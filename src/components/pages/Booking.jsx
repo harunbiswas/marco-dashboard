@@ -186,6 +186,7 @@ export default function Booking() {
                   isDetails={isDetails}
                   isIndex={isIndex}
                   handler={setIsDetails}
+                  isUser={true}
                 />
               </>
             )) || (
@@ -205,6 +206,7 @@ export default function Booking() {
                   isIndex={isIndex}
                   handler={setIsDetails}
                   setIsIndex
+                  quate={true}
                 />
               </>
             )}

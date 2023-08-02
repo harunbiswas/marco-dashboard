@@ -8,6 +8,7 @@ import PopupTitle from "../basic/PopupTitle";
 import Select from "../basic/Select";
 import Input from "./Input";
 import Pagenation from "./Pagenation";
+import QuoteDetails from "./QuoteDetails";
 import Table from "./Table";
 import Tags from "./Tags";
 
@@ -16,6 +17,7 @@ export default function UserDetails({
   handler,
   isIndex,
   setIsIndex,
+  quate,
 }) {
   const date = new Date();
   const [tags, setTags] = useState(["tag1", "tag2"]);
@@ -122,6 +124,14 @@ export default function UserDetails({
           <Pagenation />
         </div>
       </div>
+      {quate && (
+        <QuoteDetails
+          isDetails={isQuate}
+          isIndex={isIndex}
+          handler={setIsQuate}
+          isUser={false}
+        />
+      )}
     </div>
   );
 }

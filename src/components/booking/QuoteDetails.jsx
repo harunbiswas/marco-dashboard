@@ -18,7 +18,7 @@ import Tags from "./Tags";
 import TimeSlot from "./TimeSlot";
 import UserDetails from "./UserDetails";
 
-export default function QuoteDetails({ isDetails, handler, isIndex }) {
+export default function QuoteDetails({ isDetails, handler, isIndex, isUser }) {
   const date = new Date();
   const [isUserDetails, setIsUserDetails] = useState(false);
   const [isSuggest, setIsSuggest] = useState(false);
@@ -104,15 +104,20 @@ export default function QuoteDetails({ isDetails, handler, isIndex }) {
           <form onSubmit={(e) => e.preventDefault()} className="form" action="">
             <div className="title-btn">
               <PopupTitle title="General Information" />
-              <button onClick={() => setIsUserDetails(true)}>
-                <FaUserAlt />
-              </button>
-
-              <UserDetails
-                isDetails={isUserDetails}
-                isIndex={isIndex}
-                handler={setIsUserDetails}
-              />
+              {isUser && (
+                <>
+                  {" "}
+                  <button onClick={() => setIsUserDetails(true)}>
+                    <FaUserAlt />
+                  </button>
+                  <UserDetails
+                    isDetails={isUserDetails}
+                    isIndex={isIndex}
+                    handler={setIsUserDetails}
+                    quate={false}
+                  />
+                </>
+              )}
             </div>
             <div className="form-body">
               {formInfo.map((item, i) => (
