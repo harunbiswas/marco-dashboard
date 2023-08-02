@@ -288,6 +288,7 @@ export default function Table({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
               className="id"
             >
@@ -304,6 +305,7 @@ export default function Table({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
               className="name"
             >
@@ -335,6 +337,7 @@ export default function Table({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
             >
               {" "}
@@ -351,6 +354,7 @@ export default function Table({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
             >
               {" "}
@@ -367,6 +371,7 @@ export default function Table({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
             >
               <Input data={{ value: d.trasporto }} />
@@ -382,6 +387,7 @@ export default function Table({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
               className="tipi"
             >
@@ -398,6 +404,7 @@ export default function Table({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
             >
               <div className="inner">
@@ -447,6 +454,7 @@ export default function Table({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
             >
               {(!d.price && (

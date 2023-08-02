@@ -48,6 +48,7 @@ export default function TableUser({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
               className="id"
             >
@@ -65,6 +66,7 @@ export default function TableUser({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
               className="user-table"
             >
@@ -81,6 +83,7 @@ export default function TableUser({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
             >
               {" "}
@@ -97,6 +100,7 @@ export default function TableUser({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
               className="email"
             >
@@ -114,6 +118,7 @@ export default function TableUser({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
               className="phone"
             >
@@ -132,6 +137,7 @@ export default function TableUser({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
             >
               <div className="inner">
@@ -150,6 +156,7 @@ export default function TableUser({ data }) {
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
+                data.detailsHandler(false);
               }}
             >
               {d.quoteSent}
