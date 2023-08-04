@@ -45,7 +45,7 @@ export default function TableUser({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
+                if (!isFocus || !(isFocus === "id")) {
                   data.detailsHandler(!data.isDetails);
                   e.target.blur();
                 } else {
@@ -53,7 +53,7 @@ export default function TableUser({ data }) {
                 }
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("id");
                 data.detailsHandler(false);
               }}
               className="id"
@@ -63,7 +63,7 @@ export default function TableUser({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
+                if (!isFocus || !(isFocus === "fName")) {
                   data.detailsHandler(!data.isDetails);
                   e.target.blur();
                 } else {
@@ -71,7 +71,7 @@ export default function TableUser({ data }) {
                 }
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("fName");
                 data.detailsHandler(false);
               }}
               className="user-table"
@@ -80,7 +80,7 @@ export default function TableUser({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
+                if (!isFocus || !(isFocus === "lName")) {
                   data.detailsHandler(!data.isDetails);
                   e.target.blur();
                 } else {
@@ -88,7 +88,7 @@ export default function TableUser({ data }) {
                 }
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("lName");
                 data.detailsHandler(false);
               }}
             >
@@ -97,7 +97,7 @@ export default function TableUser({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
+                if (!isFocus || !(isFocus === "email")) {
                   data.detailsHandler(!data.isDetails);
                   e.target.blur();
                 } else {
@@ -105,7 +105,7 @@ export default function TableUser({ data }) {
                 }
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("email");
                 data.detailsHandler(false);
               }}
               className="email"
@@ -115,7 +115,7 @@ export default function TableUser({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
+                if (!isFocus || !(isFocus === "phone")) {
                   data.detailsHandler(!data.isDetails);
                   e.target.blur();
                 } else {
@@ -123,7 +123,7 @@ export default function TableUser({ data }) {
                 }
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("phone");
                 data.detailsHandler(false);
               }}
               className="phone"
@@ -137,7 +137,7 @@ export default function TableUser({ data }) {
                 data.detailsHandler(!data.isDetails);
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("true");
                 data.detailsHandler(false);
               }}
             >
@@ -151,7 +151,7 @@ export default function TableUser({ data }) {
                 data.detailsHandler(!data.isDetails);
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("quateSend");
                 data.detailsHandler(false);
               }}
             >
