@@ -285,7 +285,7 @@ export default function Table({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
+                if (!isFocus || !(isFocus === "id")) {
                   data.detailsHandler(!data.isDetails);
                   e.target.blur();
                 } else {
@@ -293,7 +293,7 @@ export default function Table({ data }) {
                 }
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("id");
                 data.detailsHandler(false);
               }}
               className="id"
@@ -302,7 +302,7 @@ export default function Table({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
+                if (!isFocus || !(isFocus === "name")) {
                   data.detailsHandler(!data.isDetails);
                   e.target.blur();
                 } else {
@@ -310,7 +310,7 @@ export default function Table({ data }) {
                 }
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("name");
                 data.detailsHandler(false);
               }}
               className="name"
@@ -345,7 +345,7 @@ export default function Table({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
+                if (!isFocus || !(isFocus === "module")) {
                   data.detailsHandler(!data.isDetails);
                   e.target.blur();
                 } else {
@@ -353,7 +353,7 @@ export default function Table({ data }) {
                 }
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("module");
                 data.detailsHandler(false);
               }}
             >
@@ -362,7 +362,7 @@ export default function Table({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
+                if (!isFocus || !(isFocus === "citta")) {
                   data.detailsHandler(!data.isDetails);
                   e.target.blur();
                 } else {
@@ -370,7 +370,7 @@ export default function Table({ data }) {
                 }
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("citta");
                 data.detailsHandler(false);
               }}
             >
@@ -379,7 +379,7 @@ export default function Table({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
+                if (!isFocus || !(isFocus === "trastorto")) {
                   data.detailsHandler(!data.isDetails);
                   e.target.blur();
                 } else {
@@ -387,7 +387,7 @@ export default function Table({ data }) {
                 }
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("trastorto");
                 data.detailsHandler(false);
               }}
             >
@@ -395,7 +395,7 @@ export default function Table({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
+                if (!isFocus || !(isFocus === "tipi")) {
                   data.detailsHandler(!data.isDetails);
                   e.target.blur();
                 } else {
@@ -403,7 +403,7 @@ export default function Table({ data }) {
                 }
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("tipi");
                 data.detailsHandler(false);
               }}
               className="tipi"
@@ -412,7 +412,7 @@ export default function Table({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
+                if (!isFocus || !(isFocus === "periodo")) {
                   data.detailsHandler(!data.isDetails);
                   e.target.blur();
                 } else {
@@ -420,7 +420,7 @@ export default function Table({ data }) {
                 }
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("periodo");
                 data.detailsHandler(false);
               }}
             >
@@ -441,7 +441,7 @@ export default function Table({ data }) {
               {(d.price && (
                 <div
                   onClick={(e) => {
-                    if (!isFocus) {
+                    if (!isFocus || !(isFocus === "price")) {
                       data.detailsHandler(!data.isDetails);
                       e.target.blur();
                     } else {
@@ -449,7 +449,7 @@ export default function Table({ data }) {
                     }
                   }}
                   onDoubleClick={(e) => {
-                    setIsFocus(true);
+                    setIsFocus("price");
                   }}
                   className="inner"
                 >
@@ -478,7 +478,7 @@ export default function Table({ data }) {
                 data.detailsHandler(!data.isDetails);
               }}
               onDoubleClick={(e) => {
-                setIsFocus(true);
+                setIsFocus("price");
                 data.detailsHandler(false);
               }}
             >
