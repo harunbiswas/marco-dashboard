@@ -212,7 +212,7 @@ export default function Booking() {
             )}
           </div>
 
-          <Pagenation />
+          <Pagenation isbrns={true} />
         </div>
       </div>
     </div>

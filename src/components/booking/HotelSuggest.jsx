@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
+import { RiDeleteBin2Fill } from "react-icons/ri";
 import Select from "../basic/Select";
 import Input from "./Input";
 
@@ -109,6 +110,13 @@ export default function HotelSuggest({ isSuggest, setIsSuggest }) {
     });
   };
 
+  const deleteRoom = (id) => {
+    // Filter out the room with the specified id
+    const updatedRooms = rooms.filter((room) => room.id !== id);
+    // Update the state with the filtered array
+    setRooms(updatedRooms);
+  };
+
   const addGustHandler = (e) => {
     const updatedRooms = rooms.map((room) => {
       if (room.id === e) {
@@ -163,7 +171,15 @@ export default function HotelSuggest({ isSuggest, setIsSuggest }) {
         {data.rooms.map((room, i) => (
           <div key={i} className="details-suggest-body-main">
             <div className="top">
-              <h4>{room.name}</h4>
+              <div className="left">
+                <h4>{room.name}</h4>{" "}
+                {data.rooms.length > 1 && (
+                  <button onClick={() => data.deleteRoom(room.id)}>
+                    <RiDeleteBin2Fill />
+                  </button>
+                )}
+              </div>
+
               <button onClick={data.addHotelHandler}>
                 <AiOutlinePlus />
                 Add New Room
@@ -289,6 +305,22 @@ export default function HotelSuggest({ isSuggest, setIsSuggest }) {
     );
   };
 
+  const gustDeleteRoom = (suggestId, roomId) => {
+    // Find the correct suggests object
+    const updatedSuggests = suggests.map((suggest) => {
+      if (suggest.id === suggestId) {
+        // Filter out the room with the specified roomId
+        const updatedRooms = suggest.rooms.filter((room) => room.id !== roomId);
+        // Create a new suggests object with the updated rooms array
+        return { ...suggest, rooms: updatedRooms };
+      }
+      return suggest; // Return unchanged suggests objects
+    });
+
+    // Update the state with the updated suggests array
+    setSuggests(updatedSuggests);
+  };
+
   return (
     <div className={`details-suggest`}>
       <div
@@ -304,6 +336,7 @@ export default function HotelSuggest({ isSuggest, setIsSuggest }) {
               delete: false,
               setIsDelete,
               isDelete,
+              deleteRoom,
             }}
           />
         </div>
@@ -323,6 +356,7 @@ export default function HotelSuggest({ isSuggest, setIsSuggest }) {
                   isDelete: s.isDelete,
                   setIsDelete: () => isDeleteHandler(s.id),
                   setIsSuggest: () => deleteHandler(s.id),
+                  deleteRoom: (e) => gustDeleteRoom(s.id, e),
                 }}
               />
             </div>

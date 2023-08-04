@@ -10,7 +10,7 @@ export default function TableUser({ data }) {
   return (
     <table className="table table-user">
       <thead>
-        <tr>
+        <tr className="th">
           <th>#</th>
           {data?.th.map((d) => (
             <th key={d}>
