@@ -124,14 +124,13 @@ export default function UserDetails({
           <Pagenation />
         </div>
       </div>
-      {quate && (
-        <QuoteDetails
-          isDetails={isQuate}
-          isIndex={isIndex}
-          handler={setIsQuate}
-          isUser={false}
-        />
-      )}
+
+      <QuoteDetails
+        isDetails={isQuate}
+        isIndex={isIndex}
+        handler={setIsQuate}
+        isUser={false}
+      />
     </div>
   );
 }
