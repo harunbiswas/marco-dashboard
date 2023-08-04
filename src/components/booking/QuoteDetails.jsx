@@ -7,12 +7,12 @@ import { FaPercentage, FaUserAlt } from "react-icons/fa";
 import { FaCircleChevronRight } from "react-icons/fa6";
 import { GrClose } from "react-icons/gr";
 import { HiLocationMarker } from "react-icons/hi";
-import { IoSend } from "react-icons/io5";
 import PopupTitle from "../basic/PopupTitle";
 import Select from "../basic/Select";
 import CopyLink from "./CopyLink";
 import HotelSuggest from "./HotelSuggest";
 import Input from "./Input";
+import SendBtn from "./SendBtn";
 import SendMessage from "./SendMessage";
 import Tags from "./Tags";
 import TimeSlot from "./TimeSlot";
@@ -271,14 +271,9 @@ export default function QuoteDetails({ isDetails, handler, isIndex, isUser }) {
         </div>
         <HotelSuggest isSuggest={isSuggest} setIsSuggest={setIsSuggest} />
         <div className="details-footer">
+          <div className="details-footer-item"></div>{" "}
           <div className="details-footer-item">
-            <button className="delete">Discard Changes</button>
-          </div>{" "}
-          <div className="details-footer-item">
-            <button className="save">Save Changes</button>
-            <button className="send">
-              Send Quote <IoSend />
-            </button>
+            <SendBtn />
           </div>
         </div>
       </div>

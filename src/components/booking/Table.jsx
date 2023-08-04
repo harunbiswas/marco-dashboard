@@ -276,7 +276,13 @@ export default function Table({ data }) {
             }}
             className={`${(data.isIndex === i && "active") || ""}`}
           >
-            <td>{(i < 9 && "0" + (i + 1)) || i + 1}</td>
+            <td
+              onClick={() => {
+                data.detailsHandler(!data.isDetails);
+              }}
+            >
+              {(i < 9 && "0" + (i + 1)) || i + 1}
+            </td>
             <td
               onClick={(e) => {
                 if (!isFocus) {
@@ -313,7 +319,13 @@ export default function Table({ data }) {
                 <strong>
                   <Input data={{ value: d.user }} />
                 </strong>{" "}
-                <span>{d.quote} quote request</span>
+                <span
+                  onClick={() => {
+                    data.detailsHandler(!data.isDetails);
+                  }}
+                >
+                  {d.quote} quote request
+                </span>
               </div>
             </td>
             <td
@@ -321,7 +333,12 @@ export default function Table({ data }) {
                 data.detailsHandler(!data.isDetails);
               }}
             >
-              <div className="inner">
+              <div
+                onClick={() => {
+                  data.detailsHandler(!data.isDetails);
+                }}
+                className="inner"
+              >
                 <strong>{moment(d.date).format("MMM DD, YY")}</strong>{" "}
                 <span>{moment(d.date).format("h: MM a")}</span>
               </div>
@@ -411,7 +428,13 @@ export default function Table({ data }) {
                 <strong className="periodo">
                   <Input data={{ value: d.periodo }} />
                 </strong>
-                <span>{d.dateLine}</span>
+                <span
+                  onClick={() => {
+                    data.detailsHandler(!data.isDetails);
+                  }}
+                >
+                  {d.dateLine}
+                </span>
               </div>
             </td>
             <td className="price">
@@ -433,7 +456,14 @@ export default function Table({ data }) {
                   <strong ref={inp.current[i]}>
                     €<Input data={{ value: d.price }} />
                   </strong>
-                  <span> By {d.added}</span>
+                  <span
+                    onClick={(e) => {
+                      data.detailsHandler(!data.isDetails);
+                    }}
+                  >
+                    {" "}
+                    By {d.added}
+                  </span>
                 </div>
               )) || (
                 <div className="add_price">
@@ -445,12 +475,7 @@ export default function Table({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
-                } else {
-                  data.detailsHandler(false);
-                }
+                data.detailsHandler(!data.isDetails);
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);

@@ -88,6 +88,14 @@ export default function Booking() {
     };
   }, []);
 
+  useEffect(() => {
+    document.addEventListener("click", (e) => {
+      if (filter.current && !filter.current.contains(e.target)) {
+        setIsFilter(false);
+      }
+    });
+  }, []);
+
   return (
     <div className="booking">
       <div className="container">
@@ -142,7 +150,9 @@ export default function Booking() {
               </div>
               <div ref={filter} className=" booking-btn filter-btn-wrp">
                 <button
-                  onClick={() => setIsFilter(true)}
+                  onClick={() => {
+                    setIsFilter(!isFilter);
+                  }}
                   className="filter-btn"
                 >
                   <div className="icon">
@@ -212,7 +222,7 @@ export default function Booking() {
             )}
           </div>
 
-          <Pagenation isbrns={true} />
+          <Pagenation />
         </div>
       </div>
     </div>

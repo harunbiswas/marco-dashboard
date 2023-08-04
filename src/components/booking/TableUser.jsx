@@ -36,7 +36,13 @@ export default function TableUser({ data }) {
             }}
             className={`${(data.isIndex === i && "active") || ""}`}
           >
-            <td>{(i < 9 && "0" + (i + 1)) || i + 1}</td>
+            <td
+              onClick={(e) => {
+                data.detailsHandler(!data.isDetails);
+              }}
+            >
+              {(i < 9 && "0" + (i + 1)) || i + 1}
+            </td>
             <td
               onClick={(e) => {
                 if (!isFocus) {
@@ -128,12 +134,7 @@ export default function TableUser({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
-                } else {
-                  data.detailsHandler(false);
-                }
+                data.detailsHandler(!data.isDetails);
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);
@@ -147,12 +148,7 @@ export default function TableUser({ data }) {
             </td>
             <td
               onClick={(e) => {
-                if (!isFocus) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
-                } else {
-                  data.detailsHandler(false);
-                }
+                data.detailsHandler(!data.isDetails);
               }}
               onDoubleClick={(e) => {
                 setIsFocus(true);

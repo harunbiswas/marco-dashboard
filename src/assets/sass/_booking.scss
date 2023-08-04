@@ -341,10 +341,13 @@
 
       &-body {
         height: 0;
-        transition: 0.3s;
         overflow: hidden;
+        opacity: 0;
+        transition: 0.3s;
+
         &.show {
           height: auto;
+          opacity: 1;
         }
 
         & > .group {
@@ -396,6 +399,15 @@
 
   thead {
     background: #f6f6f6;
+  }
+
+  tbody {
+    max-height: 880px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
   }
 
   tr {
@@ -1295,18 +1307,18 @@
   &.user-details {
     .details-bottom-table {
       position: relative;
-
       overflow-x: auto;
 
       .table {
-        .th {
-          position: sticky;
-          top: 0;
-        }
+        border-left: $border;
 
         tbody {
           max-height: 328px;
           overflow-y: auto;
+
+          &::-webkit-scrollbar {
+            width: 0;
+          }
         }
       }
 
@@ -1807,5 +1819,53 @@
         color: $primary;
       }
     }
+  }
+}
+
+button.sendbtn {
+  width: 200px;
+  height: 48px;
+  border: $border;
+  color: $primary;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  border-radius: 4px;
+  transition: 0.3s;
+  gap: 10px;
+  overflow: hidden;
+  position: relative;
+  padding: 10px 20px;
+  animation: opacity 2s;
+
+  .icon {
+    transition: 0;
+    position: absolute;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    animation: opacity 2s;
+    height: 100%;
+    top: 0;
+  }
+
+  &.animat {
+    .icon {
+      transition: 0.4s;
+      right: -30px;
+    }
+  }
+
+  & > span {
+    transition: 0.5s;
+    margin-left: -20px;
+  }
+
+  &:hover {
+    background-color: $primary;
+    color: $white;
   }
 }
