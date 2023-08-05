@@ -12,14 +12,9 @@ import QuoteDetails from "./QuoteDetails";
 import Table from "./Table";
 import Tags from "./Tags";
 
-export default function UserDetails({
-  isDetails,
-  handler,
-  isIndex,
-  setIsIndex,
-  quate,
-}) {
+export default function UserDetails({ isDetails, handler, quate }) {
   const date = new Date();
+  const [isIndex, setIsIndex] = useState(null);
   const [tags, setTags] = useState(["tag1", "tag2"]);
   const [formInfo, setFormInfo] = useState([
     {
