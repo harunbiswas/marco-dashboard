@@ -62,7 +62,19 @@ export default function TableUser({ data }) {
                     e.target.blur();
                   }
                 } else {
-                  data.detailsHandler(false);
+                  if (e.target.tagName !== "INPUT") {
+                    if (data.isIndex === i) {
+                      console.log(data.isIndex);
+                      data.detailsHandler(!data.isDetails);
+                      e.target.blur();
+                    } else {
+                      data.setIsIndex(i);
+                      data.detailsHandler(true);
+                      e.target.blur();
+                    }
+                  } else {
+                    data.detailsHandler(false);
+                  }
                 }
               }}
               onDoubleClick={(e) => {
@@ -87,7 +99,19 @@ export default function TableUser({ data }) {
                     e.target.blur();
                   }
                 } else {
-                  data.detailsHandler(false);
+                  if (e.target.tagName !== "INPUT") {
+                    if (data.isIndex === i) {
+                      console.log(data.isIndex);
+                      data.detailsHandler(!data.isDetails);
+                      e.target.blur();
+                    } else {
+                      data.setIsIndex(i);
+                      data.detailsHandler(true);
+                      e.target.blur();
+                    }
+                  } else {
+                    data.detailsHandler(false);
+                  }
                 }
               }}
               onDoubleClick={(e) => {
@@ -111,7 +135,19 @@ export default function TableUser({ data }) {
                     e.target.blur();
                   }
                 } else {
-                  data.detailsHandler(false);
+                  if (e.target.tagName !== "INPUT") {
+                    if (data.isIndex === i) {
+                      console.log(data.isIndex);
+                      data.detailsHandler(!data.isDetails);
+                      e.target.blur();
+                    } else {
+                      data.setIsIndex(i);
+                      data.detailsHandler(true);
+                      e.target.blur();
+                    }
+                  } else {
+                    data.detailsHandler(false);
+                  }
                 }
               }}
               onDoubleClick={(e) => {
@@ -135,7 +171,19 @@ export default function TableUser({ data }) {
                     e.target.blur();
                   }
                 } else {
-                  data.detailsHandler(false);
+                  if (e.target.tagName !== "INPUT") {
+                    if (data.isIndex === i) {
+                      console.log(data.isIndex);
+                      data.detailsHandler(!data.isDetails);
+                      e.target.blur();
+                    } else {
+                      data.setIsIndex(i);
+                      data.detailsHandler(true);
+                      e.target.blur();
+                    }
+                  } else {
+                    data.detailsHandler(false);
+                  }
                 }
               }}
               onDoubleClick={(e) => {
@@ -160,7 +208,19 @@ export default function TableUser({ data }) {
                     e.target.blur();
                   }
                 } else {
-                  data.detailsHandler(false);
+                  if (e.target.tagName !== "INPUT") {
+                    if (data.isIndex === i) {
+                      console.log(data.isIndex);
+                      data.detailsHandler(!data.isDetails);
+                      e.target.blur();
+                    } else {
+                      data.setIsIndex(i);
+                      data.detailsHandler(true);
+                      e.target.blur();
+                    }
+                  } else {
+                    data.detailsHandler(false);
+                  }
                 }
               }}
               onDoubleClick={(e) => {

@@ -279,7 +279,6 @@ export default function Table({ data }) {
             <td
               onClick={() => {
                 if (data.isIndex === i) {
-                  console.log(data.isIndex);
                   data.detailsHandler(!data.isDetails);
                 } else {
                   data.setIsIndex(i);
@@ -293,7 +292,6 @@ export default function Table({ data }) {
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "id")) {
                   if (data.isIndex === i) {
-                    console.log(data.isIndex);
                     data.detailsHandler(!data.isDetails);
                     e.target.blur();
                   } else {
@@ -302,7 +300,19 @@ export default function Table({ data }) {
                     e.target.blur();
                   }
                 } else {
-                  data.detailsHandler(false);
+                  if (e.target.tagName !== "INPUT") {
+                    if (data.isIndex === i) {
+                      console.log(data.isIndex);
+                      data.detailsHandler(!data.isDetails);
+                      e.target.blur();
+                    } else {
+                      data.setIsIndex(i);
+                      data.detailsHandler(true);
+                      e.target.blur();
+                    }
+                  } else {
+                    data.detailsHandler(false);
+                  }
                 }
               }}
               onDoubleClick={(e) => {
@@ -317,7 +327,6 @@ export default function Table({ data }) {
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "name")) {
                   if (data.isIndex === i) {
-                    console.log(data.isIndex);
                     data.detailsHandler(!data.isDetails);
                     e.target.blur();
                   } else {
@@ -326,7 +335,19 @@ export default function Table({ data }) {
                     e.target.blur();
                   }
                 } else {
-                  data.detailsHandler(false);
+                  if (e.target.tagName !== "INPUT") {
+                    if (data.isIndex === i) {
+                      console.log(data.isIndex);
+                      data.detailsHandler(!data.isDetails);
+                      e.target.blur();
+                    } else {
+                      data.setIsIndex(i);
+                      data.detailsHandler(true);
+                      e.target.blur();
+                    }
+                  } else {
+                    data.detailsHandler(false);
+                  }
                 }
               }}
               onDoubleClick={(e) => {
@@ -351,7 +372,6 @@ export default function Table({ data }) {
             <td
               onClick={() => {
                 if (data.isIndex === i) {
-                  console.log(data.isIndex);
                   data.detailsHandler(!data.isDetails);
                 } else {
                   data.setIsIndex(i);
@@ -362,7 +382,6 @@ export default function Table({ data }) {
               <div
                 onClick={() => {
                   if (data.isIndex === i) {
-                    console.log(data.isIndex);
                     data.detailsHandler(!data.isDetails);
                   } else {
                     data.setIsIndex(i);
@@ -379,7 +398,6 @@ export default function Table({ data }) {
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "module")) {
                   if (data.isIndex === i) {
-                    console.log(data.isIndex);
                     data.detailsHandler(!data.isDetails);
                     e.target.blur();
                   } else {
@@ -388,7 +406,19 @@ export default function Table({ data }) {
                     e.target.blur();
                   }
                 } else {
-                  data.detailsHandler(false);
+                  if (e.target.tagName !== "INPUT") {
+                    if (data.isIndex === i) {
+                      console.log(data.isIndex);
+                      data.detailsHandler(!data.isDetails);
+                      e.target.blur();
+                    } else {
+                      data.setIsIndex(i);
+                      data.detailsHandler(true);
+                      e.target.blur();
+                    }
+                  } else {
+                    data.detailsHandler(false);
+                  }
                 }
               }}
               onDoubleClick={(e) => {
@@ -403,7 +433,6 @@ export default function Table({ data }) {
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "citta")) {
                   if (data.isIndex === i) {
-                    console.log(data.isIndex);
                     data.detailsHandler(!data.isDetails);
                     e.target.blur();
                   } else {
@@ -412,7 +441,19 @@ export default function Table({ data }) {
                     e.target.blur();
                   }
                 } else {
-                  data.detailsHandler(false);
+                  if (e.target.tagName !== "INPUT") {
+                    if (data.isIndex === i) {
+                      console.log(data.isIndex);
+                      data.detailsHandler(!data.isDetails);
+                      e.target.blur();
+                    } else {
+                      data.setIsIndex(i);
+                      data.detailsHandler(true);
+                      e.target.blur();
+                    }
+                  } else {
+                    data.detailsHandler(false);
+                  }
                 }
               }}
               onDoubleClick={(e) => {
@@ -427,7 +468,6 @@ export default function Table({ data }) {
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "trastorto")) {
                   if (data.isIndex === i) {
-                    console.log(data.isIndex);
                     data.detailsHandler(!data.isDetails);
                     e.target.blur();
                   } else {
@@ -436,7 +476,19 @@ export default function Table({ data }) {
                     e.target.blur();
                   }
                 } else {
-                  data.detailsHandler(false);
+                  if (e.target.tagName !== "INPUT") {
+                    if (data.isIndex === i) {
+                      console.log(data.isIndex);
+                      data.detailsHandler(!data.isDetails);
+                      e.target.blur();
+                    } else {
+                      data.setIsIndex(i);
+                      data.detailsHandler(true);
+                      e.target.blur();
+                    }
+                  } else {
+                    data.detailsHandler(false);
+                  }
                 }
               }}
               onDoubleClick={(e) => {
@@ -450,7 +502,6 @@ export default function Table({ data }) {
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "tipi")) {
                   if (data.isIndex === i) {
-                    console.log(data.isIndex);
                     data.detailsHandler(!data.isDetails);
                     e.target.blur();
                   } else {
@@ -459,7 +510,19 @@ export default function Table({ data }) {
                     e.target.blur();
                   }
                 } else {
-                  data.detailsHandler(false);
+                  if (e.target.tagName !== "INPUT") {
+                    if (data.isIndex === i) {
+                      console.log(data.isIndex);
+                      data.detailsHandler(!data.isDetails);
+                      e.target.blur();
+                    } else {
+                      data.setIsIndex(i);
+                      data.detailsHandler(true);
+                      e.target.blur();
+                    }
+                  } else {
+                    data.detailsHandler(false);
+                  }
                 }
               }}
               onDoubleClick={(e) => {
@@ -474,7 +537,6 @@ export default function Table({ data }) {
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "periodo")) {
                   if (data.isIndex === i) {
-                    console.log(data.isIndex);
                     data.detailsHandler(!data.isDetails);
                     e.target.blur();
                   } else {
@@ -483,7 +545,19 @@ export default function Table({ data }) {
                     e.target.blur();
                   }
                 } else {
-                  data.detailsHandler(false);
+                  if (e.target.tagName !== "INPUT") {
+                    if (data.isIndex === i) {
+                      console.log(data.isIndex);
+                      data.detailsHandler(!data.isDetails);
+                      e.target.blur();
+                    } else {
+                      data.setIsIndex(i);
+                      data.detailsHandler(true);
+                      e.target.blur();
+                    }
+                  } else {
+                    data.detailsHandler(false);
+                  }
                 }
               }}
               onDoubleClick={(e) => {
@@ -498,7 +572,6 @@ export default function Table({ data }) {
                 <span
                   onClick={() => {
                     if (data.isIndex === i) {
-                      console.log(data.isIndex);
                       data.detailsHandler(!data.isDetails);
                     } else {
                       data.setIsIndex(i);
@@ -532,7 +605,6 @@ export default function Table({ data }) {
                   <span
                     onClick={() => {
                       if (data.isIndex === i) {
-                        console.log(data.isIndex);
                         data.detailsHandler(!data.isDetails);
                       } else {
                         data.setIsIndex(i);
@@ -555,7 +627,6 @@ export default function Table({ data }) {
             <td
               onClick={() => {
                 if (data.isIndex === i) {
-                  console.log(data.isIndex);
                   data.detailsHandler(!data.isDetails);
                 } else {
                   data.setIsIndex(i);
@@ -586,7 +657,6 @@ export default function Table({ data }) {
             <td
               onClick={() => {
                 if (data.isIndex === i) {
-                  console.log(data.isIndex);
                   data.detailsHandler(!data.isDetails);
                 } else {
                   data.setIsIndex(i);
@@ -597,7 +667,6 @@ export default function Table({ data }) {
               <button
                 onClick={() => {
                   if (data.isIndex === i) {
-                    console.log(data.isIndex);
                     data.detailsHandler(!data.isDetails);
                   } else {
                     data.setIsIndex(i);
