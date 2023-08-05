@@ -37,8 +37,14 @@ export default function TableUser({ data }) {
             className={`${(data.isIndex === i && "active") || ""}`}
           >
             <td
-              onClick={(e) => {
-                data.detailsHandler(!data.isDetails);
+              onClick={() => {
+                if (data.isIndex === i) {
+                  console.log(data.isIndex);
+                  data.detailsHandler(!data.isDetails);
+                } else {
+                  data.setIsIndex(i);
+                  data.detailsHandler(true);
+                }
               }}
             >
               {(i < 9 && "0" + (i + 1)) || i + 1}
@@ -46,8 +52,15 @@ export default function TableUser({ data }) {
             <td
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "id")) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                    e.target.blur();
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                    e.target.blur();
+                  }
                 } else {
                   data.detailsHandler(false);
                 }
@@ -64,8 +77,15 @@ export default function TableUser({ data }) {
             <td
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "fName")) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                    e.target.blur();
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                    e.target.blur();
+                  }
                 } else {
                   data.detailsHandler(false);
                 }
@@ -81,8 +101,15 @@ export default function TableUser({ data }) {
             <td
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "lName")) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                    e.target.blur();
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                    e.target.blur();
+                  }
                 } else {
                   data.detailsHandler(false);
                 }
@@ -98,8 +125,15 @@ export default function TableUser({ data }) {
             <td
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "email")) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                    e.target.blur();
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                    e.target.blur();
+                  }
                 } else {
                   data.detailsHandler(false);
                 }
@@ -116,8 +150,15 @@ export default function TableUser({ data }) {
             <td
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "phone")) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                    e.target.blur();
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                    e.target.blur();
+                  }
                 } else {
                   data.detailsHandler(false);
                 }
@@ -133,8 +174,14 @@ export default function TableUser({ data }) {
               </div>
             </td>
             <td
-              onClick={(e) => {
-                data.detailsHandler(!data.isDetails);
+              onClick={() => {
+                if (data.isIndex === i) {
+                  console.log(data.isIndex);
+                  data.detailsHandler(!data.isDetails);
+                } else {
+                  data.setIsIndex(i);
+                  data.detailsHandler(true);
+                }
               }}
               onDoubleClick={(e) => {
                 setIsFocus("true");
@@ -147,8 +194,14 @@ export default function TableUser({ data }) {
               </div>
             </td>
             <td
-              onClick={(e) => {
-                data.detailsHandler(!data.isDetails);
+              onClick={() => {
+                if (data.isIndex === i) {
+                  console.log(data.isIndex);
+                  data.detailsHandler(!data.isDetails);
+                } else {
+                  data.setIsIndex(i);
+                  data.detailsHandler(true);
+                }
               }}
               onDoubleClick={(e) => {
                 setIsFocus("quateSend");
@@ -159,7 +212,17 @@ export default function TableUser({ data }) {
             </td>
 
             <td>
-              <button onClick={() => data.detailsHandler(true)}>
+              <button
+                onClick={() => {
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                  }
+                }}
+              >
                 View Booking Info
               </button>
             </td>

@@ -278,7 +278,13 @@ export default function Table({ data }) {
           >
             <td
               onClick={() => {
-                data.detailsHandler(!data.isDetails);
+                if (data.isIndex === i) {
+                  console.log(data.isIndex);
+                  data.detailsHandler(!data.isDetails);
+                } else {
+                  data.setIsIndex(i);
+                  data.detailsHandler(true);
+                }
               }}
             >
               {(i < 9 && "0" + (i + 1)) || i + 1}
@@ -286,8 +292,15 @@ export default function Table({ data }) {
             <td
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "id")) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                    e.target.blur();
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                    e.target.blur();
+                  }
                 } else {
                   data.detailsHandler(false);
                 }
@@ -303,8 +316,15 @@ export default function Table({ data }) {
             <td
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "name")) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                    e.target.blur();
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                    e.target.blur();
+                  }
                 } else {
                   data.detailsHandler(false);
                 }
@@ -329,13 +349,25 @@ export default function Table({ data }) {
               </div>
             </td>
             <td
-              onClick={(e) => {
-                data.detailsHandler(!data.isDetails);
+              onClick={() => {
+                if (data.isIndex === i) {
+                  console.log(data.isIndex);
+                  data.detailsHandler(!data.isDetails);
+                } else {
+                  data.setIsIndex(i);
+                  data.detailsHandler(true);
+                }
               }}
             >
               <div
                 onClick={() => {
-                  data.detailsHandler(!data.isDetails);
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                  }
                 }}
                 className="inner"
               >
@@ -346,8 +378,15 @@ export default function Table({ data }) {
             <td
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "module")) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                    e.target.blur();
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                    e.target.blur();
+                  }
                 } else {
                   data.detailsHandler(false);
                 }
@@ -363,8 +402,15 @@ export default function Table({ data }) {
             <td
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "citta")) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                    e.target.blur();
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                    e.target.blur();
+                  }
                 } else {
                   data.detailsHandler(false);
                 }
@@ -380,8 +426,15 @@ export default function Table({ data }) {
             <td
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "trastorto")) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                    e.target.blur();
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                    e.target.blur();
+                  }
                 } else {
                   data.detailsHandler(false);
                 }
@@ -396,8 +449,15 @@ export default function Table({ data }) {
             <td
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "tipi")) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                    e.target.blur();
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                    e.target.blur();
+                  }
                 } else {
                   data.detailsHandler(false);
                 }
@@ -413,8 +473,15 @@ export default function Table({ data }) {
             <td
               onClick={(e) => {
                 if (!isFocus || !(isFocus === "periodo")) {
-                  data.detailsHandler(!data.isDetails);
-                  e.target.blur();
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                    e.target.blur();
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                    e.target.blur();
+                  }
                 } else {
                   data.detailsHandler(false);
                 }
@@ -430,7 +497,13 @@ export default function Table({ data }) {
                 </strong>
                 <span
                   onClick={() => {
-                    data.detailsHandler(!data.isDetails);
+                    if (data.isIndex === i) {
+                      console.log(data.isIndex);
+                      data.detailsHandler(!data.isDetails);
+                    } else {
+                      data.setIsIndex(i);
+                      data.detailsHandler(true);
+                    }
                   }}
                 >
                   {d.dateLine}
@@ -457,8 +530,14 @@ export default function Table({ data }) {
                     €<Input data={{ value: d.price }} />
                   </strong>
                   <span
-                    onClick={(e) => {
-                      data.detailsHandler(!data.isDetails);
+                    onClick={() => {
+                      if (data.isIndex === i) {
+                        console.log(data.isIndex);
+                        data.detailsHandler(!data.isDetails);
+                      } else {
+                        data.setIsIndex(i);
+                        data.detailsHandler(true);
+                      }
                     }}
                   >
                     {" "}
@@ -474,8 +553,14 @@ export default function Table({ data }) {
               )}
             </td>
             <td
-              onClick={(e) => {
-                data.detailsHandler(!data.isDetails);
+              onClick={() => {
+                if (data.isIndex === i) {
+                  console.log(data.isIndex);
+                  data.detailsHandler(!data.isDetails);
+                } else {
+                  data.setIsIndex(i);
+                  data.detailsHandler(true);
+                }
               }}
               onDoubleClick={(e) => {
                 setIsFocus("price");
@@ -499,11 +584,27 @@ export default function Table({ data }) {
               )}
             </td>
             <td
-              onClick={(e) => {
-                data.detailsHandler(!data.isDetails);
+              onClick={() => {
+                if (data.isIndex === i) {
+                  console.log(data.isIndex);
+                  data.detailsHandler(!data.isDetails);
+                } else {
+                  data.setIsIndex(i);
+                  data.detailsHandler(true);
+                }
               }}
             >
-              <button onClick={() => data.detailsHandler(true)}>
+              <button
+                onClick={() => {
+                  if (data.isIndex === i) {
+                    console.log(data.isIndex);
+                    data.detailsHandler(!data.isDetails);
+                  } else {
+                    data.setIsIndex(i);
+                    data.detailsHandler(true);
+                  }
+                }}
+              >
                 View Details
               </button>
             </td>
