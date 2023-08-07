@@ -670,6 +670,11 @@
         background-color: transparent !important;
         border: none !important;
         box-shadow: none !important;
+        gap: 0;
+
+        .active {
+          justify-content: flex-end;
+        }
 
         span {
           padding: 0 !important;
