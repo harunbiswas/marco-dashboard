@@ -273,7 +273,7 @@ export default function QuoteDetails({ isDetails, handler, isIndex, isUser }) {
         <div className="details-footer">
           <div className="details-footer-item"></div>{" "}
           <div className="details-footer-item">
-            <SendBtn />
+            <SendBtn data={{ send: "Send Quote", sent: "Quote Sent" }} />
           </div>
         </div>
       </div>

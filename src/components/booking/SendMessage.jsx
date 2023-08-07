@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { IoSend } from "react-icons/io5";
+import SendBtn from "./SendBtn";
 
 export default function SendMessage() {
   const [isSend, setIsSend] = useState(false);
@@ -53,14 +53,7 @@ export default function SendMessage() {
         </div>
 
         <div className="form-group send">
-          <button className={(isSend && "animat") || "no"}>
-            <span ref={ref}>
-              {(isSend && "Message Sent") || "Send Message"}
-              <div className="icon">
-                <IoSend />
-              </div>
-            </span>
-          </button>
+          <SendBtn data={{ send: "Send Message", sent: "Message Sent" }} />
         </div>
       </div>
     </form>

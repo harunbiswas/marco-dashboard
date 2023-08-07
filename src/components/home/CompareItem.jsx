@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import AnimateValue from "../basic/AnimateValue";
+import DateLine from "../basic/DateLine";
 import Select from "../basic/Select";
 
 export default function CompareItem({ value }) {
@@ -54,7 +55,11 @@ export default function CompareItem({ value }) {
   return (
     <div className="compare-item">
       <div className="compare-item-top">
-        <p>Select Modules</p>
+        <div className="top">
+          <p>Select Modules</p>
+          <DateLine data={["tutte", "tutte 1"]} defaultText="Adv:" />
+        </div>
+
         <Select data={["Eden e Tirrenia", "Bellevue"]} />
       </div>
       <div className="compare-item-body">

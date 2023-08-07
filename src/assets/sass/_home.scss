@@ -659,6 +659,24 @@
     border-radius: 4px;
     margin-bottom: 16px;
 
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 5px;
+
+      .select {
+        width: 130px !important;
+        background-color: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+
+        span {
+          padding: 0 !important;
+        }
+      }
+    }
+
     p {
       font-size: 18px;
       font-weight: 600;

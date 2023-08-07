@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { MdCall, MdOutlineMail } from "react-icons/md";
 import { Link } from "react-router-dom";
 import img from "../../assets/images/profile.png";
 import AnimateValue from "../basic/AnimateValue";
@@ -56,14 +55,14 @@ export default function Quotes() {
                 </div>
                 <strong>{d.name}</strong>
               </div>
-              <div className="right">
+              {/* <div className="right">
                 <Link to={d.number}>
                   <MdCall />
                 </Link>
                 <Link to="/">
                   <MdOutlineMail />
                 </Link>
-              </div>
+              </div> */}
             </div>
             <div className="bottom">
               <div className="left">

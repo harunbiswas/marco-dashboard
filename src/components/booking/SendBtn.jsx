@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { IoSend } from "react-icons/io5";
 
-export default function SendBtn() {
+export default function SendBtn({ data }) {
   const [isSend, setIsSend] = useState(false);
   const ref = useRef(null);
 
@@ -25,7 +25,7 @@ export default function SendBtn() {
       }}
     >
       <span ref={ref}>
-        {(isSend && "Message Sent") || "Send Message"}
+        {(isSend && data.sent) || data.send}
         <div className="icon">
           <IoSend />
         </div>

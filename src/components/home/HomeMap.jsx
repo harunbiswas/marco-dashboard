@@ -1,5 +1,3 @@
-import { RiEarthFill } from "react-icons/ri";
-import DateLine from "../basic/DateLine";
 import Map from "./Map";
 
 export default function HomeMap() {
@@ -10,11 +8,11 @@ export default function HomeMap() {
           <h3>Top Request Places</h3>
           <p>You’ve invested 21 country business to boost up</p>
         </div>
-        <DateLine
+        {/* <DateLine
           data={["Italy", "Bangladesh"]}
           defaultText="Country:"
           icon={<RiEarthFill />}
-        />
+        /> */}
       </div>
       <div className="map-body">
         <Map />
