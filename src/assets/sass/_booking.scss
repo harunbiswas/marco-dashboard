@@ -404,6 +404,35 @@
   tbody {
     max-height: 880px;
     overflow-y: auto;
+    position: relative;
+
+    & > .buttons {
+      position: absolute;
+      left: 20px;
+      background-color: $white;
+      box-shadow: $shadow;
+      padding: 10px;
+      border-radius: 4px;
+      z-index: 9999;
+      opacity: 0;
+      display: none;
+      transition: opacity 0.3s;
+
+      &.show {
+        opacity: 1;
+        display: block;
+      }
+
+      & > button {
+        border-radius: 4px;
+        background-color: $red;
+        color: $white;
+        font-size: 12px;
+        font-family: $jakarta;
+        border: $border;
+        padding: 7px 10px;
+      }
+    }
 
     &::-webkit-scrollbar {
       width: 0;
@@ -437,6 +466,9 @@
     height: 100%;
     flex-direction: column;
     text-align: center;
+
+    &.selc {
+    }
 
     & > svg {
       font-size: 18px;

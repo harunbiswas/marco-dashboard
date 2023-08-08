@@ -257,6 +257,28 @@ export default function Table({ data }) {
       )
     );
   };
+
+  const [isDel, setIsDel] = useState(false);
+  const del = useRef(null);
+  const tbd = useRef(null);
+
+  const contexHandler = (e, s, id) => {
+    if (s) {
+      e.preventDefault();
+      const top = tbd.current.getBoundingClientRect().top;
+      del.current.style.top = `${e.clientY - top}px`;
+      setIsDel(true);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", (e) => {
+      if (del.current && !del.current.contains(e.target)) {
+        setIsDel(false);
+      }
+    });
+  }, []);
+
   return (
     <table className="table" id="table">
       <thead>
@@ -277,7 +299,10 @@ export default function Table({ data }) {
         </tr>
       </thead>
 
-      <tbody>
+      <tbody ref={tbd}>
+        <div ref={del} className={`buttons ${(isDel && "show") || ""}`}>
+          <button>Delete</button>
+        </div>
         {td.map((d, i) => (
           <tr
             key={i}
@@ -286,7 +311,11 @@ export default function Table({ data }) {
             }}
             className={`${(data.isIndex === i && "active") || ""}`}
           >
-            <td onClick={() => selectHandler(d)}>
+            <td
+              onContextMenu={(e) => contexHandler(e, d.select, d.id)}
+              className="selc"
+              onClick={() => selectHandler(d)}
+            >
               {(d.select && <BsCheckLg />) || (i < 9 && "0" + (i + 1)) || i + 1}
             </td>
             <td

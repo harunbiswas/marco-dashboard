@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import SendBtn from "./SendBtn";
 
-export default function SendMessage() {
+export default function SendMessage({ data }) {
   const [isSend, setIsSend] = useState(false);
   const ref = useRef(null);
   const [row, setRow] = useState(1);
-  const [value, setValue] = useState(
-    "Messaggio descrizione gnenfkb gmkpgo mgmgk"
-  );
+  const [value, setValue] = useState(data.text);
 
   useEffect(() => {
     if (isSend) {

@@ -1,24 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { BiPlus } from "react-icons/bi";
+import QuoteDetailsForm from "./QuateDetailsForm";
+import UserDetailsFrom from "./UserDetailsFrom";
 
-export default function AddBtn() {
+export default function AddBtn({ activePage }) {
   const [isDr, setIsDr] = useState(false);
-  const ref = useRef(null);
 
-  useEffect(() => {
-    document.addEventListener("click", (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        setIsDr(false);
-      }
-    });
-  }, []);
   return (
-    <div ref={ref} className="add-btn">
+    <div className="add-btn">
       <button onClick={() => setIsDr(!isDr)}>
         <BiPlus />
         <span>Add</span>
       </button>
-      <div className={`dropdown ${(isDr && "show") || ""}`}></div>
+      {(activePage === "booking" && (
+        <QuoteDetailsForm isDetails={isDr} handler={setIsDr} />
+      )) ||
+        (activePage === "user" && (
+          <UserDetailsFrom isDetails={isDr} handler={setIsDr} />
+        ))}
     </div>
   );
 }

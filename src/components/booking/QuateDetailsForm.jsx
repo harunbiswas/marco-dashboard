@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { BsQuestionLg } from "react-icons/bs";
-import { FaPercentage, FaUserAlt } from "react-icons/fa";
+import { FaPercentage } from "react-icons/fa";
 import { FaCircleChevronRight } from "react-icons/fa6";
 import { GrClose } from "react-icons/gr";
 import { HiLocationMarker } from "react-icons/hi";
@@ -16,9 +16,13 @@ import SendBtn from "./SendBtn";
 import SendMessage from "./SendMessage";
 import Tags from "./Tags";
 import TimeSlot from "./TimeSlot";
-import UserDetails from "./UserDetails";
 
-export default function QuoteDetails({ isDetails, handler, isIndex, isUser }) {
+export default function QuoteDetailsForm({
+  isDetails,
+  handler,
+  isIndex,
+  isUser,
+}) {
   const date = new Date();
   const [isUserDetails, setIsUserDetails] = useState(false);
   const [isSuggest, setIsSuggest] = useState(false);
@@ -26,19 +30,19 @@ export default function QuoteDetails({ isDetails, handler, isIndex, isUser }) {
   const [formInfo, setFormInfo] = useState([
     {
       label: "First Name",
-      value: "Connie",
+      value: "",
     },
     {
       label: "Surname",
-      value: "Murray",
+      value: "",
     },
     {
       label: "email",
-      value: "patrizgasalci.arni61@gmail.com",
+      value: "",
     },
     {
       label: "Phone Number",
-      value: "+1 (234) 567 - 891",
+      value: "",
       country: true,
     },
   ]);
@@ -50,7 +54,7 @@ export default function QuoteDetails({ isDetails, handler, isIndex, isUser }) {
     },
     {
       name: "Fare",
-      value: "$20",
+      value: "$0",
     },
     {
       name: "Trasporto Option 2",
@@ -58,7 +62,7 @@ export default function QuoteDetails({ isDetails, handler, isIndex, isUser }) {
     },
     {
       name: "Fare",
-      value: "$15",
+      value: "$10",
     },
   ]);
 
@@ -104,20 +108,6 @@ export default function QuoteDetails({ isDetails, handler, isIndex, isUser }) {
           <form onSubmit={(e) => e.preventDefault()} className="form" action="">
             <div className="title-btn">
               <PopupTitle title="General Information" />
-              {isUser && (
-                <>
-                  {" "}
-                  <button onClick={() => setIsUserDetails(true)}>
-                    <FaUserAlt />
-                  </button>
-                  <UserDetails
-                    isDetails={isUserDetails}
-                    isIndex={isIndex}
-                    handler={setIsUserDetails}
-                    quate={false}
-                  />
-                </>
-              )}
             </div>
             <div className="form-body">
               {formInfo.map((item, i) => (
@@ -141,11 +131,7 @@ export default function QuoteDetails({ isDetails, handler, isIndex, isUser }) {
               ))}
             </div>
           </form>
-          <SendMessage
-            data={{
-              text: " sadjflk asjdf alskf l;asjdflkjasdlkf asdjf asjd flkjasdfj sdf skdj",
-            }}
-          />
+          <SendMessage data={{ text: "" }} />
 
           <Tags />
         </div>
@@ -158,7 +144,7 @@ export default function QuoteDetails({ isDetails, handler, isIndex, isUser }) {
                 <label htmlFor="cirra">Citta</label>
                 <Input
                   data={{
-                    value: "Caserta",
+                    value: "",
                     i: 232,
                   }}
                 />
@@ -167,7 +153,7 @@ export default function QuoteDetails({ isDetails, handler, isIndex, isUser }) {
                 <label htmlFor="Periodo">Periodo Soggiorno</label>
                 <Input
                   data={{
-                    value: "27 July - 03 Aug - 7 notti €520 per persona | 495",
+                    value: "",
                     i: 12,
                   }}
                 />
@@ -277,7 +263,7 @@ export default function QuoteDetails({ isDetails, handler, isIndex, isUser }) {
         <div className="details-footer">
           <div className="details-footer-item"></div>{" "}
           <div className="details-footer-item">
-            <SendBtn data={{ send: "Send Quote", sent: "Quote Sent" }} />
+            <SendBtn data={{ send: "Send add", sent: "Quote added" }} />
           </div>
         </div>
       </div>

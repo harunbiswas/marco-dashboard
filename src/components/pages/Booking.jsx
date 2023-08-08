@@ -142,7 +142,7 @@ export default function Booking() {
           <div className="booking-filter">
             <Search />
             <div className="booking-filters">
-              <AddBtn />
+              <AddBtn activePage={activePage} />
               <div className="sort booking-btn">
                 <div className="icon">
                   <HiMiniBars3BottomLeft />
