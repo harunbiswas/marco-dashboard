@@ -438,6 +438,10 @@
     flex-direction: column;
     text-align: center;
 
+    & > svg {
+      font-size: 18px;
+    }
+
     &:last-child {
       border-right: none;
     }
@@ -1867,5 +1871,50 @@ button.sendbtn {
   &:hover {
     background-color: $primary;
     color: $white;
+  }
+}
+
+.add-btn {
+  position: relative;
+  & > button {
+    height: 40px;
+    border: $border;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border-radius: 4px;
+    width: 82px;
+    justify-content: center;
+    gap: 5px;
+    font-weight: 500;
+    font-size: 14px;
+    font-family: $jakarta;
+    color: $dark;
+    transition: 0.3s;
+
+    svg {
+      color: $grey;
+      font-size: 18px;
+    }
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  & > .dropdown {
+    width: 200px;
+    min-height: 200px;
+    left: 50%;
+    top: 110%;
+    transform: translateX(-50%);
+    display: none;
+    transition: 0.4s;
+    opacity: 0;
+
+    &.show {
+      display: block;
+      opacity: 1;
+    }
   }
 }

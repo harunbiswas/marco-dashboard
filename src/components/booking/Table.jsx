@@ -5,6 +5,7 @@ import {
   AiOutlinePlus,
   AiOutlineQuestion,
 } from "react-icons/ai";
+import { BsCheckLg } from "react-icons/bs";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import Input from "./Input";
 
@@ -23,6 +24,7 @@ export default function Table({ data }) {
       dateLine: "27 July - 03 Aug ",
       price: null,
       added: "",
+      select: true,
     },
     {
       id: 2037,
@@ -247,6 +249,15 @@ export default function Table({ data }) {
       inp.current[index].current.childNodes[1].focus();
     }
   }, [index]);
+
+  // select handler
+  const selectHandler = (e) => {
+    setTD((prevTD) =>
+      prevTD.map((item) =>
+        item.id === e.id ? { ...item, select: !item.select } : item
+      )
+    );
+  };
   return (
     <table className="table" id="table">
       <thead>
@@ -276,17 +287,8 @@ export default function Table({ data }) {
             }}
             className={`${(data.isIndex === i && "active") || ""}`}
           >
-            <td
-              onClick={() => {
-                if (data.isIndex === i) {
-                  data.detailsHandler(!data.isDetails);
-                } else {
-                  data.setIsIndex(i);
-                  data.detailsHandler(true);
-                }
-              }}
-            >
-              {(i < 9 && "0" + (i + 1)) || i + 1}
+            <td onClick={() => selectHandler(d)}>
+              {(d.select && <BsCheckLg />) || (i < 9 && "0" + (i + 1)) || i + 1}
             </td>
             <td
               onClick={(e) => {

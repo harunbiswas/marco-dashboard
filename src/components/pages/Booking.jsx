@@ -8,6 +8,7 @@ import DateLine from "../basic/DateLine";
 import Search from "../basic/Search";
 import Select from "../basic/Select";
 import Title from "../basic/Title";
+import AddBtn from "../booking/AddBtn";
 import BookingMneu from "../booking/BookingMenu";
 import Filter from "../booking/Filter";
 import Pagenation from "../booking/Pagenation";
@@ -141,6 +142,7 @@ export default function Booking() {
           <div className="booking-filter">
             <Search />
             <div className="booking-filters">
+              <AddBtn />
               <div className="sort booking-btn">
                 <div className="icon">
                   <HiMiniBars3BottomLeft />
