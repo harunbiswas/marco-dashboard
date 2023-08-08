@@ -10,6 +10,9 @@ export default function RecordsTop({ data = {} }) {
 
           <div className="info">
             <span>This is i button</span>
+            <span>This is i button</span>
+            <span>This is i button</span>
+            <span>This is i button</span>
           </div>
         </div>
       </div>
