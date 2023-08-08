@@ -24,7 +24,6 @@ export default function Table({ data }) {
       dateLine: "27 July - 03 Aug ",
       price: null,
       added: "",
-      select: true,
     },
     {
       id: 2037,
