@@ -9,7 +9,9 @@ export default function RecordsTop({ data = {} }) {
           <BsInfoCircle />
 
           <div className="info">
-            <span>This is i button</span>
+            <span>
+              This is i buttonis is i buttonis is i buttonis is i button
+            </span>
             <span>This is i button</span>
             <span>This is i button</span>
             <span>This is i button</span>

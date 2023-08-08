@@ -213,6 +213,7 @@
         flex-direction: column;
         gap: 4px;
         z-index: 9999;
+        max-width: 200px;
       }
 
       &:hover {
@@ -395,6 +396,9 @@
 }
 
 .performance {
+  .info {
+    transform: translateX(-100%) !important;
+  }
   &-body {
     position: relative;
     strong {
