@@ -24,7 +24,7 @@ export default function Profile() {
       <div className="img">
         <img src={profileImg} alt="" />
       </div>
-      <div className="profile-body">
+      <div onClick={dropdownHandler} className="profile-body">
         <strong>Sarah Sanders</strong>
         <span>Sub-Admin</span>
       </div>

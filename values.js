@@ -2,23 +2,7 @@ const values = {};
 
 values.profileMenu = [
   {
-    name: "profile",
-    url: "/",
-  },
-  {
-    name: "profile",
-    url: "/",
-  },
-  {
-    name: "profile",
-    url: "/",
-  },
-  {
-    name: "profile",
-    url: "/",
-  },
-  {
-    name: "profile",
+    name: "Logout",
     url: "/",
   },
 ];
