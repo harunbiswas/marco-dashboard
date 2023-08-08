@@ -1,5 +1,6 @@
 import moment from "moment";
 import { useState } from "react";
+import { BsCheckLg } from "react-icons/bs";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import { MdCall } from "react-icons/md";
 import Input from "./Input";
@@ -7,6 +8,152 @@ import Input from "./Input";
 export default function TableUser({ data }) {
   const [isDetails, setIsDetails] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
+
+  const [td, setTD] = useState([
+    {
+      id: 2036,
+      fName: "Courtney ",
+      lName: "Richards",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+    {
+      id: 2037,
+      fName: "Richards",
+      lName: "Warren",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+    {
+      id: 2038,
+      fName: "Darlene",
+      lName: "Warren",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+    {
+      id: 2039,
+      fName: "Darlene",
+      lName: "Warren",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+    {
+      id: 2040,
+      fName: "Darlene",
+      lName: "Warren",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+    {
+      id: 2041,
+      fName: "Darlene",
+      lName: "Warren",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+    {
+      id: 2042,
+      fName: "Darlene",
+      lName: "Warren",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+    {
+      id: 2043,
+      fName: "Darlene",
+      lName: "Warren",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+    {
+      id: 2044,
+      fName: "Darlene",
+      lName: "Warren",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+    {
+      id: 2045,
+      fName: "Darlene",
+      lName: "Warren",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+    {
+      id: 2046,
+      fName: "Darlene",
+      lName: "Warren",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+    {
+      id: 2047,
+      fName: "Darlene",
+      lName: "Warren",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+    {
+      id: 2048,
+      fName: "Darlene",
+      lName: "Warren",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+    {
+      id: 2049,
+      fName: "Darlene",
+      lName: "Warren",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+    {
+      id: 2050,
+      fName: "Darlene",
+      lName: "Warren",
+      email: "harunbiswasrubel@gmail.com",
+      phone: "(301) 580-7410",
+      lastQuoteSent: new Date(),
+      quoteSent: "03",
+    },
+  ]);
+
+  const selectHandler = (e) => {
+    setTD((prevTD) =>
+      prevTD.map((item) =>
+        item.id === e.id ? { ...item, select: !item.select } : item
+      )
+    );
+  };
   return (
     <table className="table table-user">
       <thead>
@@ -28,7 +175,7 @@ export default function TableUser({ data }) {
       </thead>
 
       <tbody>
-        {data?.td.map((d, i) => (
+        {td.map((d, i) => (
           <tr
             key={i}
             onClick={() => {
@@ -36,18 +183,8 @@ export default function TableUser({ data }) {
             }}
             className={`${(data.isIndex === i && "active") || ""}`}
           >
-            <td
-              onClick={() => {
-                if (data.isIndex === i) {
-                  console.log(data.isIndex);
-                  data.detailsHandler(!data.isDetails);
-                } else {
-                  data.setIsIndex(i);
-                  data.detailsHandler(true);
-                }
-              }}
-            >
-              {(i < 9 && "0" + (i + 1)) || i + 1}
+            <td onClick={() => selectHandler(d)}>
+              {(d.select && <BsCheckLg />) || (i < 9 && "0" + (i + 1)) || i + 1}
             </td>
             <td
               onClick={(e) => {
