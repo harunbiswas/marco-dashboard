@@ -64,15 +64,12 @@ ul {
     border: none;
     background-color: transparent;
     font-family: $manrope;
+    outline: none;
 
     &::placeholder {
       text-transform: capitalize;
       color: $text;
       font-family: $manrope;
-    }
-
-    &:focus {
-      outline: $border;
     }
   }
 
@@ -122,6 +119,30 @@ ul {
         color: $primary;
       }
     }
+  }
+}
+
+.btn {
+  background-color: $primary;
+  border: $border;
+  border-color: $primary;
+  padding: 8px 16px;
+  border-radius: 4px;
+  color: $white;
+  font-size: 14px;
+  font-family: $jakarta;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: 0.3s;
+
+  & > svg {
+    font-size: 18px;
+  }
+
+  &:hover {
+    background-color: $white;
+    color: $primary;
   }
 }
 
@@ -192,6 +213,26 @@ ul {
   }
 }
 
+.export-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background-color: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  transform-origin: center;
+  transition: 0.3s;
+  font-family: $jakarta;
+  border: $border;
+  padding: 8px 16px;
+  border-radius: 4px;
+
+  &:hover {
+    transform: scale(1.01);
+  }
+}
+
 .dateline {
   display: flex;
   align-items: center;
@@ -237,4 +278,165 @@ ul {
   font-size: 18px;
   color: $black;
   padding-bottom: 15px;
+}
+
+.filter {
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: $white;
+  width: 220px;
+  border: $border;
+  box-shadow: $shadow;
+  border-radius: 4px;
+  padding: 20px;
+
+  &-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: $border;
+    padding: 10px 0;
+
+    .name {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      & > span {
+        background-color: rgba($color: $primary, $alpha: 0.16);
+        width: 18px;
+        height: 18px;
+        color: $primary;
+        display: flex;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+      }
+
+      p {
+        font-family: $manrope;
+        font-size: 18px;
+        font-weight: 600;
+      }
+    }
+
+    & > button {
+      background-color: transparent;
+      border: none;
+      font-family: $manrope;
+      color: $primary;
+      text-decoration: underline;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+  }
+
+  &-btns {
+    padding: 10px 0;
+    display: flex;
+    gap: 8px;
+
+    & > button {
+      width: 93px;
+      height: 36px;
+      border: $border;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: transparent;
+      border-radius: 4px;
+      text-transform: capitalize;
+      color: $black;
+      font-size: 12px;
+      font-weight: 600;
+      transition: 0.1s;
+      transform-origin: center;
+
+      &:hover {
+        transform: scale(1.01);
+      }
+
+      &.apply {
+        background-color: $primary;
+        color: $white;
+      }
+    }
+  }
+
+  &-item {
+    width: 100%;
+    padding: 10px 20px;
+    border-bottom: $border;
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: transparent;
+      border: none;
+      width: 100%;
+      font-size: 14px;
+      font-weight: 600;
+      color: $dark;
+
+      & > small {
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $primary;
+        color: $white;
+        border-radius: 50%;
+      }
+    }
+
+    &-body {
+      height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: 0.3s;
+
+      &.show {
+        height: auto;
+        opacity: 1;
+      }
+
+      & > .group {
+        padding: 10px 0;
+        display: flex;
+        gap: 10px;
+        overflow: hidden;
+
+        input {
+          width: 16px;
+        }
+
+        label {
+          font-size: 14px;
+          font-family: $manrope;
+          font-weight: 500;
+          color: $grey;
+        }
+      }
+    }
+
+    &-bottom {
+      & > button {
+        color: $primary;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  color: $yollow;
 }
