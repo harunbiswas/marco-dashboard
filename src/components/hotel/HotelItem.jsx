@@ -40,7 +40,7 @@ export default function HotelItem() {
           <strong>$590~$5000</strong>
         </div>
         <div className="hotel-item-right-bottom">
-          <Link to="/" className="btn">
+          <Link to="/hotel/12" className="btn">
             Vies details
           </Link>
         </div>

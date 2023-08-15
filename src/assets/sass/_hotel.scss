@@ -169,4 +169,117 @@
       color: $grey;
     }
   }
+
+  &-details {
+    .booking-box {
+      padding: 0;
+    }
+    &-wrp {
+      display: grid;
+      grid-template-columns: auto auto;
+      gap: 30px;
+    }
+
+    &-top {
+      padding: 32px;
+      padding-bottom: 20px;
+      .images {
+        display: flex;
+        gap: 20px;
+        .primary {
+          width: 200%;
+
+          img {
+            height: 100%;
+          }
+        }
+
+        .secondary {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+          width: 100%;
+        }
+
+        img {
+          width: 100%;
+          border-radius: 8px;
+          object-fit: cover;
+        }
+      }
+
+      & > .info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px 0;
+
+        & > .left {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+
+          .title {
+            font-size: 30px;
+          }
+
+          .rating {
+            margin-top: 10px;
+          }
+        }
+
+        & > .edit-btn {
+          a {
+            color: $primary;
+            border: $border;
+            padding: 6px 12px;
+            border-radius: 4px;
+            opacity: 0.8;
+            transition: 0.3s;
+
+            &:hover {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+
+    &-des {
+      padding: 32px;
+      padding-top: 20px;
+      border-top: $border;
+
+      & > h4 {
+        font-size: 16px;
+        font-weight: 700;
+        letter-spacing: -0.08px;
+        color: $dark;
+        padding-bottom: 20px;
+        font-family: $jakarta;
+      }
+
+      & > p {
+        font-family: $jakarta;
+        font-size: 14px;
+        color: #1e1e1e;
+        opacity: 0.7;
+        line-height: 160%;
+        white-space: pre-line;
+      }
+
+      & > button {
+        margin-top: 20px;
+        border: none;
+        background-color: transparent;
+        color: $primary;
+        text-decoration: underline;
+        font-size: 14px;
+        font-weight: 700;
+      }
+    }
+    &-offers {
+      width: 400px;
+    }
+  }
 }

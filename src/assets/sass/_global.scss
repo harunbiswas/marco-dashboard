@@ -440,3 +440,35 @@ ul {
   font-size: 18px;
   color: $yollow;
 }
+
+.bootcump {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin: 20px 0;
+
+  &-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    & > a {
+      color: $grey;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.05px;
+      transition: 0.3s;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+
+    & > span {
+      color: $primary;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: $jakarta;
+    }
+  }
+}
