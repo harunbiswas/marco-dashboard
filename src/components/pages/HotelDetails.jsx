@@ -112,7 +112,16 @@ export default function HotelDetails() {
               </button>
             </div>
             <Search />
-            <OfferItem />
+            <div className="hotel-details-offers-body">
+              <OfferItem />
+              <OfferItem />
+              <OfferItem />
+              <OfferItem />
+              <OfferItem />
+              <OfferItem />
+              <OfferItem />
+              <OfferItem />
+            </div>
           </div>
         </div>
       </div>
