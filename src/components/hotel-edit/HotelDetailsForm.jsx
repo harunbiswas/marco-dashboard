@@ -1,10 +1,57 @@
-import { BiPlus } from "react-icons/bi";
+import { useState } from "react";
+import { BiPlus, BiSwim } from "react-icons/bi";
 import DetailsImgs from "./DetailsImgs";
 import DetailsInputs from "./DetailsInputs";
 import Rating from "./Rating";
+import TagInput from "./TagInput";
 import TextArea from "./TextArea";
 
 export default function HotelDetailsForm() {
+  const [include, setInclude] = useState([
+    {
+      icon: <BiSwim />,
+      name: "Private beach",
+    },
+    {
+      icon: <BiSwim />,
+      name: "Pool",
+    },
+    {
+      icon: <BiSwim />,
+      name: "Spa",
+    },
+    {
+      icon: <BiSwim />,
+      name: "Parking included",
+    },
+    {
+      icon: <BiSwim />,
+      name: "free wifi",
+    },
+  ]);
+
+  const [strengths, setStrengths] = useState([
+    {
+      icon: <BiSwim />,
+      name: "Private beach",
+    },
+    {
+      icon: <BiSwim />,
+      name: "Pool",
+    },
+    {
+      icon: <BiSwim />,
+      name: "Spa",
+    },
+    {
+      icon: <BiSwim />,
+      name: "Parking included",
+    },
+    {
+      icon: <BiSwim />,
+      name: "free wifi",
+    },
+  ]);
   return (
     <from className="hotel-details-form">
       <div className="images">
@@ -55,6 +102,13 @@ export default function HotelDetailsForm() {
             <TextArea />
           </div>
         </div>
+      </div>
+
+      <div className="hotel-edit-bottom">
+        <h4>Service Included</h4>
+        <TagInput data={include} handler={setInclude} />
+        <h4>Strengths</h4>
+        <TagInput data={strengths} handler={setStrengths} />
       </div>
     </from>
   );

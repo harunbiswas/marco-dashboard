@@ -1,7 +1,22 @@
 import { useState } from "react";
+import { AiOutlinePlus } from "react-icons/ai";
 
-export default function TagInput({ data }) {
+export default function TagInput({ data, handler }) {
   const [active, setActive] = useState([data[0].name, data[3].name]);
+  const [isInput, setIsInput] = useState(false);
+  const [value, setValue] = useState("");
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    handler((prev) => {
+      return [...prev, { name: value }];
+    });
+    setActive((prev) => {
+      return [...prev, value];
+    });
+    setValue("");
+    setIsInput(false);
+  };
 
   return (
     <ul className="tag-input">
@@ -24,6 +39,22 @@ export default function TagInput({ data }) {
           {d.name}
         </li>
       ))}
+      {(!isInput && (
+        <button onClick={() => setIsInput(true)}>
+          <AiOutlinePlus />
+          Add More
+        </button>
+      )) || (
+        <form onSubmit={(e) => submitHandler(e)}>
+          <input
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
+            value={value}
+            type="text"
+          />
+        </form>
+      )}
     </ul>
   );
 }

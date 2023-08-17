@@ -7,6 +7,7 @@ import Search from "../basic/Search";
 import Title from "../basic/Title";
 import Description from "../hotel/Description";
 import EditBtn from "../hotel/EditBtn";
+import Map from "../hotel/Map";
 import OfferItem from "../hotel/OfferItem";
 import Tags from "../hotel/Tags";
 
@@ -102,6 +103,7 @@ export default function HotelDetails() {
                 <h4>Location</h4>
                 <EditBtn />
               </div>
+              <Map />
             </div>
           </div>
           <div className="booking-box hotel-details-offers">

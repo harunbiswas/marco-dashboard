@@ -1,10 +1,8 @@
-import { useState } from "react";
-import { BiSwim } from "react-icons/bi";
 import { BsFillBuildingsFill } from "react-icons/bs";
 import Bootcump from "../basic/BootCump";
 import EditMenu from "../hotel-edit/EditMenu";
 import HotelDetailsForm from "../hotel-edit/HotelDetailsForm";
-import TagInput from "../hotel-edit/TagInput";
+import LocationDetails from "../hotel-edit/LocationDetails";
 
 export default function HotelEdit() {
   const bootCump = [
@@ -21,28 +19,6 @@ export default function HotelEdit() {
       name: "San Pietro di Positano",
     },
   ];
-  const [include, setInclude] = useState([
-    {
-      icon: <BiSwim />,
-      name: "Private beach",
-    },
-    {
-      icon: <BiSwim />,
-      name: "Pool",
-    },
-    {
-      icon: <BiSwim />,
-      name: "Spa",
-    },
-    {
-      icon: <BiSwim />,
-      name: "Parking included",
-    },
-    {
-      icon: <BiSwim />,
-      name: "free wifi",
-    },
-  ]);
 
   return (
     <div className="hotel-edit hotel">
@@ -53,12 +29,17 @@ export default function HotelEdit() {
             <EditMenu />
           </div>
           <div className="hotel-edit-body">
-            <HotelDetailsForm />
+            {(false && <HotelDetailsForm />) || <LocationDetails />}
           </div>
-          <div className="hotel-edit-bottom">
-            <h4>Service Included</h4>
-            <TagInput data={include} />
-            <h4>Strengths</h4>
+
+          <div className="hotel-edit-footer">
+            <div className="left">
+              <button>Discard</button>
+            </div>
+            <div className="right">
+              <button>Save Changes</button>
+              <button className="submit">Next</button>
+            </div>
           </div>
         </div>
       </div>

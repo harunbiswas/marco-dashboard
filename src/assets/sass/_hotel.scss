@@ -1,4 +1,49 @@
 .hotel {
+  h4 {
+    color: $dark;
+    font-size: 20px;
+    font-family: $jakarta;
+  }
+
+  p {
+    font-size: 12px;
+    font-weight: 500;
+    font-family: $jakarta;
+    color: $grey;
+  }
+
+  .select {
+    border: $border;
+    border-radius: 4px;
+
+    & > .dropdown {
+      width: 100%;
+    }
+  }
+  label {
+    font-family: $jakarta;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 140%;
+    color: #737373;
+  }
+
+  input,
+  textarea {
+    height: 48px;
+    width: 100%;
+    border: $border;
+    border-radius: 4px;
+    padding: 16px;
+    color: $dark;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: $jakarta;
+
+    &:focus {
+      outline: 1px solid $primary;
+    }
+  }
   &-top {
     display: flex;
     align-items: center;
@@ -606,8 +651,7 @@
   .booking-box {
     padding: 0;
   }
-  &-top,
-  &-body {
+  &-top {
     padding: 32px;
     border-bottom: $border;
   }
@@ -615,6 +659,8 @@
   &-bottom {
     border-bottom: $border;
     padding: 0 32px 32px;
+    border-top: $border;
+    margin-top: 20px;
 
     h4 {
       margin-top: 20px;
@@ -628,7 +674,9 @@
       gap: 10px;
       margin-top: 10px;
 
-      & > li {
+      & > li,
+      & > button,
+      input {
         padding: 6px 12px;
         border: $border;
         border-radius: 2rem;
@@ -646,6 +694,54 @@
           color: $white;
           border-color: $primary;
         }
+      }
+
+      input {
+        border-radius: 4px;
+
+        &:focus {
+          outline: 1px solid $primary;
+        }
+      }
+    }
+  }
+
+  &-footer {
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    button {
+      padding: 8px 16px;
+      background-color: transparent;
+      border: $border;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: $jakarta;
+      text-transform: capitalize;
+      border-radius: 4px;
+      opacity: 0.8;
+      transition: 0.3s;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    & > .left {
+      button {
+        color: $red;
+      }
+    }
+
+    & > .right {
+      display: flex;
+      gap: 10px;
+
+      .submit {
+        color: $white;
+        background-color: $primary;
       }
     }
   }
@@ -759,8 +855,10 @@
   }
 
   .images {
+    padding: 0 32px;
+    margin-top: 20px;
     &-wrp {
-      margin-top: 18px;
+      margin-top: 8px;
       display: flex;
       gap: 15px;
 
@@ -795,6 +893,7 @@
   }
 
   &-rating {
+    padding: 0 32px;
     margin-top: 20px;
     &-wrp {
       display: flex;
@@ -812,6 +911,7 @@
   }
 
   & > .service {
+    padding: 0 32px;
     margin-top: 20px;
 
     & > .full {
@@ -822,6 +922,7 @@
 
 .hotel-form-details {
   margin-top: 20px;
+  padding: 0 32px;
 
   &-wrp {
     display: grid;
@@ -906,6 +1007,115 @@
       font-size: 16px;
       font-family: $jakarta;
       line-height: 21px;
+    }
+  }
+}
+
+.location-details {
+  padding: 20px 32px;
+  border-bottom: $border;
+
+  & > .inputs {
+    margin-top: 20px;
+    display: flex;
+    gap: 23px;
+
+    .inputs-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      width: 100%;
+      position: relative;
+
+      &.location {
+        input {
+          padding-left: 35px;
+        }
+        span {
+          position: absolute;
+          left: 10px;
+          bottom: 10px;
+          color: $grey;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}
+
+.map {
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.location-details {
+  &-bottom {
+    .destince {
+      margin-top: 20px;
+      display: block;
+
+      &-item {
+        display: inline-block;
+        width: 33.334%;
+        padding: 10px 10px;
+
+        &-top {
+          margin-bottom: 10px;
+          display: flex;
+          gap: 10px;
+          align-items: center;
+
+          span {
+            font-size: 14px;
+            font-family: $jakarta;
+            font-weight: 500;
+            line-height: 140%;
+          }
+
+          & > button {
+            background-color: transparent;
+            border: none;
+            color: $primary;
+            font-size: 16px;
+          }
+        }
+
+        &-body {
+          display: flex;
+
+          .select {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-right: none;
+          }
+
+          input {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+          }
+        }
+      }
+
+      & > button {
+        margin-top: 20px;
+        background-color: transparent;
+        border: none;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 16px;
+        font-weight: 600;
+        color: $primary;
+        text-transform: capitalize;
+        opacity: 0.8;
+        transition: 0.3s;
+        display: inline-block;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
     }
   }
 }
