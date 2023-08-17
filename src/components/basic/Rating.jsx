@@ -5,7 +5,7 @@ export default function Rating() {
   const [rating, setRating] = useState(5);
   return (
     <ul className="rating">
-      {Array.from({ length: 5 }, (d, i) => (
+      {Array.from({ length: rating }, (d, i) => (
         <li key={i}>
           <AiFillStar />
         </li>

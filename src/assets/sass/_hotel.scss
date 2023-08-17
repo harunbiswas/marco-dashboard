@@ -601,3 +601,285 @@
     }
   }
 }
+
+.hotel-edit {
+  .booking-box {
+    padding: 0;
+  }
+  &-top,
+  &-body {
+    padding: 32px;
+    border-bottom: $border;
+  }
+
+  &-bottom {
+    border-bottom: $border;
+    padding: 0 32px 32px;
+
+    h4 {
+      margin-top: 20px;
+      color: $dark;
+      font-size: 20px;
+      font-family: $jakarta;
+    }
+  }
+}
+
+.edit-menu {
+  display: flex;
+  align-items: center;
+  gap: 160px;
+
+  &-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+
+    & > .left {
+      border: $border;
+      width: 37px;
+      height: 37px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: $grey;
+    }
+
+    & > .right {
+      display: flex;
+      flex-direction: column;
+      color: $grey;
+
+      span {
+        font-weight: 500;
+        font-size: 14px;
+        font-family: $jakarta;
+      }
+
+      strong {
+        font-weight: 600;
+        font-size: 16px;
+        font-family: $jakarta;
+      }
+    }
+    &.active {
+      & > .left {
+        background-color: $primary;
+        color: $white;
+      }
+
+      & > .right {
+        strong {
+          color: $dark;
+        }
+      }
+    }
+
+    &::after,
+    &::before {
+      content: "";
+      width: 100px;
+      height: 4px;
+      background-color: #d9d9d9;
+      left: -30px;
+      transform: translateX(-100%);
+      position: absolute;
+      border-radius: 2rem;
+    }
+
+    &::after {
+      background-color: $primary;
+      width: 0;
+    }
+
+    &.active {
+      &::after {
+        width: 100px;
+      }
+    }
+
+    &:first-child {
+      &::before {
+        display: none;
+      }
+      &::after {
+        left: unset;
+        right: -30px;
+        transform: translateX(100%);
+        width: 50px;
+        z-index: 9;
+      }
+    }
+  }
+}
+
+.hotel-details-form {
+  h4 {
+    color: $dark;
+    font-size: 20px;
+    font-family: $jakarta;
+    font-weight: 600;
+  }
+
+  p {
+    color: $grey;
+    font-size: 12px;
+    font-family: $jakarta;
+    font-weight: 500;
+    padding: 4px 0;
+  }
+
+  .images {
+    &-wrp {
+      margin-top: 18px;
+      display: flex;
+      gap: 15px;
+
+      & > img {
+        height: 99px;
+        width: 99px;
+        border-radius: 4px;
+        object-fit: cover;
+      }
+
+      & > button {
+        width: 99px;
+        height: 99px;
+        border-radius: 4px;
+        border: 2px dashed $primary;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        justify-content: center;
+        color: $primary;
+        font-size: 14px;
+        font-weight: 600;
+        font-family: $manrope;
+        background-color: rgba($color: $primary, $alpha: 0.1);
+
+        svg {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  &-rating {
+    margin-top: 20px;
+    &-wrp {
+      display: flex;
+      margin-top: 10px;
+      font-size: 20px;
+
+      & > li {
+        cursor: pointer;
+
+        &.active {
+          color: $yollow;
+        }
+      }
+    }
+  }
+
+  & > .service {
+    margin-top: 20px;
+
+    & > .full {
+      margin-top: 10px;
+    }
+  }
+}
+
+.hotel-form-details {
+  margin-top: 20px;
+
+  &-wrp {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 28px;
+    row-gap: 15px;
+    margin-top: 28px;
+  }
+
+  &-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    &.full {
+      grid-column: span 3;
+    }
+
+    & > label {
+      font-family: $jakarta;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 140%;
+      color: #737373;
+    }
+
+    .inner {
+      position: relative;
+      display: flex;
+
+      & > button {
+        background-color: transparent;
+        border: none;
+        color: $primary;
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+      }
+
+      .select {
+        border: $border;
+        border-right: none;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+      }
+    }
+
+    input,
+    textarea {
+      height: 48px;
+      width: 100%;
+      border: $border;
+      border-radius: 4px;
+      padding: 16px;
+      color: $dark;
+      font-size: 16px;
+      font-weight: 500;
+      font-family: $jakarta;
+
+      &:focus {
+        outline: 1px solid $primary;
+      }
+    }
+
+    textarea {
+      height: 116px;
+    }
+  }
+
+  & > .buttons {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    & > a {
+      color: $primary;
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 16px;
+      font-family: $jakarta;
+      line-height: 21px;
+    }
+  }
+}
