@@ -622,6 +622,32 @@
       font-size: 20px;
       font-family: $jakarta;
     }
+
+    .tag-input {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+
+      & > li {
+        padding: 6px 12px;
+        border: $border;
+        border-radius: 2rem;
+        color: $dark;
+        cursor: pointer;
+        font-size: 12px;
+        font-family: $jakarta;
+        font-weight: 600;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+
+        &.active {
+          background-color: $primary;
+          color: $white;
+          border-color: $primary;
+        }
+      }
+    }
   }
 }
 
