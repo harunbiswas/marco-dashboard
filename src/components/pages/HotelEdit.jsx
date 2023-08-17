@@ -1,6 +1,7 @@
 import { BsFillBuildingsFill } from "react-icons/bs";
 import Bootcump from "../basic/BootCump";
 import EditMenu from "../hotel-edit/EditMenu";
+import EditOffer from "../hotel-edit/EditOffer";
 import HotelDetailsForm from "../hotel-edit/HotelDetailsForm";
 import LocationDetails from "../hotel-edit/LocationDetails";
 
@@ -29,7 +30,8 @@ export default function HotelEdit() {
             <EditMenu />
           </div>
           <div className="hotel-edit-body">
-            {(false && <HotelDetailsForm />) || <LocationDetails />}
+            {(false && <HotelDetailsForm />) ||
+              (false && <LocationDetails />) || <EditOffer />}
           </div>
 
           <div className="hotel-edit-footer">
