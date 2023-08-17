@@ -5,6 +5,7 @@ import Filters from "../basic/Filters";
 import Title from "../basic/Title";
 import BookingMneu from "../booking/BookingMenu";
 import Pagenation from "../booking/Pagenation";
+import AddHotel from "../hotel/AddHotel";
 import HotelItem from "../hotel/HotelItem";
 
 export default function Hotel() {
@@ -13,8 +14,10 @@ export default function Hotel() {
     { name: "Recently Added" },
   ]);
   const [items, setItems] = useState([1, 1, 1, 1, 1]);
+  const [addhotel, setAddhotel] = useState(false);
   return (
     <div className="hotel">
+      {addhotel && <AddHotel handler={setAddhotel} />}
       <div className="container">
         <div className="booking-box">
           <div className="hotel-top">
@@ -27,12 +30,7 @@ export default function Hotel() {
             </div>
             <div className="hotel-top-right">
               <ExportBtn />
-              <Button
-                text="Add New Hotel"
-                handler={() => {
-                  return;
-                }}
-              />
+              <Button text="Add New Hotel" handler={setAddhotel} />
             </div>
           </div>
           <BookingMneu menus={menus} />
