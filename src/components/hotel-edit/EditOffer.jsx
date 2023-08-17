@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ImGlass } from "react-icons/im";
+import img1 from "../../assets/images/create.svg";
 import img from "../../assets/images/discount.svg";
 import EditBtn from "../hotel/EditBtn";
 
@@ -65,6 +66,11 @@ export default function EditOffer() {
           </div>
         </div>
       </div>
+      <button className="edit-offer-item">
+        <img src={img1} alt="" />
+        <h4>Create New Offer</h4>
+        <p>Contrary to popular belief, Lorem Ipsum is not simply random text</p>
+      </button>
     </div>
   );
 }
