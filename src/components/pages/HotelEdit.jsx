@@ -52,7 +52,7 @@ export default function HotelEdit() {
                 }}
                 className="submit"
               >
-                Next
+                {(active === 4 && "Publish") || "Next"}
               </button>
             </div>
           </div>
