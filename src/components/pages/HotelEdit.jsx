@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BsFillBuildingsFill } from "react-icons/bs";
 import Bootcump from "../basic/BootCump";
 import EditMenu from "../hotel-edit/EditMenu";
@@ -21,17 +22,20 @@ export default function HotelEdit() {
     },
   ];
 
+  const [active, setActive] = useState(1);
+
   return (
     <div className="hotel-edit hotel">
       <div className="container">
         <Bootcump data={bootCump} />
         <div className="hotel-edit-wrp booking-box">
           <div className="hotel-edit-top">
-            <EditMenu />
+            <EditMenu active={active} setActive={setActive} />
           </div>
           <div className="hotel-edit-body">
-            {(false && <HotelDetailsForm />) ||
-              (false && <LocationDetails />) || <EditOffer />}
+            {(active === 1 && <HotelDetailsForm />) ||
+              (active === 2 && <LocationDetails />) ||
+              (active === 3 && <EditOffer />)}
           </div>
 
           <div className="hotel-edit-footer">
@@ -40,7 +44,16 @@ export default function HotelEdit() {
             </div>
             <div className="right">
               <button>Save Changes</button>
-              <button className="submit">Next</button>
+              <button
+                onClick={() => {
+                  if (active < 4) {
+                    setActive(active + 1);
+                  }
+                }}
+                className="submit"
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>
