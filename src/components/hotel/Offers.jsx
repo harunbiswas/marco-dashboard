@@ -16,12 +16,34 @@ export default function Offers() {
       name: "20% Discount Offer",
       date: "From 01 June - 30 August",
     },
+    {
+      name: "Summer Offer",
+      date: "From 01 June - 30 August",
+    },
+    {
+      name: "HoEscape Offer",
+      date: "From 01 June - 30 August",
+    },
+    {
+      name: "20% Discount Offer",
+      date: "From 01 June - 30 August",
+    },
   ]);
+  const [trn, setTrns] = useState(0);
   return (
     <>
+      {/* {trn > 0 && (
+        <button onClick={() => setTrns(trn - 1)} className="offers-btn">
+          <FaAngleLeft />
+        </button>
+      )} */}
       <ul className="offers">
         {offers.map((d, i) => (
-          <li className="offers-item" key={i}>
+          <li
+            style={{ transform: `translateX(-${trn * 110}%)` }}
+            className="offers-item"
+            key={i}
+          >
             <div className="offers-item-left">
               <img src={img} alt="" />
             </div>
@@ -32,9 +54,11 @@ export default function Offers() {
           </li>
         ))}
       </ul>
-      <button className="offers-btn">
-        <FaAngleRight />
-      </button>
+      {trn < offers.length - 3 && (
+        <button onClick={() => setTrns(trn + 1)} className="offers-btn">
+          <FaAngleRight />
+        </button>
+      )}
     </>
   );
 }

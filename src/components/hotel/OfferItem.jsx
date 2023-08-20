@@ -32,7 +32,7 @@ export default function OfferItem() {
 
   return (
     <div className="offer-item">
-      <div className="offer-item-top">
+      <div onClick={() => setIsToggle(!istoggle)} className="offer-item-top">
         <div className="offer-item-top-left">
           <img src={img} alt="" />
           <div className="content">
@@ -41,9 +41,7 @@ export default function OfferItem() {
           </div>
         </div>
         <div className="toggle">
-          <button onClick={() => setIsToggle(!istoggle)}>
-            {(!istoggle && <FaAngleDown />) || <FaAngleUp />}
-          </button>
+          <button>{(!istoggle && <FaAngleDown />) || <FaAngleUp />}</button>
         </div>
       </div>
       <div className={`offer-item-body ${(istoggle && "show") || ""}`}>

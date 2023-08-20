@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
+import DrapDrop from "./DragDrop";
 
 export default function DetailsImgs() {
   const [imgs, setImgs] = useState([
@@ -14,16 +15,20 @@ export default function DetailsImgs() {
     },
   ]);
 
+  const [isDrag, setIsDrag] = useState(false);
+
   return (
     <div className="images-wrp">
       {imgs.map((img, i) => (
         <img key={i} src={img.src} alt="" />
       ))}
 
-      <button>
+      <button onClick={() => setIsDrag(true)}>
         <AiOutlinePlus />
         Add More
       </button>
+
+      <DrapDrop handler={setIsDrag} isDrag={isDrag} addHandler={setImgs} />
     </div>
   );
 }

@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { BsFillBuildingsFill } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import Input from "../hotel-edit/Input";
 
 export default function AddHotel({ handler }) {
+  const navigate = useNavigate();
   const [tags, setTaqs] = useState([
     "Hotel",
     "B&B",
@@ -12,7 +14,19 @@ export default function AddHotel({ handler }) {
     "Villaggio",
     "casa Vacanza",
   ]);
-  const [active, setActive] = useState("Residence");
+  const [hotelId, setHotelId] = useState("");
+  const [name, setName] = useState("");
+  const [active, setActive] = useState("");
+
+  const [isError, setIsError] = useState(false);
+
+  const createHandler = () => {
+    if (hotelId && name && active) {
+      navigate(`/hotel/edit/${hotelId}`);
+    } else {
+      setIsError(true);
+    }
+  };
   return (
     <div className="add-hotel">
       <div className="add-hotel-inner">
@@ -31,15 +45,30 @@ export default function AddHotel({ handler }) {
             industry.
           </p>
           <form onSubmit={(e) => e.preventDefault()}>
-            <div className="add-hotel-item">
+            <div
+              className={`add-hotel-item ${
+                (isError && !hotelId && "error") || ""
+              }`}
+            >
               <label htmlFor="">Hotel ID</label>
-              <Input d={{ value: "", label: "#" }} />
+              <Input d={{ value: hotelId, label: "#" }} handler={setHotelId} />
             </div>{" "}
-            <div className="add-hotel-item">
+            <div
+              className={`add-hotel-item ${
+                (isError && !name && "error") || ""
+              }`}
+            >
               <label htmlFor="">Hotel Name</label>
-              <Input d={{ value: "", label: "Enter Full hotel name" }} />
+              <Input
+                handler={setName}
+                d={{ value: name, label: "Enter Full hotel name" }}
+              />
             </div>{" "}
-            <div className="add-hotel-item">
+            <div
+              className={`add-hotel-item ${
+                (isError && !active && "error") || ""
+              }`}
+            >
               <label htmlFor="">Select Hotel Type</label>
               <ul className="add-hotel-item-type">
                 {tags.map((d, i) => (
@@ -60,7 +89,9 @@ export default function AddHotel({ handler }) {
           <button onClick={() => handler(false)} className="btn cancel">
             Cancel
           </button>
-          <button className="btn">Create Hotel</button>
+          <button onClick={createHandler} className="btn">
+            Create Hotel
+          </button>
         </div>
       </div>
     </div>

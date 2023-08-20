@@ -1,16 +1,9 @@
-import { useEffect, useState } from "react";
-
-export default function Input({ d, i }) {
-  const [value, setValue] = useState("");
-
-  useEffect(() => {
-    setValue(d.value);
-  }, []);
+export default function Input({ d, i, handler }) {
   return (
     <input
       type="text"
-      value={value}
-      onChange={(e) => setValue(e.target.value)}
+      value={d.value}
+      onChange={(e) => handler(e.target.value)}
       placeholder={d.label}
       id={i}
     />

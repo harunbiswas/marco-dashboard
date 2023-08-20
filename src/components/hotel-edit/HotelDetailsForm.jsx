@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BiPlus, BiSwim } from "react-icons/bi";
+import { BiSwim } from "react-icons/bi";
 import DetailsImgs from "./DetailsImgs";
 import DetailsInputs from "./DetailsInputs";
 import Rating from "./Rating";
@@ -70,16 +70,6 @@ export default function HotelDetailsForm() {
         </p>
 
         <DetailsInputs />
-        <div className="buttons">
-          <a href="">
-            <BiPlus />
-            Add Spa Description
-          </a>
-          <a href="">
-            <BiPlus />
-            Add Restaurants Description
-          </a>
-        </div>
       </div>
       <div className="hotel-details-form-rating">
         <h4>Hotel Raring</h4>

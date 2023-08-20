@@ -13,10 +13,12 @@
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-drag-drop-files": "^2.3.10",
     "react-google-maps": "^9.4.5",
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.14.2",
-    "sass": "^1.63.6"
+    "sass": "^1.63.6",
+    "slick-slider": "^1.8.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.14",
