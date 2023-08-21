@@ -4,23 +4,41 @@ import { FiEdit } from "react-icons/fi";
 import { MdLocationOn } from "react-icons/md";
 import Select from "../basic/Select";
 import Map from "../hotel/Map";
+import EditTitle from "./EditTItle";
 import Input from "./Input";
 
 export default function LocationDetails() {
   const [destinces, setDestinces] = useState([
     {
+      id: "1",
+      isEdit: false,
       label: "distance from center",
       value: 120,
     },
-    {
-      label: "distance from center",
-      value: 50,
-    },
-    {
-      label: "distance from center",
-      value: 30,
-    },
+    { id: "2", isEdit: false, label: "distance from center", value: 50 },
+    { id: "3", isEdit: false, label: "distance from center", value: 30 },
   ]);
+
+  const toggleEdit = (itemId) => {
+    const updatedDestinces = destinces.map((item) => {
+      if (item.id === itemId) {
+        return { ...item, isEdit: !item.isEdit };
+      }
+      return item;
+    });
+    setDestinces(updatedDestinces);
+  };
+
+  const handleChangeLabel = (itemId, newLabel) => {
+    const updatedDestinces = destinces.map((item) => {
+      if (item.id === itemId) {
+        return { ...item, label: newLabel, isEdit: false };
+      }
+      return item;
+    });
+    setDestinces(updatedDestinces);
+  };
+
   return (
     <div className="location-details">
       <h4>Map Location</h4>
@@ -69,8 +87,14 @@ export default function LocationDetails() {
           {destinces.map((d, i) => (
             <div key={i} className="destince-item">
               <div className="destince-item-top">
-                <span>Distance from Center</span>
-                <button>
+                <span>{d.label}</span>
+                <EditTitle
+                  closeHandler={(e) => toggleEdit(d.id)}
+                  changeHandler={(e) => handleChangeLabel(d.id, e)}
+                  isShow={d.isEdit}
+                  data={d.label}
+                />
+                <button onClick={() => toggleEdit(d.id)}>
                   <FiEdit />
                 </button>
               </div>

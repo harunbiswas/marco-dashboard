@@ -17,7 +17,7 @@ export default function Hotel() {
   const [addhotel, setAddhotel] = useState(false);
   return (
     <div className="hotel">
-      {addhotel && <AddHotel handler={setAddhotel} />}
+      <AddHotel handler={setAddhotel} addhotel={addhotel} />
       <div className="container">
         <div className="booking-box">
           <div className="hotel-top">

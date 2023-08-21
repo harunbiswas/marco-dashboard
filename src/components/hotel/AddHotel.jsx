@@ -4,7 +4,7 @@ import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import Input from "../hotel-edit/Input";
 
-export default function AddHotel({ handler }) {
+export default function AddHotel({ handler, addhotel }) {
   const navigate = useNavigate();
   const [tags, setTaqs] = useState([
     "Hotel",
@@ -28,7 +28,7 @@ export default function AddHotel({ handler }) {
     }
   };
   return (
-    <div className="add-hotel">
+    <div className={`add-hotel ${(addhotel && "show") || ""}`}>
       <div className="add-hotel-inner">
         <div className="add-hotel-top">
           <span>
