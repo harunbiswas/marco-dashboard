@@ -3,6 +3,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { GrClose } from "react-icons/gr";
 import Select from "../basic/Select";
 import OfferTags from "../hotel/OfferTags";
+import AgeReduction from "./AgeReduction";
 import Breakdown from "./Breakdown";
 import Input from "./Input";
 import TextArea from "./TextArea";
@@ -58,6 +59,49 @@ export default function AddNewOffer({ isAdd, setIsAdd, submitHandler }) {
     },
   ]);
 
+  const [ages, setAges] = useState([
+    {
+      id: 1,
+      items: [
+        {
+          id: "10",
+          label: "Select Board type",
+          items: ["All", " All 2"],
+        },
+        {
+          id: "12",
+          label: "Age Limit",
+          value: 0,
+        },
+        {
+          id: "11",
+          label: "Discount",
+          value: "10%",
+        },
+      ],
+    },
+    {
+      id: 2,
+      items: [
+        {
+          id: "10",
+          label: "Select Board type",
+          items: ["All", " All 2"],
+        },
+        {
+          id: "12",
+          label: "Age Limit",
+          value: 10,
+        },
+        {
+          id: "11",
+          label: "Discount",
+          value: "10%",
+        },
+      ],
+    },
+  ]);
+
   const handleChange = (parentId, itemId, newValue) => {
     const updatedItems = items.map((itemGroup) => {
       if (itemGroup.id === parentId) {
@@ -72,6 +116,26 @@ export default function AddNewOffer({ isAdd, setIsAdd, submitHandler }) {
       return itemGroup;
     });
     setItems(updatedItems);
+  };
+
+  const ageVlaueChange = (parentId, itemId, newValue) => {
+    const updatedItems = ages.map((itemGroup) => {
+      if (itemGroup.id === parentId) {
+        const updatedItemsInGroup = itemGroup.items.map((item) => {
+          if (item.id === itemId) {
+            if (typeof item.value === "number") {
+              return { ...item, value: Number(newValue) };
+            } else {
+              return { ...item, value: newValue };
+            }
+          }
+          return item;
+        });
+        return { ...itemGroup, items: updatedItemsInGroup };
+      }
+      return itemGroup;
+    });
+    setAges(updatedItems);
   };
 
   return (
@@ -205,6 +269,56 @@ export default function AddNewOffer({ isAdd, setIsAdd, submitHandler }) {
                 }}
               >
                 <AiOutlinePlus /> Add More Price
+              </button>
+            </div>
+          </div>
+          <div className="offer-details">
+            <h4>Age Reduction</h4>
+            <div className="breakdown">
+              {ages.map((d, i) => (
+                <div className="breakdown-inner" key={i}>
+                  {d.items.map((d1, i) => (
+                    <AgeReduction
+                      handler={(e) => {
+                        ageVlaueChange(d.id, d1.id, e);
+                      }}
+                      key={i}
+                      data={d1}
+                    />
+                  ))}
+                </div>
+              ))}
+
+              <button
+                onClick={() => {
+                  setAges((prev) => {
+                    return [
+                      ...prev,
+                      {
+                        id: ages.length + 1,
+                        items: [
+                          {
+                            id: "10",
+                            label: "Select Board type",
+                            items: ["All", " All 2"],
+                          },
+                          {
+                            id: "12",
+                            label: "Age Limit",
+                            value: 0,
+                          },
+                          {
+                            id: "11",
+                            label: "Discount",
+                            value: "10%",
+                          },
+                        ],
+                      },
+                    ];
+                  });
+                }}
+              >
+                <AiOutlinePlus /> Add More Age Reduction
               </button>
             </div>
           </div>

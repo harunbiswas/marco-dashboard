@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { BsFillBuildingsFill, BsPlusLg } from "react-icons/bs";
 import { FaUmbrellaBeach } from "react-icons/fa";
+import { LuEdit } from "react-icons/lu";
 import Bootcump from "../basic/BootCump";
 import Rating from "../basic/Rating";
 import Search from "../basic/Search";
 import Title from "../basic/Title";
+import AgeEdit from "../hotel/AgeEdit";
 import Description from "../hotel/Description";
 import EditBtn from "../hotel/EditBtn";
 import HotelDetailsImg from "../hotel/HoteldetailsImg";
@@ -40,6 +42,8 @@ export default function HotelDetails() {
     { icon: <FaUmbrellaBeach />, name: "Breakfast included" },
     { icon: <FaUmbrellaBeach />, name: "Free Wifi" },
   ]);
+
+  const [isEdit, setIsEdit] = useState(false);
 
   return (
     <div className="hotel hotel-details">
@@ -87,6 +91,23 @@ export default function HotelDetails() {
                 <EditBtn />
               </div>
               <Map />
+            </div>
+
+            <div className="booking-box hotel-details-service">
+              <div className="hotel-details-service-top">
+                <h4>Age Reductions</h4>
+                <div className="edit-btn">
+                  <button onClick={() => setIsEdit(!isEdit)}>
+                    {(!isEdit && (
+                      <>
+                        <LuEdit /> Edit
+                      </>
+                    )) ||
+                      "Save"}
+                  </button>
+                </div>
+              </div>
+              <AgeEdit isEdit={isEdit} />
             </div>
           </div>
           <div className="booking-box hotel-details-offers">

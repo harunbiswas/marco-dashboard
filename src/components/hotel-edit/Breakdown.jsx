@@ -11,7 +11,7 @@ export default function Breakdown({ data, handler }) {
           <Select data={data.items} />
           <Input
             handler={(e) => handler(e)}
-            d={{ value: data.value, label: "Enter price" }}
+            d={{ value: data.value || 0, label: "Enter price" }}
           />
         </div>
       )) || <Select data={data.items} />}

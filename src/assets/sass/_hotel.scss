@@ -281,7 +281,8 @@
   }
 
   .edit-btn {
-    a {
+    a,
+    button {
       color: $primary;
       border: $border;
       padding: 6px 12px;
@@ -1959,6 +1960,42 @@ button.edit-offer-item {
       background-color: transparent;
       color: $dark;
       border-color: $color-border;
+    }
+  }
+}
+
+.age-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 10px;
+  padding: 20px 32px 32px;
+
+  &-item {
+    display: flex;
+    gap: 13px;
+
+    &-input {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+  }
+
+  &-show {
+    border: none;
+    background-color: transparent;
+    display: flex;
+    color: $primary;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 140%; /* 19.6px */
+    text-decoration-line: underline;
+    opacity: 0.8;
+    transition: 0.3s;
+
+    &:hover {
+      opacity: 1;
     }
   }
 }
