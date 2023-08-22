@@ -32,11 +32,14 @@ export default function Offers() {
   const [trn, setTrns] = useState(0);
   return (
     <>
-      {trn > 0 && (
-        <button onClick={() => setTrns(trn - 1)} className="offers-btn">
-          <FaAngleLeft />
-        </button>
-      )}
+      <button
+        disabled={!(trn > 0)}
+        onClick={() => setTrns(trn - 1)}
+        className="offers-btn"
+      >
+        <FaAngleLeft />
+      </button>
+
       <ul className="offers">
         {offers.map((d, i) => (
           <li
@@ -54,11 +57,14 @@ export default function Offers() {
           </li>
         ))}
       </ul>
-      {trn < offers.length - 3 && (
-        <button onClick={() => setTrns(trn + 1)} className="offers-btn">
-          <FaAngleRight />
-        </button>
-      )}
+
+      <button
+        disabled={!(trn < offers.length - 3)}
+        onClick={() => setTrns(trn + 1)}
+        className="offers-btn"
+      >
+        <FaAngleRight />
+      </button>
     </>
   );
 }

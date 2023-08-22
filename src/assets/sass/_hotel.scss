@@ -215,6 +215,11 @@
             background-color: transparent;
             font-size: 18px;
             color: $text;
+
+            &:disabled {
+              opacity: 0.3;
+              cursor: auto;
+            }
           }
         }
       }
