@@ -14,37 +14,39 @@ export default function EditTitle({
     setValue(data);
   }, [data]);
   return (
-    <div className={`edit-title booking-box ${(isShow && "show") || ""}`}>
-      <div className="edit-title-top">
-        <h4>Edit Title</h4>
-        <button onClick={closeHandler}>
-          <GrClose />
-        </button>
-      </div>
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry.
-      </p>
+    <div className={`edit-title-wrp ${(isShow && "show") || ""}`}>
+      <div className={`edit-title booking-box `}>
+        <div className="edit-title-top">
+          <h4>Edit Title</h4>
+          <button onClick={closeHandler}>
+            <GrClose />
+          </button>
+        </div>
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry.
+        </p>
 
-      <div className="item">
-        <label htmlFor="">Title Name</label>
-        <Input handler={setValue} d={{ value, label: "Enter Name" }} />
-      </div>
+        <div className="item">
+          <label htmlFor="">Title Name</label>
+          <Input handler={setValue} d={{ value, label: "Enter Name" }} />
+        </div>
 
-      <div className="edit-title-footer">
-        <button onClick={closeHandler} className="btn cancel">
-          Cancel
-        </button>
-        <button
-          onClick={() => {
-            if (value) {
-              changeHandler(value);
-            }
-          }}
-          className="btn"
-        >
-          Change
-        </button>
+        <div className="edit-title-footer">
+          <button onClick={closeHandler} className="btn cancel">
+            Cancel
+          </button>
+          <button
+            onClick={() => {
+              if (value) {
+                changeHandler(value);
+              }
+            }}
+            className="btn"
+          >
+            Change
+          </button>
+        </div>
       </div>
     </div>
   );

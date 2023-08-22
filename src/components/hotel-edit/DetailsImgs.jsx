@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
+import { GrFormClose } from "react-icons/gr";
 import DrapDrop from "./DragDrop";
 
 export default function DetailsImgs() {
@@ -17,10 +18,20 @@ export default function DetailsImgs() {
 
   const [isDrag, setIsDrag] = useState(false);
 
+  const handleRemoveItem = (index) => {
+    const updatedImgs = imgs.filter((item, idx) => idx !== index);
+    setImgs(updatedImgs);
+  };
+
   return (
     <div className="images-wrp">
       {imgs.map((img, i) => (
-        <img key={i} src={img.src} alt="" />
+        <div key={i} className="images-item">
+          <img src={img.src} alt="" />
+          <button onClick={(e) => handleRemoveItem(i)}>
+            <GrFormClose />
+          </button>
+        </div>
       ))}
 
       <button onClick={() => setIsDrag(true)}>

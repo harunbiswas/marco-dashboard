@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaAngleRight } from "react-icons/fa";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import img from "../../assets/images/discount.svg";
 
 export default function Offers() {
@@ -32,11 +32,11 @@ export default function Offers() {
   const [trn, setTrns] = useState(0);
   return (
     <>
-      {/* {trn > 0 && (
+      {trn > 0 && (
         <button onClick={() => setTrns(trn - 1)} className="offers-btn">
           <FaAngleLeft />
         </button>
-      )} */}
+      )}
       <ul className="offers">
         {offers.map((d, i) => (
           <li

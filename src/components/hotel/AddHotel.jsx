@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsFillBuildingsFill } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +27,10 @@ export default function AddHotel({ handler, addhotel }) {
       setIsError(true);
     }
   };
+
+  useEffect(() => {
+    setIsError(false);
+  }, [name, active, hotelId]);
   return (
     <div className={`add-hotel ${(addhotel && "show") || ""}`}>
       <div className="add-hotel-inner">
