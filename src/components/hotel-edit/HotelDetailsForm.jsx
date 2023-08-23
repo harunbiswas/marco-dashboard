@@ -103,12 +103,12 @@ export default function HotelDetailsForm() {
       </div>
 
       <div className="service age-edit-wrp">
-        <h4>Service Details</h4>
+        <h4>Age Reductions</h4>
         <p>
           Contrary to popular belief, Lorem Ipsum is not simply random text. It
           has roots in a piece of classical
         </p>
-        <AgeEdit />
+        <AgeEdit isEdit={true} />
       </div>
     </from>
   );

@@ -295,7 +295,7 @@
       opacity: 0.8;
       transition: 0.3s;
       background-color: transparent;
-      font-size: 12px;
+      font-size: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -304,6 +304,7 @@
       &.save {
         background-color: $primary;
         color: $white;
+        padding: 8px 16px;
       }
 
       &:hover {
@@ -1993,11 +1994,40 @@ button.edit-offer-item {
   &-item {
     display: flex;
     gap: 13px;
+    align-items: flex-end;
 
     &-input {
       display: flex;
       flex-direction: column;
       gap: 5px;
+    }
+
+    .delete {
+      width: 99px;
+      height: 48px;
+      background-color: $red;
+      border: none;
+      color: $white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+
+      svg {
+        font-size: 16px;
+      }
+
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 135%;
+      opacity: 0.8;
+      transition: 0.3s;
+
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { RiDeleteBin2Line } from "react-icons/ri";
 
 export default function AgeEdit({ isEdit }) {
   const [items, setItems] = useState([
@@ -34,7 +35,12 @@ export default function AgeEdit({ isEdit }) {
     },
   ]);
 
-  const [show, setShow] = useState(2);
+  const handleRemoveParentItem = (parentId) => {
+    const updatedItems = items.filter(
+      (parentItem) => parentItem.id !== parentId
+    );
+    setItems(updatedItems);
+  };
 
   // Function to update value dynamically
   const updateValue = (itemId, subItemId, newValue) => {
@@ -62,48 +68,66 @@ export default function AgeEdit({ isEdit }) {
       <div className="age-edit">
         {items.map((d, i) => {
           return (
-            <div key={i} className="age-edit-item">
-              {d.items.map((d1, i) => (
-                <div key={i} className="age-edit-item-input">
-                  <label htmlFor="">{d1.label}</label>
-                  <input
-                    disabled={!isEdit}
-                    type="text"
-                    value={d1.value || 0}
-                    onChange={(e) => updateValue(d.id, d1.id, e.target.value)}
-                  />
-                </div>
-              ))}
-            </div>
+            <>
+              <div key={i} className="age-edit-item">
+                {d.items.map((d1, i) => (
+                  <>
+                    <div key={i} className="age-edit-item-input">
+                      <label htmlFor="">{d1.label}</label>
+                      <input
+                        disabled={!isEdit}
+                        type="text"
+                        value={d1.value || 0}
+                        onChange={(e) =>
+                          updateValue(d.id, d1.id, e.target.value)
+                        }
+                      />
+                    </div>
+                  </>
+                ))}
+
+                {isEdit && (
+                  <button
+                    onClick={() => handleRemoveParentItem(d.id)}
+                    className="delete"
+                  >
+                    <RiDeleteBin2Line />
+                    Rimuovi
+                  </button>
+                )}
+              </div>
+            </>
           );
         })}
-        <button
-          onClick={() => {
-            setItems((prev) => {
-              return [
-                ...prev,
-                {
-                  id: items.length + 1,
-                  items: [
-                    {
-                      id: 1,
-                      label: "Age Limit",
-                      value: 10,
-                    },
-                    {
-                      id: 2,
-                      label: "Discount",
-                      value: "10%",
-                    },
-                  ],
-                },
-              ];
-            });
-          }}
-          className="age-edit-show"
-        >
-          Add More Age Reduction
-        </button>
+        {isEdit && (
+          <button
+            onClick={() => {
+              setItems((prev) => {
+                return [
+                  ...prev,
+                  {
+                    id: items.length + 1,
+                    items: [
+                      {
+                        id: 1,
+                        label: "Age Limit",
+                        value: 10,
+                      },
+                      {
+                        id: 2,
+                        label: "Discount",
+                        value: "10%",
+                      },
+                    ],
+                  },
+                ];
+              });
+            }}
+            className="age-edit-show"
+          >
+            Add More Age Reduction
+          </button>
+        )}
       </div>
     </>
   );
