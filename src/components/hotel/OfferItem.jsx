@@ -29,6 +29,7 @@ export default function OfferItem() {
 
   const body = useRef(null);
   const [istoggle, setIsToggle] = useState(false);
+  const [isTagEdit, setIsTagEdit] = useState(false);
 
   return (
     <div className="offer-item">
@@ -76,11 +77,13 @@ export default function OfferItem() {
 
         <div className="offer-item-tags">
           <h4>Tags</h4>
-          <OfferTags />
+          <OfferTags isTagEdit={isTagEdit} />
         </div>
         <div className="buttons">
           <button className="delete">Delete</button>
-          <button>Edit Offer</button>
+          <button onClick={() => setIsTagEdit(!isTagEdit)}>
+            {(isTagEdit && "Save Offer") || "Edit Offer"}
+          </button>
         </div>
       </div>
     </div>
