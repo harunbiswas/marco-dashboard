@@ -6,6 +6,7 @@ import Bootcump from "../basic/BootCump";
 import Rating from "../basic/Rating";
 import Search from "../basic/Search";
 import Title from "../basic/Title";
+import AddNewOffer from "../hotel-edit/AddNewOffer";
 import AgeEdit from "../hotel/AgeEdit";
 import Description from "../hotel/Description";
 import EditBtn from "../hotel/EditBtn";
@@ -44,6 +45,7 @@ export default function HotelDetails() {
   ]);
 
   const [isEdit, setIsEdit] = useState(false);
+  const [isAdd, setIsAdd] = useState(false);
 
   return (
     <div className="hotel hotel-details">
@@ -97,7 +99,10 @@ export default function HotelDetails() {
               <div className="hotel-details-service-top">
                 <h4>Age Reductions</h4>
                 <div className="edit-btn">
-                  <button onClick={() => setIsEdit(!isEdit)}>
+                  <button
+                    className={isEdit && "save"}
+                    onClick={() => setIsEdit(!isEdit)}
+                  >
                     {(!isEdit && (
                       <>
                         <LuEdit /> Edit
@@ -111,9 +116,14 @@ export default function HotelDetails() {
             </div>
           </div>
           <div className="booking-box hotel-details-offers">
+            <AddNewOffer
+              isAdd={isAdd}
+              setIsAdd={setIsAdd}
+              submitHandler={() => setIsAdd(false)}
+            />
             <div className="hotel-details-offers-top">
               <Title title="Hotel offers" />
-              <button className="add-new">
+              <button onClick={() => setIsAdd(true)} className="add-new">
                 <BsPlusLg />
               </button>
             </div>

@@ -294,6 +294,17 @@
       border-radius: 4px;
       opacity: 0.8;
       transition: 0.3s;
+      background-color: transparent;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+
+      &.save {
+        background-color: $primary;
+        color: $white;
+      }
 
       &:hover {
         opacity: 1;
@@ -537,6 +548,11 @@
 
     &-offers {
       width: 400px;
+
+      .add-new-offer-inner {
+        width: unset;
+        padding: 0;
+      }
 
       &.booking-box {
         padding: 22px;
@@ -1855,7 +1871,7 @@ button.edit-offer-item {
       display: grid;
       align-items: center;
       gap: 3%;
-      grid-template-columns: 32% 32% 32%;
+      grid-template-columns: 31% 31% 32%;
     }
 
     .item {
@@ -2002,5 +2018,16 @@ button.edit-offer-item {
     &:hover {
       opacity: 1;
     }
+  }
+}
+
+.service {
+  &.age-edit-wrp {
+    border-bottom: $border;
+    padding-bottom: 28px;
+  }
+
+  .age-edit {
+    padding: 0;
   }
 }

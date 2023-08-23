@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GrClose } from "react-icons/gr";
 import Input from "./Input";
 
@@ -13,9 +13,21 @@ export default function EditTitle({
   useEffect(() => {
     setValue(data);
   }, [data]);
+
+  const ref = useRef(null);
+  const wrp = useRef(null);
+
+  useEffect(() => {
+    wrp.current.addEventListener("click", (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        closeHandler();
+      }
+    });
+  });
+
   return (
-    <div className={`edit-title-wrp ${(isShow && "show") || ""}`}>
-      <div className={`edit-title booking-box `}>
+    <div ref={wrp} className={`edit-title-wrp ${(isShow && "show") || ""}`}>
+      <div ref={ref} className={`edit-title booking-box `}>
         <div className="edit-title-top">
           <h4>Edit Title</h4>
           <button onClick={closeHandler}>

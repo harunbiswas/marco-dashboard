@@ -25,7 +25,10 @@ export default function HotelItem() {
         <HotelItemImg imas={imas} />
         <div className="info">
           <div className="top">
-            <h4>San Pietro di Positano</h4>
+            <Link to="/hotel/12">
+              <h4>San Pietro di Positano</h4>
+            </Link>
+
             <Rating />
           </div>
           <p>

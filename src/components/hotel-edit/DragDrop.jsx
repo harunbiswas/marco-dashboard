@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { BsUpload } from "react-icons/bs";
 import { GrClose } from "react-icons/gr";
@@ -37,9 +37,20 @@ export default function DrapDrop({ isDrag, handler, addHandler }) {
     }
   };
 
+  const ref = useRef(null);
+  const wrp = useRef(null);
+
+  useEffect(() => {
+    wrp.current.addEventListener("click", (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        handler(false);
+      }
+    });
+  });
+
   return (
-    <div className={`drag-drop ${(isDrag && "show") || ""}`}>
-      <div className="drag-drop-inner booking-box">
+    <div ref={wrp} className={`drag-drop ${(isDrag && "show") || ""}`}>
+      <div ref={ref} className="drag-drop-inner booking-box">
         <div className="drag-drop-top">
           <h4>Upload Image</h4>
           <button onClick={() => handler(false)}>

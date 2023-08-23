@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { GrClose } from "react-icons/gr";
 import Select from "../basic/Select";
@@ -138,9 +138,20 @@ export default function AddNewOffer({ isAdd, setIsAdd, submitHandler }) {
     setAges(updatedItems);
   };
 
+  const ref = useRef(null);
+  const wrp = useRef(null);
+
+  useEffect(() => {
+    wrp.current.addEventListener("click", (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setIsAdd(false);
+      }
+    });
+  });
+
   return (
-    <div className={`add-new-offer  ${(isAdd && "show") || ""}`}>
-      <div className="add-new-offer-inner booking-box">
+    <div ref={wrp} className={`add-new-offer  ${(isAdd && "show") || ""}`}>
+      <div ref={ref} className="add-new-offer-inner booking-box">
         <div className="add-new-offer-top">
           <h4>Crate new offer</h4>
           <button onClick={() => setIsAdd(false)}>

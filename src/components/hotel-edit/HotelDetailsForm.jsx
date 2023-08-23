@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BiSwim } from "react-icons/bi";
+import AgeEdit from "../hotel/AgeEdit";
 import DetailsImgs from "./DetailsImgs";
 import DetailsInputs from "./DetailsInputs";
 import Rating from "./Rating";
@@ -99,6 +100,15 @@ export default function HotelDetailsForm() {
         <TagInput data={include} handler={setInclude} />
         <h4>Strengths</h4>
         <TagInput data={strengths} handler={setStrengths} />
+      </div>
+
+      <div className="service age-edit-wrp">
+        <h4>Service Details</h4>
+        <p>
+          Contrary to popular belief, Lorem Ipsum is not simply random text. It
+          has roots in a piece of classical
+        </p>
+        <AgeEdit />
       </div>
     </from>
   );
