@@ -5,7 +5,7 @@ import img from "../../assets/images/discount.svg";
 import Description from "./Description";
 import OfferTags from "./OfferTags";
 
-export default function OfferItem() {
+export default function OfferItem({ editOfferHandler }) {
   const description = `
     Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.`;
 
@@ -81,9 +81,7 @@ export default function OfferItem() {
         </div>
         <div className="buttons">
           <button className="delete">Delete</button>
-          <button onClick={() => setIsTagEdit(!isTagEdit)}>
-            {(isTagEdit && "Save Offer") || "Edit Offer"}
-          </button>
+          <button onClick={() => editOfferHandler(true)}>Edit Offer</button>
         </div>
       </div>
     </div>

@@ -46,6 +46,7 @@ export default function HotelDetails() {
 
   const [isEdit, setIsEdit] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
+  const [intems, setItems] = useState([1, 1, 1, 1, 1, 1, 1, 1]);
 
   return (
     <div className="hotel hotel-details">
@@ -129,14 +130,9 @@ export default function HotelDetails() {
             </div>
             <Search />
             <div className="hotel-details-offers-body">
-              <OfferItem />
-              <OfferItem />
-              <OfferItem />
-              <OfferItem />
-              <OfferItem />
-              <OfferItem />
-              <OfferItem />
-              <OfferItem />
+              {intems.map((d, i) => (
+                <OfferItem key={i} editOfferHandler={setIsAdd} />
+              ))}
             </div>
           </div>
         </div>
