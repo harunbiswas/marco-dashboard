@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsFillBuildingsFill } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
@@ -31,9 +31,21 @@ export default function AddHotel({ handler, addhotel }) {
   useEffect(() => {
     setIsError(false);
   }, [name, active, hotelId]);
+
+  const ref = useRef(null);
+  const wrp = useRef(null);
+
+  useEffect(() => {
+    wrp.current.addEventListener("click", (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        handler(false);
+      }
+    });
+  });
+
   return (
-    <div className={`add-hotel ${(addhotel && "show") || ""}`}>
-      <div className="add-hotel-inner">
+    <div ref={wrp} className={`add-hotel ${(addhotel && "show") || ""}`}>
+      <div ref={ref} className="add-hotel-inner">
         <div className="add-hotel-top">
           <span>
             <BsFillBuildingsFill />
