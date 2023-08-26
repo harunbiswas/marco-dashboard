@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiSolidOffer, BiSolidUserVoice } from "react-icons/bi";
 import { FaAngleLeft } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
@@ -6,7 +6,7 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { IoSettingsSharp } from "react-icons/io5";
 import { PiSquaresFourFill } from "react-icons/pi";
 import { RiHotelFill } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 
 export default function Sidebar({ isFull, setIsFull }) {
@@ -30,16 +30,23 @@ export default function Sidebar({ isFull, setIsFull }) {
     {
       name: "Offer Info",
       icon: <BiSolidOffer />,
-      url: "/",
+      url: "/offer",
     },
     {
       name: "Settings",
       icon: <IoSettingsSharp />,
-      url: "/",
+      url: "/setting",
     },
   ];
 
-  const [activeMenu, setActiveMenu] = useState(menu[0].name);
+  const [activeMenu, setActiveMenu] = useState(menu[0].url);
+  const location = useLocation();
+
+  useEffect(() => {
+    setActiveMenu(location.pathname);
+  });
+
+  console.log(activeMenu);
   return (
     <nav className="nav" id="nav">
       <div className="nav-brand">
@@ -70,8 +77,8 @@ export default function Sidebar({ isFull, setIsFull }) {
           {menu.map((d, i) => (
             <li key={i}>
               <Link
-                onClick={() => setActiveMenu(d.name)}
-                className={(d.name === activeMenu && "active") || ""}
+                // onClick={() => setActiveMenu(d.url.replace("/", ""))}
+                className={(d.url === activeMenu && "active") || ""}
                 to={d.url}
               >
                 {d.icon}

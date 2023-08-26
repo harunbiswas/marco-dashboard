@@ -149,6 +149,11 @@ ul {
     background-color: $red;
     color: $white;
     border: none;
+
+    &:disabled {
+      background: $grey;
+      cursor: auto;
+    }
   }
 }
 

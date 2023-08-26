@@ -7,11 +7,7 @@ export default function DeleteHotel({
   closeHandler,
   changeHandler,
 }) {
-  const [value, setValue] = useState(data);
-
-  useEffect(() => {
-    setValue(data);
-  }, [data]);
+  const [value, setValue] = useState("");
 
   const ref = useRef(null);
   const wrp = useRef(null);
@@ -23,6 +19,15 @@ export default function DeleteHotel({
       }
     });
   });
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    if (!value) {
+      setIsError(true);
+    } else {
+      setIsError(false);
+    }
+  }, [value]);
 
   return (
     <div
@@ -40,7 +45,15 @@ export default function DeleteHotel({
 
         <div className="item">
           <label htmlFor="">Title Name</label>
-          <input type="text" value={value} disabled />
+          <input
+            className={isError && "error"}
+            type="text"
+            value={value}
+            onChange={(e) => {
+              setValue(e.target.value);
+            }}
+            placeholder={data}
+          />
         </div>
 
         <div className="edit-title-footer">
@@ -54,6 +67,7 @@ export default function DeleteHotel({
               }
             }}
             className="btn delete"
+            disabled={!(data === value)}
           >
             Delete
           </button>

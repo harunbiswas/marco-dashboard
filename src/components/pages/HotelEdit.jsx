@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { BsFillBuildingsFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 import Bootcump from "../basic/BootCump";
 import EditMenu from "../hotel-edit/EditMenu";
 import EditOffer from "../hotel-edit/EditOffer";
@@ -21,6 +22,7 @@ export default function HotelEdit() {
 
   const [active, setActive] = useState(1);
   const [isPublish, setIsPublish] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="hotel-edit hotel">
@@ -47,6 +49,8 @@ export default function HotelEdit() {
                 onClick={() => {
                   if (active < 4 && !isPublish) {
                     setActive(active + 1);
+                  } else if (isPublish) {
+                    navigate("/hotel");
                   } else {
                     setIsPublish(true);
                   }
