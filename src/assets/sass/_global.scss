@@ -144,6 +144,12 @@ ul {
     background-color: $white;
     color: $primary;
   }
+
+  &.delete {
+    background-color: $red;
+    color: $white;
+    border: none;
+  }
 }
 
 .title {
@@ -241,7 +247,7 @@ ul {
   border-radius: 4px;
   gap: 10px;
   color: $grey;
-  box-shadow: $shadow;
+
   font-size: 14px;
   font-weight: 600;
   span {

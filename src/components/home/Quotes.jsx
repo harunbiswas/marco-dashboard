@@ -79,7 +79,7 @@ export default function Quotes() {
         ))}
       </ul>
 
-      <Link className="quotes-btn" to="/">
+      <Link className="quotes-btn" to="booking">
         View All
       </Link>
     </div>

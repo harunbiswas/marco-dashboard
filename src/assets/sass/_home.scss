@@ -205,7 +205,7 @@
         color: $white;
         border-radius: 4px;
         opacity: 0;
-        transition: 0.4s;
+        transition: 0.2s;
         font-size: 12px;
         font-weight: 500;
         font-family: $dm;
@@ -214,12 +214,15 @@
         gap: 4px;
         z-index: 9999;
         max-width: 200px;
+        visibility: hidden;
       }
 
       &:hover {
         color: $dark;
+
         .info {
           opacity: 1;
+          visibility: visible;
         }
       }
     }
@@ -459,6 +462,7 @@
 }
 
 .map {
+  margin-top: 0 !important;
   &-top {
     display: flex;
     align-items: center;
@@ -507,6 +511,10 @@
 }
 
 .requests {
+  .info {
+    transform: translateX(-90%) !important;
+  }
+
   &-body {
     &-top {
       margin-bottom: 20px;

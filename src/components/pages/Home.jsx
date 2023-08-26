@@ -16,7 +16,7 @@ export default function Home() {
             <strong>Monday, 08 July 2023.</strong>
             <span>
               You’ve 5 new booking request, Checkout more in{" "}
-              <Link to="/">Booking Request</Link>
+              <Link to="booking">Booking Request</Link>
             </span>
           </div>
           <DateLine

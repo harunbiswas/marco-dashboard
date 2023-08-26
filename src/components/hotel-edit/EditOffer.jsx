@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { ImGlass } from "react-icons/im";
+import { LuEdit } from "react-icons/lu";
 import img1 from "../../assets/images/create.svg";
 import img from "../../assets/images/discount.svg";
-import EditBtn from "../hotel/EditBtn";
 import AddNewOffer from "./AddNewOffer";
 
 export default function EditOffer() {
@@ -47,7 +47,11 @@ export default function EditOffer() {
               </div>
             </div>
 
-            <EditBtn />
+            <div className="edit-btn">
+              <button onClick={() => setIsAdd(true)}>
+                <LuEdit /> Edit
+              </button>
+            </div>
           </div>
           <div className="edit-offer-item-body">
             <div className="conditions">

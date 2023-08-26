@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { BsFillBuildingsFill, BsPlusLg } from "react-icons/bs";
 import { FaUmbrellaBeach } from "react-icons/fa";
+import { GiSightDisabled } from "react-icons/gi";
 import { LuEdit } from "react-icons/lu";
+import { RiDeleteBin2Line } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 import Bootcump from "../basic/BootCump";
 import Rating from "../basic/Rating";
 import Search from "../basic/Search";
 import Title from "../basic/Title";
 import AddNewOffer from "../hotel-edit/AddNewOffer";
 import AgeEdit from "../hotel/AgeEdit";
+import DeleteHotel from "../hotel/DeleteHotel";
 import Description from "../hotel/Description";
 import EditBtn from "../hotel/EditBtn";
 import HotelDetailsImg from "../hotel/HoteldetailsImg";
@@ -47,6 +51,13 @@ export default function HotelDetails() {
   const [isEdit, setIsEdit] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
   const [intems, setItems] = useState([1, 1, 1, 1, 1, 1, 1, 1]);
+
+  const [isDelete, setIsDelete] = useState(false);
+  const navigate = useNavigate();
+
+  const deleteChange = () => {
+    navigate("/hotel");
+  };
 
   return (
     <div className="hotel hotel-details">
@@ -116,23 +127,47 @@ export default function HotelDetails() {
               <AgeEdit isEdit={isEdit} />
             </div>
           </div>
-          <div className="booking-box hotel-details-offers">
-            <AddNewOffer
-              isAdd={isAdd}
-              setIsAdd={setIsAdd}
-              submitHandler={() => setIsAdd(false)}
-            />
-            <div className="hotel-details-offers-top">
-              <Title title="Hotel offers" />
-              <button onClick={() => setIsAdd(true)} className="add-new">
-                <BsPlusLg />
-              </button>
+          <div className="hotel-details-right basic">
+            <div className="booking-box delete-disable">
+              <div className="delete-disable-top">
+                <h4>Disable or Delete</h4>
+              </div>
+              <div className="delete-disable-body">
+                <DeleteHotel
+                  data={"San Pietro di Positano"}
+                  isShow={isDelete}
+                  closeHandler={() => setIsDelete(false)}
+                  changeHandler={deleteChange}
+                />
+                <button onClick={() => setIsDelete(true)} className="btn">
+                  <GiSightDisabled /> Disable
+                </button>
+                <button
+                  onClick={() => setIsDelete(true)}
+                  className="btn delete"
+                >
+                  <RiDeleteBin2Line /> Delete
+                </button>
+              </div>
             </div>
-            <Search />
-            <div className="hotel-details-offers-body">
-              {intems.map((d, i) => (
-                <OfferItem key={i} editOfferHandler={setIsAdd} />
-              ))}
+            <div className="booking-box hotel-details-offers">
+              <AddNewOffer
+                isAdd={isAdd}
+                setIsAdd={setIsAdd}
+                submitHandler={() => setIsAdd(false)}
+              />
+              <div className="hotel-details-offers-top">
+                <Title title="Hotel offers" />
+                <button onClick={() => setIsAdd(true)} className="add-new">
+                  <BsPlusLg />
+                </button>
+              </div>
+              <Search />
+              <div className="hotel-details-offers-body">
+                {intems.map((d, i) => (
+                  <OfferItem key={i} editOfferHandler={setIsAdd} />
+                ))}
+              </div>
             </div>
           </div>
         </div>

@@ -128,15 +128,28 @@
     justify-content: space-between;
 
     .sort {
+      position: relative;
+
+      & > .icon {
+        position: absolute;
+        z-index: -1;
+      }
       .active {
         padding: 5px;
       }
 
       .select {
         border: none !important;
+        width: 100%;
+        height: 100%;
+
+        .active {
+          padding-left: 30px;
+        }
 
         .dropdown {
           width: unset;
+          right: -13px;
         }
         .icon {
           display: flex;
@@ -178,11 +191,12 @@
 
         &.filter-btn-wrp {
           background-color: transparent;
-          padding: 0 16px;
+          padding: 0;
           font-size: 14px;
           position: relative;
 
           & > .filter-btn {
+            padding: 0 15px;
             display: flex;
             width: 100%;
             height: 100%;
