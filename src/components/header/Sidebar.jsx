@@ -28,9 +28,9 @@ export default function Sidebar({ isFull, setIsFull }) {
       url: "/hotel",
     },
     {
-      name: "Offer Info",
+      name: "Employee List",
       icon: <BiSolidOffer />,
-      url: "/offer",
+      url: "/employee",
     },
     {
       name: "Settings",
