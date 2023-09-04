@@ -17,9 +17,11 @@ export default function Root() {
         <Route path="hotel" element={<Hotel />} />
         <Route path="hotel/:id" element={<HotelDetails />} />
         <Route path="hotel/edit/:id" element={<HotelEdit />} />
-        <Route path="employee" element={<Dashboard />} />
+        <Route path="setting" element={<Dashboard />} />
+        <Route path="*" element={<Home />} />
       </Route>
       <Route path="/login" element={<Login />} />
+      <Route path="*" element={<Index />} />
     </Routes>
   );
 }
