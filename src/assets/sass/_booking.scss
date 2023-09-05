@@ -468,6 +468,12 @@
       grid-template-columns: 40px 100px 130px 130px 320px 180px 205px 230px 180px;
     }
   }
+
+  &-module {
+    tr {
+      grid-template-columns: 60px 100px 220px 200px 205px 300px 200px 230px;
+    }
+  }
 }
 
 .pagenation {
@@ -573,79 +579,6 @@
 
       &:hover {
         opacity: 1;
-      }
-    }
-  }
-
-  .copy-link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 32px;
-    border-bottom: $border;
-
-    &-left {
-      & > a {
-        background-color: rgba($color: $primary, $alpha: 0.2);
-        padding: 5px 10px;
-        border-radius: 4px;
-        color: $primary;
-        font-family: $jakarta;
-        font-size: 14px;
-        font-weight: 600;
-        margin-right: 10px;
-      }
-      & > span {
-        padding: 5px 10px;
-        border-radius: 4px;
-        color: $grey;
-        font-family: $jakarta;
-        font-size: 15px;
-        font-weight: 500;
-        margin-right: 10px;
-      }
-    }
-
-    &-right {
-      & > .coped {
-        color: $green;
-        font-size: 15px;
-        font-weight: 500;
-        text-transform: capitalize;
-        animation: opacity 1s;
-        display: none;
-
-        &.active {
-          display: block;
-        }
-      }
-      & > button {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 8px;
-        color: $primary;
-        border: none;
-        background-color: transparent;
-        font-family: $jakarta;
-        font-size: 14px;
-        font-weight: 600;
-        transition: 0.3s;
-        opacity: 0.8;
-        animation: opacity 2s;
-        display: none;
-
-        &.active {
-          display: flex;
-        }
-
-        svg {
-          font-size: 16px;
-        }
-
-        &:hover {
-          opacity: 1;
-        }
       }
     }
   }

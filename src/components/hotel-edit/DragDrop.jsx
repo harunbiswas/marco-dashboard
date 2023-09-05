@@ -1,26 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { FileUploader } from "react-drag-drop-files";
-import { BsUpload } from "react-icons/bs";
+
 import { GrClose } from "react-icons/gr";
+import DrapDropBody from "./DragDropBody";
 import Input from "./Input";
 
 export default function DrapDrop({ isDrag, handler, addHandler }) {
-  const fileTypes = ["JPG", "PNG", "GIF"];
   const [url, setUrl] = useState("");
   const [value, setValue] = useState("");
-
-  const fileHandler = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setUrl(event.target.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setUrl(null);
-    }
-  };
 
   useEffect(() => {
     setUrl(value);
@@ -57,32 +43,7 @@ export default function DrapDrop({ isDrag, handler, addHandler }) {
             <GrClose />
           </button>
         </div>
-        <div className="drag-drop-body">
-          {(url && <img src={url} alt="" />) || (
-            <>
-              <div className="icon">
-                <BsUpload />
-              </div>
-              <span>
-                Drag & drop files or <label htmlFor="img"> Browse files</label>
-              </span>
-
-              <p>JPG, PNG or GIF - Max file size 2MB</p>
-            </>
-          )}
-          <FileUploader
-            handleChange={fileHandler}
-            name="file"
-            className="upload"
-            types={fileTypes}
-          />
-          <input
-            onChange={(e) => fileHandler(e)}
-            type="file"
-            accept="image/*"
-            id="img"
-          />
-        </div>
+        <DrapDropBody urlSet={setUrl} />
         <div className="sep">
           <span>OR</span>
         </div>

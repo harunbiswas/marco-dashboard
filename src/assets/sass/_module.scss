@@ -1,0 +1,74 @@
+.module {
+  &-edit {
+    &-wrp {
+      &.booking-box {
+        padding: 0px;
+      }
+    }
+    &-top {
+      padding: 20px 32px;
+      border-bottom: $border;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      & > .left {
+        & > .icon {
+          width: 54px;
+          height: 54px;
+          border-radius: 50%;
+          background-color: rgba($color: $primary, $alpha: 0.15);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 22px;
+          color: $primary;
+        }
+      }
+    }
+
+    &-basic {
+      padding: 20px 32px;
+      border-bottom: $border;
+
+      &-wrp {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 22px;
+      }
+
+      p {
+        margin: 0 0 10px;
+      }
+
+      & > button {
+        margin: 10px 0 20px;
+        background-color: transparent;
+        border: none;
+        color: $primary;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      h4 {
+        margin-bottom: 5px;
+      }
+
+      &-item {
+        width: 100%;
+        margin-bottom: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        textarea {
+          height: 100px;
+        }
+      }
+    }
+  }
+}
