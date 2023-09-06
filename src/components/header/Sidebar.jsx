@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { BiSolidOffer, BiSolidUserVoice } from "react-icons/bi";
-import { FaAngleLeft } from "react-icons/fa";
+import { FaAngleLeft, FaCarSide } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { IoSettingsSharp } from "react-icons/io5";
@@ -31,6 +31,11 @@ export default function Sidebar({ isFull, setIsFull }) {
       name: "Modules",
       icon: <BiSolidOffer />,
       url: "/module",
+    },
+    {
+      name: "Transport",
+      icon: <FaCarSide />,
+      url: "/transport",
     },
     {
       name: "Settings",

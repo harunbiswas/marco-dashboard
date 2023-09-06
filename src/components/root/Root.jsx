@@ -9,6 +9,7 @@ import HotelEdit from "../pages/HotelEdit";
 import Index from "../pages/Index";
 import Login from "../pages/Login";
 import Modules from "../pages/Modules";
+import Transport from "../pages/Transport";
 
 export default function Root() {
   return (
@@ -20,6 +21,7 @@ export default function Root() {
         <Route path="hotel/:id" element={<HotelDetails />} />
         <Route path="hotel/edit/:id" element={<HotelEdit />} />
         <Route path="module" element={<Modules />} />
+        <Route path="transport" element={<Transport />} />
         <Route path="module/edit/:id" element={<EditModule />} />
         <Route path="setting" element={<Dashboard />} />
         <Route path="*" element={<Home />} />
