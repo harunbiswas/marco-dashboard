@@ -70,5 +70,97 @@
         }
       }
     }
+
+    .fixed-offer {
+      &-item {
+        margin: 15px 0 20px;
+        border: $border;
+        border-radius: 8px;
+
+        &-top {
+          background-color: rgba($color: $grey, $alpha: 0.1);
+          padding: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          & > strong {
+            color: $dark;
+            font-size: 20px;
+            font-family: $jakarta;
+            font-weight: 600;
+          }
+
+          .buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+
+            & > button {
+              border: none;
+              background-color: transparent;
+              color: $primary;
+              font-size: 16px;
+              font-weight: 600;
+              font-family: $jakarta;
+            }
+          }
+        }
+
+        &-body {
+          padding: 20px 20px 0;
+          display: flex;
+          gap: 15px;
+          align-items: center;
+
+          & > button {
+            background-color: rgba($color: $grey, $alpha: 0.2);
+            border: none;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            width: 7%;
+            height: 32px;
+            border-radius: 50%;
+          }
+
+          .group {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            .inner {
+              display: flex;
+
+              .select {
+                border-right: none;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+              }
+              input {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                text-align: right;
+              }
+            }
+          }
+        }
+
+        & > button {
+          background-color: transparent;
+          font-size: 16px;
+          font-weight: 600;
+          color: $primary;
+          border: none;
+          padding: 20px;
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+      }
+    }
   }
 }

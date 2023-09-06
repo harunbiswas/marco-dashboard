@@ -6,6 +6,7 @@ import CopyLink from "../booking/CopyLink";
 import DragDropBody from "../hotel-edit/DragDropBody";
 import Input from "../hotel-edit/Input";
 import TextArea from "../hotel-edit/TextArea";
+import FixedOffer from "../module/FixecOffer";
 import SectionThree from "../module/SectionThree";
 import SectionTwo from "../module/SectionTwo";
 
@@ -89,6 +90,7 @@ export default function EditModule() {
           </div>
           <SectionTwo />
           <SectionThree />
+          <FixedOffer />
           <div className="hotel-edit-footer">
             <div className="left">
               <button>Discard</button>
