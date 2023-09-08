@@ -135,6 +135,7 @@ ul {
   align-items: center;
   gap: 5px;
   transition: 0.3s;
+  font-weight: 600;
 
   & > svg {
     font-size: 18px;
@@ -153,6 +154,17 @@ ul {
     &:disabled {
       background: $grey;
       cursor: auto;
+    }
+  }
+
+  &-white {
+    background-color: white;
+    color: $primary;
+    border-color: $color-border;
+
+    &:hover {
+      color: $white;
+      background-color: $primary;
     }
   }
 }
@@ -554,5 +566,48 @@ ul {
         opacity: 1;
       }
     }
+  }
+}
+
+.separator {
+  width: 2px;
+  height: 25px;
+  flex-shrink: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(217, 217, 217, 0) 0%,
+    rgba(217, 217, 217, 0.52) 47.92%,
+    rgba(217, 217, 217, 0) 100%,
+    rgba(217, 217, 217, 0) 100%
+  );
+}
+
+.description {
+  & > h4 {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.08px;
+    color: $dark;
+    padding-bottom: 20px;
+    font-family: $jakarta;
+  }
+
+  & > p {
+    font-family: $jakarta;
+    font-size: 14px;
+    color: #1e1e1e;
+    opacity: 0.7;
+    line-height: 160%;
+    white-space: pre-line;
+  }
+
+  & > button {
+    margin-top: 0px;
+    border: none;
+    background-color: transparent;
+    color: $primary;
+    text-decoration: underline;
+    font-size: 14px;
+    font-weight: 700;
   }
 }

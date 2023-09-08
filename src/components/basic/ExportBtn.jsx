@@ -1,10 +1,10 @@
 import { HiOutlineDownload } from "react-icons/hi";
 
-export default function ExportBtn() {
+export default function ExportBtn({ text = "Generate Report", handler }) {
   return (
-    <button className="export-btn">
+    <button onClick={handler} className="export-btn">
       <HiOutlineDownload />
-      <span>Generate Report</span>
+      <span>{text}</span>
     </button>
   );
 }

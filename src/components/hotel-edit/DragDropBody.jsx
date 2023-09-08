@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
+import { AiFillDelete } from "react-icons/ai";
 import { BsUpload } from "react-icons/bs";
 
 export default function DrapDropBody({ urlSet }) {
@@ -21,6 +22,11 @@ export default function DrapDropBody({ urlSet }) {
 
   return (
     <div className="drag-drop-body">
+      {url && (
+        <button onClick={() => setUrl("")} className="close">
+          <AiFillDelete />
+        </button>
+      )}
       {(url && <img src={url} alt="" />) || (
         <>
           <div className="icon">

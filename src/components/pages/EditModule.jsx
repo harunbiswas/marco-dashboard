@@ -7,6 +7,8 @@ import DragDropBody from "../hotel-edit/DragDropBody";
 import Input from "../hotel-edit/Input";
 import TextArea from "../hotel-edit/TextArea";
 import FixedOffer from "../module/FixecOffer";
+import ModuleTemplate from "../module/ModuleTemplate";
+import SaveTemplate from "../module/SaveTemplate";
 import SectionThree from "../module/SectionThree";
 import SectionTwo from "../module/SectionTwo";
 
@@ -25,8 +27,15 @@ export default function EditModule() {
   const [title, setTitle] = useState("");
   const [title1, setTitle1] = useState("");
   const [videoLink, setVideoLink] = useState("");
+  const [isTemplate, setIsTemplate] = useState(false);
+
+  const [isSaveTemplate, setIsSaveTemplate] = useState(false);
+
   return (
     <div className=" module-edit hotel">
+      <ModuleTemplate addhotel={isTemplate} handler={setIsTemplate} />
+
+      <SaveTemplate addhotel={isSaveTemplate} handler={setIsSaveTemplate} />
       <div className="container">
         <Bootcump data={bootCump} />
 
@@ -37,7 +46,10 @@ export default function EditModule() {
                 <HiDocumentText />
               </div>
             </div>{" "}
-            <ExportBtn />
+            <ExportBtn
+              handler={() => setIsTemplate(true)}
+              text="Import Template  "
+            />
           </div>
           <CopyLink />
           <div className="module-edit-basic">
@@ -90,13 +102,15 @@ export default function EditModule() {
           </div>
           <SectionTwo />
           <SectionThree />
-          <FixedOffer />
+          <FixedOffer saveTemplateHandler={setIsSaveTemplate} />
           <div className="hotel-edit-footer">
             <div className="left">
               <button>Discard</button>
             </div>
             <div className="right">
-              <button>Save Changes</button>
+              <button onClick={() => setIsSaveTemplate(true)}>
+                Save as Template
+              </button>
               <button className="submit">Publish</button>
             </div>
           </div>

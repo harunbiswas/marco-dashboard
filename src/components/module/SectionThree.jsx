@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import Input from "../hotel-edit/Input";
 import TextArea from "../hotel-edit/TextArea";
 
@@ -86,6 +86,16 @@ export default function SectionThree() {
     // Add the new blog entry to the existing array
     setBlogs([...blogs, newBlog]);
   };
+
+  const deleteRegion = (blogIndex) => {
+    setBlogs((prevBlogs) => {
+      const updatedBlogs = prevBlogs.filter(
+        (blog, index) => index !== blogIndex
+      );
+      return updatedBlogs;
+    });
+  };
+
   return (
     <div className="module-edit-basic">
       <h4>Section 3</h4>
@@ -107,6 +117,7 @@ export default function SectionThree() {
         <TextArea />
       </div>
 
+      <br />
       <h4>Blog</h4>
       {blogs.map((blog, i) => (
         <div key={i} className="module-edit-basic-wrp">
@@ -120,6 +131,9 @@ export default function SectionThree() {
               />
             </div>
           ))}
+          <button onClick={() => deleteRegion(blog.id)}>
+            <AiOutlineDelete />
+          </button>
         </div>
       ))}
       <button onClick={addNewBlog}>

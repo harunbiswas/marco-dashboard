@@ -2,8 +2,9 @@ import { useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import Select from "../basic/Select";
 import Input from "../hotel-edit/Input";
+import ImportTemplate from "./ImportTemplate";
 
-export default function FixedOffer() {
+export default function FixedOffer({ saveTemplateHandler }) {
   const [dates, setDates] = useState([{ id: 1, value: "" }]);
   const handleDateChange = (id, newValue) => {
     // Create a copy of the dates state
@@ -77,9 +78,11 @@ export default function FixedOffer() {
     setRegion(updatedDates);
   };
 
+  const [isImport, setIsImport] = useState(false);
   return (
     <div className="module-edit-basic fixed-offer">
-      <h4>Module Preview</h4>
+      <ImportTemplate addhotel={isImport} handler={setIsImport} />
+      <h4>Fixed Offers</h4>
       <p>
         Contrary to popular belief, Lorem Ipsum is not simply random text. It
         has roots in a piece of classical Latin
@@ -88,8 +91,12 @@ export default function FixedOffer() {
         <div className="fixed-offer-item-top">
           <strong>By Date</strong>
           <div className="buttons">
-            <button>Create Template </button>
-            <button>Import Template </button>
+            <button onClick={() => saveTemplateHandler(true)}>
+              Create Template{" "}
+            </button>
+            <span className="separator"></span>
+            <button onClick={() => setIsImport(true)}>Import Offerte </button>
+            <span className="separator"></span>
             <button>Import Date List </button>
           </div>
         </div>
@@ -127,7 +134,10 @@ export default function FixedOffer() {
         <div className="fixed-offer-item-top">
           <strong>By Region</strong>
           <div className="buttons">
-            <button>Create Template </button>
+            <button onClick={() => saveTemplateHandler(true)}>
+              Create Template{" "}
+            </button>
+            <span className="separator"></span>
             <button>Import Region List </button>
           </div>
         </div>

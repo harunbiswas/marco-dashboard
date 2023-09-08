@@ -39,14 +39,17 @@ export default function Modules() {
           </div>
           <BookingMneu menus={menus} />
           <Filters />
-          <ModuleTable
-            data={{
-              detailsHandler: setIsDetails,
-              isIndex: isIndex,
-              setIsIndex,
-              isDetails,
-            }}
-          />
+          <div className="module-table-wrp">
+            <ModuleTable
+              data={{
+                detailsHandler: setIsDetails,
+                isIndex: isIndex,
+                setIsIndex,
+                isDetails,
+              }}
+            />
+          </div>
+
           <Pagenation />
         </div>
       </div>

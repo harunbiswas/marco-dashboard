@@ -314,35 +314,6 @@
   }
   &-details {
     position: relative;
-    .description {
-      & > h4 {
-        font-size: 16px;
-        font-weight: 700;
-        letter-spacing: -0.08px;
-        color: $dark;
-        padding-bottom: 20px;
-        font-family: $jakarta;
-      }
-
-      & > p {
-        font-family: $jakarta;
-        font-size: 14px;
-        color: #1e1e1e;
-        opacity: 0.7;
-        line-height: 160%;
-        white-space: pre-line;
-      }
-
-      & > button {
-        margin-top: 20px;
-        border: none;
-        background-color: transparent;
-        color: $primary;
-        text-decoration: underline;
-        font-size: 14px;
-        font-weight: 700;
-      }
-    }
 
     .basic {
       display: flex;
@@ -1749,6 +1720,27 @@ button.edit-offer-item {
       height: 100%;
       object-fit: cover;
       border-radius: 8px;
+    }
+
+    & > button.close {
+      background-color: transparent;
+      color: $red;
+      border: none;
+      font-size: 22px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      opacity: 0;
+      transition: 0.6s;
+      visibility: hidden;
+      z-index: 999;
+    }
+
+    &:hover {
+      & > button.close {
+        opacity: 1;
+        visibility: visible;
+      }
     }
 
     .icon {
