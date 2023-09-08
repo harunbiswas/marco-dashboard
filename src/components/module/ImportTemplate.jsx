@@ -116,7 +116,9 @@ export default function ImportTemplate({ handler, addhotel }) {
             <input type="text" placeholder="Search" id="search" />
             <button className="btn">Search</button>
           </div>
-          <div className={`module-template-items ${(isOffer && "hide") || ""}`}>
+          <div
+            className={`module-template-items max ${(isOffer && "hide") || ""}`}
+          >
             <div className="left">
               {items.map((item, i) => (
                 <div

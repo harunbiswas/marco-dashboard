@@ -70,19 +70,23 @@ export default function ModuleTemplate({ handler, addhotel }) {
             <button className="btn">Search</button>
           </div>
           <div className="module-template-items">
-            {items.map((item, i) => (
-              <div
-                key={i}
-                className={`item ${(activeItem === item.id && "active") || ""}`}
-                onClick={() => setActiveItem(item.id)}
-              >
-                <HiDocumentText />
-                <div className="content">
-                  <h4>Ceneral Template</h4>
-                  <p>Section 1, Section 2, Section 3</p>
+            <div className="left">
+              {items.map((item, i) => (
+                <div
+                  key={i}
+                  className={`item ${
+                    (activeItem === item.id && "active") || ""
+                  }`}
+                  onClick={() => setActiveItem(item.id)}
+                >
+                  <HiDocumentText />
+                  <div className="content">
+                    <h4>Ceneral Template</h4>
+                    <p>Section 1, Section 2, Section 3</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
         <div className="add-hotel-footer ">

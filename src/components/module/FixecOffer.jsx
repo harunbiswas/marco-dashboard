@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import Select from "../basic/Select";
 import Input from "../hotel-edit/Input";
+import DateList from "./DateList";
 import ImportTemplate from "./ImportTemplate";
 
 export default function FixedOffer({ saveTemplateHandler }) {
@@ -79,9 +80,11 @@ export default function FixedOffer({ saveTemplateHandler }) {
   };
 
   const [isImport, setIsImport] = useState(false);
+  const [isDate, setIsDate] = useState(false);
   return (
     <div className="module-edit-basic fixed-offer">
       <ImportTemplate addhotel={isImport} handler={setIsImport} />
+      <DateList addhotel={isDate} handler={setIsDate} />
       <h4>Fixed Offers</h4>
       <p>
         Contrary to popular belief, Lorem Ipsum is not simply random text. It
@@ -97,7 +100,7 @@ export default function FixedOffer({ saveTemplateHandler }) {
             <span className="separator"></span>
             <button onClick={() => setIsImport(true)}>Import Offerte </button>
             <span className="separator"></span>
-            <button>Import Date List </button>
+            <button onClick={() => setIsDate(true)}>Import Date List </button>
           </div>
         </div>
         {dates.map((date, i) => (
