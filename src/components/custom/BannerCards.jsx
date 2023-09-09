@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import { BsFillCalendar2Fill, BsPercent } from "react-icons/bs";
+import { HiUser } from "react-icons/hi";
 import "../styles/Dashboard/dashboard.scss";
 import ProgressItem from "./ProgressItem";
 
@@ -65,7 +67,10 @@ const BannerCards = () => {
       <div className="bc_left">
         {/* Title */}
         <div className="card_title">
-          <img src="./images/number-of-edit.png" alt="" />
+          <div className="icon">
+            {" "}
+            <BsFillCalendar2Fill />
+          </div>
           <p>Number of Edits</p>
         </div>
 
@@ -96,7 +101,10 @@ const BannerCards = () => {
       <div className="bc_center">
         {/* Title */}
         <div className="card_title">
-          <img src="./images/spent-per-hour.png" alt="" />
+          <div className="icon purple">
+            {" "}
+            <HiUser />
+          </div>
           <p>Average Time Spent per Day</p>
         </div>
 
@@ -121,7 +129,10 @@ const BannerCards = () => {
       <div className="bc_right">
         {/* Title */}
         <div className="card_title">
-          <img src="./images/number-of-edits.png" alt="" />
+          <div className="icon yallow">
+            {" "}
+            <BsPercent />
+          </div>
           <p>Top Number of Edits</p>
         </div>
 
