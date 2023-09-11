@@ -5,16 +5,16 @@ import Filters from "../basic/Filters";
 import Title from "../basic/Title";
 import BookingMneu from "../booking/BookingMenu";
 import Pagenation from "../booking/Pagenation";
-import AddModule from "../module/AddModule";
+import AddTransport from "../transport/AddTransport";
 import TransportBody from "../transport/TransportBody";
 
 export default function Transport() {
   const menus = [{ name: "All" }, { name: "Recently Added" }];
 
-  const [addModule, setAddModule] = useState(false);
+  const [addTransport, setAddTransport] = useState(false);
   return (
     <div className="module hotel">
-      <AddModule handler={setAddModule} addhotel={addModule} />
+      <AddTransport handler={setAddTransport} addhotel={addTransport} />
       <div className="container">
         <div className="booking-box">
           <div className="hotel-top">
@@ -27,12 +27,12 @@ export default function Transport() {
             </div>
             <div className="hotel-top-right">
               <ExportBtn />
-              <Button handler={setAddModule} text="Add New Hotel" />
+              <Button handler={setAddTransport} text="Add New Transport" />
             </div>
           </div>
           <BookingMneu menus={menus} />
           <Filters />
-          <TransportBody />
+          <TransportBody handler={setAddTransport} />
           <Pagenation isbrns={true} />
         </div>
       </div>

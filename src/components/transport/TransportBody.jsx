@@ -1,19 +1,15 @@
 import TransportItem from "./TransportItem";
 
-export default function TransportBody() {
+export default function TransportBody({ handler }) {
   return (
     <div className="transport-body">
-      <TransportItem />
-      <TransportItem />
-      <TransportItem />
-      <TransportItem />
-      <TransportItem />
-      <TransportItem />
-      <TransportItem />
-      <TransportItem />
-      <TransportItem />
-      <TransportItem />
-      <TransportItem />
+      <TransportItem handler={handler} />
+      <TransportItem handler={handler} />
+      <TransportItem handler={handler} />
+      <TransportItem handler={handler} />
+      <TransportItem handler={handler} />
+      <TransportItem handler={handler} />
+      <TransportItem handler={handler} />
     </div>
   );
 }

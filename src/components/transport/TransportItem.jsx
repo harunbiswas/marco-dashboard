@@ -7,7 +7,7 @@ import {
 import { FaCarSide } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-export default function TransportItem() {
+export default function TransportItem({ handler }) {
   const [prics, setPrics] = useState([
     {
       naem: "Adult",
@@ -44,7 +44,16 @@ export default function TransportItem() {
             <span>13 July - 03 August 2023</span>
           </div>
 
-          <Link onClick={() => setIsDetails(true)} to="">
+          <Link
+            onClick={() => {
+              if (!isDetails) {
+                setIsDetails(true);
+              } else {
+                handler(true);
+              }
+            }}
+            to=""
+          >
             {isDetails && <BiEdit />}{" "}
             {(!isDetails && "View Details") || "Edit Template"}
           </Link>

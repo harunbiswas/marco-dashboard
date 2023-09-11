@@ -205,4 +205,171 @@
       }
     }
   }
+
+  &-days {
+    margin: 20px 0;
+
+    strong {
+      font-size: 14px;
+      font-family: $jakarta;
+      font-weight: 500;
+      padding-right: 20px;
+    }
+
+    .top {
+      padding-bottom: 10px;
+
+      & > button {
+        color: $primary;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        border: none;
+        background-color: transparent;
+        transition: 0.3s;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    & > .days {
+      display: flex;
+      gap: 7px;
+
+      li {
+        & > button {
+          padding: 12px 14px;
+          border: $border;
+          color: $dark;
+          background-color: transparent;
+          border-radius: 2rem;
+          transition: 0.3s;
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        &.active,
+        &:hover {
+          & > button {
+            border-color: $primary;
+            background-color: rgba($color: $primary, $alpha: 0.1);
+            color: $primary;
+          }
+        }
+      }
+    }
+  }
+
+  &-catagory {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    &-item {
+      display: flex;
+      gap: 14px;
+
+      .form-group {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        &.full {
+          width: 200%;
+        }
+
+        &-inner {
+          display: flex;
+
+          .select {
+            width: 60px;
+            border-right: 0;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+
+            .active {
+              padding-right: 0;
+            }
+          }
+
+          input {
+            text-align: right;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+
+            &:focus {
+              outline: none;
+            }
+          }
+        }
+      }
+    }
+
+    & > .add-btn {
+      color: $primary;
+      font-size: 16px;
+      font-weight: 500;
+      background-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      border: none;
+      transition: 0.3s;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.add-transport {
+  .add-hotel-inner {
+    width: 814px;
+    height: 98vh;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
+
+    h4 {
+      font-size: 16px;
+      margin: 8px 0 0;
+
+      &.s-title {
+        font-size: 20px;
+        margin: 0px 0 0;
+      }
+    }
+    form {
+      display: flex;
+      gap: 18px;
+
+      & > .item-1 {
+        width: 100%;
+      }
+    }
+  }
+
+  .gap {
+    padding-top: 20px;
+  }
+
+  &-group {
+    display: flex;
+    gap: 18px;
+    margin: 10px 0;
+
+    .form-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+  }
 }
