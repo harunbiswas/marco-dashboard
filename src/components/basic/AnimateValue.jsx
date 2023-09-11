@@ -19,6 +19,7 @@ export default function AnimateValue({ data }) {
             setValue(value + 10);
           }
         } else {
+          console.log(data);
           setValue(value + 1);
         }
       } else {

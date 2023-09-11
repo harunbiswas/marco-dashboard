@@ -6,6 +6,7 @@ import Title from "../basic/Title";
 import BookingMneu from "../booking/BookingMenu";
 import Pagenation from "../booking/Pagenation";
 import AddModule from "../module/AddModule";
+import ModuleDetils from "../module/ModuleDetails";
 import ModuleTable from "../module/ModuleTable";
 
 export default function Modules() {
@@ -19,9 +20,13 @@ export default function Modules() {
   const [isIndex, setIsIndex] = useState(false);
 
   const [addModule, setAddModule] = useState(false);
+
   return (
     <div className="module hotel">
       <AddModule handler={setAddModule} addhotel={addModule} />
+      {isDetails && (
+        <ModuleDetils handler={setIsDetails} addhotel={isDetails} />
+      )}
       <div className="container">
         <div className="booking-box">
           <div className="hotel-top">
@@ -34,7 +39,7 @@ export default function Modules() {
             </div>
             <div className="hotel-top-right">
               <ExportBtn />
-              <Button handler={setAddModule} text="Add New Hotel" />
+              <Button handler={setAddModule} text="New Module" />
             </div>
           </div>
           <BookingMneu menus={menus} />
