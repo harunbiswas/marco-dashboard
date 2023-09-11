@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
+import { BsBoxArrowUpRight } from "react-icons/bs";
 import Input from "../hotel-edit/Input";
 import TextArea from "../hotel-edit/TextArea";
 
@@ -19,11 +20,13 @@ export default function SectionThree() {
           label: "Image Link",
           pls: "Enter RUL",
           value: "",
+          url: true,
         },
         {
           label: "Redirect URL",
           pls: "Enter URL",
           value: "",
+          url: true,
         },
       ],
     },
@@ -39,11 +42,13 @@ export default function SectionThree() {
           label: "Image Link",
           pls: "Enter RUL",
           value: "",
+          url: true,
         },
         {
           label: "Redirect URL",
           pls: "Enter URL",
           value: "",
+          url: true,
         },
       ],
     },
@@ -74,11 +79,13 @@ export default function SectionThree() {
           label: "Image Link",
           pls: "Enter URL",
           value: "",
+          url: true,
         },
         {
           label: "Redirect URL",
           pls: "Enter URL",
           value: "",
+          url: true,
         },
       ],
     };
@@ -129,6 +136,16 @@ export default function SectionThree() {
                 i="vidwoLink"
                 handler={(e) => handleChange(i, j, e)}
               />
+              {item.value && item.url && (
+                <a
+                  className="url-btn"
+                  href={item.value}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <BsBoxArrowUpRight />
+                </a>
+              )}
             </div>
           ))}
           <button onClick={() => deleteRegion(blog.id)}>

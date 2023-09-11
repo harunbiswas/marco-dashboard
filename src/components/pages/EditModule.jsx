@@ -3,9 +3,9 @@ import { HiDocumentText } from "react-icons/hi";
 import Bootcump from "../basic/BootCump";
 import ExportBtn from "../basic/ExportBtn";
 import CopyLink from "../booking/CopyLink";
-import DragDropBody from "../hotel-edit/DragDropBody";
 import Input from "../hotel-edit/Input";
 import TextArea from "../hotel-edit/TextArea";
+import AddImage from "../module/AddImage";
 import FixedOffer from "../module/FixecOffer";
 import ModuleTemplate from "../module/ModuleTemplate";
 import SaveTemplate from "../module/SaveTemplate";
@@ -58,7 +58,7 @@ export default function EditModule() {
               Contrary to popular belief, Lorem Ipsum is not simply random text.
               It has roots in a piece of classical Latin
             </p>
-            <DragDropBody />
+            <AddImage />
             <div className="module-edit-basic-item">
               <label htmlFor="title">Title</label>
               <Input

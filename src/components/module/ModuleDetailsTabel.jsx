@@ -133,48 +133,15 @@ export default function ModuleDetailsTable({ data }) {
   const inp = useRef(td.map(() => createRef()));
   const [index, setIndex] = useState(null);
 
-  const addPriceHandler = (itemId, newPrice, i) => {
-    setTD((prevTD) => {
-      // Find the item with the given itemId
-      const updatedTD = prevTD.map((item) => {
-        if (item.id === itemId) {
-          // Return a new item object with the updated price
-          return { ...item, price: newPrice, added: "Marco" };
-        }
-        return item; // Return unchanged item for other items
-      });
-      return updatedTD;
-    });
-    setIndex(i);
-  };
-
   useEffect(() => {
     if (index || index === 0) {
       inp.current[index].current.childNodes[1].focus();
     }
   }, [index]);
 
-  // select handler
-  const selectHandler = (e) => {
-    setTD((prevTD) =>
-      prevTD.map((item) =>
-        item.id === e.id ? { ...item, select: !item.select } : item
-      )
-    );
-  };
-
   const [isDel, setIsDel] = useState(false);
   const del = useRef(null);
   const tbd = useRef(null);
-
-  const contexHandler = (e, s, id) => {
-    if (s) {
-      e.preventDefault();
-      const top = tbd.current.getBoundingClientRect().top;
-      del.current.style.top = `${e.clientY - top}px`;
-      setIsDel(true);
-    }
-  };
 
   useEffect(() => {
     document.addEventListener("click", (e) => {

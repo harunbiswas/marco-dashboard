@@ -17,9 +17,9 @@ export default function DrapDrop({ isDrag, handler, addHandler }) {
       addHandler((prev) => {
         return [...prev, { src: img }];
       });
-      handler(false);
       setUrl("");
       setValue("");
+      handler(false);
     }
   };
 
@@ -43,7 +43,7 @@ export default function DrapDrop({ isDrag, handler, addHandler }) {
             <GrClose />
           </button>
         </div>
-        <DrapDropBody urlSet={setUrl} />
+        <DrapDropBody url={url} urlSet={setUrl} />
         <div className="sep">
           <span>OR</span>
         </div>

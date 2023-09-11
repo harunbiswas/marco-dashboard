@@ -43,6 +43,30 @@ export default function ImportTemplate({ handler, addhotel }) {
       id: 4,
       name: "Ceneral Template",
     },
+    {
+      id: 2,
+      name: "General Template - Modificed",
+    },
+    {
+      id: 3,
+      name: "General Template - Modificed",
+    },
+    {
+      id: 4,
+      name: "Ceneral Template",
+    },
+    {
+      id: 2,
+      name: "General Template - Modificed",
+    },
+    {
+      id: 3,
+      name: "General Template - Modificed",
+    },
+    {
+      id: 4,
+      name: "Ceneral Template",
+    },
   ]);
   const [offers, setOffers] = useState([
     {
@@ -83,7 +107,7 @@ export default function ImportTemplate({ handler, addhotel }) {
   const description =
     "Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.";
 
-  const [isOffer, setIsOffer] = useState(true);
+  const [isOffer, setIsOffer] = useState(false);
   const [activeID, setActiveId] = useState(null);
   const [istoggle, setIsToggle] = useState(null);
 

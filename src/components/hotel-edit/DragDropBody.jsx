@@ -1,29 +1,27 @@
-import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import { AiFillDelete } from "react-icons/ai";
 import { BsUpload } from "react-icons/bs";
 
-export default function DrapDropBody({ urlSet }) {
+export default function DrapDropBody({ urlSet, url }) {
   const fileTypes = ["JPG", "PNG", "GIF"];
-  const [url, setUrl] = useState("");
+  // const [url, setUrl] = useState("");
   const fileHandler = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setUrl(event.target.result);
         urlSet(event.target.result);
       };
       reader.readAsDataURL(file);
     } else {
-      setUrl(null);
+      urlSet(null);
     }
   };
 
   return (
     <div className="drag-drop-body">
       {url && (
-        <button onClick={() => setUrl("")} className="close">
+        <button onClick={() => urlSet("")} className="close">
           <AiFillDelete />
         </button>
       )}
