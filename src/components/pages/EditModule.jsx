@@ -60,15 +60,15 @@ export default function EditModule() {
             </p>
             <AddImage />
             <div className="module-edit-basic-item">
-              <label htmlFor="title">Title</label>
+              <label htmlFor="title">SEO - Title</label>
               <Input
-                d={{ value: title, label: "Enter Title" }}
+                d={{ value: title, label: "Enter SEO Title" }}
                 i="title"
                 handler={setTitle}
               />
             </div>
             <div className="module-edit-basic-item">
-              <label htmlFor="">Description</label>
+              <label htmlFor="">SEO - Description</label>
               <TextArea />
             </div>
           </div>{" "}
