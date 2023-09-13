@@ -3,11 +3,7 @@ import { AiFillDelete, AiOutlinePlus } from "react-icons/ai";
 import DrapDrop from "../hotel-edit/DragDrop";
 
 export default function AddImage() {
-  const [imgs, setImgs] = useState([
-    {
-      src: "https://cdn.pixabay.com/photo/2019/07/07/14/03/fiat-500-4322521_640.jpg",
-    },
-  ]);
+  const [imgs, setImgs] = useState([]);
   const [addImg, setImg] = useState(false);
 
   const deleteImg = (indexToRemove) => {
@@ -27,9 +23,11 @@ export default function AddImage() {
           </button>
         </div>
       ))}
-      <button onClick={() => setImg(true)} className="add-btn">
-        <AiOutlinePlus />
-      </button>
+      {!imgs.length && (
+        <button onClick={() => setImg(true)} className="add-btn">
+          <AiOutlinePlus />
+        </button>
+      )}
     </div>
   );
 }
