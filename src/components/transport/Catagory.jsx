@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import Select from "../basic/Select";
 import Input from "../hotel-edit/Input";
 
@@ -73,7 +73,7 @@ export default function Catagory() {
       ],
     },
     {
-      id: 3,
+      id: 4,
       items: [
         {
           name: "Type",
@@ -117,6 +117,11 @@ export default function Catagory() {
     );
   };
 
+  const removeItemById = (itemId) => {
+    console.log(itemId);
+    setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+  };
+
   return (
     <div className="transport-catagory">
       {items.map((item, i) => (
@@ -135,6 +140,9 @@ export default function Catagory() {
               )) || <Select data={d.option} />}
             </div>
           ))}
+          <button onClick={() => removeItemById(item.id)}>
+            <AiOutlineDelete />
+          </button>
         </div>
       ))}
 
@@ -144,7 +152,7 @@ export default function Catagory() {
             return [
               ...prev,
               {
-                id: items.length + 1,
+                id: new Date().getTime() + 1,
                 items: [
                   {
                     name: "Type",

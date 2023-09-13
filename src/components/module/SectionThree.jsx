@@ -96,9 +96,7 @@ export default function SectionThree() {
 
   const deleteRegion = (blogIndex) => {
     setBlogs((prevBlogs) => {
-      const updatedBlogs = prevBlogs.filter(
-        (blog, index) => index !== blogIndex
-      );
+      const updatedBlogs = prevBlogs.filter((blog) => blog.id !== blogIndex);
       return updatedBlogs;
     });
   };

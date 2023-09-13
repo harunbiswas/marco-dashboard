@@ -176,271 +176,46 @@ export default function ModuleDetailsTable({ data }) {
         </div>
         {td.map((d, i) => (
           <tr
-            key={i}
-            onClick={() => {
-              data.setIsIndex(i);
+            onClick={(e) => {
+              e.target.blur();
             }}
+            key={i}
             className={`${(data.isIndex === i && "active") || ""}`}
           >
-            <td
-              onClick={(e) => {
-                if (!isFocus || !(isFocus === "id")) {
-                  if (data.isIndex === i) {
-                    data.detailsHandler(!data.isDetails);
-                    e.target.blur();
-                  } else {
-                    data.setIsIndex(i);
-                    data.detailsHandler(true);
-                    e.target.blur();
-                  }
-                } else {
-                  if (e.target.tagName !== "INPUT") {
-                    if (data.isIndex === i) {
-                      console.log(data.isIndex);
-                      data.detailsHandler(!data.isDetails);
-                      e.target.blur();
-                    } else {
-                      data.setIsIndex(i);
-                      data.detailsHandler(true);
-                      e.target.blur();
-                    }
-                  } else {
-                    data.detailsHandler(false);
-                  }
-                }
-              }}
-              onDoubleClick={(e) => {
-                setIsFocus("id");
-                data.detailsHandler(false);
-              }}
-              className="id"
-            >
+            <td className="id">
               <Input data={{ value: d.id }} />
             </td>
-            <td
-              onClick={(e) => {
-                if (!isFocus || !(isFocus === "name")) {
-                  if (data.isIndex === i) {
-                    data.detailsHandler(!data.isDetails);
-                    e.target.blur();
-                  } else {
-                    data.setIsIndex(i);
-                    data.detailsHandler(true);
-                    e.target.blur();
-                  }
-                } else {
-                  if (e.target.tagName !== "INPUT") {
-                    if (data.isIndex === i) {
-                      console.log(data.isIndex);
-                      data.detailsHandler(!data.isDetails);
-                      e.target.blur();
-                    } else {
-                      data.setIsIndex(i);
-                      data.detailsHandler(true);
-                      e.target.blur();
-                    }
-                  } else {
-                    data.detailsHandler(false);
-                  }
-                }
-              }}
-              onDoubleClick={(e) => {
-                setIsFocus("name");
-                data.detailsHandler(false);
-              }}
-              className="name"
-            >
+            <td className="name">
               <div className="inner">
                 <strong>
                   <Input data={{ value: d.user }} />
                 </strong>{" "}
-                <span
-                  onClick={() => {
-                    data.detailsHandler(!data.isDetails);
-                  }}
-                >
-                  {d.quote} quote request
-                </span>
+                <span>{d.quote} quote request</span>
               </div>
             </td>
-            <td
-              onClick={() => {
-                if (data.isIndex === i) {
-                  data.detailsHandler(!data.isDetails);
-                } else {
-                  data.setIsIndex(i);
-                  data.detailsHandler(true);
-                }
-              }}
-            >
-              <div
-                onClick={() => {
-                  if (data.isIndex === i) {
-                    data.detailsHandler(!data.isDetails);
-                  } else {
-                    data.setIsIndex(i);
-                    data.detailsHandler(true);
-                  }
-                }}
-                className="inner"
-              >
+            <td>
+              <div className="inner">
                 <strong>{moment(d.date).format("MMM DD, YY")}</strong>{" "}
                 <span>{moment(d.date).format("h: MM a")}</span>
               </div>
             </td>
 
-            <td
-              onClick={(e) => {
-                if (!isFocus || !(isFocus === "citta")) {
-                  if (data.isIndex === i) {
-                    data.detailsHandler(!data.isDetails);
-                    e.target.blur();
-                  } else {
-                    data.setIsIndex(i);
-                    data.detailsHandler(true);
-                    e.target.blur();
-                  }
-                } else {
-                  if (e.target.tagName !== "INPUT") {
-                    if (data.isIndex === i) {
-                      console.log(data.isIndex);
-                      data.detailsHandler(!data.isDetails);
-                      e.target.blur();
-                    } else {
-                      data.setIsIndex(i);
-                      data.detailsHandler(true);
-                      e.target.blur();
-                    }
-                  } else {
-                    data.detailsHandler(false);
-                  }
-                }
-              }}
-              onDoubleClick={(e) => {
-                setIsFocus("citta");
-                data.detailsHandler(false);
-              }}
-            >
+            <td>
               {" "}
               <Input data={{ value: d.citta }} />
             </td>
-            <td
-              onClick={(e) => {
-                if (!isFocus || !(isFocus === "trastorto")) {
-                  if (data.isIndex === i) {
-                    data.detailsHandler(!data.isDetails);
-                    e.target.blur();
-                  } else {
-                    data.setIsIndex(i);
-                    data.detailsHandler(true);
-                    e.target.blur();
-                  }
-                } else {
-                  if (e.target.tagName !== "INPUT") {
-                    if (data.isIndex === i) {
-                      console.log(data.isIndex);
-                      data.detailsHandler(!data.isDetails);
-                      e.target.blur();
-                    } else {
-                      data.setIsIndex(i);
-                      data.detailsHandler(true);
-                      e.target.blur();
-                    }
-                  } else {
-                    data.detailsHandler(false);
-                  }
-                }
-              }}
-              onDoubleClick={(e) => {
-                setIsFocus("trastorto");
-                data.detailsHandler(false);
-              }}
-            >
+            <td>
               <Input data={{ value: d.trasporto }} />
             </td>
-            <td
-              onClick={(e) => {
-                if (!isFocus || !(isFocus === "tipi")) {
-                  if (data.isIndex === i) {
-                    data.detailsHandler(!data.isDetails);
-                    e.target.blur();
-                  } else {
-                    data.setIsIndex(i);
-                    data.detailsHandler(true);
-                    e.target.blur();
-                  }
-                } else {
-                  if (e.target.tagName !== "INPUT") {
-                    if (data.isIndex === i) {
-                      console.log(data.isIndex);
-                      data.detailsHandler(!data.isDetails);
-                      e.target.blur();
-                    } else {
-                      data.setIsIndex(i);
-                      data.detailsHandler(true);
-                      e.target.blur();
-                    }
-                  } else {
-                    data.detailsHandler(false);
-                  }
-                }
-              }}
-              onDoubleClick={(e) => {
-                setIsFocus("tipi");
-                data.detailsHandler(false);
-              }}
-              className="tipi"
-            >
+            <td className="tipi">
               <Input data={{ value: d.tipi }} />
             </td>
-            <td
-              onClick={(e) => {
-                if (!isFocus || !(isFocus === "periodo")) {
-                  if (data.isIndex === i) {
-                    data.detailsHandler(!data.isDetails);
-                    e.target.blur();
-                  } else {
-                    data.setIsIndex(i);
-                    data.detailsHandler(true);
-                    e.target.blur();
-                  }
-                } else {
-                  if (e.target.tagName !== "INPUT") {
-                    if (data.isIndex === i) {
-                      console.log(data.isIndex);
-                      data.detailsHandler(!data.isDetails);
-                      e.target.blur();
-                    } else {
-                      data.setIsIndex(i);
-                      data.detailsHandler(true);
-                      e.target.blur();
-                    }
-                  } else {
-                    data.detailsHandler(false);
-                  }
-                }
-              }}
-              onDoubleClick={(e) => {
-                setIsFocus("periodo");
-                data.detailsHandler(false);
-              }}
-            >
+            <td>
               <div className="inner">
                 <strong className="periodo">
                   <Input data={{ value: d.periodo }} />
                 </strong>
-                <span
-                  onClick={() => {
-                    if (data.isIndex === i) {
-                      data.detailsHandler(!data.isDetails);
-                    } else {
-                      data.setIsIndex(i);
-                      data.detailsHandler(true);
-                    }
-                  }}
-                >
-                  {d.dateLine}
-                </span>
+                <span>{d.dateLine}</span>
               </div>
             </td>
           </tr>

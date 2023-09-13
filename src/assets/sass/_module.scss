@@ -154,6 +154,11 @@
             flex-direction: column;
             gap: 5px;
 
+            .select,
+            input {
+              height: 48px !important;
+            }
+
             .inner {
               display: flex;
 
@@ -249,6 +254,19 @@
 
       &::-webkit-scrollbar {
         width: 0; /* Set the width of the scrollbar */
+      }
+    }
+
+    .add-hotel-footer {
+      display: flex;
+      gap: 20px;
+
+      & > button {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-transform: capitalize;
       }
     }
 
