@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { BiSolidOffer, BiSolidUserVoice } from "react-icons/bi";
 import { FaAngleLeft, FaCarSide } from "react-icons/fa";
@@ -6,10 +7,11 @@ import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { IoSettingsSharp } from "react-icons/io5";
 import { PiSquaresFourFill } from "react-icons/pi";
 import { RiHotelFill } from "react-icons/ri";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 
 export default function Sidebar({ isFull, setIsFull }) {
+  const navigate = useNavigate();
   const menu = [
     {
       name: "deshboard",
@@ -51,7 +53,6 @@ export default function Sidebar({ isFull, setIsFull }) {
     setActiveMenu(location.pathname);
   });
 
-  console.log(activeMenu);
   return (
     <nav className="nav" id="nav">
       <div className="nav-brand">
@@ -97,7 +98,12 @@ export default function Sidebar({ isFull, setIsFull }) {
         </ul>
       </div>
       <div className="nav-logout">
-        <button>
+        <button
+          onClick={() => {
+            Cookies.remove("login");
+            navigate("/login");
+          }}
+        >
           <FiLogOut />
           {isFull && <span>logout</span>}
         </button>

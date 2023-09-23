@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import LoginForm from "../login/LoginForm";
 import "../styles/Login/login.scss";
 
 const Login = () => {
@@ -32,45 +33,11 @@ const Login = () => {
         <div className="form_box">
           {/* heading */}
           <div className="heading">
-            <h1 className="jakarta">Welcome</h1>
+            <h1 className="jakarta">Benvenuto</h1>
           </div>
 
           {/* form */}
-          <form>
-            {/* email */}
-            <div className="box">
-              <label htmlFor="mail" className="jakarta">
-                Email
-              </label>
-              <input
-                type="email"
-                id="mail"
-                placeholder="Connie"
-                className="jakarta"
-              />
-            </div>
-
-            {/* password */}
-            <div className="box">
-              <label htmlFor="password" className="jakarta">
-                Password
-              </label>
-              <input type="password" placeholder="Murray" className="jakarta" />
-            </div>
-
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: "35px",
-              }}
-            >
-              <NavLink to="/">
-                <button className="jakarta">Login</button>
-              </NavLink>
-            </div>
-          </form>
+          <LoginForm />
         </div>
       </div>
     </div>
