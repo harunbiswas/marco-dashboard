@@ -74,4 +74,17 @@ values.userTH = [
   "Number of quote sent",
 ];
 
+values.generateUniqueString = () => {
+  const array = new Uint32Array(2);
+
+  window.crypto.getRandomValues(array);
+
+  return (
+    "#" +
+    Array.from(array, (dec) => dec.toString(36))
+      .join("")
+      .slice(0, 16)
+  );
+};
+
 export default values;

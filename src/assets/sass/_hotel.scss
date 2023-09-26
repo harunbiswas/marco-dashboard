@@ -1619,6 +1619,12 @@ button.edit-offer-item {
       .add-hotel-item-type {
         animation: vibarate 0.3s;
       }
+
+      &.item-id {
+        input {
+          color: $red;
+        }
+      }
     }
 
     &-type {

@@ -1,68 +1,107 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { PiArrowSquareOutBold } from "react-icons/pi";
+import { useParams } from "react-router-dom";
+import values from "../../../values";
 import Select from "../basic/Select";
 import Input from "./Input";
-import TextArea from "./TextArea";
 
-export default function DetailsInputs() {
-  const [inputs, setInputs] = useState([
-    {
-      label: "Hotel Name",
-      value: "San Pietro di Positano",
-    },
-    {
-      label: "Hotel ID",
-      value: "HT2035-23",
-    },
-    {
-      label: "Morgana ID",
-      value: "3430098483409",
-    },
-    {
-      label: "Hotel Website",
-      value: "https://www.borgosantandrea.it",
-      url: true,
-    },
-    {
-      label: "Email",
-      value: "patrizgasalci.arni61@gmail.com",
-    },
-    {
-      label: "Phone Number",
-      value: "+1 (234) 567 - 891",
-      number: true,
-    },
-
-    {
-      label: "Hotel XMLurl",
-      value: "https://databaselink.com",
-      url: true,
-    },
-
-    {
-      label: "Priority",
-      value: "32",
-    },
-  ]);
+export default function DetailsInputs({ data, setData }) {
+  const [inputs, setInputs] = useState([]);
   const [textareas, setTextAreas] = useState([
     {
-      label: "Hotel Description",
+      label: "Descrizione Hotel",
+      pls: "Inserisci la descrizione dell’hotel",
+      value: "",
+      name: "hotelDescription",
     },
     {
-      label: "Summary Description",
+      label: "Riassunto Descrizione",
+      pls: "Inserisci il riassunto della descrizione dell’hotel",
+      value: "",
+      name: "summaryDescription",
     },
     {
-      label: "Rooms Description",
+      label: "Descrizione Camere",
+      pls: "Inserisci una descrizione delle camere",
+      value: "",
+      name: "roomsDescription",
     },
   ]);
 
+  const { id } = useParams();
+
+  useEffect(() => {
+    axios
+      .get(`${values.url}/hotel/single?id=${id}`)
+      .then((d) => {
+        setInputs([
+          {
+            label: "Nome Hotel",
+            value: d.data?.name,
+          },
+          {
+            label: "Hotel ID",
+            value: d.data?.id,
+          },
+          {
+            label: "Morgana ID",
+            value: d.data?.morganaId,
+          },
+          {
+            label: "Sito Web Hotel",
+            value: d.data?.hotelWebsite,
+            url: true,
+          },
+          {
+            label: "Email",
+            value: d.data?.email,
+          },
+          {
+            label: "Numero di Telefono",
+            value: d.data?.phone,
+            number: true,
+          },
+
+          {
+            label: "Hotel XMLurl",
+            value: d.data?.hotelXMLurl,
+            url: true,
+          },
+
+          {
+            label: "Priorità",
+            value: d.data?.priority,
+          },
+        ]);
+      })
+      .catch((e) => console.log(e));
+  }, []);
+
+  useEffect(() => {
+    setData((prev) => {
+      return {
+        ...prev,
+        name: inputs[0]?.value,
+        morganaId: inputs[2]?.value,
+        hotelWebsite: inputs[3]?.value,
+        email: inputs[4]?.value,
+        phone: inputs[5]?.value,
+        hotelXMLurl: inputs[6]?.value,
+        priority: inputs[7]?.value,
+      };
+    });
+  }, [inputs]);
+
   const changeHandler = (label, newValue) => {
-    if (label === "Priority") {
+    if (label === "Priorità") {
       const updatedInputs = inputs.map((input) =>
         input.label === label ? { ...input, value: parseInt(newValue) } : input
       );
       setInputs(updatedInputs);
+    } else if (label === "Hotel ID") {
+      setInputs(inputs);
     } else {
       const updatedInputs = inputs.map((input) =>
         input.label === label ? { ...input, value: newValue } : input
@@ -70,6 +109,14 @@ export default function DetailsInputs() {
       setInputs(updatedInputs);
     }
   };
+
+  const [isSpa, setIsSpa] = useState(data?.spaDescription);
+  const [isRestu, setIsRestu] = useState(data?.restaurantDescription);
+
+  useEffect(() => {
+    setIsSpa(data?.spaDescription);
+    setIsRestu(data?.restaurantDescription);
+  }, [data]);
   return (
     <>
       <div className="hotel-form-details-wrp">
@@ -87,45 +134,125 @@ export default function DetailsInputs() {
             </div>
           </div>
         ))}
-        {textareas.map((d, i) => (
-          <>
-            {" "}
-            <div key={i} className="hotel-form-details-item full">
-              <label htmlFor="">{d.label}</label>
-              <div className="inner">
-                <TextArea />
-              </div>
-            </div>
-          </>
-        ))}
+        {/* item start  */}
+        <div className="hotel-form-details-item full">
+          <label htmlFor="">Descrizione Hotel</label>
+          <div className="inner">
+            <textarea
+              name="hotelDescription"
+              placeholder="Inserisci la descrizione dell’hotel"
+              value={data?.hotelDescription}
+              onChange={(e) => {
+                setData((prev) => {
+                  return {
+                    ...prev,
+                    hotelDescription: e.target.value,
+                  };
+                });
+              }}
+            ></textarea>
+          </div>
+        </div>
+        {/* item end  */}
+        {/* item start  */}
+        <div className="hotel-form-details-item full">
+          <label htmlFor="">Riassunto Descrizione</label>
+          <div className="inner">
+            <textarea
+              name="hotelDescription"
+              placeholder="Inserisci il riassunto della descrizione dell’hotel"
+              value={data?.summaryDescription}
+              onChange={(e) => {
+                setData((prev) => {
+                  return {
+                    ...prev,
+                    summaryDescription: e.target.value,
+                  };
+                });
+              }}
+            ></textarea>
+          </div>
+        </div>
+        {/* item end  */}
+
+        {/* item start  */}
+        <div className="hotel-form-details-item full">
+          <label htmlFor="">Descrizione Camere</label>
+          <div className="inner">
+            <textarea
+              name="hotelDescription"
+              placeholder="Inserisci una descrizione delle camere"
+              value={data?.roomsDescription}
+              onChange={(e) => {
+                setData((prev) => {
+                  return {
+                    ...prev,
+                    roomsDescription: e.target.value,
+                  };
+                });
+              }}
+            ></textarea>
+          </div>
+        </div>
+        {/* item end  */}
       </div>
       <div className="buttons">
-        {!textareas.some(
-          (textarea) => textarea.label === "Spa Description"
-        ) && (
+        {(isSpa && (
+          <div className="hotel-form-details-item full">
+            <label htmlFor="">Descrizione Camere</label>
+            <div className="inner">
+              <textarea
+                name="hotelDescription"
+                placeholder="Inserisci una descrizione delle camere"
+                value={data?.spaDescription}
+                onChange={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      spaDescription: e.target.value,
+                    };
+                  });
+                }}
+              ></textarea>
+            </div>
+          </div>
+        )) || (
           <button
-            onClick={() => {
-              setTextAreas((prev) => {
-                return [...prev, { label: "Spa Description" }];
-              });
+            onClick={(e) => {
+              setIsSpa(true);
             }}
           >
             <BiPlus />
-            Add Spa Description
+            Aggiungi Descrizione Spa
           </button>
-        )}
-        {!textareas.some(
-          (textarea) => textarea.label === " Restaurants Description"
-        ) && (
+        )}{" "}
+        {(isRestu && (
+          <div className="hotel-form-details-item full">
+            <label htmlFor="">Descrizione Camere</label>
+            <div className="inner">
+              <textarea
+                name="hotelDescription"
+                placeholder="Inserisci una descrizione delle camere"
+                value={data?.restaurantDescription}
+                onChange={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      restaurantDescription: e.target.value,
+                    };
+                  });
+                }}
+              ></textarea>
+            </div>
+          </div>
+        )) || (
           <button
-            onClick={() => {
-              setTextAreas((prev) => {
-                return [...prev, { label: " Restaurants Description" }];
-              });
+            onClick={(e) => {
+              setIsRestu(true);
             }}
           >
             <BiPlus />
-            Add Restaurants Description
+            Aggiungi Descrizione Ristorante
           </button>
         )}
       </div>

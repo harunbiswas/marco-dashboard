@@ -1,6 +1,9 @@
-import { useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 import { BsFillBuildingsFill } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import values from "../../../values";
 import Bootcump from "../basic/BootCump";
 import EditMenu from "../hotel-edit/EditMenu";
 import EditOffer from "../hotel-edit/EditOffer";
@@ -24,6 +27,33 @@ export default function HotelEdit() {
   const [isPublish, setIsPublish] = useState(false);
   const navigate = useNavigate();
 
+  // development
+  const { id } = useParams();
+  const [hotelData, setHotelData] = useState({});
+  const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
+
+  useEffect(() => {
+    axios
+      .get(`${values.url}/hotel/single?id=${id}`)
+      .then((d) => {
+        setHotelData(d.data);
+      })
+      .catch((e) => {
+        console.log(e.response);
+      });
+  }, []);
+
+  const submitHandler = () => {
+    axios
+      .put(`${values.url}/hotel`, hotelData, {
+        headers: {
+          token,
+        },
+      })
+      .then((d) => console.log(d))
+      .catch((e) => console.log(e));
+  };
+
   return (
     <div className="hotel-edit hotel">
       <div className="container">
@@ -33,7 +63,9 @@ export default function HotelEdit() {
             <EditMenu active={active} setActive={setActive} />
           </div>
           <div className="hotel-edit-body">
-            {(active === 1 && <HotelDetailsForm />) ||
+            {(active === 1 && (
+              <HotelDetailsForm data={hotelData} setData={setHotelData} />
+            )) ||
               (active === 2 && <LocationDetails />) ||
               (active === 3 && <EditOffer />) ||
               (active === 4 && isPublish && <Publish />)}
@@ -44,7 +76,9 @@ export default function HotelEdit() {
               <button>Discard</button>
             </div>
             <div className="right">
-              {!isPublish && <button>Save Changes</button>}
+              {!isPublish && (
+                <button onClick={submitHandler}>Save Changes</button>
+              )}
               <button
                 onClick={() => {
                   if (active < 4 && !isPublish) {

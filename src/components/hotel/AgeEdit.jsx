@@ -1,7 +1,10 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { RiDeleteBin2Line } from "react-icons/ri";
+import { useParams } from "react-router-dom";
+import values from "../../../values";
 
-export default function AgeEdit({ isEdit }) {
+export default function AgeEdit({ isEdit, data, setData }) {
   const [items, setItems] = useState([
     {
       id: 1,
@@ -41,6 +44,22 @@ export default function AgeEdit({ isEdit }) {
     );
     setItems(updatedItems);
   };
+
+  const { id } = useParams();
+  useEffect(() => {
+    axios.get(`${values.url}/hotel/single?id=${id}`).then((d) => {
+      setItems(d.data?.ageDeductions);
+    });
+  }, []);
+
+  useEffect(() => {
+    setData((prev) => {
+      return {
+        ...prev,
+        ageDeductions: items,
+      };
+    });
+  });
 
   // Function to update value dynamically
   const updateValue = (itemId, subItemId, newValue) => {

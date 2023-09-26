@@ -1,18 +1,33 @@
+import axios from "axios";
+import Cookies from "js-cookie";
 import { FileUploader } from "react-drag-drop-files";
 import { AiFillDelete } from "react-icons/ai";
 import { BsUpload } from "react-icons/bs";
+import values from "../../../values";
 
 export default function DrapDropBody({ urlSet, url }) {
+  const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
   const fileTypes = ["JPG", "PNG", "GIF"];
   // const [url, setUrl] = useState("");
   const fileHandler = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        urlSet(event.target.result);
-      };
-      reader.readAsDataURL(file);
+    const formData = new FormData();
+
+    if (file && token) {
+      formData.append("image", file);
+
+      axios
+        .post(`${values.url}/image`, formData, {
+          headers: {
+            token,
+          },
+        })
+        .then((d) => {
+          urlSet(d.data.url);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     } else {
       urlSet(null);
     }
