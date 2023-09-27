@@ -94,7 +94,7 @@ const AddEmpPopup = ({ setAddEmp, setEditEmp, add, email = null }) => {
             token,
           },
         })
-        .then((d) => {
+        .then(() => {
           closePopup();
           window.location.reload();
         })
