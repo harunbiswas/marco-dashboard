@@ -1,11 +1,14 @@
 import { motion } from "framer-motion";
+import Cookies from "js-cookie";
 import { useState } from "react";
 import AddEmpPopup from "../custom/AddEmpPopup";
 
-const EmployeeCard = () => {
+const EmployeeCard = ({ data }) => {
   //States
   const [showEmpStatistics, setShowEmpStatistics] = useState(false);
   const [editEmp, setEditEmp] = useState(false);
+
+  const logdinUser = Cookies.get("login") && JSON.parse(Cookies.get("login"));
 
   return (
     <div className="employee_card">
@@ -14,14 +17,16 @@ const EmployeeCard = () => {
         {/* left side */}
         <div className="left">
           {/* image */}
-          <img src="./images/profile-pic.png" alt="" />
+          <img src={data?.img} alt="" />
 
           {/* information */}
           <div className="info">
             {/* heading */}
             <div className="info-head">
-              <h1 className="jakarta">Marco Sciosia</h1>
-              <span className="jakarta">Admin</span>
+              <h1 className="jakarta">
+                {data?.firstName} {data?.lastName}
+              </h1>
+              <span className="jakarta">{data?.role}</span>
             </div>
 
             {/* edited */}
@@ -30,13 +35,17 @@ const EmployeeCard = () => {
         </div>
 
         {/* right */}
-        <div className="right">
-          <button className="jakarta" onClick={() => setEditEmp(true)}>
-            Edit
-          </button>
-        </div>
+        {(logdinUser?.role === "admin" || logdinUser?.role === "manager") && (
+          <div className="right">
+            <button className="jakarta" onClick={() => setEditEmp(true)}>
+              Modifica
+            </button>
+          </div>
+        )}
 
-        {editEmp === true ? <AddEmpPopup setEditEmp={setEditEmp} /> : null}
+        {editEmp === true ? (
+          <AddEmpPopup setEditEmp={setEditEmp} email={data?.email} />
+        ) : null}
       </div>
 
       {/* Bottom part */}

@@ -11,17 +11,22 @@ export default function LoginForm() {
     password: "",
   });
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsloading] = useState(false);
   const submitHandler = (e) => {
     e.preventDefault();
 
+    setIsloading(true);
     axios
       .post(`${values.url}/user`, data)
       .then((d) => {
+        console.log(d.data);
         Cookies.set("login", JSON.stringify(d.data.userObject));
+        setIsloading(false);
         navigate("/");
       })
       .catch((e) => {
         console.log(e);
+        setIsloading(false);
         setErrors(e.response.data);
       });
   };
@@ -85,7 +90,13 @@ export default function LoginForm() {
           marginTop: "35px",
         }}
       >
-        <button className="jakarta">Login</button>
+        {(isLoading && (
+          <button disabled className="jakarta spinner">
+            <div className="bounce1"></div>
+            <div className="bounce2"></div>
+            <div className="bounce3"></div>
+          </button>
+        )) || <button className="jakarta">Login</button>}
       </div>
     </form>
   );

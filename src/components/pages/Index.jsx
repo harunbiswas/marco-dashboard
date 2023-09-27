@@ -1,6 +1,8 @@
+import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import values from "../../../values";
 import Header from "../header/Header";
 import Sidebar from "../header/Sidebar";
 
@@ -12,15 +14,32 @@ export default function Index() {
     const nav = document.getElementById("nav");
     setPadding(nav.offsetWidth);
   }, [isFull]);
+  const cookie = Cookies.get("login");
+  const token = (cookie && JSON.parse(cookie).token) || "";
 
   useEffect(() => {
-    const cookie = Cookies.get("login");
-    const token = (cookie && JSON.parse(cookie).token) || "";
-
     if (!token) {
       navigate("login");
     }
   });
+
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    axios
+      .get(`${values.url}/user`, {
+        headers: {
+          token,
+        },
+      })
+      .then((d) => {
+        setUser(d.data);
+      })
+      .catch((e) => {
+        console.error(e.response);
+      });
+  }, []);
+
   return (
     <>
       <div
@@ -29,7 +48,7 @@ export default function Index() {
         }}
         className="main"
       >
-        <Header />
+        <Header user={user} />
         <div className="main-body">
           <Outlet />
         </div>

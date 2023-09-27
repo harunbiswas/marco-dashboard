@@ -1,16 +1,35 @@
+import Cookies from "js-cookie";
 import { useState } from "react";
 import AddEmpPopup from "./AddEmpPopup";
 
-const EmployeeFilter = () => {
+const EmployeeFilter = ({ users, setActiveUsers }) => {
   // Add empoloyee state
   const [addEmp, setAddEmp] = useState(false);
+
+  const searchHandler = (e) => {
+    const existingUser =
+      (e.target.value &&
+        users.filter((u) => {
+          return (
+            u.firstName.toLowerCase() === e.target.value.toLowerCase() ||
+            u.lastName.toLowerCase() === e.target.value.toLowerCase()
+          );
+        })) ||
+      users;
+
+    setActiveUsers(existingUser || []);
+  };
+
+  const [add, setAdd] = useState(false);
+
+  const logdinUser = Cookies.get("login") && JSON.parse(Cookies.get("login"));
 
   return (
     <>
       {/* Search and filter */}
       <div className="search_filter">
         {/* SearchBar */}
-        <div className="searchBar">
+        <form onSubmit={(e) => e.preventDefault()} className="searchBar">
           {/* Icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -29,8 +48,13 @@ const EmployeeFilter = () => {
           </svg>
 
           {/* Input */}
-          <input type="text" placeholder="Search here.." className="jakarta" />
-        </div>
+          <input
+            onChange={searchHandler}
+            type="text"
+            placeholder="Cerca un nome..."
+            className="jakarta"
+          />
+        </form>
 
         {/* Sorting */}
         <div className="filter_add">
@@ -68,31 +92,39 @@ const EmployeeFilter = () => {
           </div>
 
           {/* Add Icon */}
-          <div className="add" onClick={() => setAddEmp(true)}>
-            {/* Icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="15"
-              viewBox="0 0 14 15"
-              fill="#fff"
+          {(logdinUser?.role === "admin" || logdinUser?.role === "manager") && (
+            <div
+              className="add"
+              onClick={() => {
+                setAddEmp(true);
+                setAdd(true);
+              }}
             >
-              <path
-                d="M7 1.5V7.5M7 13.5V7.5M7 7.5H1M7 7.5H13"
-                stroke="#858585"
-                strokeWidth="1.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+              {/* Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="15"
+                viewBox="0 0 14 15"
+                fill="#fff"
+              >
+                <path
+                  d="M7 1.5V7.5M7 13.5V7.5M7 7.5H1M7 7.5H13"
+                  stroke="#858585"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
 
-            <p className="jakarta">Add</p>
-          </div>
+              <p className="jakarta">Aggiungi</p>
+            </div>
+          )}
         </div>
       </div>
 
       {/* Popup */}
-      {addEmp === true ? <AddEmpPopup setAddEmp={setAddEmp} /> : null}
+      {addEmp === true ? <AddEmpPopup setAddEmp={setAddEmp} add={add} /> : null}
     </>
   );
 };

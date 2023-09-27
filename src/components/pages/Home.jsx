@@ -1,36 +1,35 @@
-import { BsCalendarEvent } from "react-icons/bs";
-import { Link } from "react-router-dom";
-import DateLine from "../basic/DateLine";
-import Title from "../basic/Title";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import values from "../../../values";
 import HomeBtm from "../home/HomeBtm";
 import HomeCounter from "../home/HomeCounter";
 import HomeRecords from "../home/HomeRecords";
+import HomeTopBar from "../home/HomeTopBar";
 
 export default function Home() {
+  const [user, setUser] = useState({});
+  const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
+
+  useEffect(() => {
+    axios
+      .get(`${values.url}/user`, {
+        headers: {
+          token,
+        },
+      })
+      .then((d) => {
+        setUser(d.data);
+      })
+      .catch((e) => {
+        console.error(e.response);
+      });
+  }, []);
+
   return (
     <div className="home">
       <div className="container">
-        <Title title="Welcome back, Sarah" />
-        <div className="home-dateline">
-          <div className="home-dateline-left">
-            <strong>Monday, 08 July 2023.</strong>
-            <span>
-              You’ve 5 new booking request, Checkout more in{" "}
-              <Link to="booking">Booking Request</Link>
-            </span>
-          </div>
-          <DateLine
-            data={[
-              "Today",
-              " Last day",
-              "Last 7 days",
-              "Last Month",
-              "Last Year",
-            ]}
-            defaultText="show:"
-            icon={<BsCalendarEvent />}
-          />
-        </div>
+        <HomeTopBar user={user} />
         <HomeCounter />
         <HomeRecords />
         <HomeBtm />

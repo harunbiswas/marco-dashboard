@@ -4,7 +4,7 @@ import values from "../../../values";
 import profileImg from "../../assets/images/profile.png";
 import Dropdown from "./Dropdown";
 
-export default function Profile() {
+export default function Profile({ user }) {
   const [isDropdown, setIsDropdown] = useState(false);
   const ref = useRef(null);
 
@@ -22,11 +22,13 @@ export default function Profile() {
   return (
     <div className="profile" ref={ref}>
       <div className="img">
-        <img src={profileImg} alt="" />
+        <img src={user?.img || profileImg} alt="" />
       </div>
       <div onClick={dropdownHandler} className="profile-body">
-        <strong>Sarah Sanders</strong>
-        <span>Sub-Admin</span>
+        <strong>
+          {user?.firstName} {user?.lastName}
+        </strong>
+        <span>{user?.role}</span>
       </div>
       <div className="profile-btn">
         <button onClick={dropdownHandler}>

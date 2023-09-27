@@ -5,7 +5,7 @@ import Dropdown from "../basic/Dropdown";
 import Profile from "../basic/Profile";
 import Search from "../basic/Search";
 
-export default function Header() {
+export default function Header({ user }) {
   const [isNotifix, setIsNotific] = useState(false);
   const ref = useRef(null);
 
@@ -37,7 +37,7 @@ export default function Header() {
             </button>
             {isNotifix && <Dropdown data={values.notific} />}
           </div>
-          <Profile />
+          <Profile user={user} />
         </div>
       </div>
     </header>

@@ -1,10 +1,10 @@
 const EmployeeHeading = () => {
   return (
     <div className="heading">
-      <h1 className="jakarta">Employee List</h1>
+      <h1 className="jakarta">Lista Dipendenti</h1>
       <p>
-        Contrary to popular belief, Lorem Ipsum is not simply random text. It
-        has roots in a piece
+        Qui puoi vedere tutti i dipendenti e le statistiche dettagliate sul loro
+        lavoro.
       </p>
     </div>
   );

@@ -1,21 +1,38 @@
-import { useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import values from "../../../values";
 
-const AddEmpPopup = ({ setAddEmp, setEditEmp }) => {
+const AddEmpPopup = ({ setAddEmp, setEditEmp, add, email = null }) => {
   // Popup btns
-  const popupBtns = [
+  const [popupBtns, setPopupBtns] = useState([
     {
       id: 1,
-      title: "Admin",
+      title: "admin",
     },
     {
       id: 2,
-      title: "Manager",
+      title: "manager",
     },
     {
       id: 3,
-      title: "Base",
+      title: "base",
     },
-  ];
+  ]);
+  const logdinUser = Cookies.get("login") && JSON.parse(Cookies.get("login"));
+
+  useEffect(() => {
+    if (logdinUser.role === "manager") {
+      setPopupBtns([
+        {
+          id: 3,
+          title: "base",
+        },
+      ]);
+    }
+  }, []);
+
+  const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
   // close popup
   const closePopup = () => {
@@ -24,13 +41,107 @@ const AddEmpPopup = ({ setAddEmp, setEditEmp }) => {
   };
 
   // select active btn
-  const [activeBtn, setActiveBtn] = useState(1);
+
+  // development area
+  const [userData, setUserData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    role: "base",
+  });
+
+  useEffect(() => {
+    if (!add && email) {
+      axios
+        .get(`${values.url}/user/single?email=${email}`, {
+          headers: {
+            token,
+          },
+        })
+        .then((d) => {
+          setUserData(d.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }, []);
+
+  const [errors, setErrors] = useState({});
+
+  const changeHandler = (e) => {
+    setUserData((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+    });
+
+    setErrors((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: null,
+      };
+    });
+  };
+
+  const submitHandler = (e) => {
+    if (add) {
+      axios
+        .post(`${values.url}/user/add`, userData, {
+          headers: {
+            token,
+          },
+        })
+        .then((d) => {
+          closePopup();
+          window.location.reload();
+        })
+        .catch((e) => {
+          setErrors(e.response.data);
+        });
+    } else {
+      axios
+        .put(`${values.url}/user/update`, userData, {
+          headers: {
+            token,
+          },
+        })
+        .then((d) => {
+          closePopup();
+        })
+        .catch((e) => {
+          setErrors(e.response.data);
+        });
+    }
+  };
+
+  const [isDelete, setIsDelete] = useState(false);
+  const deleteHandler = () => {
+    axios
+      .delete(`${values.url}/user/delete?id=${userData._id}`, {
+        headers: {
+          token,
+        },
+      })
+      .then((d) => {
+        setIsDelete(false);
+        closePopup();
+        window.location.reload();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   return (
     <div className="add_emp">
       <div className="formBox">
         {/* Heading */}
         <div className="heading">
-          <p className="jakarta">Create New Employee</p>
+          <p className="jakarta">
+            {(add && "Crea Nuovo ") || "Modifica"} Dipendente
+          </p>
 
           {/* Icon */}
           <svg
@@ -64,9 +175,10 @@ const AddEmpPopup = ({ setAddEmp, setEditEmp }) => {
 
         {/* Box Header */}
         <div className="box_header">
-          <h2 className="jakarta">Employee Detail</h2>
+          <h2 className="jakarta">Dettagli Dipendente</h2>
           <p className="jakarta">
-            Contrary to popular belief, Lorem Ipsum is not simply random text
+            Inserisci tutte le informazioni e infine seleziona il livello di
+            sicurezza
           </p>
         </div>
 
@@ -75,42 +187,70 @@ const AddEmpPopup = ({ setAddEmp, setEditEmp }) => {
           {/* nameBox */}
           <div className="nameBox">
             {/* name */}
-            <div className="box">
+            <div className={`box ${(errors.firstName && "error") || ""}`}>
               <label htmlFor="name" className="jakarta">
-                Name
+                Nome
               </label>
-              <input type="text" placeholder="Marco" className="jakarta" />
+              <input
+                value={userData?.firstName}
+                name="firstName"
+                type="text"
+                placeholder="Marco"
+                className="jakarta"
+                onChange={changeHandler}
+              />
+              {errors.firstName && <span>{errors.firstName.msg}</span>}
             </div>
 
             {/* surname */}
-            <div className="box">
+            <div className={`box ${(errors.lastName && "error") || ""}`}>
               <label htmlFor="surname" className="jakarta">
-                Surname
+                Cognome
               </label>
-              <input type="text" placeholder="Sciosy" className="jakarta" />
+              <input
+                value={userData?.lastName}
+                name="lastName"
+                type="text"
+                placeholder="Sciosy"
+                className="jakarta"
+                onChange={changeHandler}
+              />
+              {errors.lastName && <span>{errors.lastName.msg}</span>}
             </div>
           </div>
 
           {/* nameBox */}
           <div className="mailPass">
             {/* name */}
-            <div className="box">
+            <div className={`box ${(errors.email && "error") || ""}`}>
               <label htmlFor="name" className="jakarta">
                 Email
               </label>
               <input
-                type="text"
+                type="email"
+                value={userData?.email}
+                name="email"
                 placeholder="email@gmail.com"
                 className="jakarta"
+                onChange={changeHandler}
               />
+              {errors.email && <span>{errors.email.msg}</span>}
             </div>
 
             {/* surname */}
-            <div className="box">
+            <div className={`box ${(errors.password && "error") || ""}`}>
               <label htmlFor="surname" className="jakarta">
                 Password
               </label>
-              <input type="text" placeholder="1234passw" className="jakarta" />
+              <input
+                type="text"
+                value={userData?.passwrod}
+                name="password"
+                placeholder="1234passw"
+                className="jakarta"
+                onChange={changeHandler}
+              />
+              {errors.password && <span>{errors.password.msg}</span>}
             </div>
           </div>
         </form>
@@ -120,14 +260,23 @@ const AddEmpPopup = ({ setAddEmp, setEditEmp }) => {
 
         {/* Buttons */}
         <div className="security_btns">
-          <h2>Security Level</h2>
+          <h2>Livello di Sicurezza</h2>
 
           <div className="btns">
             {popupBtns?.map((btn) => (
               <button
-                onClick={() => setActiveBtn(btn.id)}
+                onClick={() => {
+                  setUserData((prev) => {
+                    return {
+                      ...prev,
+                      role: btn.title,
+                    };
+                  });
+                }}
                 key={btn.id}
-                className={`jakarta ${btn.id === activeBtn ? "active" : ""}`}
+                className={`jakarta ${
+                  btn.title === userData?.role ? "active" : ""
+                }`}
               >
                 {btn.title}
               </button>
@@ -141,14 +290,36 @@ const AddEmpPopup = ({ setAddEmp, setEditEmp }) => {
         {/* Submit Btns */}
         <div className="submit_btns">
           {/* cancel btn */}
-          <button className="cancel jakarta" onClick={closePopup}>
-            Delete
+          <button
+            className="cancel jakarta"
+            onClick={() => {
+              (add && closePopup) || setIsDelete(true);
+            }}
+          >
+            {(add && "Annulla") || "SElimina"}
           </button>
 
           {/* submit btn */}
-          <button className="next jakarta">Next</button>
+          <button onClick={submitHandler} className="next jakarta">
+            {(add && "Aggiungi") || "Salva Modifiche"}
+          </button>
         </div>
       </div>
+
+      {isDelete && (
+        <div className="isdelete">
+          <h2 className="jakarta">Vuoi rimuovere NAMEEMPLOYEE?</h2>
+          <p className="jakarta">L’utente non potrà più accedere</p>
+          <div className="buttons">
+            <button onClick={() => setIsDelete(false)} className="btn">
+              Annulla
+            </button>
+            <button onClick={deleteHandler} className="delete-btn btn">
+              Elimina
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
