@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const values = {};
 
 // values.url = "http://localhost:5000";
@@ -86,6 +88,31 @@ values.generateUniqueString = () => {
       .join("")
       .slice(0, 16)
   );
+};
+
+values.getCityState = (setCitys) => {
+  axios
+    .get(
+      "http://api.geonames.org/childrenJSON?geonameId=3175395&username=hoescapedashboard"
+    )
+    .then((d) => {
+      setCitys(d?.data.geonames);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+values.getState = (setCitys, regionCode) => {
+  axios
+    .get(
+      `http://api.geonames.org/childrenJSON?geonameId=${regionCode}&username=hoescapedashboard`
+    )
+    .then((d) => {
+      setCitys(d?.data.geonames);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 };
 
 export default values;

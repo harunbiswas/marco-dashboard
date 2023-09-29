@@ -1,4 +1,6 @@
-import { useState } from "react";
+import moment from "moment";
+import "moment/locale/it";
+import { useEffect, useState } from "react";
 import {
   BiEdit,
   BiSolidDollarCircle,
@@ -7,7 +9,7 @@ import {
 import { FaCarSide } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-export default function TransportItem({ handler }) {
+export default function TransportItem({ handler, data }) {
   const [prics, setPrics] = useState([
     {
       naem: "Adult",
@@ -34,14 +36,37 @@ export default function TransportItem({ handler }) {
     },
   ]);
 
+  useEffect(() => {
+    moment.locale("it"); // Set the locale
+  }, []);
+
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+    localeMatcher: "best fit",
+  };
+
   const [isDetails, setIsDetails] = useState(false);
+  const formattedDate = (value) =>
+    new Intl.DateTimeFormat("it-IT", options).format(value);
+
+  console.log(data.pricing);
   return (
     <div className="item">
       <div className="item-top-wrp">
         <div className={`item-top ${isDetails && "bg-grey"}`}>
           <div className="content">
-            <strong>Edino v3</strong>
-            <span>13 July - 03 August 2023</span>
+            <strong>{data?.name}</strong>
+            <span>
+              {data?.startingDate &&
+                moment(data?.startingDate).format("dddd MM")}
+              -
+              {data?.endingDate &&
+                moment(data?.endingDate).format("dddd MM YYYY")}
+            </span>
           </div>
 
           <Link
@@ -55,17 +80,16 @@ export default function TransportItem({ handler }) {
             to=""
           >
             {isDetails && <BiEdit />}{" "}
-            {(!isDetails && "Vedi Dettagli") || "Edit Template"}
+            {(!isDetails && "Vedi Dettagli") || "Modifica Trasporto"}
           </Link>
         </div>
         {!isDetails && (
           <div className="item-bottom">
             <span>
-              <FaCarSide /> Train + Bus
+              <FaCarSide /> {data?.vehicleType}
             </span>
             <span>
-              <BiSolidLocationPlus /> Campo Santa Maria Del Giglio, 2467, 30124
-              Venezia VE
+              <BiSolidLocationPlus /> {data?.city} {data?.state} {data?.zip}
             </span>
           </div>
         )}
@@ -77,9 +101,9 @@ export default function TransportItem({ handler }) {
               <BiSolidLocationPlus />
             </div>
             <div className="content">
-              <span>Starting Point</span>
+              <span>Punto di Partenza</span>
               <strong>
-                Campo Santa Maria Del Giglio, 2467, 30124 Venezia VE
+                {data?.city} {data?.state} {data?.zip}
               </strong>
             </div>
           </div>
@@ -90,8 +114,8 @@ export default function TransportItem({ handler }) {
               <FaCarSide />
             </div>
             <div className="content">
-              <span>Vehicle Type</span>
-              <strong>Train + Bus</strong>
+              <span>Tipo di Veicolo</span>
+              <strong>{data?.vehicleType}</strong>
             </div>
           </div>{" "}
           <div className="item-body-item-inner">
@@ -99,8 +123,8 @@ export default function TransportItem({ handler }) {
               <FaCarSide />
             </div>
             <div className="content">
-              <span>Vehicle Brand</span>
-              <strong>Toyota - Deluxe</strong>
+              <span>Marchio</span>
+              <strong>{data?.vehicleBrand}</strong>
             </div>
           </div>
         </div>
@@ -111,18 +135,37 @@ export default function TransportItem({ handler }) {
               <BiSolidDollarCircle />
             </div>
             <div className="content">
-              <span>Pricing by Catagory</span>
+              <span>Prezzo per Categoria</span>
             </div>
           </div>
           <div className="item-body-item-pricing">
-            {prics.map((d, i) => (
-              <div className={`item ${d.discount && "disc"}`} key={i}>
+            {data?.pricing.map((d, i) => (
+              <div
+                className={`item ${
+                  (d?.items[1]?.name === "Sconto" && "disc") ||
+                  (d?.items[2]?.name === "Sconto" && "disc")
+                }`}
+                key={i}
+              >
                 <strong>
-                  {d.naem} <span>({d.tag})</span>
+                  {d?.items[0]?.activeValue}
+                  <span> ({d?.items[1]?.name + d?.items[1]?.value})</span>
                 </strong>
-                <h4>${d.price}</h4>
-                <span className={d.discount && "dis"}>
-                  {(d.discount && d.discount + "% Discount") ||
+                <h4>
+                  {(d?.items[3] && d?.items[3]?.activeValue) ||
+                    d?.items[2]?.activeValue}
+                  {(d?.items[3] && d?.items[3]?.value) || d?.items[2]?.value}
+                </h4>
+                <span
+                  className={
+                    (d?.items[1]?.name === "Sconto" && "dis") ||
+                    (d?.items[2]?.name === "Sconto" && "dis")
+                  }
+                >
+                  {(d?.items[1]?.name === "Sconto" &&
+                    d?.items[1]?.value + "% Sconto") ||
+                    (d?.items[2]?.name === "Sconto" &&
+                      d?.items[2]?.value + "% Sconto") ||
                     (d.max && "Maximum " + d.max)}
                 </span>
               </div>

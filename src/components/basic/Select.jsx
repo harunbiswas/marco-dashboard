@@ -16,12 +16,12 @@ export default function Select({ data, handler, activeValue }) {
 
   useEffect(() => {
     setIsDrop(false);
-  }, [value]);
+  }, [activeValue]);
 
   return (
     <div ref={ref} className="select">
       <span onClick={() => setIsDrop(!isDorp)} className="active">
-        {value}
+        {activeValue}
       </span>
       <button onClick={() => setIsDrop(!isDorp)} className="icon">
         <GoTriangleDown />
@@ -32,7 +32,6 @@ export default function Select({ data, handler, activeValue }) {
             <li key={i}>
               <button
                 onClick={() => {
-                  setValue(d);
                   handler(d);
                 }}
               >

@@ -347,6 +347,48 @@
 }
 
 .add-transport {
+  .hours-inner {
+    padding: 20px 0;
+
+    & > * {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    li {
+      padding: 8px 12px;
+      background-color: $grey;
+      border-radius: 2rem;
+      color: $white;
+      cursor: pointer;
+
+      &.active {
+        background-color: $primary;
+      }
+    }
+
+    button {
+      background-color: transparent;
+      display: inline-flex;
+      border: none;
+      gap: 4px;
+      color: $grey;
+      transition: 0.3s;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+
+    input {
+      width: 150px;
+      display: inline-block;
+    }
+
+    form {
+      display: inline-block !important;
+    }
+  }
   .add-hotel-inner {
     width: 814px;
     height: 98vh;
@@ -389,6 +431,12 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+
+      &.error {
+        input {
+          border-color: $red;
+        }
+      }
     }
   }
 }
