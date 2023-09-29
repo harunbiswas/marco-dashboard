@@ -35,7 +35,7 @@ export default function Sidebar({ isFull, setIsFull }) {
       url: "/module",
     },
     {
-      name: "Transport",
+      name: "Trasporti",
       icon: <FaCarSide />,
       url: "/transport",
     },

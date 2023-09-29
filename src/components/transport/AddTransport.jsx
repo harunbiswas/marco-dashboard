@@ -1,32 +1,51 @@
+import axios from "axios";
+import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
 import { FaCarSide } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import values from "../../../values";
 import Select from "../basic/Select";
 import Input from "../hotel-edit/Input";
 import Catagory from "./Catagory";
 import Days from "./Days";
 
-export default function AddTransport({ handler, addhotel }) {
+export default function AddTransport({ handler, addhotel, add }) {
   const navigate = useNavigate();
+  const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
-  const [hotelId, setHotelId] = useState("");
   const [zip, setZip] = useState("");
   const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
 
   const [isError, setIsError] = useState(false);
 
   const createHandler = () => {
-    if (hotelId && name) {
-      navigate(`/module/edit/${hotelId}`);
+    if (name) {
+      if (add) {
+        axios
+          .post(`${values.url}/transport`, data, {
+            headers: {
+              token,
+            },
+          })
+          .then((d) => {
+            navigate(`/module/edit/${d.data._id}`);
+          })
+          .catch((e) => {
+            console.log(e.response);
+          });
+      }
     } else {
       setIsError(true);
     }
   };
 
+  console.log(name);
+
   useEffect(() => {
     setIsError(false);
-  }, [name, hotelId]);
+  }, [name]);
 
   const ref = useRef(null);
   const wrp = useRef(null);
@@ -38,6 +57,33 @@ export default function AddTransport({ handler, addhotel }) {
       }
     });
   });
+
+  // development
+  const [data, setData] = useState({
+    name: "",
+    transportId: values.generateUniqueString(),
+    city: "",
+    state: "",
+    zip: "",
+    address: "",
+    vehicleType: "",
+    vehicleBrand: "",
+    startingDate: "",
+    endingDate: "",
+    days: [],
+    pricing: [],
+  });
+
+  useEffect(() => {
+    setData((prev) => {
+      return {
+        ...prev,
+        name,
+        zip,
+        address,
+      };
+    });
+  }, [name, zip, address]);
 
   return (
     <div
@@ -54,100 +100,170 @@ export default function AddTransport({ handler, addhotel }) {
           </button>
         </div>
         <div className="add-hotel-body">
-          <h4 className="s-title">Create/Edit Template</h4>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
-          </p>
+          <h4 className="s-title">
+            {(add && "Crea un nuovo Trasporto") || "Modifica Trasporto"}
+          </h4>
+          <p>Inserisci o modifica le informazioni del trasporto qui sotto</p>
           <form onSubmit={(e) => e.preventDefault()}>
             <div
-              className={`add-hotel-item item-1 ${
-                (isError && !hotelId && "error") || ""
-              }`}
+              className={`add-hotel-item item-1 ${(isError && "error") || ""}`}
             >
-              <label htmlFor="">Template Name</label>
+              <label htmlFor="">Nome Trasporto”</label>
               <Input
-                d={{ value: hotelId, label: "Template Name" }}
-                handler={setHotelId}
+                d={{ value: name, label: "Nome Trasporto”" }}
+                handler={setName}
               />
             </div>{" "}
-            <div
-              className={`add-hotel-item ${
-                (isError && !name && "error") || ""
-              }`}
-            >
-              <label htmlFor="">Template ID</label>
+            <div className={`add-hotel-item `}>
+              <label htmlFor="">Trasporto ID</label>
               <Input
-                handler={setName}
-                d={{ value: name, label: "Template ID" }}
+                d={{ value: data?.transportId, label: "Trasporto ID" }}
+                handler={() => {
+                  return;
+                }}
               />
             </div>{" "}
           </form>
 
-          <h4>Starting Point</h4>
+          <h4>Punto di Partenza</h4>
           <div className="add-transport-group">
             <div className="form-group">
-              <label htmlFor="">City</label>
-              <Select data={["Select City", "Select City", "Select City"]} />
+              <label htmlFor="">Regione</label>
+              <Select
+                activeValue="Select Regione"
+                handler={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      city: e,
+                    };
+                  });
+                }}
+                data={["Select Regione", "Select City1", "Select City2"]}
+              />
             </div>
             <div className="form-group">
-              <label htmlFor="">State</label>
-              <Select data={["Select state", "Select City", "Select City"]} />
+              <label htmlFor="">Città</label>
+              <Select
+                activeValue="Select Città"
+                handler={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      state: e,
+                    };
+                  });
+                }}
+                data={["Select Città", "Select City", "Select City"]}
+              />
             </div>
             <div className="form-group">
-              <label htmlFor="">Zip Code</label>
-              <Input d={{ value: zip, label: "Zip code" }} handler={setZip} />
+              <label htmlFor="">Codice Postale</label>
+              <Input
+                d={{ value: zip, label: "Codice Postale" }}
+                handler={setZip}
+              />
             </div>
           </div>
           <div className="add-transport-group">
             <div className="form-group">
-              <label htmlFor="">Address Line 1</label>
-              <Input d={{ value: zip, label: "Zip code" }} handler={setZip} />
+              <label htmlFor="">Coordinate Punto di Partenza</label>
+              <Input
+                d={{ value: address, label: "Coordinate Punto di Partenza" }}
+                handler={setAddress}
+              />
             </div>
           </div>
         </div>
         <div className="add-hotel-body gap">
-          <h4>Transport Details</h4>
+          <h4>Dettagli Trasporto</h4>
           <div className="add-transport-group">
             <div className="form-group">
-              <label htmlFor="">Vehicle Type</label>
-              <Select data={["Bus + Train", "Select City", "Select City"]} />
+              <label htmlFor="">Tipo di Veicolo</label>
+              <Select
+                activeValue="Treno"
+                handler={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      vehicleType: e,
+                    };
+                  });
+                }}
+                data={["Treno", "Bus", "Aereo", "Nave"]}
+              />
             </div>
             <div className="form-group">
-              <label htmlFor="">Vehicle Brand</label>
+              <label htmlFor="">Marchio</label>
               <Select
+                activeValue="Toyota - Deluxe"
+                handler={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      vehicleBrand: e,
+                    };
+                  });
+                }}
                 data={["Toyota - Deluxe", "Select City", "Select City"]}
               />
             </div>
           </div>
         </div>
         <div className="add-hotel-body gap">
-          <h4>Validity Period</h4>
+          <h4>Periodo di Validità</h4>
           <p>
-            Contrary to popular belief, Lorem Ipsum is not simply random text
+            Inserisci il periodo di validità in cui verrà preso in
+            considerazione questo trasporto
           </p>
           <div className="add-transport-group">
             <div className="form-group">
-              <label htmlFor="">Starting Date</label>
-              <input type="date" name="" id="" />
+              <label htmlFor="">Data d’inizio</label>
+              <input
+                value={data?.startingDate}
+                onChange={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      startingDate: e.target.value,
+                    };
+                  });
+                }}
+                type="date"
+                name=""
+                id=""
+              />
             </div>
             <div className="form-group">
-              <label htmlFor="">Ending Date</label>
-              <input type="date" name="" id="" />
+              <label htmlFor="">Data finale</label>
+              <input
+                value={data?.endingDate}
+                onChange={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      endingDate: e.target.value,
+                    };
+                  });
+                }}
+                type="date"
+                name=""
+                id=""
+              />
             </div>
           </div>
-          <Days />
+          <Days data={data?.days} setData={setData} />
         </div>{" "}
         <div className="add-hotel-body gap">
-          <h4>Pricing by Catagory</h4>
-          <Catagory />
+          <h4>Prezzo per Categoria</h4>
+          <Catagory add={add} data={data?.pricing} setData={setData} />
         </div>
         <div className="add-hotel-footer">
           <button onClick={() => handler(false)} className="btn cancel">
             Discard
           </button>
           <button onClick={createHandler} className="btn">
-            Save & Use Template
+            {(add && "Aggiungi Nuovo Trasporto") || "Salva Modifiche"}
           </button>
         </div>
       </div>

@@ -12,27 +12,42 @@ export default function Transport() {
   const menus = [{ name: "All" }, { name: "Recently Added" }];
 
   const [addTransport, setAddTransport] = useState(false);
+  const [add, isAdd] = useState(false);
   return (
     <div className="module hotel">
-      <AddTransport handler={setAddTransport} addhotel={addTransport} />
+      <AddTransport
+        add={add}
+        handler={setAddTransport}
+        addhotel={addTransport}
+      />
       <div className="container">
         <div className="booking-box">
           <div className="hotel-top">
             <div className="hotel-top-left">
-              <Title title="Hotel Lish" />
+              <Title title="Lista Trasporti" />
               <p>
-                Contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece
+                Questa è la lista di tutti i trasporti aggiunti nel pannello
               </p>
             </div>
             <div className="hotel-top-right">
               <ExportBtn />
-              <Button handler={setAddTransport} text="Add New Transport" />
+              <Button
+                handler={(e) => {
+                  setAddTransport(e);
+                  isAdd(true);
+                }}
+                text="Aggiungi Trasporto"
+              />
             </div>
           </div>
           <BookingMneu menus={menus} />
           <Filters />
-          <TransportBody handler={setAddTransport} />
+          <TransportBody
+            handler={(e) => {
+              setAddTransport(e);
+              isAdd(false);
+            }}
+          />
           <Pagenation isbrns={true} />
         </div>
       </div>

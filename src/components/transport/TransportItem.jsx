@@ -55,7 +55,7 @@ export default function TransportItem({ handler }) {
             to=""
           >
             {isDetails && <BiEdit />}{" "}
-            {(!isDetails && "View Details") || "Edit Template"}
+            {(!isDetails && "Vedi Dettagli") || "Edit Template"}
           </Link>
         </div>
         {!isDetails && (

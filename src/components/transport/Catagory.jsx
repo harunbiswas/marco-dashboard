@@ -1,28 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import Select from "../basic/Select";
 import Input from "../hotel-edit/Input";
 
-export default function Catagory() {
+export default function Catagory({ setData, data, add }) {
   const [items, setItems] = useState([
     {
       id: 1,
       items: [
         {
-          name: "Type",
-          option: ["Adult", "Kids", "Luggage", "Dog"],
+          name: "Tipo",
+          option: ["Adulti", "Bambini", "Bagagli", "Animale"],
+          activeValue: "Adulti",
+        },
+
+        {
+          name: "Sconto",
+          value: 10,
         },
         {
-          name: "Age",
-          option: ["18+", "6"],
-        },
-        {
-          name: "Discount",
-          option: ["5%", "10%"],
-        },
-        {
-          name: "Cost",
-          option: ["$", "$", "$"],
+          name: "Prezzo",
+          option: ["€", "$", "$"],
+          activeValue: "€",
           value: 0,
         },
       ],
@@ -31,20 +30,22 @@ export default function Catagory() {
       id: 2,
       items: [
         {
-          name: "Type",
-          option: ["Kids", "Adult", "Luggage", "Dog"],
+          name: "Tipo",
+          option: ["Bambini", "Adulti", "Bagagli", "Animale"],
+          activeValue: "Bambini",
         },
         {
-          name: "Age",
-          option: ["6", "18+"],
+          name: "Età Massima",
+          value: 6,
         },
         {
-          name: "Discount",
-          option: ["5%", "10%"],
+          name: "Sconto",
+          value: 10,
         },
         {
-          name: "Cost",
-          option: ["$", "$", "$"],
+          name: "Prezzo",
+          option: ["€", "$", "$"],
+          activeValue: "€",
           value: 0,
         },
       ],
@@ -53,22 +54,26 @@ export default function Catagory() {
       id: 3,
       items: [
         {
-          name: "Type",
-          option: ["Luggage", "Adult", "Kids", "Dog"],
+          name: "Tipo",
+          option: ["Bagagli", "Adulti", "Bambini", "Animale"],
+          activeValue: "Bagagli",
         },
         {
-          name: "Max Weight",
+          name: "Massimo Peso",
           option: ["Kg", "GR"],
           value: 15,
+          activeValue: "kg",
         },
         {
-          name: "Miximum Laggage",
+          name: "Numero Bagagli",
           option: ["5", "10"],
+          activeValue: "5",
         },
         {
-          name: "Cost",
-          option: ["$", "$", "$"],
+          name: "Prezzo",
+          option: ["€", "$", "$"],
           value: 0,
+          activeValue: "€",
         },
       ],
     },
@@ -76,20 +81,23 @@ export default function Catagory() {
       id: 4,
       items: [
         {
-          name: "Type",
-          option: ["Luggage", "Adult", "Kids", "Dog"],
+          name: "Tipo",
+          option: ["Animale", "Adulti", "Bambini", "Bagagli"],
+          activeValue: "Animale",
         },
         {
           name: "Max Weight  ",
           option: ["Kg", "GR"],
           value: 5,
           full: true,
+          activeValue: "Kg",
         },
 
         {
-          name: "Cost",
-          option: ["$", "$", "$"],
+          name: "Prezzo",
+          option: ["€", "$", "$"],
           value: 0,
+          activeValue: "€",
         },
       ],
     },
@@ -122,6 +130,36 @@ export default function Catagory() {
     setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
 
+  const handleActiveValueChange = (sectionId, itemName, newActiveValue) => {
+    setItems((prevItems) =>
+      prevItems.map((section) => ({
+        ...section,
+        items: section.items.map((item) => ({
+          ...item,
+          activeValue:
+            section.id === sectionId && item.name === itemName
+              ? newActiveValue
+              : item.activeValue,
+        })),
+      }))
+    );
+  };
+
+  useEffect(() => {
+    setData((prev) => {
+      return {
+        ...prev,
+        pricing: items,
+      };
+    });
+  }, [items]);
+
+  // useEffect(() => {
+  //   if (!add) {
+  //     setItems(data && data);
+  //   }
+  // }, []);
+
   return (
     <div className="transport-catagory">
       {items.map((item, i) => (
@@ -131,13 +169,27 @@ export default function Catagory() {
               <label htmlFor="">{d.name}</label>
               {((d.value || d.value === 0) && (
                 <div className="form-group-inner">
-                  <Select data={d.option} />
+                  {d.option && (
+                    <Select
+                      activeValue={d?.activeValue}
+                      handler={(e) =>
+                        handleActiveValueChange(item.id, d.name, e)
+                      }
+                      data={d.option}
+                    />
+                  )}
                   <Input
                     d={{ value: d.value, label: "Enter Cost" }}
                     handler={(e) => updateItemValue(item.id, d.name, e)}
                   />
                 </div>
-              )) || <Select data={d.option} />}
+              )) || (
+                <Select
+                  activeValue={d?.activeValue}
+                  handler={(e) => handleActiveValueChange(item.id, d.name, e)}
+                  data={d.option}
+                />
+              )}
             </div>
           ))}
           <button onClick={() => removeItemById(item.id)}>
@@ -155,21 +207,19 @@ export default function Catagory() {
                 id: new Date().getTime() + 1,
                 items: [
                   {
-                    name: "Type",
-                    option: ["Adult", "Kids", "Luggage", "Dog"],
+                    name: "Tipo",
+                    option: ["Adulti", "Bambini", "Bagagli", "Animale"],
+                    activeValue: "Adulti",
                   },
                   {
-                    name: "Age",
-                    option: ["18+", "6"],
+                    name: "Sconto",
+                    value: 10,
                   },
                   {
-                    name: "Discount",
-                    option: ["5%", "10%"],
-                  },
-                  {
-                    name: "Cost",
-                    option: ["$", "$", "$"],
+                    name: "Prezzo",
+                    option: ["€", "$", "$"],
                     value: 0,
+                    activeValue: "€",
                   },
                 ],
               },
@@ -178,7 +228,7 @@ export default function Catagory() {
         }}
         className="add-btn"
       >
-        <AiOutlinePlus /> Add More Price
+        <AiOutlinePlus /> Aggiungi Prezzo
       </button>
     </div>
   );

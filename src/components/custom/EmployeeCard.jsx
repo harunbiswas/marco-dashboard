@@ -26,7 +26,17 @@ const EmployeeCard = ({ data }) => {
               <h1 className="jakarta">
                 {data?.firstName} {data?.lastName}
               </h1>
-              <span className="jakarta">{data?.role}</span>
+              <span
+                className="jakarta"
+                style={{
+                  background: `${
+                    (data?.role === "manager" && "#ff9500") ||
+                    (data?.role === "base" && "#1dbf73")
+                  }`,
+                }}
+              >
+                {data?.role}
+              </span>
             </div>
 
             {/* edited */}
@@ -35,7 +45,8 @@ const EmployeeCard = ({ data }) => {
         </div>
 
         {/* right */}
-        {(logdinUser?.role === "admin" || logdinUser?.role === "manager") && (
+        {(logdinUser?.role === "admin" ||
+          (logdinUser?.role === "manager" && data?.role === "base")) && (
           <div className="right">
             <button className="jakarta" onClick={() => setEditEmp(true)}>
               Modifica

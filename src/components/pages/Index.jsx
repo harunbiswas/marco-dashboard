@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import values from "../../../values";
+import ThemeContext from "../context/ThemeContext";
 import Header from "../header/Header";
 import Sidebar from "../header/Sidebar";
 
@@ -42,18 +43,20 @@ export default function Index() {
 
   return (
     <>
-      <div
-        style={{
-          paddingLeft: `${padding}px`,
-        }}
-        className="main"
-      >
-        <Header user={user} />
-        <div className="main-body">
-          <Outlet />
+      <ThemeContext.Provider value={{ user }}>
+        <div
+          style={{
+            paddingLeft: `${padding}px`,
+          }}
+          className="main"
+        >
+          <Header />
+          <div className="main-body">
+            <Outlet />
+          </div>
         </div>
-      </div>
-      <Sidebar isFull={isFull} setIsFull={setIsFull} />
+        <Sidebar isFull={isFull} setIsFull={setIsFull} />
+      </ThemeContext.Provider>
     </>
   );
 }

@@ -1,23 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function Days() {
+export default function Days({ setData, data }) {
   const [days, setDays] = useState([
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
+    "Lunedì",
+    "Martedì",
+    "Mercoledì",
+    "Giovedì",
+    "Venerdì",
+    "Sabato",
+    "Domenica",
   ]);
-  const [activeDays, setActiveDays] = useState([
-    "Sunday",
-    "Monday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ]);
+  const [activeDays, setActiveDays] = useState((data && data) || []);
 
   const handler = (day) => {
     if (activeDays.includes(day)) {
@@ -28,12 +21,21 @@ export default function Days() {
       });
     }
   };
+
+  useEffect(() => {
+    setData((prev) => {
+      return {
+        ...prev,
+        days: activeDays,
+      };
+    });
+  }, [activeDays]);
   return (
     <div className="transport-days">
       <div className="top">
-        <strong>Validity Day</strong>{" "}
+        <strong>Giorni Validi</strong>{" "}
         {!(days === activeDays) && (
-          <button onClick={() => setActiveDays(days)}>Select All</button>
+          <button onClick={() => setActiveDays(days)}>Seleziona Tutti</button>
         )}
       </div>
       <ul className="days">

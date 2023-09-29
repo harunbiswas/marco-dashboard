@@ -1,12 +1,13 @@
 @import "../_variables.sass";
 
 .loginPage {
-  min-height: 100vh;
+  height: 100vh;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   isolation: isolate;
+  overflow: hidden;
 
   .overlay_one {
     position: absolute;

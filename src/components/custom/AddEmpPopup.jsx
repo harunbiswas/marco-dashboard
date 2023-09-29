@@ -195,7 +195,7 @@ const AddEmpPopup = ({ setAddEmp, setEditEmp, add, email = null }) => {
                 value={userData?.firstName}
                 name="firstName"
                 type="text"
-                placeholder="Marco"
+                placeholder="Nome"
                 className="jakarta"
                 onChange={changeHandler}
               />
@@ -211,7 +211,7 @@ const AddEmpPopup = ({ setAddEmp, setEditEmp, add, email = null }) => {
                 value={userData?.lastName}
                 name="lastName"
                 type="text"
-                placeholder="Sciosy"
+                placeholder="Cognome"
                 className="jakarta"
                 onChange={changeHandler}
               />
@@ -238,11 +238,16 @@ const AddEmpPopup = ({ setAddEmp, setEditEmp, add, email = null }) => {
             </div>
 
             {/* surname */}
-            <div className={`box ${(errors.password && "error") || ""}`}>
+
+            <div
+              style={{ opacity: `${(!add && ".3") || "1"}` }}
+              className={`box ${(errors.password && "error") || ""}`}
+            >
               <label htmlFor="surname" className="jakarta">
                 Password
               </label>
               <input
+                disabled={!add}
                 type="text"
                 value={userData?.passwrod}
                 name="password"
@@ -293,10 +298,10 @@ const AddEmpPopup = ({ setAddEmp, setEditEmp, add, email = null }) => {
           <button
             className="cancel jakarta"
             onClick={() => {
-              (add && closePopup) || setIsDelete(true);
+              (add && closePopup()) || setIsDelete(true);
             }}
           >
-            {(add && "Annulla") || "SElimina"}
+            {(add && "Annulla") || "Elimina"}
           </button>
 
           {/* submit btn */}
@@ -308,10 +313,16 @@ const AddEmpPopup = ({ setAddEmp, setEditEmp, add, email = null }) => {
 
       {isDelete && (
         <div className="isdelete">
-          <h2 className="jakarta">Vuoi rimuovere NAMEEMPLOYEE?</h2>
+          <h2 className="jakarta">Vuoi rimuovere {userData?.firstName}?</h2>
           <p className="jakarta">L’utente non potrà più accedere</p>
           <div className="buttons">
-            <button onClick={() => setIsDelete(false)} className="btn">
+            <button
+              onClick={() => {
+                setIsDelete(false);
+                closePopup();
+              }}
+              className="btn"
+            >
               Annulla
             </button>
             <button onClick={deleteHandler} className="delete-btn btn">

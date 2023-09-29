@@ -1,5 +1,7 @@
+import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
 import { BiSolidDownArrow } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 import values from "../../../values";
 import profileImg from "../../assets/images/profile.png";
 import Dropdown from "./Dropdown";
@@ -7,6 +9,7 @@ import Dropdown from "./Dropdown";
 export default function Profile({ user }) {
   const [isDropdown, setIsDropdown] = useState(false);
   const ref = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.addEventListener("click", (e) => {
@@ -18,6 +21,11 @@ export default function Profile({ user }) {
 
   const dropdownHandler = () => {
     setIsDropdown(!isDropdown);
+  };
+
+  const logout = () => {
+    Cookies.remove("login");
+    navigate("/login");
   };
   return (
     <div className="profile" ref={ref}>
@@ -35,7 +43,7 @@ export default function Profile({ user }) {
           <BiSolidDownArrow />
         </button>
       </div>
-      {isDropdown && <Dropdown data={values.profileMenu} />}
+      {isDropdown && <Dropdown handler={logout} data={values.profileMenu} />}
     </div>
   );
 }
