@@ -11,7 +11,14 @@ import Catagory from "./Catagory";
 import Days from "./Days";
 import Hours from "./Hours";
 
-export default function AddTransport({ handler, addhotel, add }) {
+export default function AddTransport({
+  handler,
+  addhotel,
+  add,
+  transportData,
+}) {
+  const bg = add ? "transparent" : "red";
+  const cl = add ? "black" : "white";
   const navigate = useNavigate();
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
@@ -19,18 +26,29 @@ export default function AddTransport({ handler, addhotel, add }) {
   const [isValid, setIsValid] = useState(true);
   const postalCodeRegex = /^\d{5}(?:[-\s]\d{4})?$/;
 
-  const [zip, setZip] = useState("");
-  const [name, setName] = useState("");
   const [address, setAddress] = useState("");
 
   const [isError, setIsError] = useState(false);
 
   const createHandler = () => {
-    if (postalCodeRegex.test(zip)) {
-      if (name) {
+    if (postalCodeRegex.test(data?.zip)) {
+      if (data?.name) {
         if (add) {
           axios
             .post(`${values.url}/transport`, data, {
+              headers: {
+                token,
+              },
+            })
+            .then((d) => {
+              navigate(`/module/edit/${d.data._id}`);
+            })
+            .catch((e) => {
+              console.log(e.response);
+            });
+        } else {
+          axios
+            .put(`${values.url}/transport`, data, {
               headers: {
                 token,
               },
@@ -49,10 +67,6 @@ export default function AddTransport({ handler, addhotel, add }) {
       setIsValid(false);
     }
   };
-
-  useEffect(() => {
-    setIsError(false);
-  }, [name]);
 
   const ref = useRef(null);
   const wrp = useRef(null);
@@ -82,51 +96,66 @@ export default function AddTransport({ handler, addhotel, add }) {
     hours: [],
   });
 
-  useEffect(() => {
-    setData((prev) => {
-      return {
-        ...prev,
-        name,
-        zip,
-        address,
-      };
-    });
-  }, [name, zip, address]);
-
   const [citys, setCitys] = useState([]);
   const [citysName, setCitysName] = useState([]);
-  const [state, setState] = useState([]);
-  const [stateName, setStateName] = useState([]);
+
+  useEffect(() => {
+    setIsError(false);
+  }, [data?.name]);
 
   useEffect(() => {
     values.getCityState(setCitys);
   }, []);
 
   useEffect(() => {
-    let regioneCode = "";
-    citys.forEach((item) => {
-      if (item.toponymName === data.city) {
-        regioneCode = item.geonameId;
-      }
-    });
-    values.getState(setState, regioneCode);
-  }, [data.city]);
-
-  useEffect(() => {
     const ar = [];
     citys?.forEach((item) => {
-      ar.push(item.toponymName);
+      ar.push(item.name);
     });
     setCitysName(ar);
   }, [citys]);
 
+  // update data
+
   useEffect(() => {
-    const ar = [];
-    state?.forEach((item) => {
-      ar.push(item.toponymName);
-    });
-    setStateName(ar);
-  }, [state]);
+    if (transportData) {
+      setData(transportData);
+    } else {
+      setData({
+        name: "",
+        transportId: values.generateUniqueString(),
+        city: "",
+        state: "",
+        zip: "",
+        address: "",
+        vehicleType: "",
+        vehicleBrand: "",
+        startingDate: "",
+        endingDate: "",
+        days: [],
+        pricing: [],
+        hours: [],
+      });
+    }
+  }, [transportData]);
+
+  // delete
+  const [isDelete, setIsDelete] = useState(false);
+
+  const deleteHandler = () => {
+    axios
+      .delete(`${values.url}/transport?id=${data?._id}`, {
+        headers: {
+          token,
+        },
+      })
+      .then((d) => {
+        window.location.reload();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   return (
     <div
@@ -153,8 +182,15 @@ export default function AddTransport({ handler, addhotel, add }) {
             >
               <label htmlFor="">Nome Trasporto</label>
               <Input
-                d={{ value: name, label: "Nome Trasporto" }}
-                handler={setName}
+                d={{ value: data?.name, label: "Nome Trasporto" }}
+                handler={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      name: e,
+                    };
+                  });
+                }}
               />
             </div>{" "}
             <div className={`add-hotel-item `}>
@@ -188,8 +224,11 @@ export default function AddTransport({ handler, addhotel, add }) {
             </div>
             <div className="form-group">
               <label htmlFor="">Città</label>
-              <Select
-                activeValue={data?.state || "Select Città"}
+              <Input
+                d={{
+                  value: data?.state,
+                  label: "Città",
+                }}
                 handler={(e) => {
                   setData((prev) => {
                     return {
@@ -198,15 +237,19 @@ export default function AddTransport({ handler, addhotel, add }) {
                     };
                   });
                 }}
-                data={stateName}
               />
             </div>
             <div className={`form-group ${(!isValid && "error") || ""}`}>
               <label htmlFor="">Codice Postale</label>
               <Input
-                d={{ value: zip, label: "Codice Postale" }}
+                d={{ value: data?.zip, label: "Codice Postale" }}
                 handler={(e) => {
-                  setZip(e);
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      zip: e,
+                    };
+                  });
                   setIsValid(true);
                 }}
               />
@@ -217,7 +260,7 @@ export default function AddTransport({ handler, addhotel, add }) {
               <label htmlFor="">Coordinate Punto di Partenza</label>
               <Input
                 d={{
-                  value: address,
+                  value: data?.address,
                   label:
                     "Inserisci Coordinate (42.69325378735576, 11.708567085372382)",
                 }}
@@ -232,7 +275,7 @@ export default function AddTransport({ handler, addhotel, add }) {
             <div className="form-group">
               <label htmlFor="">Tipo di Veicolo</label>
               <Select
-                activeValue={data?.vehicleType}
+                activeValue={data?.vehicleType || "Treno"}
                 handler={(e) => {
                   setData((prev) => {
                     return {
@@ -248,7 +291,7 @@ export default function AddTransport({ handler, addhotel, add }) {
             <div className="form-group">
               <label htmlFor="">Marchio</label>
               <Select
-                activeValue={data?.vehicleBrand}
+                activeValue={data?.vehicleBrand || "Select one"}
                 handler={(e) => {
                   setData((prev) => {
                     return {
@@ -278,7 +321,8 @@ export default function AddTransport({ handler, addhotel, add }) {
                     "Medmar",
                     "Caremar",
                     "Alilauro",
-                  ])
+                  ]) ||
+                  []
                 }
               />
             </div>
@@ -328,18 +372,38 @@ export default function AddTransport({ handler, addhotel, add }) {
               />
             </div>
           </div>
-          <Days data={data?.days} setData={setData} />
+          <Days
+            transportData={transportData}
+            data={data?.days}
+            setData={setData}
+            add={add}
+          />
           <div className="hours">
             <h4>Orari di Partenza</h4>
-            <Hours data={data?.hours} handler={setData} />
+            <Hours
+              transportData={transportData}
+              data={data?.hours}
+              handler={setData}
+            />
           </div>
         </div>{" "}
         <div className="add-hotel-body gap">
           <h4>Prezzo per Categoria</h4>
-          <Catagory add={add} data={data?.pricing} setData={setData} />
+          <Catagory
+            transportData={transportData}
+            add={add}
+            data={data?.pricing}
+            setData={setData}
+          />
         </div>
         <div className="add-hotel-footer">
-          <button onClick={() => handler(false)} className="btn cancel">
+          <button
+            style={{ backgroundColor: bg, color: cl }}
+            onClick={() => {
+              (add && handler(false)) || setIsDelete(true);
+            }}
+            className="btn cancel "
+          >
             {(add && "Torna Indietro") || "Annulla"}
           </button>
           <button onClick={createHandler} className="btn">
@@ -347,6 +411,29 @@ export default function AddTransport({ handler, addhotel, add }) {
           </button>
         </div>
       </div>
+
+      {isDelete && (
+        <div className="isdelete">
+          <h2 className="jakarta">Vuoi tornare alla lista dei trasporti?</h2>
+          <p className="jakarta">
+            Cliccando su torna indietro perderai le modifiche a questo trasporto
+          </p>
+          <div className="buttons">
+            <button
+              onClick={() => {
+                setIsDelete(false);
+                handler(false);
+              }}
+              className="btn"
+            >
+              Annulla
+            </button>
+            <button onClick={deleteHandler} className="delete-btn btn">
+              Torna Indietro
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

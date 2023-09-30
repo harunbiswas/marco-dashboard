@@ -8,7 +8,7 @@ import DateLine from "./DateLine";
 import Search from "./Search";
 import Select from "./Select";
 
-export default function Filters({ activePage }) {
+export default function Filters({ activePage, search, setSearch }) {
   const [isFilter, setIsFilter] = useState(false);
   const filter = useRef(null);
 
@@ -25,7 +25,7 @@ export default function Filters({ activePage }) {
   }, []);
   return (
     <div className="booking-filter">
-      <Search />
+      <Search search={search} setSearch={setSearch} />
       <div className="booking-filters">
         {activePage && <AddBtn activePage={activePage} />}
         <div className="sort booking-btn">

@@ -9,7 +9,7 @@ import {
 import { FaCarSide } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-export default function TransportItem({ handler, data }) {
+export default function TransportItem({ handler, data, setTransportData }) {
   const [prics, setPrics] = useState([
     {
       naem: "Adult",
@@ -74,6 +74,7 @@ export default function TransportItem({ handler, data }) {
                 setIsDetails(true);
               } else {
                 handler(true);
+                setTransportData(data);
               }
             }}
             to=""
@@ -138,35 +139,40 @@ export default function TransportItem({ handler, data }) {
             </div>
           </div>
           <div className="item-body-item-pricing">
-            {data?.pricing.map((d, i) => (
+            {data?.pricing?.map((d, i) => (
               <div
                 className={`item ${
-                  (d?.items[1]?.name === "Sconto" && "disc") ||
-                  (d?.items[2]?.name === "Sconto" && "disc")
+                  (d?.name === "Adulti" || d?.name === "Bambini") && "disc"
                 }`}
                 key={i}
               >
                 <strong>
-                  {d?.items[0]?.activeValue}
-                  <span> ({d?.items[1]?.name + d?.items[1]?.value})</span>
+                  {d?.name}
+                  {(d?.name === "Bambini" && (
+                    <span> (Età Massima {d?.age})</span>
+                  )) ||
+                    ((d?.name === "Bagagli" || d?.name === "Animale") &&
+                      d?.maxWeight && (
+                        <span>
+                          {" "}
+                          (Massimo Peso {d?.maxWeight}
+                          {d?.unit})
+                        </span>
+                      ))}
                 </strong>
                 <h4>
-                  {(d?.items[3] && d?.items[3]?.activeValue) ||
-                    d?.items[2]?.activeValue}
-                  {(d?.items[3] && d?.items[3]?.value) || d?.items[2]?.value}
+                  {d?.carency}
+                  {d?.cost}
                 </h4>
-                <span
-                  className={
-                    (d?.items[1]?.name === "Sconto" && "dis") ||
-                    (d?.items[2]?.name === "Sconto" && "dis")
-                  }
-                >
-                  {(d?.items[1]?.name === "Sconto" &&
-                    d?.items[1]?.value + "% Sconto") ||
-                    (d?.items[2]?.name === "Sconto" &&
-                      d?.items[2]?.value + "% Sconto") ||
-                    (d.max && "Maximum " + d.max)}
-                </span>
+
+                {((d?.name === "Adulti" || d?.name === "Bambini") && (
+                  <span className={d?.discount && "dis"}>
+                    {d?.discount}% Sconto
+                  </span>
+                )) ||
+                  (d?.name === "Bagagli" && (
+                    <span>Numero Bagagli {d?.count}</span>
+                  ))}
               </div>
             ))}
           </div>

@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import values from "../../../values";
 import TransportItem from "./TransportItem";
 
-export default function TransportBody({ handler }) {
+export default function TransportBody({ handler, search, setTransportData }) {
   const [transport, setTransport] = useState([]);
+  const [transportMain, setTransportMain] = useState([]);
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
   useEffect(() => {
@@ -17,19 +18,40 @@ export default function TransportBody({ handler }) {
       })
       .then((d) => {
         setTransport(d.data);
+        setTransportMain(d.data);
       })
       .catch((e) => {
         console.log(e.response);
       });
   }, []);
 
-  console.log(transport);
+  useEffect(() => {
+    console.log(search, transport[0]?.vehicleType);
+    if (search) {
+      setTransport((prev) => {
+        const filteredData = transportMain.filter(
+          (item) =>
+            item?.vehicleType.toLowerCase().trim() ===
+            search?.toLowerCase().trim()
+        );
+        return filteredData;
+      });
+    } else {
+      setTransport(transportMain);
+    }
+  }, [search]);
+
   return (
     <div className="transport-body">
       {transport &&
         transport.length &&
         transport.map((item) => (
-          <TransportItem key={item._id} data={item} handler={handler} />
+          <TransportItem
+            setTransportData={setTransportData}
+            key={item._id}
+            data={item}
+            handler={handler}
+          />
         ))}
     </div>
   );

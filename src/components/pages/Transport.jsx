@@ -10,15 +10,17 @@ import TransportBody from "../transport/TransportBody";
 
 export default function Transport() {
   const menus = [{ name: "All" }, { name: "Recently Added" }];
-
+  const [transportData, setTransportData] = useState({});
   const [addTransport, setAddTransport] = useState(false);
   const [add, isAdd] = useState(false);
+  const [search, setSearch] = useState("");
   return (
     <div className="module hotel">
       <AddTransport
         add={add}
         handler={setAddTransport}
         addhotel={addTransport}
+        transportData={(!add && transportData) || null}
       />
       <div className="container">
         <div className="booking-box">
@@ -41,8 +43,10 @@ export default function Transport() {
             </div>
           </div>
           <BookingMneu menus={menus} />
-          <Filters />
+          <Filters search={search} setSearch={setSearch} />
           <TransportBody
+            search={search}
+            setTransportData={setTransportData}
             handler={(e) => {
               setAddTransport(e);
               isAdd(false);

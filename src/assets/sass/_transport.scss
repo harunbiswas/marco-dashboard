@@ -353,6 +353,7 @@
     & > * {
       display: inline-block;
       margin-right: 10px;
+      margin-bottom: 10px;
     }
 
     li {
@@ -383,10 +384,25 @@
     input {
       width: 150px;
       display: inline-block;
+      height: 40px;
     }
 
     form {
-      display: inline-block !important;
+      display: inline-flex !important;
+      gap: 5px !important;
+
+      & > button {
+        background-color: $primary;
+        padding: 0px 10px;
+        height: 40px;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $white !important;
+        font-size: 16px;
+        font-weight: 400;
+      }
     }
   }
   .add-hotel-inner {

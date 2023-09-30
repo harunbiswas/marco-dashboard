@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Days({ setData, data }) {
+export default function Days({ setData, data, transportData, add }) {
   const [days, setDays] = useState([
     "Lunedì",
     "Martedì",
@@ -30,6 +30,12 @@ export default function Days({ setData, data }) {
       };
     });
   }, [activeDays]);
+
+  useEffect(() => {
+    if (!add && transportData) {
+      setActiveDays(transportData?.days || []);
+    }
+  }, [transportData]);
   return (
     <div className="transport-days">
       <div className="top">
