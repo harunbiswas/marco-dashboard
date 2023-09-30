@@ -19,6 +19,11 @@ export default function AddTransport({
 }) {
   const bg = add ? "transparent" : "red";
   const cl = add ? "black" : "white";
+
+  function formatDate(dateString) {
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  }
   const navigate = useNavigate();
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
@@ -157,6 +162,7 @@ export default function AddTransport({
       });
   };
 
+  console.log(data);
   return (
     <div
       ref={wrp}
