@@ -53,7 +53,6 @@ export default function TransportItem({ handler, data }) {
   const formattedDate = (value) =>
     new Intl.DateTimeFormat("it-IT", options).format(value);
 
-  console.log(data.pricing);
   return (
     <div className="item">
       <div className="item-top-wrp">
