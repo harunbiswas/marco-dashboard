@@ -93,7 +93,7 @@ values.generateUniqueString = () => {
 values.getCityState = (setCitys) => {
   axios
     .get(
-      "http://secure.geonames.org/childrenJSON?geonameId=3175395&username=hoescapedashboard"
+      "https://secure.geonames.org/childrenJSON?geonameId=3175395&username=hoescapedashboard"
     )
     .then((d) => {
       setCitys(d?.data.geonames);
@@ -105,7 +105,7 @@ values.getCityState = (setCitys) => {
 values.getState = (setCitys, regionCode) => {
   axios
     .get(
-      `http://secure.geonames.org/childrenJSON?geonameId=${regionCode}&username=hoescapedashboard`
+      `https://secure.geonames.org/childrenJSON?geonameId=${regionCode}&username=hoescapedashboard`
     )
     .then((d) => {
       setCitys(d?.data.geonames);
