@@ -425,7 +425,7 @@ export default function AddTransport({
             }}
             className="btn cancel "
           >
-            {(add && "Torna Indietro") || "Annulla"}
+            {(add && "Torna Indietro") || "Elimina"}
           </button>
           <button onClick={createHandler} className="btn">
             {(add && "Aggiungi Nuovo Trasporto") || "Salva Modifiche"}
