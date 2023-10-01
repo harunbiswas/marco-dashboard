@@ -276,7 +276,14 @@ export default function AddTransport({
                   label:
                     "Inserisci Coordinate (42.69325378735576, 11.708567085372382)",
                 }}
-                handler={setAddress}
+                handler={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      address: e,
+                    };
+                  });
+                }}
               />
             </div>
           </div>
@@ -440,10 +447,10 @@ export default function AddTransport({
               }}
               className="btn"
             >
-              Elimina
+              Annulla
             </button>
             <button onClick={deleteHandler} className="delete-btn btn">
-              Torna Indietro
+              Elimina
             </button>
           </div>
         </div>
