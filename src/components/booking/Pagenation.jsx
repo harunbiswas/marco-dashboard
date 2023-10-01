@@ -1,11 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function Pagenation({ isbrns }) {
-  const [btns, setBtns] = useState([1, 2, 3, 4]);
+export default function Pagenation({ isbrns, max, active, setActiveValue }) {
+  const [btns, setBtns] = useState([1]);
   const [activeBtn, setActiveBtn] = useState(btns[0]);
+  const showItem = 30;
+
+  useEffect(() => {
+    const btn = max / showItem;
+    setBtns([]);
+    for (let i = 1; i <= btn + 1; i++) {
+      setBtns((prev) => {
+        return [...prev, i];
+      });
+    }
+  }, [max]);
+
+  useEffect(() => {
+    setActiveValue(activeBtn);
+  }, [activeBtn]);
+
   return (
     <div className="pagenation-wrp">
-      <span>Showing 13 from 324 Entries</span>
+      <span>
+        Mostrando {max && showItem * active - showItem + 1} -
+        {(showItem * active < max && showItem * active) || max} su {max || "0"}
+      </span>
       {isbrns && (
         <ul className="pagenation">
           <li>

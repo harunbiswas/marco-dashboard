@@ -168,7 +168,6 @@ export default function AddTransport({
       });
   };
 
-  console.log(data);
   return (
     <div
       ref={wrp}

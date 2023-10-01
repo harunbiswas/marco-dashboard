@@ -51,26 +51,30 @@
           }
         }
 
-        & > a {
-          border: $border;
-          color: $primary;
-          padding: 8px 16px;
-          border-radius: 4px;
-          font-size: 14px;
-          font-style: normal;
-          font-weight: 500;
-          opacity: 0.8;
-          transition: 0.3s;
+        .right {
           display: flex;
-          align-items: center;
-          gap: 5px;
+          gap: 20px;
+          & > a {
+            border: $border;
+            color: $primary;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            opacity: 0.8;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
 
-          svg {
-            font-size: 18px;
-          }
+            svg {
+              font-size: 18px;
+            }
 
-          &:hover {
-            opacity: 1;
+            &:hover {
+              opacity: 1;
+            }
           }
         }
       }
@@ -112,7 +116,7 @@
           &-inner {
             display: flex;
             align-items: center;
-            min-width: 250px;
+            min-width: 350px;
             gap: 10px;
 
             .icon {
@@ -143,6 +147,17 @@
                 font-weight: 600;
                 color: $dark;
               }
+
+              .days {
+                display: flex;
+                gap: 10px;
+
+                & > strong {
+                  font-size: 16px;
+                  font-weight: 600;
+                  color: $dark;
+                }
+              }
             }
           }
 
@@ -165,7 +180,7 @@
                 width: 7px;
                 height: 38px;
                 border-radius: 12px;
-                background-color: #ca8d54;
+                background-color: #d86c07;
                 position: absolute;
                 top: 5px;
                 left: 0;
@@ -174,6 +189,16 @@
               &.disc {
                 &::after {
                   background-color: $primary;
+                }
+              }
+              &.bam {
+                &::after {
+                  background-color: #ff0099;
+                }
+              }
+              &.ani {
+                &::after {
+                  background-color: #ca8d54;
                 }
               }
 

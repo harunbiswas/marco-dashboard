@@ -4,7 +4,7 @@ import Select from "../basic/Select";
 import Input from "../hotel-edit/Input";
 
 export default function Catagory({ setData, data, add, transportData }) {
-  const typesOption = ["Bagagli", "Adulti", "Bambini", "Animale"];
+  const typesOption = ["Adulti", "Bambini", "Bagagli", "Animale"];
   const carencyOtion = ["€", "$", "$"];
   const discountOtion = [5, 10, 15];
   const ageOption = [
@@ -207,19 +207,23 @@ export default function Catagory({ setData, data, add, transportData }) {
             {item.name === "Bambini" && (
               <div className={`form-group`}>
                 <label htmlFor="">Età Massima</label>
-                <Select
-                  activeValue={item.age}
+                <Input
+                  d={{ value: item.age }}
                   handler={(e) => {
                     setItems((prevItems) => {
                       return prevItems.map((i) => {
                         if (i.itemId === item.itemId) {
-                          return { ...i, age: e };
+                          return {
+                            ...i,
+                            age: Number(
+                              rx.test(e.toString()) ? (e < 17 && e) || 17 : 0
+                            ),
+                          };
                         }
                         return i;
                       });
                     });
                   }}
-                  data={ageOption}
                 />
               </div>
             )}

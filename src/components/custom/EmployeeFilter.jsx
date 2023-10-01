@@ -11,8 +11,11 @@ const EmployeeFilter = ({ users, setActiveUsers }) => {
       (e.target.value &&
         users.filter((u) => {
           return (
-            u.firstName.toLowerCase() === e.target.value.toLowerCase() ||
-            u.lastName.toLowerCase() === e.target.value.toLowerCase()
+            u.firstName.toLowerCase().includes(e.target.value.toLowerCase()) ||
+            u.lastName.toLowerCase().includes(e.target.value.toLowerCase()) ||
+            (u.firstName + " " + u.lastName)
+              .toLowerCase()
+              .includes(e.target.value.toLowerCase())
           );
         })) ||
       users;

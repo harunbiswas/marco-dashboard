@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function BookingMneu({ menus = [] }) {
+export default function BookingMneu({ menus = [], setActive }) {
   const [activeMenu, setActiveMenu] = useState(menus[0].name);
+
+  useEffect(() => {
+    setActive(activeMenu), [activeMenu];
+  });
   return (
     <div className="booking-main">
       <div className="booking-menu">

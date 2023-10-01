@@ -4,15 +4,21 @@ import ExportBtn from "../basic/ExportBtn";
 import Filters from "../basic/Filters";
 import Title from "../basic/Title";
 import BookingMneu from "../booking/BookingMenu";
+import Pagenation from "../booking/Pagenation";
 import AddTransport from "../transport/AddTransport";
 import TransportBody from "../transport/TransportBody";
 
 export default function Transport() {
-  const menus = [{ name: "All" }, { name: "Recently Added" }];
+  const menus = [{ name: "Tutti" }, { name: "Recentemente Aggiunti" }];
   const [transportData, setTransportData] = useState({});
   const [addTransport, setAddTransport] = useState(false);
   const [add, isAdd] = useState(false);
   const [search, setSearch] = useState("");
+
+  const [maxVlaue, setMaxValue] = useState(0);
+  const [activeVlaue, setActiveValue] = useState();
+  const [activeMenu, setActiveMenu] = useState(false);
+
   return (
     <div className="module hotel">
       <AddTransport
@@ -41,17 +47,25 @@ export default function Transport() {
               />
             </div>
           </div>
-          <BookingMneu menus={menus} />
+          <BookingMneu setActive={setActiveMenu} menus={menus} />
           <Filters search={search} setSearch={setSearch} />
           <TransportBody
+            activeMenu={activeMenu}
             search={search}
             setTransportData={setTransportData}
+            activePage={activeVlaue}
+            setMaxValue={setMaxValue}
             handler={(e) => {
               setAddTransport(e);
               isAdd(false);
             }}
           />
-          {/* <Pagenation isbrns={true} /> */}
+          <Pagenation
+            isbrns={true}
+            active={activeVlaue}
+            max={maxVlaue}
+            setActiveValue={setActiveValue}
+          />
         </div>
       </div>
     </div>
