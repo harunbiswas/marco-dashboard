@@ -7,7 +7,26 @@ export default function Catagory({ setData, data, add, transportData }) {
   const typesOption = ["Bagagli", "Adulti", "Bambini", "Animale"];
   const carencyOtion = ["€", "$", "$"];
   const discountOtion = [5, 10, 15];
-  const ageOption = [6, 10, 15];
+  const ageOption = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12",
+    "13",
+    "14",
+    "15",
+    "16",
+    "17",
+  ];
   const unitOption = ["Kg", "Gr"];
   const countOption = [5, 10, 15];
 

@@ -4,7 +4,6 @@ import ExportBtn from "../basic/ExportBtn";
 import Filters from "../basic/Filters";
 import Title from "../basic/Title";
 import BookingMneu from "../booking/BookingMenu";
-import Pagenation from "../booking/Pagenation";
 import AddTransport from "../transport/AddTransport";
 import TransportBody from "../transport/TransportBody";
 
@@ -52,7 +51,7 @@ export default function Transport() {
               isAdd(false);
             }}
           />
-          <Pagenation isbrns={true} />
+          {/* <Pagenation isbrns={true} /> */}
         </div>
       </div>
     </div>
