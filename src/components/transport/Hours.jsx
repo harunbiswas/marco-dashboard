@@ -91,7 +91,7 @@ export default function Hours({ data, handler, transportData }) {
                   });
                 }}
               />
-              <button type="submit">update</button>
+              <button type="submit">Aggiorna</button>
             </form>
           )}
         </>
@@ -117,7 +117,7 @@ export default function Hours({ data, handler, transportData }) {
             onChange={changeHandler}
             id=""
           />
-          <button type="submit">Add</button>
+          <button type="submit">Aggiungi</button>
         </form>
       )) || (
         <button onClick={() => setIsInput(true)}>

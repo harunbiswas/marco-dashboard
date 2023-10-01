@@ -272,6 +272,7 @@
       display: flex;
       gap: 14px;
       align-items: center;
+      width: 100%;
 
       .form-group {
         width: 100%;
@@ -282,6 +283,20 @@
         .select,
         input {
           height: 48px !important;
+          text-align: right;
+        }
+
+        &.discount {
+          position: relative;
+
+          & > span {
+            position: absolute;
+            right: 10px;
+            bottom: 14px;
+          }
+          input {
+            padding-right: 25px;
+          }
         }
 
         &.full {
@@ -314,17 +329,24 @@
         }
       }
 
-      & > button {
-        background-color: rgba(132, 129, 138, 0.2);
-        border: none;
-        font-size: 22px;
+      &-wrp {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 20px;
-        height: 32px;
-        border-radius: 50%;
-        width: 19%;
+        gap: 10px;
+
+        & > button {
+          background-color: rgba(132, 129, 138, 0.2);
+          border: none;
+          font-size: 22px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 20px;
+          height: 32px;
+          border-radius: 50%;
+          width: 5%;
+        }
       }
     }
 

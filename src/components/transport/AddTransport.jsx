@@ -36,7 +36,7 @@ export default function AddTransport({
   const [isError, setIsError] = useState(false);
 
   const createHandler = () => {
-    if (postalCodeRegex.test(data?.zip)) {
+    if (postalCodeRegex.test(data?.zip) && data.pricing.length) {
       if (data?.name) {
         if (add) {
           axios
@@ -46,7 +46,7 @@ export default function AddTransport({
               },
             })
             .then((d) => {
-              navigate(`/module/edit/${d.data._id}`);
+              window.location.reload();
             })
             .catch((e) => {
               console.log(e.response);
@@ -59,7 +59,7 @@ export default function AddTransport({
               },
             })
             .then((d) => {
-              navigate(`/module/edit/${d.data._id}`);
+              window.location.reload();
             })
             .catch((e) => {
               console.log(e.response);
@@ -69,7 +69,9 @@ export default function AddTransport({
         setIsError(true);
       }
     } else {
-      setIsValid(false);
+      if (!postalCodeRegex.test(data?.zip)) {
+        setIsValid(false);
+      }
     }
   };
 
@@ -101,24 +103,28 @@ export default function AddTransport({
     hours: [],
   });
 
-  const [citys, setCitys] = useState([]);
-  const [citysName, setCitysName] = useState([]);
-
-  useEffect(() => {
-    setIsError(false);
-  }, [data?.name]);
-
-  useEffect(() => {
-    values.getCityState(setCitys);
-  }, []);
-
-  useEffect(() => {
-    const ar = [];
-    citys?.forEach((item) => {
-      ar.push(item.name);
-    });
-    setCitysName(ar);
-  }, [citys]);
+  const [citysName, setCitysName] = useState([
+    "Abruzzo",
+    "Basilicata",
+    "Calabria",
+    "Campania",
+    "Emilia-Romagna",
+    "Friuli-Venezia Giulia",
+    "Lazio",
+    "Liguria",
+    "Lombardia",
+    "Marche",
+    "Molise",
+    "Piemonte",
+    "Puglia",
+    "Sardegna",
+    "Sicilia",
+    "Toscana",
+    "Trentino-Alto Adige",
+    "Umbria",
+    "Valle d'Aosta",
+    "Veneto",
+  ]);
 
   // update data
 
@@ -281,7 +287,9 @@ export default function AddTransport({
             <div className="form-group">
               <label htmlFor="">Tipo di Veicolo</label>
               <Select
-                activeValue={data?.vehicleType || "Treno"}
+                activeValue={
+                  data?.vehicleType || "Seleziona un tipo di veicolo"
+                }
                 handler={(e) => {
                   setData((prev) => {
                     return {
@@ -297,7 +305,7 @@ export default function AddTransport({
             <div className="form-group">
               <label htmlFor="">Marchio</label>
               <Select
-                activeValue={data?.vehicleBrand || "Select one"}
+                activeValue={data?.vehicleBrand || "Seleziona un Marchio"}
                 handler={(e) => {
                   setData((prev) => {
                     return {
@@ -420,9 +428,9 @@ export default function AddTransport({
 
       {isDelete && (
         <div className="isdelete">
-          <h2 className="jakarta">Vuoi tornare alla lista dei trasporti?</h2>
+          <h2 className="jakarta">Vuoi eliminare {data?.name}?</h2>
           <p className="jakarta">
-            Cliccando su torna indietro perderai le modifiche a questo trasporto
+            Eliminandolo non sarà più possibile recuperarlo
           </p>
           <div className="buttons">
             <button
@@ -432,7 +440,7 @@ export default function AddTransport({
               }}
               className="btn"
             >
-              Annulla
+              Elimina
             </button>
             <button onClick={deleteHandler} className="delete-btn btn">
               Torna Indietro
