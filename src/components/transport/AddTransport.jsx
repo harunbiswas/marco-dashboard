@@ -34,6 +34,7 @@ export default function AddTransport({
   const [address, setAddress] = useState("");
 
   const [isError, setIsError] = useState(false);
+  const [isPrice, setIsPrice] = useState(false);
 
   const createHandler = () => {
     if (postalCodeRegex.test(data?.zip) && data.pricing.length) {
@@ -69,6 +70,9 @@ export default function AddTransport({
         setIsError(true);
       }
     } else {
+      if (!data.pricing.length) {
+        setIsPrice(true);
+      }
       if (!postalCodeRegex.test(data?.zip)) {
         setIsValid(false);
       }
@@ -129,9 +133,12 @@ export default function AddTransport({
   // update data
 
   useEffect(() => {
-    if (transportData) {
-      setData(transportData);
-    } else {
+    setIsError(false);
+    setIsPrice(false);
+    setIsValid(true);
+    setIsDelete(false);
+
+    if (add) {
       setData({
         name: "",
         transportId: values.generateUniqueString(),
@@ -147,26 +154,54 @@ export default function AddTransport({
         pricing: [],
         hours: [],
       });
+    } else {
+      if (transportData && !add) {
+        setData(transportData);
+      } else {
+        setData({
+          name: "",
+          transportId: values.generateUniqueString(),
+          city: "",
+          state: "",
+          zip: "",
+          address: "",
+          vehicleType: "",
+          vehicleBrand: "",
+          startingDate: "",
+          endingDate: "",
+          days: [],
+          pricing: [],
+          hours: [],
+        });
+      }
     }
-  }, [transportData]);
+  }, [transportData, add]);
 
   // delete
   const [isDelete, setIsDelete] = useState(false);
 
   const deleteHandler = () => {
-    axios
-      .delete(`${values.url}/transport?id=${data?._id}`, {
-        headers: {
-          token,
-        },
-      })
-      .then((d) => {
-        window.location.reload();
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    if (add) {
+      handler(false);
+    } else {
+      axios
+        .delete(`${values.url}/transport?id=${data?._id}`, {
+          headers: {
+            token,
+          },
+        })
+        .then((d) => {
+          window.location.reload();
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   };
+
+  useEffect(() => {
+    setIsDelete(false);
+  }, [addhotel]);
 
   return (
     <div
@@ -178,7 +213,17 @@ export default function AddTransport({
           <span>
             <FaCarSide />
           </span>
-          <button onClick={() => handler(false)} className="close">
+          <button
+            onClick={() => {
+              if (add) {
+                setIsDelete(true);
+              } else {
+                handler(false);
+                setIsDelete(false);
+              }
+            }}
+            className="close"
+          >
             <IoClose />
           </button>
         </div>
@@ -404,12 +449,15 @@ export default function AddTransport({
               transportData={transportData}
               data={data?.hours}
               handler={setData}
+              add={add}
             />
           </div>
         </div>{" "}
         <div className="add-hotel-body gap">
           <h4>Prezzo per Categoria</h4>
           <Catagory
+            isPrice={isPrice}
+            setIsPrice={setIsPrice}
             transportData={transportData}
             add={add}
             data={data?.pricing}
@@ -420,7 +468,7 @@ export default function AddTransport({
           <button
             style={{ backgroundColor: bg, color: cl }}
             onClick={() => {
-              (add && handler(false)) || setIsDelete(true);
+              setIsDelete(true);
             }}
             className="btn cancel "
           >
@@ -434,22 +482,27 @@ export default function AddTransport({
 
       {isDelete && (
         <div className="isdelete">
-          <h2 className="jakarta">Vuoi eliminare {data?.name}?</h2>
+          <h2 className="jakarta">
+            {(add && "Vuoi tornare alla lista?") ||
+              `Vuoi eliminare ${data?.name}?`}
+          </h2>
           <p className="jakarta">
-            Eliminandolo non sarà più possibile recuperarlo
+            {(add &&
+              "Tornando alla lista perderai la configurazione che stai creando") ||
+              "Eliminandolo non sarà più possibile recuperarlo"}
           </p>
           <div className="buttons">
             <button
               onClick={() => {
                 setIsDelete(false);
-                handler(false);
+                handler(true);
               }}
               className="btn"
             >
               Annulla
             </button>
             <button onClick={deleteHandler} className="delete-btn btn">
-              Elimina
+              {(add && "Torna alla Lista") || "Elimina"}
             </button>
           </div>
         </div>

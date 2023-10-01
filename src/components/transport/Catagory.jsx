@@ -3,7 +3,14 @@ import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import Select from "../basic/Select";
 import Input from "../hotel-edit/Input";
 
-export default function Catagory({ setData, data, add, transportData }) {
+export default function Catagory({
+  setData,
+  data,
+  add,
+  transportData,
+  isPrice,
+  setIsPrice,
+}) {
   const typesOption = ["Adulti", "Bambini", "Bagagli", "Animale"];
   const carencyOtion = ["€", "$", "$"];
   const discountOtion = [5, 10, 15];
@@ -77,45 +84,8 @@ export default function Catagory({ setData, data, add, transportData }) {
     },
   ]);
 
-  const updateItemValue = (itemId, itemName, newValue) => {
-    setItems((prevItems) =>
-      prevItems.map((item) => {
-        if (item.itemId === itemId) {
-          return {
-            ...item,
-            items: item.items.map((subItem) => {
-              if (subItem.name === itemName) {
-                return {
-                  ...subItem,
-                  value: Number(newValue) || 0,
-                };
-              }
-              return subItem;
-            }),
-          };
-        }
-        return item;
-      })
-    );
-  };
-
   const removeItemById = (itemId) => {
     setItems((prevItems) => prevItems.filter((item) => item.itemId !== itemId));
-  };
-
-  const handleActiveValueChange = (sectionId, itemName, newActiveValue) => {
-    setItems((prevItems) =>
-      prevItems.map((section) => ({
-        ...section,
-        items: section.items.map((item) => ({
-          ...item,
-          activeValue:
-            section.itemId === sectionId && item.name === itemName
-              ? newActiveValue
-              : item.activeValue,
-        })),
-      }))
-    );
   };
 
   useEffect(() => {
@@ -132,6 +102,8 @@ export default function Catagory({ setData, data, add, transportData }) {
   useEffect(() => {
     if (!add && transportData) {
       setItems(transportData?.pricing || []);
+    } else {
+      setItems([]);
     }
   }, [transportData]);
 
@@ -350,8 +322,9 @@ export default function Catagory({ setData, data, add, transportData }) {
       ))}
 
       <button
-        style={{ color: !items.length && "red" }}
+        style={{ color: isPrice && "red" }}
         onClick={() => {
+          setIsPrice(false);
           setItems((prev) => {
             return [
               ...prev,

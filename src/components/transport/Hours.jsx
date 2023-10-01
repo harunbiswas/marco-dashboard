@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 
-export default function Hours({ data, handler, transportData }) {
+export default function Hours({ data, handler, transportData, add }) {
   const [hours, setHours] = useState(data);
   const [isInput, setIsInput] = useState(false);
   const [active, setActive] = useState(data);
@@ -26,8 +26,13 @@ export default function Hours({ data, handler, transportData }) {
   };
 
   useEffect(() => {
-    setHours(transportData?.hours || []);
-    setActive(transportData?.hours || []);
+    if (transportData && !add) {
+      setHours(transportData?.hours || []);
+      setActive(transportData?.hours || []);
+    } else {
+      setHours([]);
+      setActive([]);
+    }
   }, [transportData]);
 
   return (

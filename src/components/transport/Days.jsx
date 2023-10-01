@@ -34,6 +34,8 @@ export default function Days({ setData, data, transportData, add }) {
   useEffect(() => {
     if (!add && transportData) {
       setActiveDays(transportData?.days || []);
+    } else {
+      setActiveDays([]);
     }
   }, [transportData]);
   return (

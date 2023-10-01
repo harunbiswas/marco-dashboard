@@ -43,7 +43,6 @@ export default function TransportItem({ handler, data, setTransportData }) {
     setPrics(data?.pricing.sort((a, b) => a?.age - b?.age));
   }, [data]);
 
-  console.log(data);
   return (
     <div className="item">
       <div className="item-top-wrp">
