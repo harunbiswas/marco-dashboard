@@ -244,11 +244,15 @@
 }
 
 .isdelete {
-  position: absolute;
+  position: fixed;
   background-color: #fff;
   padding: 20px;
   display: flex;
   flex-direction: column;
+  z-index: 999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   box-shadow: 0px 23px 44px 0px rgba(176, 183, 195, 0.14),
     0px 1px 3px 0px rgba(0, 0, 0, 0.12);

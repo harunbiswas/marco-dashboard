@@ -83,9 +83,9 @@ export default function AddTransport({
   const wrp = useRef(null);
 
   useEffect(() => {
-    wrp.current.addEventListener("click", (e) => {
+    wrp.current.addEventListener("mousedown", (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
-        handler(false);
+        setIsDelete(true);
       }
     });
   });
@@ -265,7 +265,7 @@ export default function AddTransport({
             <div className="form-group">
               <label htmlFor="">Regione</label>
               <Select
-                activeValue={data?.city || "Select Regione"}
+                activeValue={data?.city || "Seleziona Regione"}
                 handler={(e) => {
                   setData((prev) => {
                     return {
@@ -478,35 +478,34 @@ export default function AddTransport({
             {(add && "Aggiungi Nuovo Trasporto") || "Salva Modifiche"}
           </button>
         </div>
-      </div>
-
-      {isDelete && (
-        <div className="isdelete">
-          <h2 className="jakarta">
-            {(add && "Vuoi tornare alla lista?") ||
-              `Vuoi eliminare ${data?.name}?`}
-          </h2>
-          <p className="jakarta">
-            {(add &&
-              "Tornando alla lista perderai la configurazione che stai creando") ||
-              "Eliminandolo non sarà più possibile recuperarlo"}
-          </p>
-          <div className="buttons">
-            <button
-              onClick={() => {
-                setIsDelete(false);
-                handler(true);
-              }}
-              className="btn"
-            >
-              Annulla
-            </button>
-            <button onClick={deleteHandler} className="delete-btn btn">
-              {(add && "Torna alla Lista") || "Elimina"}
-            </button>
+        {isDelete && (
+          <div className="isdelete">
+            <h2 className="jakarta">
+              {(add && "Vuoi tornare alla lista?") ||
+                `Vuoi eliminare ${data?.name}?`}
+            </h2>
+            <p className="jakarta">
+              {(add &&
+                "Tornando alla lista perderai la configurazione che stai creando") ||
+                "Eliminandolo non sarà più possibile recuperarlo"}
+            </p>
+            <div className="buttons">
+              <button
+                onClick={() => {
+                  setIsDelete(false);
+                  handler(true);
+                }}
+                className="btn"
+              >
+                Annulla
+              </button>
+              <button onClick={deleteHandler} className="delete-btn btn">
+                {(add && "Torna alla Lista") || "Elimina"}
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

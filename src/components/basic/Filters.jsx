@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { BsCalendarEvent } from "react-icons/bs";
 import { FiFilter } from "react-icons/fi";
 import { HiMiniBars3BottomLeft } from "react-icons/hi2";
 import AddBtn from "../booking/AddBtn";
 import Filter from "../booking/Filter";
-import DateLine from "./DateLine";
 import Search from "./Search";
 import Select from "./Select";
 
@@ -23,17 +21,25 @@ export default function Filters({ activePage, search, setSearch }) {
       }
     });
   }, []);
+
+  const [sortValue, setSortValue] = useState("Ordina per ultimi aggiunti");
   return (
     <div className="booking-filter">
       <Search search={search} setSearch={setSearch} />
       <div className="booking-filters">
         {activePage && <AddBtn activePage={activePage} />}
-        <div className="sort booking-btn">
+        <div className="sort booking-btn transport-sort">
           <div className="icon">
             <HiMiniBars3BottomLeft />
           </div>
 
-          <Select data={["Sort", "Top", "Bottom"]} />
+          <Select
+            handler={(e) => {
+              setSortValue(e);
+            }}
+            data={["Ordina per ultimi aggiunti", "Ordina per i più vecchi"]}
+            activeValue={sortValue}
+          />
         </div>
         <div ref={filter} className=" booking-btn filter-btn-wrp">
           <button
@@ -52,7 +58,7 @@ export default function Filters({ activePage, search, setSearch }) {
 
           {isFilter && <Filter handler={closeHandler} />}
         </div>
-        <DateLine
+        {/* <DateLine
           data={[
             "Today",
             " Last day",
@@ -62,7 +68,7 @@ export default function Filters({ activePage, search, setSearch }) {
           ]}
           defaultText="show:"
           icon={<BsCalendarEvent />}
-        />
+        /> */}
       </div>
     </div>
   );

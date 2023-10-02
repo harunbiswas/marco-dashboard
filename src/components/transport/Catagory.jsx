@@ -97,7 +97,7 @@ export default function Catagory({
     });
   }, [items]);
 
-  const rx = /^\d+(\.\d*)?$/;
+  const rx = /^(\d+(\.\d{0,2})?)?$/;
 
   useEffect(() => {
     if (!add && transportData) {
@@ -249,7 +249,13 @@ export default function Catagory({
                           if (i.itemId === item.itemId) {
                             return {
                               ...i,
-                              maxWeight: Number(rx.test(e.toString()) ? e : 0),
+                              maxWeight: Number(
+                                rx.test(e.toString())
+                                  ? e
+                                  : e.length < 2
+                                  ? 0
+                                  : item.maxWeight
+                              ),
                             };
                           }
                           return i;
@@ -304,7 +310,9 @@ export default function Catagory({
                         if (i.itemId === item.itemId) {
                           return {
                             ...i,
-                            cost: rx.test(e.toString()) ? e : 0,
+                            cost:
+                              (rx.test(e.toString()) && e) ||
+                              (e.length < 2 ? 0 : item.cost),
                           };
                         }
                         return i;
