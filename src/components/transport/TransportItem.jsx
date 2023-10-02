@@ -43,6 +43,20 @@ export default function TransportItem({ handler, data, setTransportData }) {
     setPrics(data?.pricing.sort((a, b) => a?.age - b?.age));
   }, [data]);
 
+  const customSort = (a, b) => {
+    const order = [
+      "Lunedì",
+      "Martedì",
+      "Mercoledì",
+      "Giovedì",
+      "Venerdì",
+      "Sabato",
+      "Domenica",
+    ];
+
+    return order.indexOf(a) - order.indexOf(b);
+  };
+
   return (
     <div className="item">
       <div className="item-top-wrp">
@@ -52,7 +66,8 @@ export default function TransportItem({ handler, data, setTransportData }) {
             <span>
               {data?.startingDate &&
                 formattedDate(new Date(data?.startingDate))}
-              -{data?.endingDate && formattedDate(new Date(data?.endingDate))}
+              {" -" + " "}
+              {data?.endingDate && formattedDate(new Date(data?.endingDate))}
             </span>
           </div>
 
@@ -94,7 +109,8 @@ export default function TransportItem({ handler, data, setTransportData }) {
               {data?.vehicleType}
             </span>
             <span>
-              <BiSolidLocationPlus /> {data?.state} {data?.city} {data?.zip}
+              <BiSolidLocationPlus /> {data?.state && data?.state + ","}{" "}
+              {data?.city && data?.city + "."} {data?.zip}
             </span>
           </div>
         )}
@@ -108,7 +124,8 @@ export default function TransportItem({ handler, data, setTransportData }) {
             <div className="content">
               <span>Punto di Partenza</span>
               <strong>
-                {data?.state} {data?.city} {data?.zip}
+                {data?.state && data?.state + ","}{" "}
+                {data?.city && data?.city + "."} {data?.zip}
               </strong>
             </div>
           </div>
@@ -150,7 +167,8 @@ export default function TransportItem({ handler, data, setTransportData }) {
                 {" "}
                 {data?.startingDate &&
                   formattedDate(new Date(data?.startingDate))}
-                -{data?.endingDate && formattedDate(new Date(data?.endingDate))}
+                {" - "}
+                {data?.endingDate && formattedDate(new Date(data?.endingDate))}
               </strong>
             </div>
           </div>
@@ -161,10 +179,10 @@ export default function TransportItem({ handler, data, setTransportData }) {
             <div className="content">
               <span>Giorni Validi</span>
               <div className="days">
-                {data?.days.map((d, i) => (
+                {data?.days.sort(customSort).map((d, i) => (
                   <strong key={i}>
-                    {d}
-                    {(i === data.days.length - 2 && " and") ||
+                    {"  " + d}
+                    {(i === data.days.length - 2 && " e") ||
                       (i === data.days.length - 1 && " ") ||
                       ","}
                   </strong>
@@ -201,12 +219,10 @@ export default function TransportItem({ handler, data, setTransportData }) {
                       <span>
                         {" "}
                         (Età
-                        {(d?.age <= 5 && "0-5") ||
-                          (d?.age <= 7 && "6-7") ||
-                          (d?.age <= 9 && "8-9") ||
-                          (d?.age <= 13 && "10-13") ||
-                          (d?.age <= 15 && "14-15") ||
-                          (d?.age <= 18 && "16-18")}
+                        {(d?.age <= 5 && " 0-5") ||
+                          (d?.age <= 7 && " 6-7") ||
+                          (d?.age <= 9 && " 8-9") ||
+                          (d?.age <= 17 && " 10-17")}
                         )
                       </span>
                     )) ||

@@ -22,7 +22,7 @@ export default function Pagenation({ isbrns, max, active, setActiveValue }) {
   return (
     <div className="pagenation-wrp">
       <span>
-        Mostrando {max && showItem * active - showItem + 1} -
+        Mostrando {max && showItem * active - showItem + 1} -{" "}
         {(showItem * active < max && showItem * active) || max} su {max || "0"}
       </span>
       {isbrns && (

@@ -12,6 +12,8 @@ export default function TransportBody({
   activePage,
   setMaxValue,
   activeMenu,
+  sortValue,
+  filterOP,
 }) {
   const showItem = 30;
   const [transport, setTransport] = useState([]);
@@ -64,9 +66,48 @@ export default function TransportBody({
     }
   }, [search]);
 
+  useEffect(() => {
+    if (sortValue === "Ordina per i più vecchi") {
+      const sortedTransport = [...transport].sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+
+        return dateB - dateA;
+      });
+
+      setTransport(sortedTransport);
+    } else {
+      const sortedTransport = [...transport].sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+
+        return dateA - dateB;
+      });
+
+      setTransport(sortedTransport);
+    }
+  }, [sortValue]);
+
   const oneWeekAgo = new Date();
   oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
+  // filter
+
+  useEffect(() => {
+    if (filterOP.car.length || filterOP.days.length) {
+      const filteredTransport = transportMain.filter((item) => {
+        const isCarIncluded = filterOP.car.includes(item.vehicleType);
+        const areDaysIncluded = item.days.some((day) =>
+          filterOP.days.includes(day)
+        );
+        return isCarIncluded || areDaysIncluded;
+      });
+
+      setTransport(filteredTransport);
+    } else {
+      setTransport(transportMain);
+    }
+  }, [filterOP]);
   return (
     <div className="transport-body">
       {(activeMenu === "Tutti" &&

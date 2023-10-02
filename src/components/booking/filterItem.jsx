@@ -1,8 +1,29 @@
 import { useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 
-export default function FilterItem({ data }) {
+export default function FilterItem({ data, filterOP, setFilterOP, index }) {
   const [collops, setCollops] = useState(false);
+  const [isAll, setIsAll] = useState(false);
+
+  const carHandler = (e) => {
+    setFilterOP((prev) => {
+      const updatedFilter = { ...prev };
+      if (!updatedFilter[e.target.name]) {
+        updatedFilter[e.target.name] = [];
+      }
+
+      if (e.target.checked) {
+        updatedFilter[e.target.name].push(e.target.value);
+      } else {
+        updatedFilter[e.target.name] = updatedFilter[e.target.name].filter(
+          (item) => item !== e.target.value
+        );
+      }
+
+      return updatedFilter;
+    });
+  };
+
   return (
     <div className="filter-item">
       <button onClick={() => setCollops(!collops)}>
@@ -10,15 +31,42 @@ export default function FilterItem({ data }) {
         {<FaAngleDown /> || <FaAngleUp />}
       </button>
       <ul className={`filter-item-body ${(collops && "show") || ""}`}>
-        {data?.items.map((d, i) => (
-          <div key={i} className="group">
-            <input type="checkbox" id={d} />
-            <label htmlFor={d}>{d}</label>
+        {(!isAll &&
+          data?.items.slice(0, 4).map((d, i) => (
+            <div key={i} className="group">
+              <input
+                name={(index === 0 && "car") || "days"}
+                onChange={carHandler}
+                value={d}
+                type="checkbox"
+                id={d}
+              />
+              <label htmlFor={d}>{d}</label>
+            </div>
+          ))) ||
+          data?.items.map((d, i) => (
+            <div key={i} className="group">
+              <input
+                name={(index === 0 && "car") || "days"}
+                onChange={carHandler}
+                value={d}
+                type="checkbox"
+                id={d}
+              />
+              <label htmlFor={d}>{d}</label>
+            </div>
+          ))}
+        {data?.items.length > 4 && (
+          <div className="filter-item-bottom">
+            <button
+              onClick={() => {
+                setIsAll(!isAll);
+              }}
+            >
+              {(isAll && "Show less") || "Show All"}
+            </button>
           </div>
-        ))}
-        <div className="filter-item-bottom">
-          <button>Show All</button>
-        </div>
+        )}
       </ul>
     </div>
   );

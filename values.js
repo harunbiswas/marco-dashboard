@@ -36,21 +36,21 @@ values.notific = [
 
 values.filterData = [
   {
-    name: "Module",
-    items: ["Eden", "Dellevue", "Eden E Tirrenia"],
+    name: "Tipo di Veicolo",
+    items: ["Treno", "Bus", "Aereo", "Nave"],
   },
   {
-    name: "ModuCittàle",
+    name: "Giorni",
     count: 1,
-    items: ["Eden", "Dellevue", "Eden E Tirrenia"],
-  },
-  {
-    name: "Trasporto",
-    items: ["Eden", "Dellevue", "Eden E Tirrenia"],
-  },
-  {
-    name: "Tipi di Camera",
-    items: ["Eden", "Dellevue", "Eden E Tirrenia"],
+    items: [
+      "Lunedì",
+      "Martedì",
+      "Mercoledì",
+      "Giovedì",
+      "Venerdì",
+      "Sabato",
+      "Domenica",
+    ],
   },
 ];
 

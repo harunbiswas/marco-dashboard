@@ -85,7 +85,7 @@ export default function AddTransport({
   useEffect(() => {
     wrp.current.addEventListener("mousedown", (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
-        setIsDelete(true);
+        handler(false);
       }
     });
   });

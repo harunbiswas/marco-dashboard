@@ -6,7 +6,15 @@ import Filter from "../booking/Filter";
 import Search from "./Search";
 import Select from "./Select";
 
-export default function Filters({ activePage, search, setSearch }) {
+export default function Filters({
+  activePage,
+  search,
+  setSearch,
+  sortValue,
+  setSortValue,
+  filterOP,
+  setFilterOP,
+}) {
   const [isFilter, setIsFilter] = useState(false);
   const filter = useRef(null);
 
@@ -22,10 +30,9 @@ export default function Filters({ activePage, search, setSearch }) {
     });
   }, []);
 
-  const [sortValue, setSortValue] = useState("Ordina per ultimi aggiunti");
   return (
     <div className="booking-filter">
-      <Search search={search} setSearch={setSearch} />
+      <Search search={search} pls="Cerca" setSearch={setSearch} />
       <div className="booking-filters">
         {activePage && <AddBtn activePage={activePage} />}
         <div className="sort booking-btn transport-sort">
@@ -56,7 +63,13 @@ export default function Filters({ activePage, search, setSearch }) {
             <span>2</span>
           </button>
 
-          {isFilter && <Filter handler={closeHandler} />}
+          {isFilter && (
+            <Filter
+              filterOP={filterOP}
+              setFilterOP={setFilterOP}
+              handler={closeHandler}
+            />
+          )}
         </div>
         {/* <DateLine
           data={[

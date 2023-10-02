@@ -17,9 +17,14 @@ export default function Transport() {
   const [maxVlaue, setMaxValue] = useState(0);
   const [activeVlaue, setActiveValue] = useState();
   const [activeMenu, setActiveMenu] = useState(false);
+  const [sortValue, setSortValue] = useState("Ordina per ultimi aggiunti");
+  const [filterOP, setFilterOP] = useState({
+    car: [],
+    days: [],
+  });
 
   return (
-    <div className="module hotel">
+    <div className="module hotel transport">
       <AddTransport
         add={add}
         handler={setAddTransport}
@@ -47,17 +52,26 @@ export default function Transport() {
             </div>
           </div>
           <BookingMneu setActive={setActiveMenu} menus={menus} />
-          <Filters search={search} setSearch={setSearch} />
+          <Filters
+            filterOP={filterOP}
+            setFilterOP={setFilterOP}
+            sortValue={sortValue}
+            setSortValue={setSortValue}
+            search={search}
+            setSearch={setSearch}
+          />
           <TransportBody
             activeMenu={activeMenu}
             search={search}
             setTransportData={setTransportData}
             activePage={activeVlaue}
             setMaxValue={setMaxValue}
+            sortValue={sortValue}
             handler={(e) => {
               setAddTransport(e);
               isAdd(false);
             }}
+            filterOP={filterOP}
           />
           <Pagenation
             isbrns={true}
