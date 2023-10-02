@@ -4,8 +4,10 @@ export default function BookingMneu({ menus = [], setActive }) {
   const [activeMenu, setActiveMenu] = useState(menus[0].name);
 
   useEffect(() => {
-    setActive(activeMenu), [activeMenu];
-  });
+    if (typeof setActive === "function") {
+      setActive(activeMenu);
+    }
+  }, [activeMenu]);
   return (
     <div className="booking-main">
       <div className="booking-menu">

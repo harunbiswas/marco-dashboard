@@ -16,7 +16,9 @@ export default function Pagenation({ isbrns, max, active, setActiveValue }) {
   }, [max]);
 
   useEffect(() => {
-    setActiveValue(activeBtn);
+    if (typeof setActiveValue === "function") {
+      setActiveValue(activeBtn);
+    }
   }, [activeBtn]);
 
   return (

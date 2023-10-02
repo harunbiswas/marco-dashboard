@@ -1,36 +1,43 @@
-import { useEffect, useState } from "react";
-import Autocomplete from "react-autocomplete-input";
-import "react-autocomplete-input/dist/bundle.css";
+import React, { useState } from "react";
+import PlacesAutocomplete from "react-places-autocomplete";
 
 const LocationAutoComplete = () => {
-  const [options, setOptions] = useState([]);
-  const [value, setValue] = useState("");
+  const [address, setAddress] = useState("");
 
-  useEffect(() => {
-    // Fetch data from the Google Maps service
-    // Replace 'YOUR_API_KEY' with your actual Google Maps API key
-    fetch(
-      `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${value}&key=AIzaSyA4ZZ5jJ98FlDnIUnimv-OmA18tWiPqYuk`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        // Extract the options from the data received
-        const extractedOptions = data.predictions.map(
-          (prediction) => prediction.description
-        );
-        setOptions(extractedOptions);
-      })
-      .catch((error) => {
-        console.error("Error fetching data from Google Maps service:", error);
-      });
-  }, [value]);
+  const handleChange = (address) => {
+    setAddress(address);
+  };
 
-  const handleSelect = (selectedValue) => {
-    setValue(selectedValue);
+  const handleSelect = (address) => {
+    setAddress(address);
   };
 
   return (
-    <Autocomplete options={options} onSelect={handleSelect} value={value} />
+    <PlacesAutocomplete
+      value={address}
+      onChange={handleChange}
+      onSelect={handleSelect}
+    >
+      {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+        <div>
+          <input {...getInputProps({ placeholder: "Enter a location" })} />
+          <div>
+            {loading ? <div>Loading...</div> : null}
+            {suggestions.map((suggestion) => {
+              const style = {
+                backgroundColor: suggestion.active ? "#41b6e6" : "#fff",
+              };
+
+              return (
+                <div {...getSuggestionItemProps(suggestion, { style })}>
+                  {suggestion.description}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </PlacesAutocomplete>
   );
 };
 
