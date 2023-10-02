@@ -10,6 +10,7 @@ import Input from "../hotel-edit/Input";
 import Catagory from "./Catagory";
 import Days from "./Days";
 import Hours from "./Hours";
+import LocationAutocomplete from "./LocationAutoComplete";
 
 export default function AddTransport({
   handler,
@@ -280,7 +281,17 @@ export default function AddTransport({
             </div>
             <div className="form-group">
               <label htmlFor="">Città</label>
-              <Input
+              <LocationAutocomplete
+                onSelect={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      state: e,
+                    };
+                  });
+                }}
+              />
+              {/* <Input
                 d={{
                   value: data?.state,
                   label: "Città",
@@ -293,7 +304,7 @@ export default function AddTransport({
                     };
                   });
                 }}
-              />
+              /> */}
             </div>
             <div className={`form-group ${(!isValid && "error") || ""}`}>
               <label htmlFor="">Codice Postale</label>
