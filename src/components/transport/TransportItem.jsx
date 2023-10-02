@@ -57,6 +57,31 @@ export default function TransportItem({ handler, data, setTransportData }) {
     return order.indexOf(a) - order.indexOf(b);
   };
 
+  //. kits
+
+  const [kits, setKits] = useState([]);
+
+  useEffect(() => {
+    setKits(
+      prics.sort((a, b) => a?.age - b?.age).filter((i) => i.name === "Bambini")
+    );
+  }, [prics]);
+
+  const kidsHandler = (age) => {
+    let config = ` 0-${kits[0]?.age} `;
+    for (let i = 0; i < kits.length; i++) {
+      if (i > 0) {
+        if (age === kits[i]?.age) {
+          config = ` ${kits[i - 1]?.age + 1}-${kits[i]?.age} `;
+        }
+      }
+    }
+
+    return config;
+  };
+
+  // config = ` ${kits[0]?.age + 1}-${kits[i]?.age} `;
+
   return (
     <div className="item">
       <div className="item-top-wrp">
@@ -219,11 +244,7 @@ export default function TransportItem({ handler, data, setTransportData }) {
                       <span>
                         {" "}
                         (Età
-                        {(d?.age <= 5 && " 0-5") ||
-                          (d?.age <= 7 && " 6-7") ||
-                          (d?.age <= 9 && " 8-9") ||
-                          (d?.age <= 17 && " 10-17")}
-                        )
+                        {d && kidsHandler(d?.age)})
                       </span>
                     )) ||
                       ((d?.name === "Bagagli" || d?.name === "Animale") &&
