@@ -13,7 +13,9 @@ export default function FilterItem({ data, filterOP, setFilterOP, index }) {
       }
 
       if (e.target.checked) {
-        updatedFilter[e.target.name].push(e.target.value);
+        if (!filterOP[e.target.name].includes(e.target.value)) {
+          updatedFilter[e.target.name].push(e.target.value);
+        }
       } else {
         updatedFilter[e.target.name] = updatedFilter[e.target.name].filter(
           (item) => item !== e.target.value
@@ -27,7 +29,8 @@ export default function FilterItem({ data, filterOP, setFilterOP, index }) {
   return (
     <div className="filter-item">
       <button onClick={() => setCollops(!collops)}>
-        <span>{data.name}</span> {data.count && <small>{data.count}</small>}
+        <span>{data.name}</span>{" "}
+        {data?.name === "Giorni" && <small>{filterOP.days.length}</small>}
         {<FaAngleDown /> || <FaAngleUp />}
       </button>
       <ul className={`filter-item-body ${(collops && "show") || ""}`}>
@@ -39,6 +42,10 @@ export default function FilterItem({ data, filterOP, setFilterOP, index }) {
                 onChange={carHandler}
                 value={d}
                 type="checkbox"
+                checked={
+                  (index === 0 && filterOP.car.includes(d)) ||
+                  filterOP.days.includes(d)
+                }
                 id={d}
               />
               <label htmlFor={d}>{d}</label>
@@ -52,6 +59,10 @@ export default function FilterItem({ data, filterOP, setFilterOP, index }) {
                 value={d}
                 type="checkbox"
                 id={d}
+                checked={
+                  (index === 0 && filterOP.car.includes(d)) ||
+                  filterOP.days.includes(d)
+                }
               />
               <label htmlFor={d}>{d}</label>
             </div>

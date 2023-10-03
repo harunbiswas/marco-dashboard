@@ -60,7 +60,7 @@ export default function Filters({
             </div>
 
             <p>Filters</p>
-            <span>2</span>
+            <span>{filterOP.car.length + filterOP.days.length}</span>
           </button>
 
           {isFilter && (
