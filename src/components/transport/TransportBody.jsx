@@ -72,7 +72,7 @@ export default function TransportBody({
         const dateA = new Date(a.createdAt);
         const dateB = new Date(b.createdAt);
 
-        return dateB - dateA;
+        return dateA - dateB;
       });
 
       setTransport(sortedTransport);
@@ -81,7 +81,7 @@ export default function TransportBody({
         const dateA = new Date(a.createdAt);
         const dateB = new Date(b.createdAt);
 
-        return dateA - dateB;
+        return dateB - dateA;
       });
 
       setTransport(sortedTransport);
@@ -116,10 +116,10 @@ export default function TransportBody({
       const currentDate = new Date(); // Get current date
 
       const filteredTransportMain = transportMain.filter((item) => {
-        const itemEndDate = new Date(item.endDate); // Assuming endDate is a property in each object
+        const itemEndDate = new Date(item.endingDate); // Assuming endDate is a property in each object
 
         // Compare item's end date with current date
-        return itemEndDate > currentDate;
+        return itemEndDate.getTime() < currentDate.getTime();
       });
 
       setTransport(filteredTransportMain);
