@@ -424,7 +424,7 @@ export default function AddTransport({
               </label>
               <input
                 value={data?.startingDate}
-                max={data?.endingDate}
+                max={data?.endingDate || ""}
                 onChange={(e) => {
                   setIsChange(true);
                   setData((prev) => {
@@ -445,7 +445,7 @@ export default function AddTransport({
               </label>
               <input
                 value={data?.endingDate}
-                min={data?.startingDate}
+                min={data?.startingDate || ""}
                 onChange={(e) => {
                   setIsChange(true);
                   setData((prev) => {
