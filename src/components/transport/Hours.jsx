@@ -39,7 +39,7 @@ export default function Hours({
       setHours([]);
       setActive([]);
     }
-  }, [transportData, data]);
+  }, [transportData]);
 
   return (
     <ul className="hours-inner">

@@ -59,7 +59,7 @@ export default function Filters({
               <FiFilter />
             </div>
 
-            <p>Filters</p>
+            <p>Filtri</p>
             <span>{filterOP.car.length + filterOP.days.length}</span>
           </button>
 

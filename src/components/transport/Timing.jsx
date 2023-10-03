@@ -44,7 +44,7 @@ export default function Timing({
     } else {
       setTimes([]);
     }
-  }, [transportData, dd]);
+  }, [transportData]);
 
   return (
     <div className="timeing">

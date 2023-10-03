@@ -98,6 +98,7 @@ export default function EditableSelect({
           {data?.length &&
             data
               .filter((item) => item.vehicaleType === mainData?.vehicleType)
+              .sort((a, b) => a.name.localeCompare(b.name))
               .map((d, i) => (
                 <li key={i}>
                   <button
@@ -130,7 +131,7 @@ export default function EditableSelect({
               />
             </form>
           )) ||
-            (mainData.vehicleType && role === "admin" && (
+            (mainData?.vehicleType && role === "admin" && (
               <button
                 onClick={(e) => {
                   setIsadd(true);

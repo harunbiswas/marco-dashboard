@@ -43,7 +43,7 @@ export default function Days({
     } else {
       setActiveDays([]);
     }
-  }, [transportData, data]);
+  }, [transportData]);
   return (
     <div className="transport-days">
       <div className="top">

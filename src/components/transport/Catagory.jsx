@@ -10,6 +10,7 @@ export default function Catagory({
   transportData,
   isPrice,
   setIsPrice,
+  setIsChange,
 }) {
   const typesOption = ["Adulti", "Bambini", "Bagagli", "Animale"];
   const carencyOtion = ["€", "$", "$"];
@@ -33,6 +34,7 @@ export default function Catagory({
     "15",
     "16",
     "17",
+    "18",
   ];
   const unitOption = ["Kg", "Gr"];
   const countOption = [5, 10, 15];
@@ -105,7 +107,7 @@ export default function Catagory({
     } else {
       setItems([]);
     }
-  }, [transportData, data]);
+  }, [transportData]);
 
   return (
     <div className="transport-catagory">
@@ -144,7 +146,7 @@ export default function Catagory({
                               (e &&
                                 Number(
                                   rx.test(e.toString())
-                                    ? (e <= 17 && e) || 17
+                                    ? (e <= 18 && e) || 18
                                     : 0
                                 )) ||
                               0,
@@ -290,6 +292,7 @@ export default function Catagory({
       <button
         style={{ color: isPrice && "red" }}
         onClick={() => {
+          setIsChange(false);
           setIsPrice(false);
           setItems((prev) => {
             return [
@@ -298,7 +301,7 @@ export default function Catagory({
                 itemId:
                   (items.length && items[items.length - 1].itemId + 1) || 1,
                 name: "Adulti",
-                discount: discountOtion[0],
+                discount: 0,
                 cost: 0,
                 carency: "€",
                 age: ageOption[0],

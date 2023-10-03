@@ -72,7 +72,7 @@ export default function TransportItem({ handler, data, setTransportData }) {
     for (let i = 0; i < kits.length; i++) {
       if (i > 0) {
         if (age === kits[i]?.age) {
-          config = ` ${kits[i - 1]?.age + 1}-${kits[i]?.age} `;
+          config = ` ${kits[i - 1]?.age}-${kits[i]?.age} `;
         }
       }
     }

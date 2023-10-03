@@ -41,7 +41,7 @@ export default function AddTransport({
   const [isPrice, setIsPrice] = useState(false);
 
   const createHandler = () => {
-    if (postalCodeRegex.test(data?.zip) && data.pricing.length) {
+    if (data.pricing.length) {
       if (data?.name) {
         if (add) {
           axios
@@ -74,11 +74,8 @@ export default function AddTransport({
         setIsError(true);
       }
     } else {
-      if (!data.pricing.length) {
+      if (!data?.pricing?.length) {
         setIsPrice(true);
-      }
-      if (!postalCodeRegex.test(data?.zip)) {
-        setIsValid(false);
       }
     }
   };
@@ -239,7 +236,6 @@ export default function AddTransport({
     setIsDelete(false);
   }, [addhotel]);
 
-  console.log(isChange);
   return (
     <div
       ref={wrp}
@@ -293,12 +289,7 @@ export default function AddTransport({
             </div>{" "}
             <div className={`add-hotel-item `}>
               <label htmlFor="">Trasporto ID</label>
-              <Input
-                d={{ value: data?.transportId, label: "Trasporto ID" }}
-                handler={() => {
-                  return;
-                }}
-              />
+              <Input d={{ value: data?.transportId, label: "Trasporto ID" }} />
             </div>{" "}
           </form>
 
@@ -485,10 +476,7 @@ export default function AddTransport({
             setIsChange={setIsChange}
             transportData={transportData}
             data={data?.days}
-            setData={() => {
-              setData();
-              // setIsChange(true);
-            }}
+            setData={setData}
             add={add}
           />
           <div className="hours">
@@ -497,10 +485,7 @@ export default function AddTransport({
               setIsChange={setIsChange}
               transportData={transportData}
               data={data?.hours}
-              handler={() => {
-                setData();
-                // setIsChange(true);
-              }}
+              handler={setData}
               add={add}
             />
           </div>
@@ -509,17 +494,12 @@ export default function AddTransport({
           <h4>Prezzo per Categoria</h4>
           <Catagory
             isPrice={isPrice}
-            setIsPrice={() => {
-              setIsPrice();
-              setIsChange(true);
-            }}
+            setIsPrice={() => setIsPrice()}
+            setIsChange={setIsChange}
             transportData={transportData}
             add={add}
             data={data?.pricing}
-            setData={() => {
-              setData();
-              // setIsChange(true);
-            }}
+            setData={setData}
           />
         </div>
         <div className="add-hotel-footer">

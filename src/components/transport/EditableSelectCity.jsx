@@ -97,6 +97,7 @@ export default function EditableSelectCity({ handler, activeValue, mainData }) {
           {data?.length &&
             data
               .filter((item) => item.region === mainData?.city)
+              .sort((a, b) => a.name.localeCompare(b.name))
               .map((d, i) => (
                 <li key={i}>
                   <button
@@ -129,7 +130,7 @@ export default function EditableSelectCity({ handler, activeValue, mainData }) {
               />
             </form>
           )) ||
-            (mainData.city && role === "admin" && (
+            (mainData?.city && role === "admin" && (
               <button
                 onClick={(e) => {
                   setIsadd(true);
