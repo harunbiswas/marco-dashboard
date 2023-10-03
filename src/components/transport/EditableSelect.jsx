@@ -107,13 +107,15 @@ export default function EditableSelect({
                   >
                     {d.name}
                   </button>
-                  <button
-                    ref={refbtn}
-                    className="del"
-                    onClick={() => handleRemoveItem(d._id)}
-                  >
-                    <RiDeleteBin6Line />
-                  </button>
+                  {role === "admin" && (
+                    <button
+                      ref={refbtn}
+                      className="del"
+                      onClick={() => handleRemoveItem(d._id)}
+                    >
+                      <RiDeleteBin6Line />
+                    </button>
+                  )}
                 </li>
               ))}
           {(isAdd && (

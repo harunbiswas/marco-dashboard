@@ -100,6 +100,7 @@ const AddEmpPopup = ({ setAddEmp, setEditEmp, add, email = null }) => {
         })
         .catch((e) => {
           setErrors(e.response.data);
+          console.log(e.response.data);
         });
     } else {
       axios

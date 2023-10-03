@@ -106,13 +106,15 @@ export default function EditableSelectCity({ handler, activeValue, mainData }) {
                   >
                     {d.name}
                   </button>
-                  <button
-                    ref={refbtn}
-                    className="del"
-                    onClick={() => handleRemoveItem(d._id)}
-                  >
-                    <RiDeleteBin6Line />
-                  </button>
+                  {role === "admin" && (
+                    <button
+                      ref={refbtn}
+                      className="del"
+                      onClick={() => handleRemoveItem(d._id)}
+                    >
+                      <RiDeleteBin6Line />
+                    </button>
+                  )}
                 </li>
               ))}
           {(isAdd && (
