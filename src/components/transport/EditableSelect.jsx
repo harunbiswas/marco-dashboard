@@ -4,7 +4,13 @@ import { GoTriangleDown } from "react-icons/go";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import values from "../../../values";
 
-export default function EditableSelect({ name, handler, activeValue }) {
+// vehicaleType
+export default function EditableSelect({
+  name,
+  handler,
+  activeValue,
+  mainData,
+}) {
   const [isDorp, setIsDrop] = useState(false);
   const ref = useRef(null);
   const refbtn = useRef(null);
@@ -34,6 +40,7 @@ export default function EditableSelect({ name, handler, activeValue }) {
     if (value) {
       const ddd = {
         name: value.name,
+        vehicaleType: mainData?.vehicleType,
       };
 
       axios
@@ -87,24 +94,26 @@ export default function EditableSelect({ name, handler, activeValue }) {
       {isDorp && (
         <ul className="dropdown">
           {data?.length &&
-            data.map((d, i) => (
-              <li key={i}>
-                <button
-                  onClick={() => {
-                    handler(d.name);
-                  }}
-                >
-                  {d.name}
-                </button>
-                <button
-                  ref={refbtn}
-                  className="del"
-                  onClick={() => handleRemoveItem(d._id)}
-                >
-                  <RiDeleteBin6Line />
-                </button>
-              </li>
-            ))}
+            data
+              .filter((item) => item.vehicaleType === mainData?.vehicleType)
+              .map((d, i) => (
+                <li key={i}>
+                  <button
+                    onClick={() => {
+                      handler(d.name);
+                    }}
+                  >
+                    {d.name}
+                  </button>
+                  <button
+                    ref={refbtn}
+                    className="del"
+                    onClick={() => handleRemoveItem(d._id)}
+                  >
+                    <RiDeleteBin6Line />
+                  </button>
+                </li>
+              ))}
           {(isAdd && (
             <form onSubmit={submitHandler} className="editable-select-form">
               <input

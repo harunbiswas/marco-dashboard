@@ -286,6 +286,7 @@ export default function AddTransport({
 
               <EditableSelectCity
                 activeValue={data?.state || "Seleziona un Marchio"}
+                mainData={data}
                 handler={(e) => {
                   setData((prev) => {
                     return {
@@ -368,6 +369,7 @@ export default function AddTransport({
                   });
                 }}
                 name="vahicale"
+                mainData={data}
               />
             </div>
           </div>

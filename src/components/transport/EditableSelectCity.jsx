@@ -4,7 +4,9 @@ import { GoTriangleDown } from "react-icons/go";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import values from "../../../values";
 
-export default function EditableSelectCity({ handler, activeValue }) {
+// region
+
+export default function EditableSelectCity({ handler, activeValue, mainData }) {
   const [isDorp, setIsDrop] = useState(false);
   const ref = useRef(null);
   const refbtn = useRef(null);
@@ -36,6 +38,7 @@ export default function EditableSelectCity({ handler, activeValue }) {
       const ddd = {
         name: parts[0],
         zip: parts[1],
+        region: mainData?.city,
       };
 
       axios
@@ -89,24 +92,26 @@ export default function EditableSelectCity({ handler, activeValue }) {
       {isDorp && (
         <ul className="dropdown">
           {data?.length &&
-            data.map((d, i) => (
-              <li key={i}>
-                <button
-                  onClick={() => {
-                    handler(d);
-                  }}
-                >
-                  {d.name}
-                </button>
-                <button
-                  ref={refbtn}
-                  className="del"
-                  onClick={() => handleRemoveItem(d._id)}
-                >
-                  <RiDeleteBin6Line />
-                </button>
-              </li>
-            ))}
+            data
+              .filter((item) => item.region === mainData?.city)
+              .map((d, i) => (
+                <li key={i}>
+                  <button
+                    onClick={() => {
+                      handler(d);
+                    }}
+                  >
+                    {d.name}
+                  </button>
+                  <button
+                    ref={refbtn}
+                    className="del"
+                    onClick={() => handleRemoveItem(d._id)}
+                  >
+                    <RiDeleteBin6Line />
+                  </button>
+                </li>
+              ))}
           {(isAdd && (
             <form onSubmit={submitHandler} className="editable-select-form">
               <input
