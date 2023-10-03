@@ -505,6 +505,72 @@
       }
     }
   }
+  .hour-s {
+    font-size: 14px;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-weight: 500;
+    padding-right: 20px;
+  }
+  .timeing {
+    padding: 10px 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    strong {
+      font-size: 14px;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-weight: 500;
+      padding-right: 20px;
+    }
+
+    &-body {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    &-item {
+      display: flex;
+      border: $border;
+      border-radius: 4px;
+
+      input {
+        border: none;
+        border-right: $border;
+        border-radius: none;
+        outline: none;
+      }
+
+      input[type="text"] {
+        text-align: right;
+        padding-right: 30px;
+      }
+
+      & > button {
+        background-color: rgba($color: $grey, $alpha: 0.1);
+        border: none;
+        color: $dark;
+        font-size: 18px;
+      }
+    }
+
+    & > button {
+      border: none;
+      background-color: transparent;
+      font-size: 16px;
+      font-weight: 500;
+      display: flex;
+      gap: 5px;
+      color: $primary;
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
 }
 
 .booking-filter .sort.transport-sort .select .icon {

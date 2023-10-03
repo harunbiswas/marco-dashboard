@@ -187,9 +187,14 @@ export default function Catagory({
                         if (i.itemId === item.itemId) {
                           return {
                             ...i,
-                            age: Number(
-                              rx.test(e.toString()) ? (e < 17 && e) || 17 : 0
-                            ),
+                            age:
+                              (e &&
+                                Number(
+                                  rx.test(e.toString())
+                                    ? (e <= 17 && e) || 17
+                                    : 0
+                                )) ||
+                              0,
                           };
                         }
                         return i;

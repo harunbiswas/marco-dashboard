@@ -10,6 +10,7 @@ import Input from "../hotel-edit/Input";
 import Catagory from "./Catagory";
 import Days from "./Days";
 import Hours from "./Hours";
+import Timing from "./Timing";
 
 export default function AddTransport({
   handler,
@@ -105,6 +106,7 @@ export default function AddTransport({
     days: [],
     pricing: [],
     hours: [],
+    timing: [],
   });
 
   const [citysName, setCitysName] = useState([
@@ -402,7 +404,9 @@ export default function AddTransport({
           </p>
           <div className="add-transport-group">
             <div className="form-group">
-              <label htmlFor="">Data d’inizio</label>
+              <label htmlFor="" style={{ color: "#000" }}>
+                Data d’inizio
+              </label>
               <input
                 value={data?.startingDate}
                 max={data?.endingDate}
@@ -420,7 +424,9 @@ export default function AddTransport({
               />
             </div>
             <div className="form-group">
-              <label htmlFor="">Data finale</label>
+              <label htmlFor="" style={{ color: "#000" }}>
+                Data finale
+              </label>
               <input
                 value={data?.endingDate}
                 min={data?.startingDate}
@@ -438,6 +444,12 @@ export default function AddTransport({
               />
             </div>
           </div>
+          <Timing
+            transportData={transportData}
+            data={data?.timing}
+            setData={setData}
+            add={add}
+          />
           <Days
             transportData={transportData}
             data={data?.days}
@@ -445,7 +457,7 @@ export default function AddTransport({
             add={add}
           />
           <div className="hours">
-            <h4>Orari di Partenza</h4>
+            <strong className="hour-s">Orari di Partenza</strong>
             <Hours
               transportData={transportData}
               data={data?.hours}

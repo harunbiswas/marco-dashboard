@@ -108,6 +108,26 @@ export default function TransportBody({
       setTransport(transportMain);
     }
   }, [filterOP]);
+
+  // active menu
+
+  useEffect(() => {
+    if (activeMenu === "Scaduti") {
+      const currentDate = new Date(); // Get current date
+
+      const filteredTransportMain = transportMain.filter((item) => {
+        const itemEndDate = new Date(item.endDate); // Assuming endDate is a property in each object
+
+        // Compare item's end date with current date
+        return itemEndDate > currentDate;
+      });
+
+      setTransport(filteredTransportMain);
+    } else {
+      setTransport(transportMain);
+    }
+  }, [activeMenu, transportMain]);
+
   return (
     <div className="transport-body">
       {(activeMenu === "Tutti" &&
