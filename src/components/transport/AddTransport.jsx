@@ -9,6 +9,8 @@ import Select from "../basic/Select";
 import Input from "../hotel-edit/Input";
 import Catagory from "./Catagory";
 import Days from "./Days";
+import EditableSelect from "./EditableSelect";
+import EditableSelectCity from "./EditableSelectCity";
 import Hours from "./Hours";
 import Timing from "./Timing";
 
@@ -273,7 +275,6 @@ export default function AddTransport({
                     return {
                       ...prev,
                       city: e,
-                      state: " ",
                     };
                   });
                 }}
@@ -283,16 +284,14 @@ export default function AddTransport({
             <div className="form-group">
               <label htmlFor="">Città</label>
 
-              <Input
-                d={{
-                  value: data?.state,
-                  label: "Città",
-                }}
+              <EditableSelectCity
+                activeValue={data?.state || "Seleziona un Marchio"}
                 handler={(e) => {
                   setData((prev) => {
                     return {
                       ...prev,
-                      state: e,
+                      state: e.name,
+                      zip: e.zip,
                     };
                   });
                 }}
@@ -358,7 +357,7 @@ export default function AddTransport({
             </div>
             <div className="form-group">
               <label htmlFor="">Marchio</label>
-              <Select
+              <EditableSelect
                 activeValue={data?.vehicleBrand || "Seleziona un Marchio"}
                 handler={(e) => {
                   setData((prev) => {
@@ -368,30 +367,7 @@ export default function AddTransport({
                     };
                   });
                 }}
-                data={
-                  (data?.vehicleType === "Treno" && [
-                    "Italo",
-                    "Frecciarossa",
-                  ]) ||
-                  (data?.vehicleType === "Bus" && [
-                    "Nostro",
-                    "Itabus",
-                    "FlixBus",
-                  ]) ||
-                  (data?.vehicleType === "Aereo" && [
-                    "Ryanair",
-                    "Ita",
-                    "EasyJet",
-                    "Vuelig",
-                    "Wizz",
-                  ]) ||
-                  (data?.vehicleType === "Nave" && [
-                    "Medmar",
-                    "Caremar",
-                    "Alilauro",
-                  ]) ||
-                  []
-                }
+                name="vahicale"
               />
             </div>
           </div>

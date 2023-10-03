@@ -571,6 +571,38 @@
       }
     }
   }
+
+  .editable-select {
+    .add-btn {
+      font-size: 14px;
+      color: $primary;
+      background-color: transparent !important;
+    }
+
+    input {
+      font-size: 14px;
+    }
+
+    .dropdown > li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+
+      .del {
+        width: 10%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    &-city {
+      .del {
+        width: 17% !important;
+      }
+    }
+  }
 }
 
 .booking-filter .sort.transport-sort .select .icon {
