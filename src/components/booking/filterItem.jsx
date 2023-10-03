@@ -30,7 +30,7 @@ export default function FilterItem({ data, filterOP, setFilterOP, index }) {
     <div className="filter-item">
       <button onClick={() => setCollops(!collops)}>
         <span>{data.name}</span>{" "}
-        {data?.name === "Giorni" && <small>{filterOP.days.length}</small>}
+        {<small>{filterOP[(index === 0 && "car") || "days"].length}</small>}
         {<FaAngleDown /> || <FaAngleUp />}
       </button>
       <ul className={`filter-item-body ${(collops && "show") || ""}`}>

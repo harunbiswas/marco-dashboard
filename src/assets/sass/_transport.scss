@@ -535,6 +535,14 @@
       display: flex;
       border: $border;
       border-radius: 4px;
+      position: relative;
+
+      .carency {
+        position: absolute;
+        top: 50%;
+        right: 60px;
+        transform: translateY(-51%);
+      }
 
       input {
         border: none;

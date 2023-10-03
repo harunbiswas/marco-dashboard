@@ -73,6 +73,7 @@ export default function Timing({ setData, transportData, add, dd }) {
               onChange={(e) => handleUpdateValue(e, d.id)}
               placeholder="Costo"
             />
+            <div className="carency">€</div>
             <button
               onClick={() => {
                 setTimes((prevTimes) =>
