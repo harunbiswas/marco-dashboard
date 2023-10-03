@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
 import { GoTriangleDown } from "react-icons/go";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -17,6 +18,7 @@ export default function EditableSelect({
   const [data, setData] = useState([{ name: "harun" }]);
   const [isAdd, setIsadd] = useState(false);
   const [value, setValue] = useState({ name: "" });
+  const { role } = Cookies.get("login") && JSON.parse(Cookies.get("login"));
 
   useEffect(() => {
     document.addEventListener("click", (e) => {
@@ -125,17 +127,18 @@ export default function EditableSelect({
                 placeholder="Aggiungi"
               />
             </form>
-          )) || (
-            <button
-              onClick={(e) => {
-                setIsadd(true);
-              }}
-              className="add-btn"
-              ref={refbtn}
-            >
-              + Aggiungi Marchio
-            </button>
-          )}
+          )) ||
+            (mainData.vehicleType && role === "admin" && (
+              <button
+                onClick={(e) => {
+                  setIsadd(true);
+                }}
+                className="add-btn"
+                ref={refbtn}
+              >
+                + Aggiungi Marchio
+              </button>
+            ))}
         </ul>
       )}
     </div>

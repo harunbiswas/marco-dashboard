@@ -571,8 +571,11 @@
       }
     }
   }
-
+  .select {
+    height: 48px;
+  }
   .editable-select {
+    height: 48px;
     .add-btn {
       font-size: 14px;
       color: $primary;

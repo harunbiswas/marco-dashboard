@@ -275,6 +275,8 @@ export default function AddTransport({
                     return {
                       ...prev,
                       city: e,
+                      state: "",
+                      zip: "",
                     };
                   });
                 }}
@@ -285,7 +287,7 @@ export default function AddTransport({
               <label htmlFor="">Città</label>
 
               <EditableSelectCity
-                activeValue={data?.state || "Seleziona un Marchio"}
+                activeValue={data?.state || "Seleziona Città"}
                 mainData={data}
                 handler={(e) => {
                   setData((prev) => {
