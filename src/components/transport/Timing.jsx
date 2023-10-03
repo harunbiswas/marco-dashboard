@@ -1,16 +1,9 @@
 import { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 
-export default function Timing({ setData, transportData, add }) {
+export default function Timing({ setData, transportData, add, dd }) {
   const rx = /^(\d+(\.\d{0,2})?)?$/;
-  const [times, setTimes] = useState([
-    {
-      id: 1,
-      start: "",
-      end: "",
-      cost: 0,
-    },
-  ]);
+  const [times, setTimes] = useState([]);
 
   const handleUpdateValue = (e, id) => {
     setTimes((prevTimes) => {
@@ -43,14 +36,7 @@ export default function Timing({ setData, transportData, add }) {
     if (transportData && !add) {
       setTimes(transportData?.timing || []);
     } else {
-      setTimes([
-        {
-          id: 1,
-          start: "",
-          end: "",
-          cost: 0,
-        },
-      ]);
+      setTimes([]);
     }
   }, [transportData]);
 
@@ -64,7 +50,8 @@ export default function Timing({ setData, transportData, add }) {
             <input
               onChange={(e) => handleUpdateValue(e, d.id)}
               value={d?.start}
-              max={d?.end}
+              max={dd?.endingDate}
+              min={dd?.startingDate}
               type="date"
               name="start"
               id=""
@@ -72,7 +59,8 @@ export default function Timing({ setData, transportData, add }) {
             <input
               onChange={(e) => handleUpdateValue(e, d.id)}
               value={d?.end}
-              min={d?.start}
+              max={dd?.endingDate}
+              min={dd?.startingDate}
               type="date"
               name="end"
               id=""

@@ -449,6 +449,7 @@ export default function AddTransport({
             data={data?.timing}
             setData={setData}
             add={add}
+            dd={data}
           />
           <Days
             transportData={transportData}
