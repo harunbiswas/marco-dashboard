@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 
-export default function Days({ setData, data, transportData, add }) {
+export default function Days({
+  setData,
+  data,
+  transportData,
+  add,
+  setIsChange,
+}) {
   const [days, setDays] = useState([
     "Lunedì",
     "Martedì",
@@ -37,19 +43,33 @@ export default function Days({ setData, data, transportData, add }) {
     } else {
       setActiveDays([]);
     }
-  }, [transportData]);
+  }, [transportData, data]);
   return (
     <div className="transport-days">
       <div className="top">
         <strong>Giorni Validi</strong>{" "}
         {!(days === activeDays) && (
-          <button onClick={() => setActiveDays(days)}>Seleziona Tutti</button>
+          <button
+            onClick={() => {
+              setActiveDays(days);
+              setIsChange(true);
+            }}
+          >
+            Seleziona Tutti
+          </button>
         )}
       </div>
       <ul className="days">
         {days.map((day) => (
           <li className={activeDays.includes(day) && "active"} key={day}>
-            <button onClick={() => handler(day)}>{day}</button>
+            <button
+              onClick={() => {
+                handler(day);
+                setIsChange(true);
+              }}
+            >
+              {day}
+            </button>
           </li>
         ))}
       </ul>

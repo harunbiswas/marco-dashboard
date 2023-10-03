@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 
-export default function Hours({ data, handler, transportData, add }) {
+export default function Hours({
+  data,
+  handler,
+  transportData,
+  add,
+  setIsChange,
+}) {
   const [hours, setHours] = useState(data);
   const [isInput, setIsInput] = useState(false);
   const [active, setActive] = useState(data);
@@ -33,7 +39,7 @@ export default function Hours({ data, handler, transportData, add }) {
       setHours([]);
       setActive([]);
     }
-  }, [transportData]);
+  }, [transportData, data]);
 
   return (
     <ul className="hours-inner">
@@ -70,6 +76,7 @@ export default function Hours({ data, handler, transportData, add }) {
           )) || (
             <form
               onSubmit={(e) => {
+                setIsChange(true);
                 e.preventDefault();
                 let updatedHours = [];
                 setHours((prevHours) => {
@@ -104,6 +111,7 @@ export default function Hours({ data, handler, transportData, add }) {
       {(isInput && (
         <form
           onSubmit={(e) => {
+            setIsChange(true);
             setHours((prev) => {
               return [...prev, value];
             });
@@ -125,7 +133,11 @@ export default function Hours({ data, handler, transportData, add }) {
           <button type="submit">Aggiungi</button>
         </form>
       )) || (
-        <button onClick={() => setIsInput(true)}>
+        <button
+          onClick={() => {
+            setIsInput(true);
+          }}
+        >
           <AiOutlinePlus /> Aggiungi Altri
         </button>
       )}

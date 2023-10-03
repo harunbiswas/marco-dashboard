@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 
-export default function Timing({ setData, transportData, add, dd }) {
+export default function Timing({
+  setData,
+  transportData,
+  add,
+  dd,
+  setIsChange,
+}) {
   const rx = /^(\d+(\.\d{0,2})?)?$/;
   const [times, setTimes] = useState([]);
 
@@ -38,7 +44,7 @@ export default function Timing({ setData, transportData, add, dd }) {
     } else {
       setTimes([]);
     }
-  }, [transportData]);
+  }, [transportData, dd]);
 
   return (
     <div className="timeing">
@@ -90,6 +96,7 @@ export default function Timing({ setData, transportData, add, dd }) {
 
       <button
         onClick={() => {
+          setIsChange(true);
           setTimes((prev) => {
             return [
               ...prev,

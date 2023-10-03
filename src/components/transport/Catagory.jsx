@@ -105,54 +105,7 @@ export default function Catagory({
     } else {
       setItems([]);
     }
-  }, [transportData]);
-
-  // [
-  //   {
-  //     itemId: 1,
-  //     name: "Adulti",
-  //     discount: discountOtion[0],
-  //     cost: 0,
-  //     carency: "€",
-  //     age: ageOption[0],
-  //     maxWeight: 0,
-  //     count: countOption[0],
-  //     unit: unitOption[0],
-  //   },
-  //   {
-  //     itemId: 2,
-  //     name: "Bambini",
-  //     discount: discountOtion[0],
-  //     cost: 0,
-  //     carency: "€",
-  //     age: ageOption[0],
-  //     maxWeight: 0,
-  //     count: countOption[0],
-  //     unit: unitOption[0],
-  //   },
-  //   {
-  //     itemId: 3,
-  //     name: "Bagagli",
-  //     discount: discountOtion[0],
-  //     cost: 0,
-  //     carency: "€",
-  //     age: ageOption[0],
-  //     maxWeight: 0,
-  //     count: countOption[0],
-  //     unit: unitOption[0],
-  //   },
-  //   {
-  //     itemId: 4,
-  //     name: "Animale",
-  //     discount: discountOtion[0],
-  //     cost: 0,
-  //     carency: "€",
-  //     age: ageOption[0],
-  //     maxWeight: 0,
-  //     count: countOption[0],
-  //     unit: unitOption[0],
-  //   },
-  // ]
+  }, [transportData, data]);
 
   return (
     <div className="transport-catagory">

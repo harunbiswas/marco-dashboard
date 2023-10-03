@@ -34,7 +34,8 @@ export default function AddTransport({
   const [isValid, setIsValid] = useState(true);
   const postalCodeRegex = /^\d{5}(?:[-\s]\d{4})?$/;
 
-  const [address, setAddress] = useState("");
+  const [isRemove, setIsRemove] = useState(false);
+  const [isChange, setIsChange] = useState(false);
 
   const [isError, setIsError] = useState(false);
   const [isPrice, setIsPrice] = useState(false);
@@ -88,7 +89,14 @@ export default function AddTransport({
   useEffect(() => {
     wrp.current.addEventListener("mousedown", (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
-        handler(false);
+        if (isChange) {
+          handler(true);
+          setIsDelete(true);
+          setIsRemove(false);
+        } else {
+          setIsDelete(false);
+          handler(false);
+        }
       }
     });
   });
@@ -141,6 +149,7 @@ export default function AddTransport({
     setIsPrice(false);
     setIsValid(true);
     setIsDelete(false);
+    setIsChange(false);
 
     if (add) {
       setData({
@@ -185,21 +194,44 @@ export default function AddTransport({
   const [isDelete, setIsDelete] = useState(false);
 
   const deleteHandler = () => {
+    setIsChange(false);
+    setIsRemove(false);
     if (add) {
+      setData({
+        name: "",
+        transportId: values.generateUniqueString(),
+        city: "",
+        state: "",
+        zip: "",
+        address: "",
+        vehicleType: "",
+        vehicleBrand: "",
+        startingDate: "",
+        endingDate: "",
+        days: [],
+        pricing: [],
+        hours: [],
+      });
+
       handler(false);
     } else {
-      axios
-        .delete(`${values.url}/transport?id=${data?._id}`, {
-          headers: {
-            token,
-          },
-        })
-        .then((d) => {
-          window.location.reload();
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      if (isRemove) {
+        axios
+          .delete(`${values.url}/transport?id=${data?._id}`, {
+            headers: {
+              token,
+            },
+          })
+          .then((d) => {
+            window.location.reload();
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        setData(transportData);
+        handler(false);
+      }
     }
   };
 
@@ -207,6 +239,7 @@ export default function AddTransport({
     setIsDelete(false);
   }, [addhotel]);
 
+  console.log(isChange);
   return (
     <div
       ref={wrp}
@@ -219,11 +252,15 @@ export default function AddTransport({
           </span>
           <button
             onClick={() => {
-              if (add) {
-                setIsDelete(true);
+              if (isChange) {
+                if (add) {
+                  setIsDelete(true);
+                } else {
+                  setIsRemove(false);
+                  setIsDelete(true);
+                }
               } else {
                 handler(false);
-                setIsDelete(false);
               }
             }}
             className="close"
@@ -244,6 +281,7 @@ export default function AddTransport({
               <Input
                 d={{ value: data?.name, label: "Nome Trasporto" }}
                 handler={(e) => {
+                  setIsChange(true);
                   setData((prev) => {
                     return {
                       ...prev,
@@ -271,6 +309,7 @@ export default function AddTransport({
               <Select
                 activeValue={data?.city || "Seleziona Regione"}
                 handler={(e) => {
+                  setIsChange(true);
                   setData((prev) => {
                     return {
                       ...prev,
@@ -290,6 +329,7 @@ export default function AddTransport({
                 activeValue={data?.state || "Seleziona Città"}
                 mainData={data}
                 handler={(e) => {
+                  setIsChange(true);
                   setData((prev) => {
                     return {
                       ...prev,
@@ -305,6 +345,7 @@ export default function AddTransport({
               <Input
                 d={{ value: data?.zip, label: "Codice Postale" }}
                 handler={(e) => {
+                  setIsChange(true);
                   setData((prev) => {
                     return {
                       ...prev,
@@ -326,6 +367,7 @@ export default function AddTransport({
                     "Inserisci Coordinate (42.69325378735576, 11.708567085372382)",
                 }}
                 handler={(e) => {
+                  setIsChange(true);
                   setData((prev) => {
                     return {
                       ...prev,
@@ -347,6 +389,7 @@ export default function AddTransport({
                   data?.vehicleType || "Seleziona un tipo di veicolo"
                 }
                 handler={(e) => {
+                  setIsChange(true);
                   setData((prev) => {
                     return {
                       ...prev,
@@ -363,6 +406,7 @@ export default function AddTransport({
               <EditableSelect
                 activeValue={data?.vehicleBrand || "Seleziona un Marchio"}
                 handler={(e) => {
+                  setIsChange(true);
                   setData((prev) => {
                     return {
                       ...prev,
@@ -391,6 +435,7 @@ export default function AddTransport({
                 value={data?.startingDate}
                 max={data?.endingDate}
                 onChange={(e) => {
+                  setIsChange(true);
                   setData((prev) => {
                     return {
                       ...prev,
@@ -411,6 +456,7 @@ export default function AddTransport({
                 value={data?.endingDate}
                 min={data?.startingDate}
                 onChange={(e) => {
+                  setIsChange(true);
                   setData((prev) => {
                     return {
                       ...prev,
@@ -427,22 +473,34 @@ export default function AddTransport({
           <Timing
             transportData={transportData}
             data={data?.timing}
-            setData={setData}
+            setIsChange={setIsChange}
+            setData={() => {
+              setData();
+              // setIsChange(true);
+            }}
             add={add}
             dd={data}
           />
           <Days
+            setIsChange={setIsChange}
             transportData={transportData}
             data={data?.days}
-            setData={setData}
+            setData={() => {
+              setData();
+              // setIsChange(true);
+            }}
             add={add}
           />
           <div className="hours">
             <strong className="hour-s">Orari di Partenza</strong>
             <Hours
+              setIsChange={setIsChange}
               transportData={transportData}
               data={data?.hours}
-              handler={setData}
+              handler={() => {
+                setData();
+                // setIsChange(true);
+              }}
               add={add}
             />
           </div>
@@ -451,18 +509,33 @@ export default function AddTransport({
           <h4>Prezzo per Categoria</h4>
           <Catagory
             isPrice={isPrice}
-            setIsPrice={setIsPrice}
+            setIsPrice={() => {
+              setIsPrice();
+              setIsChange(true);
+            }}
             transportData={transportData}
             add={add}
             data={data?.pricing}
-            setData={setData}
+            setData={() => {
+              setData();
+              // setIsChange(true);
+            }}
           />
         </div>
         <div className="add-hotel-footer">
           <button
             style={{ backgroundColor: bg, color: cl }}
             onClick={() => {
-              setIsDelete(true);
+              if (!add) {
+                setIsRemove(true);
+                setIsDelete(true);
+              } else {
+                if (isChange) {
+                  setIsDelete(true);
+                } else {
+                  handler(false);
+                }
+              }
             }}
             className="btn cancel "
           >
@@ -475,11 +548,11 @@ export default function AddTransport({
         {isDelete && (
           <div className="isdelete">
             <h2 className="jakarta">
-              {(add && "Vuoi tornare alla lista?") ||
+              {(!isRemove && "Vuoi tornare alla lista?") ||
                 `Vuoi eliminare ${data?.name}?`}
             </h2>
             <p className="jakarta">
-              {(add &&
+              {(!isRemove &&
                 "Tornando alla lista perderai la configurazione che stai creando") ||
                 "Eliminandolo non sarà più possibile recuperarlo"}
             </p>
