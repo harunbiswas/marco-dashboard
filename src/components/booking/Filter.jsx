@@ -17,7 +17,7 @@ export default function Filter({ handler, filterOP, setFilterOP }) {
       <div className="filter-top">
         <div className="name">
           <p>Filtri</p>
-          <span>{filterOPTem.car.length + filterOPTem.days.length}</span>
+          <span>{filterOPTem?.car?.length + filterOPTem?.days?.length}</span>
         </div>
         <button
           style={{ textDecoration: "none" }}
