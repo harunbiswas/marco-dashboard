@@ -44,6 +44,7 @@ export default function Days({
       setActiveDays([]);
     }
   }, [transportData]);
+
   return (
     <div className="transport-days">
       <div className="top">

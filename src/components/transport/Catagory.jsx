@@ -229,13 +229,16 @@ export default function Catagory({
             {item.name === "Bagagli" && (
               <div className={`form-group`}>
                 <label htmlFor="">Numero Bagagli</label>
-                <Select
-                  activeValue={item.count}
+                <Input
+                  d={{ value: item?.count }}
                   handler={(e) => {
                     setItems((prevItems) => {
                       return prevItems.map((i) => {
                         if (i.itemId === item.itemId) {
-                          return { ...i, count: e };
+                          return {
+                            ...i,
+                            count: Number(rx.test(e.toString()) ? e : 0),
+                          };
                         }
                         return i;
                       });
@@ -246,7 +249,7 @@ export default function Catagory({
               </div>
             )}
             <div className={`form-group`}>
-              <label htmlFor="">Cost</label>
+              <label htmlFor="">Prezzo</label>
               <div className="form-group-inner">
                 <Select
                   activeValue={item.carency}

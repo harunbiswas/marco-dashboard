@@ -32,7 +32,6 @@ export default function AddTransport({
 
   // valid postale code
   const [isValid, setIsValid] = useState(true);
-  const postalCodeRegex = /^\d{5}(?:[-\s]\d{4})?$/;
 
   const [isRemove, setIsRemove] = useState(false);
   const [isChange, setIsChange] = useState(false);
@@ -236,6 +235,8 @@ export default function AddTransport({
     setIsDelete(false);
   }, [addhotel]);
 
+  console.log(data);
+
   return (
     <div
       ref={wrp}
@@ -389,7 +390,7 @@ export default function AddTransport({
                     };
                   });
                 }}
-                data={["Treno", "Bus", "Aereo", "Nave"]}
+                data={["Treno", "Bus", "Aereo", "Nave", "Auto"]}
               />
             </div>
             <div className="form-group">
@@ -465,10 +466,7 @@ export default function AddTransport({
             transportData={transportData}
             data={data?.timing}
             setIsChange={setIsChange}
-            setData={() => {
-              setData();
-              // setIsChange(true);
-            }}
+            setData={setData}
             add={add}
             dd={data}
           />

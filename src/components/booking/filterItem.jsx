@@ -74,7 +74,7 @@ export default function FilterItem({ data, filterOP, setFilterOP, index }) {
                 setIsAll(!isAll);
               }}
             >
-              {(isAll && "Show Less") || "Mostra tutti"}
+              {(isAll && "Mostra meno") || "Mostra tutti"}
             </button>
           </div>
         )}
