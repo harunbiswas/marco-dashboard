@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import Select from "../basic/Select";
 import Input from "../hotel-edit/Input";
+import EditableSelect from "./EditableSelect";
 
 export default function Catagory({
   setData,
@@ -12,7 +13,7 @@ export default function Catagory({
   setIsPrice,
   setIsChange,
 }) {
-  const typesOption = ["Adulti", "Bambini", "Bagagli", "Animale"];
+  const typesOption = ["Adulti", "Bambini", "Bagagli", "Animale", "Auto"];
   const carencyOtion = ["€", "$", "$"];
   const discountOtion = [5, 10, 15];
   const ageOption = [
@@ -50,6 +51,7 @@ export default function Catagory({
       maxWeight: 0,
       count: countOption[0],
       unit: unitOption[0],
+      dimensioneAuto: "",
     },
     {
       itemId: 2,
@@ -61,6 +63,7 @@ export default function Catagory({
       maxWeight: 0,
       count: countOption[0],
       unit: unitOption[0],
+      dimensioneAuto: "",
     },
     {
       itemId: 3,
@@ -72,6 +75,7 @@ export default function Catagory({
       maxWeight: 0,
       count: countOption[0],
       unit: unitOption[0],
+      dimensioneAuto: "",
     },
     {
       itemId: 4,
@@ -83,6 +87,7 @@ export default function Catagory({
       maxWeight: 0,
       count: countOption[0],
       unit: unitOption[0],
+      dimensioneAuto: "",
     },
   ]);
 
@@ -109,11 +114,16 @@ export default function Catagory({
     }
   }, [transportData]);
 
+  console.log(items);
   return (
     <div className="transport-catagory">
       {items.map((item, i) => (
         <div key={i} className="transport-catagory-item-wrp">
-          <div className="transport-catagory-item">
+          <div
+            className={`transport-catagory-item ${
+              item.name === "Bagagli" && "relbin"
+            }`}
+          >
             <div className={`form-group`}>
               <label htmlFor="">Tipo</label>
               <Select
@@ -248,6 +258,31 @@ export default function Catagory({
                 />
               </div>
             )}
+            {item.name === "Auto" && (
+              <div className={`form-group`}>
+                <label htmlFor="">Dimensione Auto</label>
+                <EditableSelect
+                  name="vahicale"
+                  activeValue={item?.dimensioneAuto || "Select Dimensione"}
+                  mainData={data}
+                  cat={true}
+                  handler={(e) => {
+                    setItems((prevItems) => {
+                      return prevItems.map((i) => {
+                        if (i.itemId === item.itemId) {
+                          return {
+                            ...i,
+                            dimensioneAuto: e,
+                          };
+                        }
+                        return i;
+                      });
+                    });
+                  }}
+                  data={countOption}
+                />
+              </div>
+            )}
             <div className={`form-group`}>
               <label htmlFor="">Prezzo</label>
               <div className="form-group-inner">
@@ -285,8 +320,32 @@ export default function Catagory({
                 />
               </div>
             </div>
+            {item.name === "Bagagli" && (
+              <div className={`form-group disclaimer`}>
+                <label htmlFor="">Disclaimer</label>
+                <Input
+                  d={{ value: item?.disclaimer }}
+                  handler={(e) => {
+                    setItems((prevItems) => {
+                      return prevItems.map((i) => {
+                        if (i.itemId === item.itemId) {
+                          return {
+                            ...i,
+                            disclaimer: e,
+                          };
+                        }
+                        return i;
+                      });
+                    });
+                  }}
+                />
+              </div>
+            )}
           </div>
-          <button onClick={() => removeItemById(item.itemId)}>
+          <button
+            className={item.name === "Bagagli" && "relbitbtn"}
+            onClick={() => removeItemById(item.itemId)}
+          >
             <AiOutlineDelete />
           </button>
         </div>
@@ -307,10 +366,11 @@ export default function Catagory({
                 discount: 0,
                 cost: 0,
                 carency: "€",
-                age: ageOption[0],
+                age: 0,
                 maxWeight: 0,
-                count: countOption[0],
+                count: 0,
                 unit: unitOption[0],
+                dimensioneAuto: "",
               },
             ];
           });

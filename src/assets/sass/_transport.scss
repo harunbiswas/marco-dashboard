@@ -623,3 +623,26 @@
 .booking-filters .booking-btn.transport-sort .select {
   width: 235px !important;
 }
+
+.add-transport .editable-select .dropdown > li .del {
+  width: 22%;
+}
+
+.relbin {
+  position: relative;
+  height: 160px;
+  align-items: flex-start;
+
+  .disclaimer {
+    position: absolute;
+    bottom: 0;
+
+    input {
+      text-align: left !important;
+    }
+  }
+}
+
+.relbitbtn {
+  margin-top: -60px !important;
+}

@@ -11,6 +11,7 @@ export default function EditableSelect({
   handler,
   activeValue,
   mainData,
+  cat,
 }) {
   const [isDorp, setIsDrop] = useState(false);
   const ref = useRef(null);
@@ -131,7 +132,7 @@ export default function EditableSelect({
               />
             </form>
           )) ||
-            (mainData?.vehicleType && role === "admin" && (
+            ((mainData?.vehicleType || cat) && role === "admin" && (
               <button
                 onClick={(e) => {
                   setIsadd(true);

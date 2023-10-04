@@ -235,8 +235,6 @@ export default function AddTransport({
     setIsDelete(false);
   }, [addhotel]);
 
-  console.log(data);
-
   return (
     <div
       ref={wrp}
@@ -390,7 +388,7 @@ export default function AddTransport({
                     };
                   });
                 }}
-                data={["Treno", "Bus", "Aereo", "Nave", "Auto"]}
+                data={["Treno", "Bus", "Aereo", "Nave"]}
               />
             </div>
             <div className="form-group">
