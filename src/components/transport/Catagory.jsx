@@ -263,7 +263,7 @@ export default function Catagory({
                 <label htmlFor="">Dimensione Auto</label>
                 <EditableSelect
                   name="vahicale"
-                  activeValue={item?.dimensioneAuto || "Select Dimensione"}
+                  activeValue={item?.dimensioneAuto || "Seleziona Dimensione"}
                   mainData={data}
                   cat={true}
                   handler={(e) => {

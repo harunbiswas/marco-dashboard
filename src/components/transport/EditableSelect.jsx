@@ -140,7 +140,7 @@ export default function EditableSelect({
                 className="add-btn"
                 ref={refbtn}
               >
-                + Aggiungi Marchio
+                + {(cat && "Aggiungi Dimensione") || "Aggiungi Marchio"}
               </button>
             ))}
         </ul>
