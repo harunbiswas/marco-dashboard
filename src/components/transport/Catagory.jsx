@@ -114,7 +114,6 @@ export default function Catagory({
     }
   }, [transportData]);
 
-  console.log(items);
   return (
     <div className="transport-catagory">
       {items.map((item, i) => (

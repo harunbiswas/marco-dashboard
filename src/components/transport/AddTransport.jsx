@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
 import { FaCarSide } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
 import values from "../../../values";
 import Select from "../basic/Select";
 import Input from "../hotel-edit/Input";
@@ -12,6 +11,7 @@ import Days from "./Days";
 import EditableSelect from "./EditableSelect";
 import EditableSelectCity from "./EditableSelectCity";
 import Hours from "./Hours";
+import StartEndDate from "./StartEndDate";
 import Timing from "./Timing";
 
 export default function AddTransport({
@@ -27,7 +27,7 @@ export default function AddTransport({
     const options = { year: "numeric", month: "2-digit", day: "2-digit" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
-  const navigate = useNavigate();
+
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
   // valid postale code
@@ -107,8 +107,12 @@ export default function AddTransport({
     address: "",
     vehicleType: "",
     vehicleBrand: "",
-    startingDate: "",
-    endingDate: "",
+    date: [
+      {
+        start: "",
+        end: "",
+      },
+    ],
     days: [],
     pricing: [],
     hours: [],
@@ -157,8 +161,12 @@ export default function AddTransport({
         address: "",
         vehicleType: "",
         vehicleBrand: "",
-        startingDate: "",
-        endingDate: "",
+        date: [
+          {
+            start: "",
+            end: "",
+          },
+        ],
         days: [],
         pricing: [],
         hours: [],
@@ -176,8 +184,12 @@ export default function AddTransport({
           address: "",
           vehicleType: "",
           vehicleBrand: "",
-          startingDate: "",
-          endingDate: "",
+          date: [
+            {
+              start: "",
+              end: "",
+            },
+          ],
           days: [],
           pricing: [],
           hours: [],
@@ -202,8 +214,12 @@ export default function AddTransport({
         address: "",
         vehicleType: "",
         vehicleBrand: "",
-        startingDate: "",
-        endingDate: "",
+        date: [
+          {
+            start: "",
+            end: "",
+          },
+        ],
         days: [],
         pricing: [],
         hours: [],
@@ -416,50 +432,14 @@ export default function AddTransport({
             Inserisci il periodo di validità in cui verrà preso in
             considerazione questo trasporto
           </p>
-          <div className="add-transport-group">
-            <div className="form-group">
-              <label htmlFor="" style={{ color: "#000" }}>
-                Data d’inizio
-              </label>
-              <input
-                value={data?.startingDate}
-                max={data?.endingDate || ""}
-                onChange={(e) => {
-                  setIsChange(true);
-                  setData((prev) => {
-                    return {
-                      ...prev,
-                      startingDate: e.target.value,
-                    };
-                  });
-                }}
-                type="date"
-                name=""
-                id=""
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="" style={{ color: "#000" }}>
-                Data finale
-              </label>
-              <input
-                value={data?.endingDate}
-                min={data?.startingDate || ""}
-                onChange={(e) => {
-                  setIsChange(true);
-                  setData((prev) => {
-                    return {
-                      ...prev,
-                      endingDate: e.target.value,
-                    };
-                  });
-                }}
-                type="date"
-                name=""
-                id=""
-              />
-            </div>
-          </div>
+          <StartEndDate
+            transportData={transportData}
+            data={data?.date}
+            setIsChange={setIsChange}
+            setData={setData}
+            add={add}
+            dd={data}
+          />
           <Timing
             transportData={transportData}
             data={data?.timing}

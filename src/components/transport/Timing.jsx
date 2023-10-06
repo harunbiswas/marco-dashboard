@@ -56,8 +56,8 @@ export default function Timing({
             <input
               onChange={(e) => handleUpdateValue(e, d.id)}
               value={d?.start}
-              max={d?.end || dd?.endingDate || ""}
-              min={dd?.startingDate || ""}
+              max={d?.end || dd?.date[dd?.date.length - 1]?.end || ""}
+              min={dd?.date[0].start || ""}
               type="date"
               name="start"
               id=""
@@ -65,8 +65,8 @@ export default function Timing({
             <input
               onChange={(e) => handleUpdateValue(e, d.id)}
               value={d?.end}
-              max={dd?.endingDate || ""}
-              min={d?.start || dd?.startingDate || ""}
+              max={dd?.date[dd?.date.length - 1].end || ""}
+              min={d?.start || dd?.date[0].start || ""}
               type="date"
               name="end"
               id=""

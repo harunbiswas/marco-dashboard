@@ -89,10 +89,13 @@ export default function TransportItem({ handler, data, setTransportData }) {
           <div className="content">
             <strong>{data?.name}</strong>
             <span>
-              {data?.startingDate &&
-                formattedDate(new Date(data?.startingDate))}
+              {data?.date[0]?.start &&
+                formattedDate(new Date(data?.date[0]?.start))}
               {" -" + " "}
-              {data?.endingDate && formattedDate(new Date(data?.endingDate))}
+              {data?.date[data?.date?.length - 1]?.end &&
+                formattedDate(
+                  new Date(data?.date[data?.date?.length - 1]?.end)
+                )}
             </span>
           </div>
 
@@ -189,11 +192,13 @@ export default function TransportItem({ handler, data, setTransportData }) {
             <div className="content">
               <span>Periodo di Validità</span>
               <strong>
-                {" "}
-                {data?.startingDate &&
-                  formattedDate(new Date(data?.startingDate))}
-                {" - "}
-                {data?.endingDate && formattedDate(new Date(data?.endingDate))}
+                {data?.date[0]?.start &&
+                  formattedDate(new Date(data?.date[0]?.start))}
+                {" -" + " "}
+                {data?.date[data?.date?.length - 1]?.end &&
+                  formattedDate(
+                    new Date(data?.date[data?.date?.length - 1]?.end)
+                  )}
               </strong>
             </div>
           </div>
