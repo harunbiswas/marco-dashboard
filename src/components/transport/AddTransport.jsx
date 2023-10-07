@@ -404,7 +404,7 @@ export default function AddTransport({
                     };
                   });
                 }}
-                data={["Treno", "Bus", "Aereo", "Nave"]}
+                data={["Treno", "Bus", "Aereo", "Nave", "Aliscafo"]}
               />
             </div>
             <div className="form-group">
