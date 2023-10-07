@@ -21,8 +21,8 @@ export default function Root() {
         <Route path="hotel/:id" element={<HotelDetails />} />
         <Route path="hotel/edit/:id" element={<HotelEdit />} />
         <Route path="module" element={<Modules />} />
-        <Route path="transport" element={<Transport />} />
         <Route path="module/edit/:id" element={<EditModule />} />
+        <Route path="transport" element={<Transport />} />
         <Route path="setting" element={<Dashboard />} />
         <Route path="*" element={<Home />} />
       </Route>

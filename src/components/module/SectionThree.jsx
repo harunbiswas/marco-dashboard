@@ -1,65 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import { BsBoxArrowUpRight } from "react-icons/bs";
 import Input from "../hotel-edit/Input";
 import TextArea from "../hotel-edit/TextArea";
 
-export default function SectionThree() {
+export default function SectionThree({ data, fixtData, setData }) {
   const [title, setTitle] = useState("");
 
   const [blogs, setBlogs] = useState([
     {
       id: 1,
-      items: [
-        {
-          label: "Title",
-          pls: "Enter Title",
-          value: "",
-        },
-        {
-          label: "Image Link",
-          pls: "Enter RUL",
-          value: "",
-          url: true,
-        },
-        {
-          label: "Redirect URL",
-          pls: "Enter URL",
-          value: "",
-          url: true,
-        },
-      ],
-    },
-    {
-      id: 1,
-      items: [
-        {
-          label: "Title",
-          pls: "Enter Title",
-          value: "",
-        },
-        {
-          label: "Image Link",
-          pls: "Enter RUL",
-          value: "",
-          url: true,
-        },
-        {
-          label: "Redirect URL",
-          pls: "Enter URL",
-          value: "",
-          url: true,
-        },
-      ],
+      title: "",
+      img: "",
+      url: "",
     },
   ]);
 
-  const handleChange = (blogIndex, itemIndex, newValue) => {
+  useEffect(() => {
+    setData((prev) => {
+      return {
+        ...prev,
+        blog: blogs,
+      };
+    });
+  }, [blogs]);
+
+  useEffect(() => {
+    setBlogs(
+      fixtData?.blog || [
+        {
+          id: 1,
+          title: "",
+          img: "",
+          url: "",
+        },
+      ]
+    );
+  }, [fixtData]);
+
+  const handleChange = (blogIndex, itemName, newValue) => {
     // Create a copy of the blogs state
     const updatedBlogs = [...blogs];
 
     // Update the value of the specified item
-    updatedBlogs[blogIndex].items[itemIndex].value = newValue;
+    updatedBlogs[blogIndex][itemName] = newValue;
 
     // Set the updated state
     setBlogs(updatedBlogs);
@@ -68,26 +52,10 @@ export default function SectionThree() {
   const addNewBlog = () => {
     // Create a new blog object with initial values
     const newBlog = {
-      id: blogs.length + 1, // Generate a unique ID (you can use a different approach for unique IDs)
-      items: [
-        {
-          label: "Title",
-          pls: "Enter Title",
-          value: "",
-        },
-        {
-          label: "Image Link",
-          pls: "Enter URL",
-          value: "",
-          url: true,
-        },
-        {
-          label: "Redirect URL",
-          pls: "Enter URL",
-          value: "",
-          url: true,
-        },
-      ],
+      id: blogs.length + 1 || 1,
+      title: "",
+      img: "",
+      url: "",
     };
 
     // Add the new blog entry to the existing array
@@ -112,40 +80,73 @@ export default function SectionThree() {
       <div className="module-edit-basic-item">
         <label htmlFor="title1">Title</label>
         <Input
-          d={{ value: title, label: "Enter Title" }}
+          d={{ value: data?.section3Title, label: "Enter Title" }}
           i="title1"
-          handler={setTitle}
+          handler={(e) => {
+            setData((prev) => {
+              return {
+                ...prev,
+                section3Title: e,
+              };
+            });
+          }}
         />
       </div>
       <div className="module-edit-basic-item">
         <label htmlFor="">sub-Description</label>
-        <TextArea />
+        <TextArea
+          value={data?.section3Description}
+          handler={(e) => {
+            setData((prev) => {
+              return {
+                ...prev,
+                section3Description: e,
+              };
+            });
+          }}
+        />
       </div>
 
       <br />
       <h4>Blog</h4>
-      {blogs.map((blog, i) => (
+      {blogs?.map((blog, i) => (
         <div key={i} className="module-edit-basic-wrp">
-          {blog.items.map((item, j) => (
-            <div key={j} className="module-edit-basic-item">
-              <label htmlFor="vidwoLink">{item.label}</label>
-              <Input
-                d={{ value: item.value, label: item.pls }}
-                i="vidwoLink"
-                handler={(e) => handleChange(i, j, e)}
-              />
-              {item.value && item.url && (
-                <a
-                  className="url-btn"
-                  href={item.value}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <BsBoxArrowUpRight />
-                </a>
-              )}
-            </div>
-          ))}
+          <div className="module-edit-basic-item">
+            <label htmlFor="vidwoLink">Title</label>
+            <Input
+              d={{ value: blog?.title, label: "Enter Title" }}
+              i="vidwoLink"
+              handler={(e) => handleChange(i, "title", e)}
+            />
+          </div>
+          <div className="module-edit-basic-item">
+            <label htmlFor="vidwoLink">Image URL</label>
+            <Input
+              d={{ value: blog?.img, label: "Enter URL" }}
+              i="vidwoLink"
+              handler={(e) => handleChange(i, "img", e)}
+            />
+          </div>
+          <div className="module-edit-basic-item">
+            <label htmlFor="vidwoLink">Title</label>
+            <Input
+              d={{ value: blog?.url, label: "Redirect URL" }}
+              i="vidwoLink"
+              handler={(e) => handleChange(i, "url", e)}
+            />
+
+            {blog?.url && (
+              <a
+                className="url-btn"
+                href={blog?.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <BsBoxArrowUpRight />
+              </a>
+            )}
+          </div>
+
           <button onClick={() => deleteRegion(blog.id)}>
             <AiOutlineDelete />
           </button>
@@ -158,7 +159,17 @@ export default function SectionThree() {
 
       <div className="module-edit-basic-item">
         <label htmlFor="">Bottom Description</label>
-        <TextArea />
+        <TextArea
+          value={data?.bottomDescription}
+          handler={(e) => {
+            setData((prev) => {
+              return {
+                ...prev,
+                bottomDescription: e,
+              };
+            });
+          }}
+        />
       </div>
     </div>
   );

@@ -1,5 +1,8 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { HiDocumentText } from "react-icons/hi";
+import { useParams } from "react-router-dom";
+import values from "../../../values";
 import Bootcump from "../basic/BootCump";
 import ExportBtn from "../basic/ExportBtn";
 import CopyLink from "../booking/CopyLink";
@@ -13,6 +16,7 @@ import SectionThree from "../module/SectionThree";
 import SectionTwo from "../module/SectionTwo";
 
 export default function EditModule() {
+  const { id } = useParams();
   const bootCump = [
     {
       name: "Modules",
@@ -24,12 +28,24 @@ export default function EditModule() {
     },
   ];
 
-  const [title, setTitle] = useState("");
-  const [title1, setTitle1] = useState("");
-  const [videoLink, setVideoLink] = useState("");
+  const [data, setData] = useState({});
+  const [fixtData, setFixtData] = useState({});
+
   const [isTemplate, setIsTemplate] = useState(false);
 
   const [isSaveTemplate, setIsSaveTemplate] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`${values.url}/module/single?id=${id}`)
+      .then((d) => {
+        setData(d.data);
+        setFixtData(d.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   return (
     <div className=" module-edit hotel">
@@ -62,14 +78,31 @@ export default function EditModule() {
             <div className="module-edit-basic-item">
               <label htmlFor="title">SEO - Title</label>
               <Input
-                d={{ value: title, label: "Enter SEO Title" }}
+                d={{ value: data?.seoTitle, label: "Enter SEO Title" }}
                 i="title"
-                handler={setTitle}
+                handler={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      seoTitle: e,
+                    };
+                  });
+                }}
               />
             </div>
             <div className="module-edit-basic-item">
               <label htmlFor="">SEO - Description</label>
-              <TextArea />
+              <TextArea
+                value={data?.seoDescription}
+                handler={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      seoDescription: e,
+                    };
+                  });
+                }}
+              />
             </div>
           </div>{" "}
           <div className="module-edit-basic">
@@ -82,26 +115,50 @@ export default function EditModule() {
             <div className="module-edit-basic-item">
               <label htmlFor="title1">Title</label>
               <Input
-                d={{ value: title1, label: "Enter Title" }}
+                d={{ value: data?.section1Title, label: "Enter Title" }}
                 i="title1"
-                handler={setTitle1}
+                handler={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      section1Title: e,
+                    };
+                  });
+                }}
               />
             </div>
             <div className="module-edit-basic-item">
               <label htmlFor="">Description</label>
-              <TextArea />
+              <TextArea
+                value={data?.section1Description}
+                handler={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      section1Description: e,
+                    };
+                  });
+                }}
+              />
             </div>
             <div className="module-edit-basic-item">
               <label htmlFor="vidwoLink">Video Link</label>
               <Input
-                d={{ value: videoLink, label: "Enter URL" }}
+                d={{ value: data?.section1Video, label: "Enter URL" }}
                 i="vidwoLink"
-                handler={setVideoLink}
+                handler={(e) => {
+                  setData((prev) => {
+                    return {
+                      ...prev,
+                      section1Video: e,
+                    };
+                  });
+                }}
               />
             </div>
           </div>
-          <SectionTwo />
-          <SectionThree />
+          <SectionTwo data={data} setData={setData} />
+          <SectionThree fixtData={fixtData} data={data} setData={setData} />
           <FixedOffer saveTemplateHandler={setIsSaveTemplate} />
           <div className="hotel-edit-footer">
             <div className="left">

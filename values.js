@@ -1,9 +1,7 @@
-import axios from "axios";
-
 const values = {};
 
-// values.url = "http://localhost:5000";
-values.url = "https://marco-backend-update.vercel.app";
+values.url = "http://localhost:5000";
+// values.url = "https://marco-backend-update.vercel.app";
 
 values.profileMenu = [
   {
@@ -83,36 +81,11 @@ values.generateUniqueString = () => {
   window.crypto.getRandomValues(array);
 
   return (
-    "#" +
+    // "#" +
     Array.from(array, (dec) => dec.toString(36))
       .join("")
       .slice(0, 16)
   );
-};
-
-values.getCityState = (setCitys) => {
-  axios
-    .get(
-      "https://secure.geonames.org/childrenJSON?geonameId=3175395&username=hoescapedashboard"
-    )
-    .then((d) => {
-      setCitys(d?.data.geonames);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-};
-values.getState = (setCitys, regionCode) => {
-  axios
-    .get(
-      `https://secure.geonames.org/childrenJSON?geonameId=${regionCode}&username=hoescapedashboard`
-    )
-    .then((d) => {
-      setCitys(d?.data.geonames);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
 };
 
 export default values;

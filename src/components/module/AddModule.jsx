@@ -1,21 +1,38 @@
+import axios from "axios";
+import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
 import { BsFillBuildingsFill } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import values from "../../../values";
 import Input from "../hotel-edit/Input";
 
 export default function AddModule({ handler, addhotel }) {
   const navigate = useNavigate();
-
+  const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
   const [hotelId, setHotelId] = useState("");
   const [name, setName] = useState("");
-  const [active, setActive] = useState("");
 
   const [isError, setIsError] = useState(false);
 
   const createHandler = () => {
     if (hotelId && name) {
-      navigate(`/module/edit/${hotelId}`);
+      axios
+        .post(
+          `${values.url}/module`,
+          { name, id: hotelId },
+          {
+            headers: {
+              token,
+            },
+          }
+        )
+        .then((d) => {
+          navigate(`/module/edit/${d.data._id}`);
+        })
+        .catch((e) => {
+          setIsError(e.response.data);
+        });
     } else {
       setIsError(true);
     }
@@ -23,7 +40,7 @@ export default function AddModule({ handler, addhotel }) {
 
   useEffect(() => {
     setIsError(false);
-  }, [name, active, hotelId]);
+  }, [name, hotelId]);
 
   const ref = useRef(null);
   const wrp = useRef(null);
@@ -35,6 +52,10 @@ export default function AddModule({ handler, addhotel }) {
       }
     });
   });
+
+  useEffect(() => {
+    setHotelId(values.generateUniqueString());
+  }, [addhotel]);
 
   return (
     <div ref={wrp} className={`add-hotel ${(addhotel && "show") || ""}`}>

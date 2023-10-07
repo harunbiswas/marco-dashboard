@@ -2,7 +2,7 @@ import { useState } from "react";
 import Input from "../hotel-edit/Input";
 import TextArea from "../hotel-edit/TextArea";
 
-export default function SectionTwo() {
+export default function SectionTwo({ data, setData }) {
   const [videoLink, setVideoLink] = useState("");
   const [videoLink1, setVideoLink1] = useState("");
   const [title, setTitle] = useState("");
@@ -18,17 +18,31 @@ export default function SectionTwo() {
         <div className="module-edit-basic-item">
           <label htmlFor="vidwoLink">1st Video Link</label>
           <Input
-            d={{ value: videoLink, label: "Enter URL" }}
+            d={{ value: data?.section2Video1, label: "Enter URL" }}
             i="vidwoLink"
-            handler={setVideoLink}
+            handler={(e) => {
+              setData((prev) => {
+                return {
+                  ...prev,
+                  section1Video: e,
+                };
+              });
+            }}
           />
         </div>
         <div className="module-edit-basic-item">
           <label htmlFor="vidwoLink1">2nd Video Link</label>
           <Input
-            d={{ value: videoLink1, label: "Enter URL" }}
+            d={{ value: data?.section2Video2, label: "Enter URL" }}
             i="vidwoLink1"
-            handler={setVideoLink1}
+            handler={(e) => {
+              setData((prev) => {
+                return {
+                  ...prev,
+                  section2Video2: e,
+                };
+              });
+            }}
           />
         </div>
       </div>
@@ -36,14 +50,31 @@ export default function SectionTwo() {
       <div className="module-edit-basic-item">
         <label htmlFor="title1">Title</label>
         <Input
-          d={{ value: title, label: "Enter Title" }}
+          d={{ value: data?.section2Title, label: "Enter Title" }}
           i="title1"
-          handler={setTitle}
+          handler={(e) => {
+            setData((prev) => {
+              return {
+                ...prev,
+                section2Title: e,
+              };
+            });
+          }}
         />
       </div>
       <div className="module-edit-basic-item">
         <label htmlFor="">Description</label>
-        <TextArea />
+        <TextArea
+          value={data?.section2Desctiption}
+          handler={(e) => {
+            setData((prev) => {
+              return {
+                ...prev,
+                section2Desctiption: e,
+              };
+            });
+          }}
+        />
       </div>
     </div>
   );
