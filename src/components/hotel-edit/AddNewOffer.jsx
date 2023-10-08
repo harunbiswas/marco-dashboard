@@ -2,144 +2,145 @@ import { useEffect, useRef, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { GrClose } from "react-icons/gr";
 import Select from "../basic/Select";
-import OfferTags from "../hotel/OfferTags";
+// import OfferTags from "../hotel/OfferTags";
 import AgeReduction from "./AgeReduction";
 import Breakdown from "./Breakdown";
 import Input from "./Input";
 import TextArea from "./TextArea";
+import values from "../../../values";
+import TagInput from "./TagInput";
+import Cookies from "js-cookie";
+import axios from "axios";
+import { useHotelContext } from "../../context/hotel.context";
 
-export default function AddNewOffer({ isAdd, setIsAdd, submitHandler }) {
-  const [title, setTitle] = useState("Summer Offer 2023");
-  const [offerID, setOfferID] = useState("#0394-21");
+const updateOffer = (data, newOffer, offerId) => {
+  const updatedOffers = data.offers.map((offer) => {
+    if (offer._id === offerId) return newOffer;
+    return offer;
+  });
+  const updatedData = { ...data, offers: updatedOffers };
+  console.log("Data after offer is updated", updatedData);
+  return updatedData;
+};
 
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      items: [
-        {
-          id: "10",
-          label: "Select Board type",
-          items: ["Full board", "Half Board"],
-        },
-        {
-          id: "10",
-          label: "Price type",
-          items: ["Per night", "Per night"],
-        },
-        {
-          id: "11",
-          label: "Select Board type",
-          items: ["$", "$"],
-          value: 0,
-          input: true,
-        },
-      ],
-    },
-    {
-      id: 2,
-      items: [
-        {
-          id: "10",
-          label: "Select Board type",
-          items: ["Full board", "Half Board"],
-        },
-        {
-          id: "10",
-          label: "Price type",
-          items: ["Per night", "Per night"],
-        },
-        {
-          id: "12",
-          label: "Select Board type",
-          items: ["$", "$"],
-          value: 0,
-          input: true,
-        },
-      ],
-    },
-  ]);
+const addNewOffer = (data, newOffer) => {
+  if (Array.isArray(data.offers)) data.offers.push(newOffer);
+  else data.offers = [newOffer];
+  const updatedData = { ...data };
+  return updatedData;
+};
 
-  const [ages, setAges] = useState([
-    {
-      id: 1,
-      items: [
-        {
-          id: "10",
-          label: "Select Board type",
-          items: ["All", " All 2"],
-        },
-        {
-          id: "12",
-          label: "Age Limit",
-          value: 0,
-        },
-        {
-          id: "11",
-          label: "Discount",
-          value: "10%",
-        },
-      ],
-    },
-    {
-      id: 2,
-      items: [
-        {
-          id: "10",
-          label: "Select Board type",
-          items: ["All", " All 2"],
-        },
-        {
-          id: "12",
-          label: "Age Limit",
-          value: 10,
-        },
-        {
-          id: "11",
-          label: "Discount",
-          value: "10%",
-        },
-      ],
-    },
-  ]);
+export default function AddNewOffer({
+  isAdd,
+  setIsAdd,
+  isAddNewOfferClicked,
+  setIsAddNewOfferClicked,
+  offer,
+  setOffer,
+  submitHandler,
+  data,
+  setData,
+}) {
+  const { isNewHotelAdding } = useHotelContext();
+  const [tagsLoading, setTagsLoading] = useState(true);
+  const [title, setTitle] = useState(offer ? offer.name : "");
+  const [offerID, setOfferID] = useState(
+    offer ? offer.id : values.generateUniqueString()
+  );
 
-  const handleChange = (parentId, itemId, newValue) => {
-    const updatedItems = items.map((itemGroup) => {
-      if (itemGroup.id === parentId) {
-        const updatedItemsInGroup = itemGroup.items.map((item) => {
-          if (item.id === itemId) {
-            return { ...item, value: parseInt(newValue) };
-          }
-          return item;
+  const [description, setDescription] = useState(
+    offer ? offer.description : ""
+  );
+
+  const [startDate, setStartDate] = useState(
+    offer ? new Date(offer.startDate) : null
+  );
+  const [endDate, setEndDate] = useState(
+    offer ? new Date(offer.endDate) : null
+  );
+
+  const [minStay, setMinStay] = useState(offer ? offer.minStay : "");
+  const [maxStay, setMaxStay] = useState(offer ? offer.maxStay : "");
+
+  const [beverageAvailability, setBeverageAvailability] = useState(
+    offer ? offer.beverageAvailability : ""
+  );
+
+  const [items, setItems] = useState(
+    offer
+      ? offer.breakdown
+      : [
+          { breakdownId: 1, name: "", priceType: "", currency: "€", price: 0 },
+          { breakdownId: 2, name: "", priceType: "", currency: "€", price: 0 },
+          { breakdownId: 3, name: "", priceType: "", currency: "€", price: 0 },
+        ]
+  );
+
+  const [ages, setAges] = useState(
+    offer
+      ? offer.ageReduction
+      : [
+          { reductionId: 1, boardType: "", agelimit: 0, discount: 10 },
+          { reductionId: 2, boardType: "", agelimit: 0, discount: 10 },
+        ]
+  );
+
+  const [offerTags, setOfferTags] = useState(offer ? offer.tags : []);
+
+  const [existingTags, setExistingTags] = useState([]);
+
+  const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data: tags } = await axios.get(`${values.url}/tag`, {
+          headers: {
+            token,
+          },
         });
-        return { ...itemGroup, items: updatedItemsInGroup };
+        setExistingTags(tags.offerTags ?? []);
+      } catch (error) {
+        console.log(error);
       }
-      return itemGroup;
+      setTagsLoading(false);
+    })();
+  }, []);
+
+  const handleBreakdownChange = (value, id, property) => {
+    console.log("handleBreakdownChange", items);
+    const updatedItems = items.map((item) => {
+      return item.breakdownId === id
+        ? {
+            ...item,
+            [property]: value,
+          }
+        : item;
     });
+    // console.log(updatedItems);
     setItems(updatedItems);
   };
 
-  const ageVlaueChange = (parentId, itemId, newValue) => {
-    const updatedItems = ages.map((itemGroup) => {
-      if (itemGroup.id === parentId) {
-        const updatedItemsInGroup = itemGroup.items.map((item) => {
-          if (item.id === itemId) {
-            if (typeof item.value === "number") {
-              return { ...item, value: Number(newValue) };
-            } else {
-              return { ...item, value: newValue };
-            }
+  const handleAgeChange = (value, id, property) => {
+    console.log("handleAgeChange", ages);
+    const updatedAges = ages.map((age) => {
+      return age.reductionId === id
+        ? {
+            ...age,
+            [property]: value,
           }
-          return item;
-        });
-        return { ...itemGroup, items: updatedItemsInGroup };
-      }
-      return itemGroup;
+        : age;
     });
-    setAges(updatedItems);
+    // console.log(updatedAges);
+    setAges(updatedAges);
   };
 
   const ref = useRef(null);
   const wrp = useRef(null);
+
+  useEffect(() => {
+    if (isAddNewOfferClicked) setOfferID(values.generateUniqueString());
+  }, [isAdd]);
 
   useEffect(() => {
     wrp.current.addEventListener("click", (e) => {
@@ -147,183 +148,233 @@ export default function AddNewOffer({ isAdd, setIsAdd, submitHandler }) {
         setIsAdd(false);
       }
     });
-  });
+  }, []);
+
+  const handleSave = async () => {
+    const newOfferData = {
+      name: title,
+      id: offerID,
+      description,
+      startDate,
+      endDate,
+      minStay,
+      maxStay,
+      beverageAvailability,
+      tags: offerTags,
+      breakdown: items,
+      ageReduction: ages,
+    };
+    console.log({
+      newOffer: newOfferData,
+      hotelId: data._id,
+    });
+    if (isNewHotelAdding) {
+      if (isAddNewOfferClicked) {
+        setData((prevData) => addNewOffer(prevData, newOfferData));
+      } else {
+        setData((prevData) => updateOffer(prevData, newOfferData, offer._id));
+      }
+    } else {
+      try {
+        if (isAddNewOfferClicked) {
+          await axios.post(
+            `${values.url}/hotel/offer`,
+            {
+              newOffer: newOfferData,
+              hotelId: data._id,
+            },
+            {
+              headers: {
+                token,
+              },
+            }
+          );
+          setData((prevData) => addNewOffer(prevData, newOfferData));
+        } else {
+          await axios.put(
+            `${values.url}/hotel/offer`,
+            {
+              updatedOffer: newOfferData,
+              hotelId: data._id,
+              offerId: offer._id,
+            },
+            {
+              headers: {
+                token,
+              },
+            }
+          );
+          setData((prevData) => updateOffer(prevData, newOfferData, offer._id));  
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    setIsAdd(false);
+    setIsAddNewOfferClicked(false);
+    setOffer(null);
+  };
 
   return (
     <div ref={wrp} className={`add-new-offer  ${(isAdd && "show") || ""}`}>
       <div ref={ref} className="add-new-offer-inner booking-box">
         <div className="add-new-offer-top">
-          <h4>Crate new offer</h4>
-          <button onClick={() => setIsAdd(false)}>
+          <h4>
+            {isAddNewOfferClicked
+              ? "Crea una nuova offerta"
+              : "Modifica Offerta"}
+          </h4>
+          <button
+            onClick={() => {
+              setIsAdd(false);
+              setIsAddNewOfferClicked(false);
+              setOffer(null);
+            }}
+          >
             <GrClose />
           </button>
         </div>
         <div className="add-new-offer-body">
           <div className="offer-details">
-            <h4>Offer Details</h4>
-            <p>
-              Contrary to popular belief, Lorem Ipsum is not simply random text
-            </p>
+            <h4>Dettagli Offerta</h4>
+            <p>Inserisci o modifica i dettagli dell’offerta</p>
             <div className="add-new-offer-details">
               <div className="item">
-                <label htmlFor="title">Offer Title</label>
+                <label htmlFor="title">Nome Offerta</label>
                 <Input
                   handler={setTitle}
                   d={{ value: title, label: "Enter title" }}
                 />
               </div>
               <div className="item">
-                <label htmlFor="title">Offer ID</label>
+                <label htmlFor="title">ID Offerta</label>
                 <Input
                   handler={setOfferID}
                   d={{ value: offerID, label: "#" }}
                 />
               </div>
               <div className="item full">
-                <label htmlFor="title">Description</label>
-                <TextArea />
+                <label htmlFor="title">Descrizione offerta</label>
+                <TextArea
+                  value={description}
+                  handler={(e) => setDescription(e.target.value)}
+                  pls="Inserisci la descrizione dell’offerta"
+                />
               </div>
             </div>
           </div>
           <div className="offer-details">
-            <h4>Offer Validity</h4>
-            <p>
-              Contrary to popular belief, Lorem Ipsum is not simply random text
-            </p>
+            <h4>Validità Offerta</h4>
+            <p>Inserisci il periodo di validità</p>
             <div className="add-new-offer-details">
               <div className="item">
-                <label htmlFor="title">Starting Date</label>
-                <input type="date" name="" id="" placeholder="select date" />
+                <label htmlFor="Valida dal">Valida dal</label>
+                <input
+                  type="date"
+                  value={startDate && startDate.toLocaleDateString("en-CA")}
+                  onChange={(e) => setStartDate(new Date(e.target.value))}
+                  name=""
+                  id=""
+                  placeholder="select date"
+                />
               </div>
               <div className="item">
-                <label htmlFor="title">Ending Date</label>
-                <input type="date" name="" id="" placeholder="select date" />
+                <label htmlFor="Valida fino al">Valida fino al</label>
+                <input
+                  type="date"
+                  value={endDate && endDate.toLocaleDateString("en-CA")}
+                  onChange={(e) => setEndDate(new Date(e.target.value))}
+                  name=""
+                  id=""
+                  min={startDate && new Date(startDate).toISOString().split('T')[0]}
+                  placeholder="select date"
+                />
               </div>
             </div>
           </div>{" "}
           <div className="offer-details">
-            <h4>Offer Condition</h4>
+            <h4>Condizioni Offerta</h4>
 
             <div className="add-new-offer-details">
               <div className="item">
-                <label htmlFor="title">Minimum Stay</label>
-                <Select data={["2 days", "3 days", "4 days"]} />
+                <label htmlFor="Minimo notti">Minimo notti</label>
+                {/* <Select data={["2 days", "3 days", "4 days"]} /> */}
+                <Input
+                  type="number"
+                  handler={setMinStay}
+                  d={{ value: minStay }}
+                />
               </div>
               <div className="item">
-                <label htmlFor="title">Minimum Stay</label>
-                <Select data={["5 days", "3 days", "4 days"]} />
+                <label htmlFor="Massimo notti">Massimo notti</label>
+                {/* <Select data={["5 days", "3 days", "4 days"]} /> */}
+                <Input
+                  type="number"
+                  handler={setMaxStay}
+                  d={{ value: maxStay }}
+                />
               </div>
               <div className="item">
-                <label htmlFor="title">Beverage Availability</label>
-                <Select data={["Included", "Included 1", "Included 2"]} />
-              </div>
-              <div className="item">
-                <label htmlFor="title">
-                  Maximum People <span>(Optional)</span>
-                </label>
+                <label htmlFor="title">Bevande incluse</label>
                 <Select
-                  data={["ex. 5 person", "ex. 5 person", "ex. 5 person"]}
+                  data={["Incluse", "Non Incluse"]}
+                  activeValue={beverageAvailability || ""}
+                  handler={(e) => {
+                    setBeverageAvailability(e);
+                  }}
                 />
               </div>
             </div>
           </div>
           <div className="offer-details">
             <h4>Tags</h4>
-            <OfferTags />
+            {/* <OfferTags /> */}
+            {!tagsLoading && (
+              <TagInput
+                tags={existingTags}
+                handler={setExistingTags}
+                name="offerTags"
+                setData={setOfferTags}
+                data={offerTags}
+              />
+            )}
           </div>
           <div className="offer-details">
-            <h4>Price breakdown</h4>
+            <h4>Prezzi</h4>
             <div className="breakdown">
-              {items.map((d, i) => (
-                <div className="breakdown-inner" key={i}>
-                  {d.items.map((d1, i) => (
-                    <Breakdown
-                      handler={(e) => {
-                        handleChange(d.id, d1.id, e);
-                      }}
-                      key={i}
-                      data={d1}
-                    />
-                  ))}
-                </div>
+              {items.map((item, i) => (
+                <Breakdown
+                  handler={(value, id, property) =>
+                    handleBreakdownChange(value, id, property)
+                  }
+                  key={i}
+                  data={item}
+                />
               ))}
-
-              <button
-                onClick={() => {
-                  setItems((prev) => {
-                    return [
-                      ...prev,
-                      {
-                        id: items.length + 1,
-                        items: [
-                          {
-                            id: "10",
-                            label: "Select Board type",
-                            items: ["Full board", "Half Board"],
-                          },
-                          {
-                            id: "10",
-                            label: "Price type",
-                            items: ["Per night", "Per night"],
-                          },
-                          {
-                            id: "11",
-                            label: "Select Board type",
-                            items: ["$", "$"],
-                            value: 0,
-                            input: true,
-                          },
-                        ],
-                      },
-                    ];
-                  });
-                }}
-              >
-                <AiOutlinePlus /> Add More Price
-              </button>
             </div>
           </div>
           <div className="offer-details">
-            <h4>Age Reduction</h4>
+            <h4>Riduzioni Età</h4>
             <div className="breakdown">
-              {ages.map((d, i) => (
-                <div className="breakdown-inner" key={i}>
-                  {d.items.map((d1, i) => (
-                    <AgeReduction
-                      handler={(e) => {
-                        ageVlaueChange(d.id, d1.id, e);
-                      }}
-                      key={i}
-                      data={d1}
-                    />
-                  ))}
-                </div>
+              {ages.map((age, i) => (
+                <AgeReduction
+                  handler={(value, id, property) =>
+                    handleAgeChange(value, id, property)
+                  }
+                  key={i}
+                  data={age}
+                />
               ))}
-
               <button
                 onClick={() => {
                   setAges((prev) => {
                     return [
                       ...prev,
                       {
-                        id: ages.length + 1,
-                        items: [
-                          {
-                            id: "10",
-                            label: "Select Board type",
-                            items: ["All", " All 2"],
-                          },
-                          {
-                            id: "12",
-                            label: "Age Limit",
-                            value: 0,
-                          },
-                          {
-                            id: "11",
-                            label: "Discount",
-                            value: "10%",
-                          },
-                        ],
+                        reductionId: ages.length + 1,
+                        boardType: "",
+                        agelimit: 0,
+                        discount: 10,
                       },
                     ];
                   });
@@ -339,9 +390,9 @@ export default function AddNewOffer({ isAdd, setIsAdd, submitHandler }) {
             <button onClick={() => setIsAdd(false)}>Discard</button>
           </div>
           <div className="right">
-            <button>Save Changes</button>
-            <button onClick={submitHandler} className="submit">
-              {"Next"}
+            {/* <button onClick={handleSave}>Save Changes</button> */}
+            <button onClick={handleSave} className="submit">
+              {isAddNewOfferClicked ? "Aggiungi Offerta" : "Salva Modifiche"}
             </button>
           </div>
         </div>

@@ -38,23 +38,23 @@ export default function DrapDrop({ isDrag, handler, addHandler }) {
     <div ref={wrp} className={`drag-drop ${(isDrag && "show") || ""}`}>
       <div ref={ref} className="drag-drop-inner booking-box">
         <div className="drag-drop-top">
-          <h4>Upload Image</h4>
+          <h4>Carica Immagine</h4>
           <button onClick={() => handler(false)}>
             <GrClose />
           </button>
         </div>
         <DrapDropBody url={url} urlSet={setUrl} />
         <div className="sep">
-          <span>OR</span>
+          <span>OPPURE</span>
         </div>
         <div className="drag-drop-form">
           <div className="item">
             <Input
               handler={setValue}
-              d={{ value: value, label: "Paster Image URL" }}
+              d={{ value: value, label: "Incolla Immagine URL" }}
             />
             <button onClick={(e) => submitHandler(url)} className="btn">
-              Add
+              Aggiungi
             </button>
           </div>
         </div>

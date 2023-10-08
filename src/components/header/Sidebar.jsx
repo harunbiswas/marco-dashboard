@@ -25,7 +25,7 @@ export default function Sidebar({ isFull, setIsFull }) {
       url: "/booking",
     },
     {
-      name: "Hotel Management",
+      name: "Gestione Hotel",
       icon: <RiHotelFill />,
       url: "/hotel",
     },

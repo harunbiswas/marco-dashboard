@@ -6,9 +6,12 @@ import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import values from "../../../values";
 import Input from "../hotel-edit/Input";
+import { useHotelContext } from "../../context/hotel.context";
 
 export default function AddHotel({ handler, addhotel }) {
   const navigate = useNavigate();
+  const {setIsNewHotelAdding} = useHotelContext()
+
   const [tags, setTaqs] = useState([
     "Hotel",
     "B&B",
@@ -46,6 +49,7 @@ export default function AddHotel({ handler, addhotel }) {
         })
         .then((d) => {
           navigate(`/hotel/edit/${d.data._id}`);
+          setIsNewHotelAdding(true)  
         })
         .catch((e) => {
           if (e.response.data.id) {

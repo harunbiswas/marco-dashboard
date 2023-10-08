@@ -1,15 +1,18 @@
-import { useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
 import { BsFillBuildingsFill, BsPlusLg } from "react-icons/bs";
 import { FaUmbrellaBeach } from "react-icons/fa";
 import { GiSightDisabled } from "react-icons/gi";
-import { LuEdit } from "react-icons/lu";
 import { RiDeleteBin2Line } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import values from "../../../values";
 import Bootcump from "../basic/BootCump";
 import Rating from "../basic/Rating";
 import Search from "../basic/Search";
 import Title from "../basic/Title";
 import AddNewOffer from "../hotel-edit/AddNewOffer";
+import { extractLatAndLng } from "../hotel-edit/LocationDetails";
 import AgeEdit from "../hotel/AgeEdit";
 import DeleteHotel from "../hotel/DeleteHotel";
 import Description from "../hotel/Description";
@@ -19,18 +22,18 @@ import Map from "../hotel/Map";
 import OfferItem from "../hotel/OfferItem";
 import Tags from "../hotel/Tags";
 
-export default function HotelDetails() {
-  const bootcumpData = [
-    {
-      name: " Hotel Management",
-      url: "/hotel",
-      icon: <BsFillBuildingsFill />,
-    },
-    {
-      name: "San Pietro di Positano",
-    },
-  ];
+const bootcumpData = [
+  {
+    name: "Gestione Hotel",
+    url: "/hotel",
+    icon: <BsFillBuildingsFill />,
+  },
+  {
+    name: "San Pietro di Positano",
+  },
+];
 
+export default function HotelDetails() {
   const description = `Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.
   
   The spacious rooms all include bathrobes, slippers and a flat-screen TV with satellite and pay-per-view channels. Some also feature a design sofa or chair.Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.
@@ -48,6 +51,30 @@ export default function HotelDetails() {
     { icon: <FaUmbrellaBeach />, name: "Free Wifi" },
   ]);
 
+  const [hotelData, setHotelData] = useState(null);
+
+  const { id: hotelId } = useParams();
+  const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await axios.get(
+          `${values.url}/hotel/single?id=${hotelId}`,
+          {
+            headers: {
+              token,
+            },
+          }
+        );
+        console.log(data);
+        setHotelData(data);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
   const [isEdit, setIsEdit] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
   const [intems, setItems] = useState([1, 1, 1, 1, 1, 1, 1, 1]);
@@ -55,10 +82,20 @@ export default function HotelDetails() {
   const [isDelete, setIsDelete] = useState(false);
   const navigate = useNavigate();
 
-  const deleteChange = () => {
-    navigate("/hotel");
+  const deleteChange = async () => {
+    try {
+      const resp = await axios.delete(`${values.url}/hotel/${hotelId}`, {
+        headers: {
+          token,
+        },
+      });
+      console.log(resp);
+      navigate("/hotel");
+    } catch (error) {
+      console.log(error);
+    }
   };
-
+  if (!hotelData) return <h1>Loading</h1>;
   return (
     <div className="hotel hotel-details">
       <div className="container">
@@ -67,51 +104,64 @@ export default function HotelDetails() {
           <div className="basic">
             <div className="booking-box">
               <div className="hotel-details-top">
-                <HotelDetailsImg />
+                <HotelDetailsImg imgs={hotelData && hotelData.images} />
                 <div className="info">
                   <div className="left">
-                    <Title title="San Pietro di Positano" />
+                    <Title title={hotelData && hotelData.name} />
                     <Rating />
                   </div>
-                  <EditBtn />
+                  <EditBtn hotelId={hotelId} />
                 </div>
-                <Tags />
+                <Tags tag={[]} />
               </div>
               <div className="hotel-details-des">
-                <Description description={description} title="Description" />
+                {hotelData.hotelDescription && (
+                  <Description
+                    description={hotelData.hotelDescription}
+                    title="Description"
+                  />
+                )}
               </div>
             </div>
             <div className="booking-box hotel-details-service">
               <div className="hotel-details-service-top">
                 <h4>Services</h4>
-                <EditBtn />
+                <EditBtn hotelId={hotelId} />
               </div>
               <div className="hotel-details-service-body">
                 <ul className="hotel-details-service-body-items">
-                  {serviceItems.map((item, i) => (
-                    <li key={i}>
-                      {item.icon} {item.name}
-                    </li>
-                  ))}
+                  {[...hotelData.services, ...hotelData.strengths].map(
+                    (item, i) => (
+                      <li key={i}>
+                        {/* {item.icon} {item.name} */}
+                        {item}
+                      </li>
+                    )
+                  )}
                 </ul>
                 <div className="hotel-details-des">
-                  <Description max={30} description={description} />
+                  {hotelData.summaryDescription && (
+                    <Description
+                      max={30}
+                      description={hotelData.summaryDescription}
+                    />
+                  )}
                 </div>
               </div>
             </div>
             <div className="booking-box hotel-details-location">
               <div className="hotel-details-location-top">
                 <h4>Location</h4>
-                <EditBtn />
+                <EditBtn hotelId={hotelId} />
               </div>
-              <Map />
+              <Map markerPosition={extractLatAndLng(hotelData.coordinate)} />
             </div>
 
             <div className="booking-box hotel-details-service">
               <div className="hotel-details-service-top">
                 <h4>Age Reductions</h4>
                 <div className="edit-btn">
-                  <button
+                  {/* <button
                     className={isEdit && "save"}
                     onClick={() => setIsEdit(!isEdit)}
                   >
@@ -121,7 +171,8 @@ export default function HotelDetails() {
                       </>
                     )) ||
                       "Save"}
-                  </button>
+                  </button> */}
+                  <EditBtn hotelId={hotelId} />
                 </div>
               </div>
               <AgeEdit isEdit={isEdit} />
@@ -134,7 +185,7 @@ export default function HotelDetails() {
               </div>
               <div className="delete-disable-body">
                 <DeleteHotel
-                  data={"San Pietro di Positano"}
+                  data={hotelData.name}
                   isShow={isDelete}
                   closeHandler={() => setIsDelete(false)}
                   changeHandler={deleteChange}
@@ -163,11 +214,17 @@ export default function HotelDetails() {
                 </button>
               </div>
               <Search />
-              <div className="hotel-details-offers-body">
-                {intems.map((d, i) => (
-                  <OfferItem key={i} editOfferHandler={setIsAdd} />
-                ))}
-              </div>
+              {hotelData.offers && (
+                <div className="hotel-details-offers-body">
+                  {hotelData.offers.map((offer, i) => (
+                    <OfferItem
+                      key={i}
+                      editOfferHandler={setIsAdd}
+                      offer={offer}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

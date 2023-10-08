@@ -871,6 +871,56 @@
   }
 }
 
+.tag-input {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  align-items: center;
+  & > li,
+  & > button,
+  input {
+    padding: 6px 12px;
+    border: $border;
+    border-radius: 2rem;
+    color: $dark;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: $jakarta;
+    font-weight: 600;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+    &.active {
+      background-color: $primary;
+      color: $white;
+      border-color: $primary;
+    }
+  }
+
+  input {
+    border-radius: 4px;
+    // height: 16px;
+
+    &:focus {
+      outline: 1px solid $primary;
+    }
+  }
+
+  form {
+    display: flex;
+
+    button {
+      padding: 8px;
+      color: $primary;
+
+      &:disabled {
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
 .hotel-edit {
   .booking-box {
     padding: 0;
@@ -897,7 +947,7 @@
       display: flex;
       gap: 10px;
       margin-top: 10px;
-
+      align-items: center;
       & > li,
       & > button,
       input {
@@ -922,9 +972,23 @@
 
       input {
         border-radius: 4px;
+        // height: 16px;
 
         &:focus {
           outline: 1px solid $primary;
+        }
+      }
+
+      form {
+        display: flex;
+
+        button {
+          padding: 8px;
+          color: $primary;
+
+          &:disabled {
+            cursor: not-allowed;
+          }
         }
       }
     }
@@ -1482,6 +1546,11 @@
               font-size: 12px;
               color: #84818a;
             }
+
+            .discount {
+              color: #34c759;
+            }
+
             strong {
               letter-spacing: -0.08px;
               font-size: 16px;
@@ -2064,6 +2133,62 @@ button.edit-offer-item {
     display: flex;
     gap: 13px;
     align-items: flex-end;
+
+    &-form-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-width: 214px;
+
+      .select,
+      input {
+        height: 48px !important;
+        text-align: right;
+      }
+
+      &.discount {
+        position: relative;
+
+        & > span {
+          position: absolute;
+          right: 10px;
+          bottom: 14px;
+        }
+        input {
+          padding-right: 25px;
+        }
+      }
+
+      &.full {
+        width: 200%;
+      }
+
+      &-inner {
+        display: flex;
+
+        .select {
+          width: 60px;
+          border-right: 0;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+
+          .active {
+            padding-right: 0;
+          }
+        }
+
+        input {
+          text-align: right;
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
 
     &-input {
       display: flex;

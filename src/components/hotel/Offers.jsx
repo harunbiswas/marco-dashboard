@@ -1,35 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import img from "../../assets/images/discount.svg";
+import moment from "moment/moment";
 
-export default function Offers() {
-  const [offers, setOffers] = useState([
-    {
-      name: "Summer Offer",
-      date: "From 01 June - 30 August",
-    },
-    {
-      name: "HoEscape Offer",
-      date: "From 01 June - 30 August",
-    },
-    {
-      name: "20% Discount Offer",
-      date: "From 01 June - 30 August",
-    },
-    {
-      name: "Summer Offer",
-      date: "From 01 June - 30 August",
-    },
-    {
-      name: "HoEscape Offer",
-      date: "From 01 June - 30 August",
-    },
-    {
-      name: "20% Discount Offer",
-      date: "From 01 June - 30 August",
-    },
-  ]);
+export default function Offers({offer}) {
+  const [offers, setOffers] = useState([]);
   const [trn, setTrns] = useState(0);
+  useEffect(() => {
+    setOffers(offer);
+  }, [offer]);
   return (
     <>
       <button
@@ -52,7 +31,7 @@ export default function Offers() {
             </div>
             <div className="offers-item-right">
               <h5>{d.name}</h5>
-              <p>{d.date}</p>
+              <p>Dal {moment(d.startDate).format("Do MMMM ")} - {moment(d.endDate).format("Do MMMM YY")}</p>
             </div>
           </li>
         ))}

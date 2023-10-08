@@ -4,7 +4,7 @@ export default function TextArea({ pls, value, handler, name }) {
       name={name}
       placeholder={pls}
       value={value}
-      onChange={(e) => handler(e.target.value)}
+      onChange={(e) => handler(e)}
     ></textarea>
   );
 }

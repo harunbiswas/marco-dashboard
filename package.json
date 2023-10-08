@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-google-maps/api": "^2.19.2",
     "axios": "^1.5.0",
+    "firebase": "^10.4.0",
     "framer-motion": "^10.16.2",
     "js-cookie": "^3.0.5",
     "moment": "^2.29.4",
@@ -28,7 +29,8 @@
     "react-router-dom": "^6.14.2",
     "react-time-picker": "^6.5.1",
     "sass": "^1.63.6",
-    "slick-slider": "^1.8.2"
+    "slick-slider": "^1.8.2",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.14",

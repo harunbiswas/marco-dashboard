@@ -22,6 +22,8 @@ export default function Header() {
       setTitle("Settins");
     } else if (pathname === "transport") {
       setTitle("Trasporti");
+    } else if (pathname.includes("hotel")) {
+      setTitle("Gestione Hotel");
     }
   }, [pathname]);
 

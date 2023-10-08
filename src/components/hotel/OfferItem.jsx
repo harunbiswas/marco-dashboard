@@ -4,8 +4,9 @@ import { ImGlass } from "react-icons/im";
 import img from "../../assets/images/discount.svg";
 import Description from "./Description";
 import OfferTags from "./OfferTags";
+import moment from "moment/moment";
 
-export default function OfferItem({ editOfferHandler }) {
+export default function OfferItem({ editOfferHandler, offer }) {
   const description = `
     Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.`;
 
@@ -37,8 +38,11 @@ export default function OfferItem({ editOfferHandler }) {
         <div className="offer-item-top-left">
           <img src={img} alt="" />
           <div className="content">
-            <h4>Summer Offer</h4>
-            <span>From 01 june - 30 August</span>
+            <h4>{offer.name}</h4>
+            <span>
+              Dal {moment(offer.startDate).format("Do MMMM ")} -{" "}
+              {moment(offer.endDate).format("Do MMMM YY")}
+            </span>
           </div>
         </div>
         <div className="toggle">
@@ -46,29 +50,31 @@ export default function OfferItem({ editOfferHandler }) {
         </div>
       </div>
       <div className={`offer-item-body ${(istoggle && "show") || ""}`}>
-        <Description description={description} max={20} />
+        <Description description={offer.description} max={20} />
         <div className="conditions">
           <h4>Conditions</h4>
           <ul className="conditions-wrp">
-            <li>&#x2713; Minimum 2 Nights </li>
-            <li>&#x2713; Minimum 7 Nights </li>
+            <li>&#x2713; Minimo {offer.minStay} Notti </li>
+            <li>&#x2713; Massimo {offer.maxStay} Notti </li>
           </ul>
         </div>
         <div className="conditions">
           <h4>
             <ImGlass />
-            Beverage Included
+            {offer.beverageAvailability === "Incluse"
+              ? "Bevande Incluse"
+              : "Bevande non Incluse"}
           </h4>
         </div>
 
         <div className="price">
           <h4>Price</h4>
           <ul className="price-items">
-            {prices.map((d, i) => (
+            {offer.breakdown.map((pr, i) => (
               <li key={i}>
-                <p>{d.name}</p>
+                <p>{pr.name}</p>
                 <strong>
-                  ${d.price} <span>/{d.dateline}</span>
+                  {pr.currency + pr.price} <span>/{pr.priceType}</span>
                 </strong>
               </li>
             ))}

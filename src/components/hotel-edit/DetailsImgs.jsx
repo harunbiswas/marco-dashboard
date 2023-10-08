@@ -59,7 +59,7 @@ const DetailsImgs = ({ data, setData }) => {
 
         <button onClick={() => setIsDrag(true)}>
           <AiOutlinePlus />
-          Add More
+          Aggiungi Immagine
         </button>
 
         <DrapDrop handler={setIsDrag} isDrag={isDrag} addHandler={setImgs} />

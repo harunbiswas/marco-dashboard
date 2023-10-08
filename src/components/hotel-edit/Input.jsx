@@ -1,7 +1,7 @@
-export default function Input({ d, i, handler }) {
+export default function Input({ d, i, handler, type }) {
   return (
     <input
-      type="text"
+      type={type ?? "text"}
       value={d.value}
       onChange={(e) => {
         handler(e.target.value);

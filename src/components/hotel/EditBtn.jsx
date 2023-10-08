@@ -1,10 +1,10 @@
 import { LuEdit } from "react-icons/lu";
 import { Link } from "react-router-dom";
 
-export default function EditBtn() {
+export default function EditBtn({hotelId}) {
   return (
     <div className="edit-btn">
-      <Link to="/hotel/edit/1">
+      <Link to={"/hotel/edit/" + hotelId}>
         <LuEdit /> Edit
       </Link>
     </div>

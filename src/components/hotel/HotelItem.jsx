@@ -6,53 +6,70 @@ import HotelItemImg from "./HotelItemImg";
 import Offers from "./Offers";
 import Tags from "./Tags";
 
-export default function HotelItem() {
-  const imas = [
-    {
-      src: "https://cdn.pixabay.com/photo/2021/08/27/01/33/bedroom-6577523_1280.jpg",
-    },
-    {
-      src: "https://cdn.pixabay.com/photo/2016/10/18/09/02/hotel-1749602_640.jpg",
-    },
-    {
-      src: "https://cdn.pixabay.com/photo/2014/07/10/17/17/hotel-389256_640.jpg",
-    },
-  ];
+const calculateLowestAndHighestPrices = (offers) => {
+  let lowestPrice = Infinity; // Initialize with a high value
+  let highestPrice = -Infinity; // Initialize with a low value
 
+  for (const offer of offers) {
+    const { minStay, breakdown } = offer;
+
+    for (const item of breakdown) {
+      const { price, priceType } = item;
+
+      if (priceType === "Totale offerta") {
+        const adjustedPrice = price / minStay; // Divide price by minStay
+        lowestPrice = Math.min(lowestPrice, adjustedPrice);
+        highestPrice = Math.max(highestPrice, adjustedPrice);
+      } else {
+        lowestPrice = Math.min(lowestPrice, price);
+        highestPrice = Math.max(highestPrice, price);
+      }
+    }
+  }
+  return `$${lowestPrice}~$${highestPrice}`;
+};
+
+export default function HotelItem({ hotelData }) {
   return (
     <div className="hotel-item">
       <div className="hotel-item-left">
-        <HotelItemImg imas={imas} />
+        <HotelItemImg imas={hotelData.images} />
         <div className="info">
           <div className="top">
-            <Link to="/hotel/12">
-              <h4>San Pietro di Positano</h4>
+            <Link to={`/hotel/${hotelData._id}`}>
+              <h4>{hotelData.name}</h4>
             </Link>
 
-            <Rating />
+            <Rating rate={hotelData.rating} />
           </div>
           <p>
             <span>
-              <MdLocationOn /> Via Laurito, 2, 80017 Positano, Italy
+              <MdLocationOn /> {hotelData.address}
             </span>
 
             <span className="loca">
               <RxDotFilled />
-              1.7 km from centre
+              {/* 1.7 km from centre */}
+              {hotelData.distance.map((dist, index) => (
+                <>
+                  {dist.distance + " " + dist.label}{" "}
+                  {hotelData.distance.length !== index + 1 ? " - " : ""}
+                </>
+              ))}
             </span>
           </p>
-          <Tags />
-          <Offers />
+          <Tags tag={[...hotelData.strengths, ...hotelData.services]} />
+          <Offers offer={hotelData.offers} />
         </div>
       </div>
       <div className="hotel-item-right">
         <div className="hotel-item-right-top">
-          <span>Starting form</span>
-          <strong>$590~$5000</strong>
+          <span>Range di Prezzi</span>
+          <strong>{calculateLowestAndHighestPrices(hotelData.offers)}</strong>
         </div>
         <div className="hotel-item-right-bottom">
-          <Link to="/hotel/12" className="btn">
-            View Details
+          <Link to={`/hotel/${hotelData._id}`} className="btn">
+          Vedi Dettagli
           </Link>
         </div>
       </div>

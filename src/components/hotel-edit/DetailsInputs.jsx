@@ -9,77 +9,42 @@ import Input from "./Input";
 
 export default function DetailsInputs({ data, setData }) {
   const [inputs, setInputs] = useState([]);
-  const [textareas, setTextAreas] = useState([
-    {
-      label: "Descrizione Hotel",
-      pls: "Inserisci la descrizione dell’hotel",
-      value: "",
-      name: "hotelDescription",
-    },
-    {
-      label: "Riassunto Descrizione",
-      pls: "Inserisci il riassunto della descrizione dell’hotel",
-      value: "",
-      name: "summaryDescription",
-    },
-    {
-      label: "Descrizione Camere",
-      pls: "Inserisci una descrizione delle camere",
-      value: "",
-      name: "roomsDescription",
-    },
-  ]);
-
   const { id } = useParams();
+  const [isSpa, setIsSpa] = useState(false);
+  // const [isRestu, setIsRestu] = useState(Boolean(data?.restaurantDescription));
+  const [isRestu, setIsRestu] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(`${values.url}/hotel/single?id=${id}`)
-      .then((d) => {
-        setInputs([
-          {
-            label: "Nome Hotel",
-            value: d.data?.name,
-          },
-          {
-            label: "Hotel ID",
-            value: d.data?.id,
-          },
-          {
-            label: "Morgana ID",
-            value: d.data?.morganaId,
-          },
-          {
-            label: "Sito Web Hotel",
-            value: d.data?.hotelWebsite,
-            url: true,
-          },
-          {
-            label: "Email",
-            value: d.data?.email,
-          },
-          {
-            label: "Numero di Telefono",
-            value: d.data?.phone,
-            number: true,
-          },
+    console.log("simple useeffect ");
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`${values.url}/hotel/single?id=${id}`);
+        const { data } = response;
+        setIsSpa(Boolean(data?.spaDescription));
+        setIsRestu(Boolean(data?.restaurantDescription));
 
-          {
-            label: "Hotel XMLurl",
-            value: d.data?.hotelXMLurl,
-            url: true,
-          },
+        const inputsData = [
+          { label: "Nome Hotel", value: data?.name },
+          { label: "Hotel ID", value: data?.id },
+          { label: "Morgana ID", value: data?.morganaId },
+          { label: "Sito Web Hotel", value: data?.hotelWebsite, url: true },
+          { label: "Email", value: data?.email },
+          { label: "Numero di Telefono", value: data?.phone, number: true },
+          { label: "Hotel XMLurl", value: data?.hotelXMLurl, url: true },
+          { label: "Priorità", value: data?.priority },
+        ];
 
-          {
-            label: "Priorità",
-            value: d.data?.priority,
-          },
-        ]);
-      })
-      .catch((e) => console.log(e));
-  }, []);
+        setInputs(inputsData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   useEffect(() => {
+    console.log("Inputs useeffect ");
     setData((prev) => {
       return {
         ...prev,
@@ -110,13 +75,12 @@ export default function DetailsInputs({ data, setData }) {
     }
   };
 
-  const [isSpa, setIsSpa] = useState(data?.spaDescription);
-  const [isRestu, setIsRestu] = useState(data?.restaurantDescription);
+  // useEffect(() => {
+  //   console.log("Data useeffect ", Boolean(data?.restaurantDescription))
+  //   setIsSpa(data?.spaDescription);
+  //   setIsRestu(Boolean(data?.restaurantDescription));
+  // }, [data]);
 
-  useEffect(() => {
-    setIsSpa(data?.spaDescription);
-    setIsRestu(data?.restaurantDescription);
-  }, [data]);
   return (
     <>
       <div className="hotel-form-details-wrp">
@@ -199,11 +163,11 @@ export default function DetailsInputs({ data, setData }) {
       <div className="buttons">
         {(isSpa && (
           <div className="hotel-form-details-item full">
-            <label htmlFor="">Descrizione Camere</label>
+            <label htmlFor="">Descrizione Spa</label>
             <div className="inner">
               <textarea
                 name="hotelDescription"
-                placeholder="Inserisci una descrizione delle camere"
+                placeholder="Inserisci una descrizione delle spa"
                 value={data?.spaDescription}
                 onChange={(e) => {
                   setData((prev) => {
@@ -226,33 +190,32 @@ export default function DetailsInputs({ data, setData }) {
             Aggiungi Descrizione Spa
           </button>
         )}{" "}
-        {(isRestu && (
+        {isRestu ? (
           <div className="hotel-form-details-item full">
-            <label htmlFor="">Descrizione Camere</label>
+            <label htmlFor="hotelDescription">Descrizione ristorante</label>
             <div className="inner">
               <textarea
                 name="hotelDescription"
-                placeholder="Inserisci una descrizione delle camere"
+                placeholder="Inserisci una descrizione delle ristorante"
                 value={data?.restaurantDescription}
-                onChange={(e) => {
-                  setData((prev) => {
-                    return {
-                      ...prev,
-                      restaurantDescription: e.target.value,
-                    };
-                  });
-                }}
+                onChange={(e) =>
+                  setData((prev) => ({
+                    ...prev,
+                    restaurantDescription: e.target.value,
+                  }))
+                }
               ></textarea>
             </div>
           </div>
-        )) || (
+        ) : (
           <button
-            onClick={(e) => {
+            onClick={() => {
+              console.log(isRestu);
               setIsRestu(true);
             }}
           >
             <BiPlus />
-            Aggiungi Descrizione Ristorante
+            Aggiungi Descrizione Ristorante {isRestu.toString()}
           </button>
         )}
       </div>

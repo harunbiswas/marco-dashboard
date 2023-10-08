@@ -3,40 +3,12 @@ import { useEffect, useState } from "react";
 import { RiDeleteBin2Line } from "react-icons/ri";
 import { useParams } from "react-router-dom";
 import values from "../../../values";
+import Input from "../hotel-edit/Input";
+
+const rx = /^(\d+(\.\d{0,2})?)?$/;
 
 export default function AgeEdit({ isEdit, data, setData }) {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      items: [
-        {
-          id: 1,
-          label: "Age Limit",
-          value: 10,
-        },
-        {
-          id: 2,
-          label: "Discount",
-          value: "10%",
-        },
-      ],
-    },
-    {
-      id: 2,
-      items: [
-        {
-          id: 1,
-          label: "Age Limit",
-          value: 10,
-        },
-        {
-          id: 2,
-          label: "Discount",
-          value: "10%",
-        },
-      ],
-    },
-  ]);
+  const [items, setItems] = useState([]);
 
   const handleRemoveParentItem = (parentId) => {
     const updatedItems = items.filter(
@@ -53,7 +25,7 @@ export default function AgeEdit({ isEdit, data, setData }) {
   }, []);
 
   useEffect(() => {
-    setData((prev) => {
+    setData && setData((prev) => {
       return {
         ...prev,
         ageDeductions: items,
@@ -67,11 +39,23 @@ export default function AgeEdit({ isEdit, data, setData }) {
       if (item.id === itemId) {
         const updatedSubItems = item.items.map((subItem) => {
           if (subItem.id === subItemId) {
-            if (typeof subItem.value === "number") {
-              return { ...subItem, value: parseInt(newValue) };
-            } else {
-              return { ...subItem, value: newValue };
-            }
+            // if (typeof subItem.value === "number") {
+            // return { ...subItem, value: parseInt(newValue) };
+            return {
+              ...subItem,
+              value: Number(
+                subItem.label === "Age Limit"
+                  ? rx.test(newValue.toString())
+                    ? (newValue < 17 && newValue) || 17
+                    : 0
+                  : rx.test(newValue.toString())
+                  ? (newValue < 100 && newValue) || 100
+                  : 0
+              ),
+            };
+            // } else {
+            //   return { ...subItem, value: newValue };
+            // }
           }
           return subItem;
         });
@@ -88,18 +72,59 @@ export default function AgeEdit({ isEdit, data, setData }) {
         {items.map((d, i) => {
           return (
             <>
+              {/* <Input
+                  d={{ value: item.age }}
+                  handler={(e) => {
+                    setItems((prevItems) => {
+                      return prevItems.map((i) => {
+                        if (i.itemId === item.itemId) {
+                          return {
+                            ...i,
+                            age: Number(
+                              rx.test(e.toString()) ? (e < 17 && e) || 17 : 0
+                            ),
+                          };
+                        }
+                        return i;
+                      });
+                    });
+                  }}
+                /> */}
               <div key={i} className="age-edit-item">
                 {d.items.map((d1, i) => (
                   <>
-                    <div key={i} className="age-edit-item-input">
-                      <label htmlFor="">{d1.label}</label>
-                      <input
-                        disabled={!isEdit}
-                        type="text"
-                        value={d1.value || 0}
-                        onChange={(e) =>
-                          updateValue(d.id, d1.id, e.target.value)
-                        }
+                    <div key={i} className={d1.label === "Age Limit" ? "age-edit-item-input" : "age-edit-item-form-group discount"}>
+                    {/* <div key={i} className={"age-edit-item-input"}> */}
+                      <label htmlFor="">
+                        {d1.label === "Age Limit"
+                          ? "Età Limite (Inclusa)"
+                          : "Sconto (%)"}
+                      </label>
+                      {d1.label !== "Age Limit" && <span>%</span>}
+                      <Input
+                        // disabled={!isEdit}
+                        // type="text"
+                        d={{ value: d1.value }}
+                        // value={d1.value || 0}
+                        // onChange={(e) =>
+                        //   updateValue(d.id, d1.id, e.target.value)
+                        // }
+                        handler={(e) => {
+                          updateValue(d.id, d1.id, e);
+                          // setItems((prevItems) => {
+                          //   return prevItems.map((i) => {
+                          //     if (i.itemId === item.itemId) {
+                          //       return {
+                          //         ...i,
+                          //         age: Number(
+                          //           rx.test(e.toString()) ? (e < 17 && e) || 17 : 0
+                          //         ),
+                          //       };
+                          //     }
+                          //     return i;
+                          //   });
+                          // });
+                        }}
                       />
                     </div>
                   </>
@@ -135,7 +160,7 @@ export default function AgeEdit({ isEdit, data, setData }) {
                       {
                         id: 2,
                         label: "Discount",
-                        value: "10%",
+                        value: 10,
                       },
                     ],
                   },
@@ -144,10 +169,38 @@ export default function AgeEdit({ isEdit, data, setData }) {
             }}
             className="age-edit-show"
           >
-            Add More Age Reduction
+            Aggiungi Riduzione Età
           </button>
         )}
       </div>
     </>
   );
+}
+
+{
+  /* <Input
+  d={{ value: item.discount }}
+  handler={(e) => {
+    setItems((prevItems) => {
+      return prevItems.map((i) => {
+        if (i.itemId === item.itemId) {
+          return {
+            ...i,
+            discount: rx.test(e.toString()) ? (e < 100 && e) || 100 : 0,
+          };
+        }
+        return i;
+      });
+    });
+  }}
+/>; */
+}
+
+{
+  /* <input
+  disabled={!isEdit}
+  type="text"
+  value={d1.value || 0}
+  onChange={(e) => updateValue(d.id, d1.id, e.target.value)}
+/>; */
 }

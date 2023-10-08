@@ -1,9 +1,10 @@
-import axios from "axios";
 import Cookies from "js-cookie";
 import { FileUploader } from "react-drag-drop-files";
 import { AiFillDelete } from "react-icons/ai";
 import { BsUpload } from "react-icons/bs";
-import values from "../../../values";
+import { v4 as uuidv4 } from "uuid";
+
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 export default function DrapDropBody({ urlSet, url }) {
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
@@ -15,19 +16,47 @@ export default function DrapDropBody({ urlSet, url }) {
 
     if (file && token) {
       formData.append("image", file);
+      console.log(file, typeof file);
+      const hotelImageRef = ref(storage, `hotel-images/${uuidv4()}`);
+      // const snapshot = await uploadBytes(hotelImageRef, file)
+      // console.log(snapshot.metadata)
+      const uploadTask = uploadBytesResumable(hotelImageRef, file);
 
-      axios
-        .post(`${values.url}/image`, formData, {
-          headers: {
-            token,
-          },
-        })
-        .then((d) => {
-          urlSet(d.data.url);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Observe the upload progress if needed
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+        },
+        (error) => {
+          // Handle unsuccessful uploads
+          console.error(error);
+        },
+        () => {
+          // Handle successful upload
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("Download Url: ", downloadURL);
+            urlSet(downloadURL);
+          });
+        }
+      );
+      // uploadBytes(hotelImageRef, file).then((snapshot) => {
+      //   console.log('Uploaded a blob or file!');
+      // });
+      // axios
+      //   .post(`${values.url}/image`, formData, {
+      //     headers: {
+      //       token,
+      //     },
+      //   })
+      //   .then((d) => {
+      //     urlSet(d.data.url);
+      //   })
+      //   .catch((e) => {
+      //     console.log(e);
+      //   });
     } else {
       urlSet(null);
     }
@@ -46,10 +75,13 @@ export default function DrapDropBody({ urlSet, url }) {
             <BsUpload />
           </div>
           <span>
-            Drag & drop files or <label htmlFor="img"> Browse files</label>
+            Trascina o <label htmlFor="img">Clicca per importare il file</label>
           </span>
 
-          <p>JPG, PNG or GIF - Max file size 2MB</p>
+          <p>
+            Assicurati di non caricare immagini troppo pesanti, consigliate in
+            WebP
+          </p>
         </>
       )}
       <FileUploader

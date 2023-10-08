@@ -5,16 +5,16 @@ import { HiMiniDocumentText, HiReceiptPercent } from "react-icons/hi2";
 
 export default function EditMenu({ active, setActive }) {
   const [menus, setMenus] = useState([
-    { id: 1, name: "Hotel Details", icon: <HiMiniDocumentText /> },
-    { id: 2, name: "Location Details", icon: <FaLocationDot /> },
+    { id: 1, name: "Dettagli Hotel", icon: <HiMiniDocumentText /> },
+    { id: 2, name: "Dettagli Location", icon: <FaLocationDot /> },
     {
       id: 3,
-      name: "Offer Details",
+      name: "Dettagli Offerta",
       icon: <HiReceiptPercent />,
     },
     {
       id: 4,
-      name: "Publish",
+      name: "Pubblica",
       icon: <BsFillBookmarkStarFill />,
     },
   ]);

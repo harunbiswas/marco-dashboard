@@ -1,4 +1,7 @@
-import { useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import values from "../../../values";
 import Button from "../basic/Button";
 import ExportBtn from "../basic/ExportBtn";
 import Filters from "../basic/Filters";
@@ -10,11 +13,32 @@ import HotelItem from "../hotel/HotelItem";
 
 export default function Hotel() {
   const [menus, setMenus] = useState([
-    { name: "all" },
-    { name: "Recently Added" },
+    { name: "Tutti" },
+    { name: "Recentemente Aggiunti" },
   ]);
-  const [items, setItems] = useState([1, 1, 1, 1, 1]);
+
+  const [hotels, setHotels] = useState([]);
   const [addhotel, setAddhotel] = useState(false);
+
+  const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await axios.get(`${values.url}/hotel`, {
+          headers: {
+            token,
+          },
+        });
+        console.log(data);
+        setHotels(data);
+      } catch (error) {
+        console.log(error);
+        setHotels([]);
+      }
+    })();
+  }, []);
+
   return (
     <div className="hotel">
       <AddHotel handler={setAddhotel} addhotel={addhotel} />
@@ -23,22 +47,20 @@ export default function Hotel() {
           <div className="hotel-top">
             <div className="hotel-top-left">
               <Title title="Hotel Lish" />
-              <p>
-                Contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece
-              </p>
+              <p>Questa è la lista di tutti gli hotel aggiunti nel pannello</p>
             </div>
             <div className="hotel-top-right">
               <ExportBtn />
-              <Button text="Add New Hotel" handler={setAddhotel} />
+              <Button text="Aggiungi Hotel" handler={setAddhotel} />
             </div>
           </div>
           <BookingMneu menus={menus} />
           <Filters />
           <div className="hotel-wrp">
-            {items.map((item, i) => (
-              <HotelItem key={i} />
-            ))}
+            {Array.isArray(hotels) &&
+              hotels?.map((hotel, i) => (
+                <HotelItem key={i} hotelData={hotel} />
+              ))}
           </div>
           <Pagenation isbrns={true} />
         </div>
