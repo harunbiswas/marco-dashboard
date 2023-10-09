@@ -82,6 +82,8 @@ export default function TransportItem({ handler, data, setTransportData }) {
 
   // config = ` ${kits[0]?.age + 1}-${kits[i]?.age} `;
 
+  const duplicateHandler = () => {};
+
   return (
     <div className="item">
       <div className="item-top-wrp">
@@ -108,6 +110,12 @@ export default function TransportItem({ handler, data, setTransportData }) {
                 to=""
               >
                 Chiudi Dettagli
+              </Link>
+            )}
+
+            {isDetails && (
+              <Link onClick={duplicateHandler} to="">
+                Duplica
               </Link>
             )}
 
