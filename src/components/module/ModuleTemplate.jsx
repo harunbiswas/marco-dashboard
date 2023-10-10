@@ -7,7 +7,12 @@ import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import values from "../../../values";
 
-export default function ModuleTemplate({ handler, addhotel, setData }) {
+export default function ModuleTemplate({
+  handler,
+  addhotel,
+  setData,
+  tempLoad,
+}) {
   const navigate = useNavigate();
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
@@ -61,7 +66,7 @@ export default function ModuleTemplate({ handler, addhotel, setData }) {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  }, [tempLoad]);
 
   return (
     <div

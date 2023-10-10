@@ -6,7 +6,14 @@ import { IoClose } from "react-icons/io5";
 import values from "../../../values";
 import Input from "../hotel-edit/Input";
 
-export default function SaveTemplate({ handler, addhotel, setData, data }) {
+export default function SaveTemplate({
+  handler,
+  addhotel,
+  setData,
+  data,
+  tempLoad,
+  setTempLoad,
+}) {
   const [name, setName] = useState("");
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
@@ -22,6 +29,7 @@ export default function SaveTemplate({ handler, addhotel, setData, data }) {
           },
         })
         .then((d) => {
+          setTempLoad(!tempLoad);
           setData(d.data);
           handler(false);
         })

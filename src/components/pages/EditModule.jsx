@@ -30,6 +30,7 @@ export default function EditModule() {
   ];
 
   const navigate = useNavigate();
+  const [tempLoad, setTempLoad] = useState(false);
 
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
@@ -72,18 +73,19 @@ export default function EditModule() {
       });
   };
 
-  console.log(data);
-
   return (
     <div className=" module-edit hotel">
       <ModuleTemplate
         addhotel={isTemplate}
         setData={setData}
         handler={setIsTemplate}
+        tempLoad={tempLoad}
       />
 
       <SaveTemplate
         addhotel={isSaveTemplate}
+        tempLoad={tempLoad}
+        setTempLoad={setTempLoad}
         setData={setData}
         data={data}
         handler={setIsSaveTemplate}
