@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 
-export default function Pagenation({ isbrns, max, active, setActiveValue }) {
+export default function Pagenation({
+  isbrns,
+  max,
+  active,
+  setActiveValue,
+  setIsLoading,
+}) {
   const [btns, setBtns] = useState([1]);
   const [activeBtn, setActiveBtn] = useState(btns[0]);
   const showItem = 30;

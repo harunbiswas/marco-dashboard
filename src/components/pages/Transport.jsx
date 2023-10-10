@@ -27,6 +27,7 @@ export default function Transport() {
     car: [],
     days: [],
   });
+  const [isloading, setIsLoading] = useState(false);
 
   return (
     <div className="module hotel transport">
@@ -74,6 +75,8 @@ export default function Transport() {
             activePage={activeVlaue}
             setMaxValue={setMaxValue}
             sortValue={sortValue}
+            isloading={isloading}
+            setIsLoading={setIsLoading}
             handler={(e) => {
               setAddTransport(e);
               isAdd(false);
@@ -82,6 +85,7 @@ export default function Transport() {
             setIsDup={setIsDup}
           />
           <Pagenation
+            setIsLoading={setIsLoading}
             isbrns={true}
             active={activeVlaue}
             max={maxVlaue}

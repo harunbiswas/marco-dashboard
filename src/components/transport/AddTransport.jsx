@@ -203,9 +203,9 @@ export default function AddTransport({
   const [isDelete, setIsDelete] = useState(false);
 
   const deleteHandler = () => {
-    setIsChange(false);
-    setIsRemove(false);
-    if (add) {
+    if (add || isDup) {
+      setIsChange(false);
+      setIsRemove(false);
       setData({
         name: "",
         transportId: values.generateUniqueString(),
@@ -315,7 +315,9 @@ export default function AddTransport({
         </div>
         <div className="add-hotel-body">
           <h4 className="s-title">
-            {(add && "Crea un nuovo Trasporto") || "Modifica Trasporto"}
+            {(add && "Crea un nuovo Trasporto") ||
+              (isDup && "Duplica Trasporto") ||
+              "Modifica Trasporto"}
           </h4>
           <p>Inserisci o modifica le informazioni del trasporto qui sotto</p>
           <form onSubmit={(e) => e.preventDefault()}>
@@ -533,7 +535,7 @@ export default function AddTransport({
           </button>
           <button onClick={createHandler} className="btn">
             {(add && "Aggiungi Nuovo Trasporto") ||
-              (isDup && "Duplica") ||
+              (isDup && "Aggiungi Nuovo Trasporto") ||
               "Salva Modifiche"}
           </button>
         </div>
@@ -541,6 +543,7 @@ export default function AddTransport({
           <div className="isdelete">
             <h2 className="jakarta">
               {(!isRemove && "Vuoi tornare alla lista?") ||
+                (isDup && "Vuoi tornare alla lista?") ||
                 `Vuoi eliminare ${data?.name}?`}
             </h2>
             <p className="jakarta">

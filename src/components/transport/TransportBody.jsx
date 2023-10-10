@@ -15,12 +15,13 @@ export default function TransportBody({
   sortValue,
   filterOP,
   setIsDup,
+  isloading,
+  setIsLoading,
 }) {
   const showItem = 30;
   const [transport, setTransport] = useState([]);
   const [transportMain, setTransportMain] = useState([]);
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
-  const [isloading, setIsLoading] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
