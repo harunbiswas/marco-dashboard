@@ -1,18 +1,18 @@
+import axios from "axios";
+import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { HiDocumentText } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import values from "../../../values";
 
-export default function ModuleTemplate({ handler, addhotel }) {
+export default function ModuleTemplate({ handler, addhotel, setData }) {
   const navigate = useNavigate();
+  const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
   const ref = useRef(null);
   const wrp = useRef(null);
-
-  const createHandler = () => {
-    handler(false);
-  };
 
   useEffect(() => {
     wrp.current.addEventListener("click", (e) => {
@@ -41,7 +41,27 @@ export default function ModuleTemplate({ handler, addhotel }) {
     },
   ]);
 
-  const [activeItem, setActiveItem] = useState(null);
+  const [activeItem, setActiveItem] = useState({});
+
+  const createHandler = () => {
+    setData(activeItem);
+    handler(false);
+  };
+
+  useEffect(() => {
+    axios
+      .get(`${values.url}/module/templetes`, {
+        headers: {
+          token,
+        },
+      })
+      .then((d) => {
+        setItems(d.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   return (
     <div
@@ -75,13 +95,15 @@ export default function ModuleTemplate({ handler, addhotel }) {
                 <div
                   key={i}
                   className={`item ${
-                    (activeItem === item.id && "active") || ""
+                    (activeItem?._id === item?._id && "active") || ""
                   }`}
-                  onClick={() => setActiveItem(item.id)}
+                  onClick={() => {
+                    setActiveItem(item);
+                  }}
                 >
                   <HiDocumentText />
                   <div className="content">
-                    <h4>Ceneral Template</h4>
+                    <h4>{item?.name}</h4>
                     <p>Section 1, Section 2, Section 3</p>
                   </div>
                 </div>

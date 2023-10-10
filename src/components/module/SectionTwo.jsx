@@ -18,7 +18,7 @@ export default function SectionTwo({ data, setData }) {
         <div className="module-edit-basic-item">
           <label htmlFor="vidwoLink">1st Video Link</label>
           <Input
-            d={{ value: data?.section2Video1, label: "Enter URL" }}
+            d={{ value: data?.section2Video1 || "", label: "Enter URL" }}
             i="vidwoLink"
             handler={(e) => {
               setData((prev) => {
@@ -33,7 +33,7 @@ export default function SectionTwo({ data, setData }) {
         <div className="module-edit-basic-item">
           <label htmlFor="vidwoLink1">2nd Video Link</label>
           <Input
-            d={{ value: data?.section2Video2, label: "Enter URL" }}
+            d={{ value: data?.section2Video2 || "", label: "Enter URL" }}
             i="vidwoLink1"
             handler={(e) => {
               setData((prev) => {
@@ -50,7 +50,7 @@ export default function SectionTwo({ data, setData }) {
       <div className="module-edit-basic-item">
         <label htmlFor="title1">Title</label>
         <Input
-          d={{ value: data?.section2Title, label: "Enter Title" }}
+          d={{ value: data?.section2Title || "", label: "Enter Title" }}
           i="title1"
           handler={(e) => {
             setData((prev) => {
@@ -65,7 +65,7 @@ export default function SectionTwo({ data, setData }) {
       <div className="module-edit-basic-item">
         <label htmlFor="">Description</label>
         <TextArea
-          value={data?.section2Desctiption}
+          value={data?.section2Desctiption || ""}
           handler={(e) => {
             setData((prev) => {
               return {

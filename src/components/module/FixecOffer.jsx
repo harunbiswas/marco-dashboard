@@ -118,7 +118,7 @@ export default function FixedOffer({ saveTemplateHandler }) {
               <div className="inner">
                 <Select data={["$", "$", "$"]} />
                 <Input
-                  d={{ value: date.value, label: "Enter Price" }}
+                  d={{ value: date.value || "", label: "Enter Price" }}
                   handler={(e) => handleDateChange(date.id, e)}
                 />
               </div>
@@ -159,7 +159,7 @@ export default function FixedOffer({ saveTemplateHandler }) {
               <div className="inner">
                 <Select data={["$", "$", "$"]} />
                 <Input
-                  d={{ value: date.value, label: "Enter Price" }}
+                  d={{ value: date.value || "", label: "Enter Price" }}
                   handler={(e) => handleRegionChange(date.id, e)}
                 />
               </div>

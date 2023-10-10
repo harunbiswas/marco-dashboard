@@ -80,7 +80,7 @@ export default function SectionThree({ data, fixtData, setData }) {
       <div className="module-edit-basic-item">
         <label htmlFor="title1">Title</label>
         <Input
-          d={{ value: data?.section3Title, label: "Enter Title" }}
+          d={{ value: data?.section3Title || "", label: "Enter Title" }}
           i="title1"
           handler={(e) => {
             setData((prev) => {
@@ -95,7 +95,7 @@ export default function SectionThree({ data, fixtData, setData }) {
       <div className="module-edit-basic-item">
         <label htmlFor="">sub-Description</label>
         <TextArea
-          value={data?.section3Description}
+          value={data?.section3Description || ""}
           handler={(e) => {
             setData((prev) => {
               return {
@@ -114,7 +114,7 @@ export default function SectionThree({ data, fixtData, setData }) {
           <div className="module-edit-basic-item">
             <label htmlFor="vidwoLink">Title</label>
             <Input
-              d={{ value: blog?.title, label: "Enter Title" }}
+              d={{ value: blog?.title || "", label: "Enter Title" }}
               i="vidwoLink"
               handler={(e) => handleChange(i, "title", e)}
             />
@@ -122,7 +122,7 @@ export default function SectionThree({ data, fixtData, setData }) {
           <div className="module-edit-basic-item">
             <label htmlFor="vidwoLink">Image URL</label>
             <Input
-              d={{ value: blog?.img, label: "Enter URL" }}
+              d={{ value: blog?.img || "", label: "Enter URL" }}
               i="vidwoLink"
               handler={(e) => handleChange(i, "img", e)}
             />
@@ -130,7 +130,7 @@ export default function SectionThree({ data, fixtData, setData }) {
           <div className="module-edit-basic-item">
             <label htmlFor="vidwoLink">Title</label>
             <Input
-              d={{ value: blog?.url, label: "Redirect URL" }}
+              d={{ value: blog?.url || "", label: "Redirect URL" }}
               i="vidwoLink"
               handler={(e) => handleChange(i, "url", e)}
             />
@@ -160,7 +160,7 @@ export default function SectionThree({ data, fixtData, setData }) {
       <div className="module-edit-basic-item">
         <label htmlFor="">Bottom Description</label>
         <TextArea
-          value={data?.bottomDescription}
+          value={data?.bottomDescription || ""}
           handler={(e) => {
             setData((prev) => {
               return {

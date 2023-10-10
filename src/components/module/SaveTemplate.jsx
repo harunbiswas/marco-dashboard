@@ -1,16 +1,33 @@
+import axios from "axios";
+import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
 import { BsFillBuildingsFill } from "react-icons/bs";
 import { IoClose } from "react-icons/io5";
+import values from "../../../values";
 import Input from "../hotel-edit/Input";
 
-export default function SaveTemplate({ handler, addhotel }) {
+export default function SaveTemplate({ handler, addhotel, setData, data }) {
   const [name, setName] = useState("");
+  const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
   const [isError, setIsError] = useState(false);
 
   const createHandler = () => {
+    delete data?._id;
     if (name) {
-      handler(false);
+      axios
+        .post(`${values.url}/module/templete`, data, {
+          headers: {
+            token,
+          },
+        })
+        .then((d) => {
+          setData(d.data);
+          handler(false);
+        })
+        .catch((e) => {
+          console.error(e);
+        });
     } else {
       setIsError(true);
     }
@@ -18,6 +35,14 @@ export default function SaveTemplate({ handler, addhotel }) {
 
   useEffect(() => {
     setIsError(false);
+    if (typeof setData === "function") {
+      setData((prev) => {
+        return {
+          ...prev,
+          name,
+        };
+      });
+    }
   }, [name]);
 
   const ref = useRef(null);

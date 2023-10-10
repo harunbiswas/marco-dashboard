@@ -1,7 +1,8 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { HiDocumentText } from "react-icons/hi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import values from "../../../values";
 import Bootcump from "../basic/BootCump";
 import ExportBtn from "../basic/ExportBtn";
@@ -28,8 +29,14 @@ export default function EditModule() {
     },
   ];
 
+  const navigate = useNavigate();
+
+  const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
+
   const [data, setData] = useState({});
   const [fixtData, setFixtData] = useState({});
+
+  const [moduleData, setModuleData] = useState({});
 
   const [isTemplate, setIsTemplate] = useState(false);
 
@@ -39,19 +46,48 @@ export default function EditModule() {
     axios
       .get(`${values.url}/module/single?id=${id}`)
       .then((d) => {
-        setData(d.data);
-        setFixtData(d.data);
+        setModuleData(d.data);
       })
       .catch((e) => {
         console.log(e);
       });
   }, []);
 
+  const publishHandler = () => {
+    axios
+      .put(
+        `${values.url}/module`,
+        { ...moduleData, templeteId: data?._id, publish: true },
+        {
+          headers: {
+            token,
+          },
+        }
+      )
+      .then((d) => {
+        navigate("/module");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  console.log(data);
+
   return (
     <div className=" module-edit hotel">
-      <ModuleTemplate addhotel={isTemplate} handler={setIsTemplate} />
+      <ModuleTemplate
+        addhotel={isTemplate}
+        setData={setData}
+        handler={setIsTemplate}
+      />
 
-      <SaveTemplate addhotel={isSaveTemplate} handler={setIsSaveTemplate} />
+      <SaveTemplate
+        addhotel={isSaveTemplate}
+        setData={setData}
+        data={data}
+        handler={setIsSaveTemplate}
+      />
       <div className="container">
         <Bootcump data={bootCump} />
 
@@ -78,7 +114,7 @@ export default function EditModule() {
             <div className="module-edit-basic-item">
               <label htmlFor="title">SEO - Title</label>
               <Input
-                d={{ value: data?.seoTitle, label: "Enter SEO Title" }}
+                d={{ value: data?.seoTitle || "", label: "Enter SEO Title" }}
                 i="title"
                 handler={(e) => {
                   setData((prev) => {
@@ -93,7 +129,7 @@ export default function EditModule() {
             <div className="module-edit-basic-item">
               <label htmlFor="">SEO - Description</label>
               <TextArea
-                value={data?.seoDescription}
+                value={data?.seoDescription || ""}
                 handler={(e) => {
                   setData((prev) => {
                     return {
@@ -115,7 +151,7 @@ export default function EditModule() {
             <div className="module-edit-basic-item">
               <label htmlFor="title1">Title</label>
               <Input
-                d={{ value: data?.section1Title, label: "Enter Title" }}
+                d={{ value: data?.section1Title || "", label: "Enter Title" }}
                 i="title1"
                 handler={(e) => {
                   setData((prev) => {
@@ -130,7 +166,7 @@ export default function EditModule() {
             <div className="module-edit-basic-item">
               <label htmlFor="">Description</label>
               <TextArea
-                value={data?.section1Description}
+                value={data?.section1Description || ""}
                 handler={(e) => {
                   setData((prev) => {
                     return {
@@ -144,7 +180,7 @@ export default function EditModule() {
             <div className="module-edit-basic-item">
               <label htmlFor="vidwoLink">Video Link</label>
               <Input
-                d={{ value: data?.section1Video, label: "Enter URL" }}
+                d={{ value: data?.section1Video || "", label: "Enter URL" }}
                 i="vidwoLink"
                 handler={(e) => {
                   setData((prev) => {
@@ -168,7 +204,9 @@ export default function EditModule() {
               <button onClick={() => setIsSaveTemplate(true)}>
                 Save as Template
               </button>
-              <button className="submit">Publish</button>
+              <button onClick={publishHandler} className="submit">
+                Publish
+              </button>
             </div>
           </div>
         </div>
