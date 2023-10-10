@@ -19,6 +19,7 @@ export default function AddTransport({
   addhotel,
   add,
   transportData,
+  isDup,
 }) {
   const bg = add ? "transparent" : "red";
   const cl = add ? "black" : "white";
@@ -42,7 +43,7 @@ export default function AddTransport({
   const createHandler = () => {
     if (data.pricing.length) {
       if (data?.name) {
-        if (add) {
+        if (add || isDup) {
           axios
             .post(`${values.url}/transport`, data, {
               headers: {
@@ -250,6 +251,39 @@ export default function AddTransport({
   useEffect(() => {
     setIsDelete(false);
   }, [addhotel]);
+
+  useEffect(() => {
+    if (isDup) {
+      if (transportData && isDup) {
+        delete transportData._id;
+        transportData.name = "";
+        transportData.transportId = values.generateUniqueString();
+
+        setData(transportData);
+        setIsChange(true);
+      } else {
+        setData({
+          name: "",
+          transportId: values.generateUniqueString(),
+          city: "",
+          state: "",
+          zip: "",
+          address: "",
+          vehicleType: "",
+          vehicleBrand: "",
+          date: [
+            {
+              start: "",
+              end: "",
+            },
+          ],
+          days: [],
+          pricing: [],
+          hours: [],
+        });
+      }
+    }
+  }, [transportData, isDup]);
 
   return (
     <div
@@ -482,7 +516,7 @@ export default function AddTransport({
           <button
             style={{ backgroundColor: bg, color: cl }}
             onClick={() => {
-              if (!add) {
+              if (!add && !isDup) {
                 setIsRemove(true);
                 setIsDelete(true);
               } else {
@@ -495,10 +529,12 @@ export default function AddTransport({
             }}
             className="btn cancel "
           >
-            {(add && "Torna Indietro") || "Elimina"}
+            {((add || isDup) && "Torna Indietro") || "Elimina"}
           </button>
           <button onClick={createHandler} className="btn">
-            {(add && "Aggiungi Nuovo Trasporto") || "Salva Modifiche"}
+            {(add && "Aggiungi Nuovo Trasporto") ||
+              (isDup && "Duplica") ||
+              "Salva Modifiche"}
           </button>
         </div>
         {isDelete && (

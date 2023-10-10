@@ -17,6 +17,7 @@ export default function Transport() {
   const [addTransport, setAddTransport] = useState(false);
   const [add, isAdd] = useState(false);
   const [search, setSearch] = useState("");
+  const [isDup, setIsDup] = useState(false);
 
   const [maxVlaue, setMaxValue] = useState(0);
   const [activeVlaue, setActiveValue] = useState();
@@ -34,6 +35,7 @@ export default function Transport() {
         handler={setAddTransport}
         addhotel={addTransport}
         transportData={(!add && transportData) || null}
+        isDup={isDup}
       />
       <div className="container">
         <div className="booking-box">
@@ -50,6 +52,7 @@ export default function Transport() {
                 handler={(e) => {
                   setAddTransport(e);
                   isAdd(true);
+                  setIsDup(false);
                 }}
                 text="Aggiungi Trasporto"
               />
@@ -76,6 +79,7 @@ export default function Transport() {
               isAdd(false);
             }}
             filterOP={filterOP}
+            setIsDup={setIsDup}
           />
           <Pagenation
             isbrns={true}

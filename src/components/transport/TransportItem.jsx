@@ -12,7 +12,12 @@ import { SlCalender } from "react-icons/sl";
 import { TbTrain } from "react-icons/tb";
 import { Link } from "react-router-dom";
 
-export default function TransportItem({ handler, data, setTransportData }) {
+export default function TransportItem({
+  handler,
+  data,
+  setTransportData,
+  setIsDup,
+}) {
   const [prics, setPrics] = useState([]);
 
   useEffect(() => {
@@ -81,7 +86,7 @@ export default function TransportItem({ handler, data, setTransportData }) {
   };
 
   // config = ` ${kits[0]?.age + 1}-${kits[i]?.age} `;
-
+  const [isDelete, setIsDelete] = useState(false);
   const duplicateHandler = () => {};
 
   return (
@@ -106,6 +111,7 @@ export default function TransportItem({ handler, data, setTransportData }) {
               <Link
                 onClick={() => {
                   setIsDetails(false);
+                  setIsDup(false);
                 }}
                 to=""
               >
@@ -114,7 +120,14 @@ export default function TransportItem({ handler, data, setTransportData }) {
             )}
 
             {isDetails && (
-              <Link onClick={duplicateHandler} to="">
+              <Link
+                onClick={() => {
+                  handler(true);
+                  setTransportData(data);
+                  setIsDup(true);
+                }}
+                to=""
+              >
                 Duplica
               </Link>
             )}
@@ -123,9 +136,11 @@ export default function TransportItem({ handler, data, setTransportData }) {
               onClick={() => {
                 if (!isDetails) {
                   setIsDetails(true);
+                  setIsDup(false);
                 } else {
                   handler(true);
                   setTransportData(data);
+                  setIsDup(false);
                 }
               }}
               to=""

@@ -14,6 +14,7 @@ export default function TransportBody({
   activeMenu,
   sortValue,
   filterOP,
+  setIsDup,
 }) {
   const showItem = 30;
   const [transport, setTransport] = useState([]);
@@ -146,6 +147,7 @@ export default function TransportBody({
               key={item._id}
               data={item}
               handler={handler}
+              setIsDup={setIsDup}
             />
           ))) ||
         (!isloading &&
