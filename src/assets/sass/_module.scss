@@ -94,6 +94,9 @@
     }
 
     .fixed-offer {
+      .info {
+        padding: 10px 20px;
+      }
       &-item {
         margin: 15px 0 20px;
         border: $border;

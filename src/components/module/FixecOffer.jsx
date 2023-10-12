@@ -141,11 +141,16 @@ export default function FixedOffer({
 
   const [isRT, setIsRT] = useState(false);
 
-  console.log(region);
+  console.log(dates);
 
   return (
     <div className="module-edit-basic fixed-offer">
-      <ImportTemplate addhotel={isImport} handler={setIsImport} />
+      <ImportTemplate
+        tempLoad={tempLoad}
+        addhotel={isImport}
+        handler={setIsImport}
+        setDates={setDates}
+      />
       <DateList
         setDates={setDates}
         addhotel={isDate}
@@ -170,59 +175,85 @@ export default function FixedOffer({
           </div>
         </div>
         {dates.map((date, i) => (
-          <div key={i} className="fixed-offer-item-body">
-            <div className="group">
-              <label htmlFor="">Starting Date</label>
-              <input
-                value={date?.start}
-                max={date?.end || ""}
-                onChange={(e) => {
-                  setDates((prevDates) => {
-                    const updatedDates = [...prevDates];
-                    updatedDates[i].start = e.target.value;
-                    return updatedDates;
-                  });
-                }}
-                type="date"
-                name=""
-                id=""
-              />
-            </div>
-            <div className="group">
-              <label htmlFor="">Ending Date</label>
-              <input
-                min={date?.start || ""}
-                value={date?.end}
-                type="date"
-                name=""
-                onChange={(e) => {
-                  setDates((prevDates) => {
-                    const updatedDates = [...prevDates];
-                    updatedDates[i].end = e.target.value;
-                    return updatedDates;
-                  });
-                }}
-                id=""
-              />
-            </div>
-            <div className="group">
-              <label htmlFor="">Fixed Price</label>
-              <div className="inner">
-                <Select
-                  activeValue={carrency}
-                  handler={(e) => setCarrency(e)}
-                  data={["€", "$"]}
-                />
-                <Input
-                  d={{ value: date?.price || 0, label: "Enter Price" }}
-                  handler={(e) => handleDateChange(date.id, e)}
+          <>
+            <div key={i} className="fixed-offer-item-body">
+              <div className="group">
+                <label htmlFor="">Starting Date</label>
+                <input
+                  value={date?.start}
+                  max={date?.end || ""}
+                  onChange={(e) => {
+                    if (!date.hotelName) {
+                      setDates((prevDates) => {
+                        const updatedDates = [...prevDates];
+                        updatedDates[i].start = e.target.value;
+                        return updatedDates;
+                      });
+                    }
+                  }}
+                  type="date"
+                  name=""
+                  id=""
                 />
               </div>
+              <div className="group">
+                <label htmlFor="">Ending Date</label>
+                <input
+                  min={date?.start || ""}
+                  value={date?.end}
+                  type="date"
+                  name=""
+                  onChange={(e) => {
+                    setDates((prevDates) => {
+                      const updatedDates = [...prevDates];
+                      updatedDates[i].end = e.target.value;
+                      return updatedDates;
+                    });
+                  }}
+                  id=""
+                />
+              </div>
+              <div className="group">
+                <label htmlFor="">Fixed Price</label>
+                <div className="inner">
+                  <Select
+                    activeValue={carrency}
+                    handler={(e) => setCarrency(e)}
+                    data={["€", "$"]}
+                  />
+                  <Input
+                    d={{ value: date?.price || 0, label: "Enter Price" }}
+                    handler={(e) => handleDateChange(date.id, e)}
+                  />
+                </div>
+              </div>
+              <button onClick={() => deleteDate(date.id)}>
+                <AiOutlineDelete />
+              </button>
             </div>
-            <button onClick={() => deleteDate(date.id)}>
-              <AiOutlineDelete />
-            </button>
-          </div>
+
+            <div className="info">
+              {date?.hotelName && (
+                <span
+                  style={{
+                    color: "#015DAA",
+                  }}
+                >
+                  {date?.hotelName}
+                </span>
+              )}{" "}
+              -{" "}
+              {date?.offerName && (
+                <span
+                  style={{
+                    color: "#1DBF73",
+                  }}
+                >
+                  {date?.offerName}
+                </span>
+              )}
+            </div>
+          </>
         ))}
         <button onClick={addNewDate}>
           <AiOutlinePlus /> Add More

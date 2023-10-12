@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import { GrFormClose } from "react-icons/gr";
 
-export default function OfferTags({ isTagEdit = true }) {
+export default function OfferTags({ isTagEdit = true, ta }) {
   const [tags, setTags] = useState([
     "Hotel",
     "Half Board",
@@ -29,6 +29,12 @@ export default function OfferTags({ isTagEdit = true }) {
     setTags(updatedTags);
   };
 
+  useEffect(() => {
+    if (ta && ta.length) {
+      setTags(ta);
+    }
+  }, [ta]);
+
   return (
     <ul className="offer-tags">
       {tags.map((d, i) => (
@@ -44,7 +50,11 @@ export default function OfferTags({ isTagEdit = true }) {
       {isTagEdit && (
         <li className="new">
           {(!isInput && (
-            <button onClick={() => setIsInput(true)}>
+            <button
+              onClick={() => {
+                setIsInput(true);
+              }}
+            >
               <BiPlus />
               New tag
             </button>

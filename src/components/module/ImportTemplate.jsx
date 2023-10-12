@@ -1,3 +1,5 @@
+import axios from "axios";
+import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { BiSearch, BiSolidOffer } from "react-icons/bi";
 import { BsFillBuildingsFill } from "react-icons/bs";
@@ -5,18 +7,20 @@ import { FaAngleUp } from "react-icons/fa";
 import { ImGlass } from "react-icons/im";
 import { IoClose } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import values from "../../../values";
 import Description from "../hotel/Description";
 import OfferTags from "../hotel/OfferTags";
 
-export default function ImportTemplate({ handler, addhotel }) {
+export default function ImportTemplate({
+  handler,
+  addhotel,
+  tempLoad,
+  setDates,
+}) {
   const navigate = useNavigate();
 
   const ref = useRef(null);
   const wrp = useRef(null);
-
-  const createHandler = () => {
-    handler(false);
-  };
 
   useEffect(() => {
     wrp.current.addEventListener("click", (e) => {
@@ -26,90 +30,35 @@ export default function ImportTemplate({ handler, addhotel }) {
     });
   });
 
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      name: "Ceneral Template",
-    },
-    {
-      id: 2,
-      name: "General Template - Modificed",
-    },
-    {
-      id: 3,
-      name: "General Template - Modificed",
-    },
-    {
-      id: 4,
-      name: "Ceneral Template",
-    },
-    {
-      id: 2,
-      name: "General Template - Modificed",
-    },
-    {
-      id: 3,
-      name: "General Template - Modificed",
-    },
-    {
-      id: 4,
-      name: "Ceneral Template",
-    },
-    {
-      id: 2,
-      name: "General Template - Modificed",
-    },
-    {
-      id: 3,
-      name: "General Template - Modificed",
-    },
-    {
-      id: 4,
-      name: "Ceneral Template",
-    },
-  ]);
-  const [offers, setOffers] = useState([
-    {
-      id: 1,
-      name: "HoEscape Offer",
-    },
-    {
-      id: 2,
-      name: "HoEscape Offer",
-    },
-    {
-      id: 3,
-      name: "HoEscape Offer",
-    },
-    {
-      id: 4,
-      name: "HoEscape Offer",
-    },
-  ]);
-
-  const [prices, setPrices] = useState([
-    {
-      name: "Full Board",
-      price: 120,
-      dateline: "per night",
-    },
-    {
-      name: "Half Board",
-      price: 90,
-      dateline: "per night",
-    },
-    {
-      name: "Bread & Breakfast",
-      price: 140,
-      dateline: "per night",
-    },
-  ]);
-  const description =
-    "Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.";
+  const [items, setItems] = useState([]);
 
   const [isOffer, setIsOffer] = useState(false);
-  const [activeID, setActiveId] = useState(null);
+  const [activeID, setActiveId] = useState([]);
   const [istoggle, setIsToggle] = useState(null);
+
+  useEffect(() => {
+    axios.get(`${values.url}/hotel`).then((d) => {
+      setItems(d.data);
+    });
+  }, [tempLoad]);
+
+  const createHandler = () => {
+    setDates((prev) => {
+      return [
+        ...prev,
+        {
+          start: moment(activeID?.startDate).format("YYYY-MM-DD"),
+          end: moment(activeID?.endDate).format("YYYY-MM-DD"),
+          carrency: activeID?.currency,
+          id: (prev.length && prev.length + 1) || 1,
+          hotelName: isOffer?.name,
+          offerName: activeID?.name,
+          price: activeID?.price,
+        },
+      ];
+    });
+    handler(false);
+  };
 
   return (
     <div
@@ -148,93 +97,100 @@ export default function ImportTemplate({ handler, addhotel }) {
                 <div
                   key={i}
                   className={`item`}
-                  onClick={() => setIsOffer(true)}
+                  onClick={() => setIsOffer(item)}
                 >
                   <BsFillBuildingsFill />
                   <div className="content">
                     <h4>{item.name}</h4>
-                    <p>Section 1, Section 2, Section 3</p>
+                    <p>{item?.offers?.length}</p>
                   </div>
                 </div>
               ))}
             </div>
 
             <div className="right">
-              {offers.map((item, i) => (
-                <div
-                  key={i}
-                  className={`item ${(activeID === item.id && "active") || ""}`}
-                  onClick={() => {
-                    setActiveId(item.id);
-                  }}
-                >
-                  <div className="body">
-                    <BiSolidOffer />
-                    <div className="content">
-                      <h4>{item.name}</h4>
-                      <p>From 01 June - 30 August</p>
-                    </div>
-                    {(!(istoggle === item.id) && (
-                      <button
-                        onClick={() => {
-                          setIsToggle(item.id);
-                          setActiveId(null);
-                        }}
-                        className="btn btn-white"
-                      >
-                        View Details
-                      </button>
-                    )) || (
-                      <button
-                        onClick={() => setIsToggle(null)}
-                        className="close"
-                      >
-                        <FaAngleUp />
-                      </button>
-                    )}
-                  </div>
-
+              {isOffer &&
+                isOffer?.offers?.map((item, i) => (
                   <div
-                    className={`offer-item-body ${
-                      (istoggle === item.id && "show") || ""
+                    key={i}
+                    className={`item ${
+                      (activeID?._id === item._id && "active") || ""
                     }`}
+                    onClick={() => {
+                      setActiveId(item);
+                    }}
                   >
-                    <Description description={description} max={20} />
-                    <div className="conditions">
-                      <h4>Conditions</h4>
-                      <ul className="conditions-wrp">
-                        <li>&#x2713; Minimum 2 Nights </li>
-                        <li>&#x2713; Minimum 7 Nights </li>
-                      </ul>
-                    </div>
-                    <div className="conditions">
-                      <h4>
-                        <ImGlass />
-                        Beverage Included
-                      </h4>
+                    <div className="body">
+                      <BiSolidOffer />
+                      <div className="content">
+                        <h4>{item.name}</h4>
+                        <p>
+                          From {moment(item?.startDate).format("DD MMMM")} -{" "}
+                          {moment(item?.endDate).format("DD MMMM")}
+                        </p>
+                      </div>
+                      {(!(istoggle === item.id) && (
+                        <button
+                          onClick={() => {
+                            setIsToggle(item.id);
+                            setActiveId(null);
+                          }}
+                          className="btn btn-white"
+                        >
+                          View Details
+                        </button>
+                      )) || (
+                        <button
+                          onClick={() => setIsToggle(null)}
+                          className="close"
+                        >
+                          <FaAngleUp />
+                        </button>
+                      )}
                     </div>
 
-                    <div className="price">
-                      <h4>Price</h4>
-                      <ul className="price-items">
-                        {prices.map((d, i) => (
-                          <li key={i}>
-                            <p>{d.name}</p>
-                            <strong>
-                              ${d.price} <span>/{d.dateline}</span>
-                            </strong>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    <div
+                      className={`offer-item-body ${
+                        (istoggle === item.id && "show") || ""
+                      }`}
+                    >
+                      <Description description={item?.description} max={20} />
+                      <div className="conditions">
+                        <h4>Conditions</h4>
+                        <ul className="conditions-wrp">
+                          <li>&#x2713; Minimum 2 Nights </li>
+                          <li>&#x2713; Minimum 7 Nights </li>
+                        </ul>
+                      </div>
+                      <div className="conditions">
+                        <h4>
+                          <ImGlass />
+                          Beverage Included
+                        </h4>
+                      </div>
 
-                    <div className="offer-item-tags">
-                      <h4>Tags</h4>
-                      <OfferTags isTagEdit={false} />
+                      <div className="price">
+                        <h4>Price</h4>
+                        <ul className="price-items">
+                          {item?.breakdown?.map((d, i) => (
+                            <li key={i}>
+                              <p>{d.name}</p>
+                              <strong>
+                                {d?.currency}
+                                {d?.price} <span>/{d?.priceType}</span>
+                              </strong>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="offer-item-tags">
+                        <h4>Tags</h4>
+                        <OfferTags ta={item?.tags} isTagEdit={false} />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>
