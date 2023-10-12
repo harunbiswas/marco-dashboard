@@ -1,6 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
+import { AiFillDelete } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { HiDocumentText } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
@@ -12,9 +13,13 @@ export default function ModuleTemplate({
   addhotel,
   setData,
   tempLoad,
+  setTempLoad,
+  setFixtData,
 }) {
   const navigate = useNavigate();
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
+
+  const [isDelete, setIsDelete] = useState(false);
 
   const ref = useRef(null);
   const wrp = useRef(null);
@@ -27,29 +32,13 @@ export default function ModuleTemplate({
     });
   });
 
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      name: "Ceneral Template",
-    },
-    {
-      id: 2,
-      name: "General Template - Modificed",
-    },
-    {
-      id: 3,
-      name: "General Template - Modificed",
-    },
-    {
-      id: 4,
-      name: "Ceneral Template",
-    },
-  ]);
+  const [items, setItems] = useState([]);
 
   const [activeItem, setActiveItem] = useState({});
 
   const createHandler = () => {
     setData(activeItem);
+
     handler(false);
   };
 
@@ -67,6 +56,22 @@ export default function ModuleTemplate({
         console.log(e);
       });
   }, [tempLoad]);
+
+  const deleteHandler = () => {
+    axios
+      .delete(`${values.url}/module/templete?id=${activeItem?._id}`, {
+        headers: {
+          token,
+        },
+      })
+      .then((d) => {
+        setIsDelete(false);
+        setTempLoad(!tempLoad);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   return (
     <div
@@ -111,11 +116,40 @@ export default function ModuleTemplate({
                     <h4>{item?.name}</h4>
                     <p>Section 1, Section 2, Section 3</p>
                   </div>
+                  <button
+                    onClick={() => setIsDelete(true)}
+                    className="del-icon"
+                  >
+                    <AiFillDelete />
+                  </button>
                 </div>
               ))}
             </div>
           </div>
         </div>
+
+        {isDelete && (
+          <div className="isdelete">
+            <h2 className="jakarta">
+              do you want delete the Template {activeItem?.name}
+            </h2>
+
+            <div className="buttons">
+              <button
+                onClick={() => {
+                  setIsDelete(false);
+                  handler(true);
+                }}
+                className="btn"
+              >
+                Cancel
+              </button>
+              <button onClick={deleteHandler} className="delete-btn btn">
+                Delete
+              </button>
+            </div>
+          </div>
+        )}
         <div className="add-hotel-footer ">
           <button onClick={() => handler(false)} className="btn cancel">
             Cancel

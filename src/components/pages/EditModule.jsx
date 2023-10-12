@@ -47,7 +47,12 @@ export default function EditModule() {
     axios
       .get(`${values.url}/module/single?id=${id}`)
       .then((d) => {
-        setModuleData(d.data);
+        axios
+          .get(`${values.url}/module/templete?id=${d.data.templeteId}`)
+          .then((d1) => {
+            setModuleData(d.data);
+            setFixtData(d1.data);
+          });
       })
       .catch((e) => {
         console.log(e);
@@ -80,6 +85,8 @@ export default function EditModule() {
         setData={setData}
         handler={setIsTemplate}
         tempLoad={tempLoad}
+        setTempLoad={setTempLoad}
+        setFixtData={setFixtData}
       />
 
       <SaveTemplate
@@ -197,7 +204,14 @@ export default function EditModule() {
           </div>
           <SectionTwo data={data} setData={setData} />
           <SectionThree fixtData={fixtData} data={data} setData={setData} />
-          <FixedOffer saveTemplateHandler={setIsSaveTemplate} />
+          <FixedOffer
+            data={data}
+            setData={setData}
+            fixtData={fixtData}
+            saveTemplateHandler={setIsSaveTemplate}
+            tempLoad={tempLoad}
+            setTempLoad={setTempLoad}
+          />
           <div className="hotel-edit-footer">
             <div className="left">
               <button>Discard</button>

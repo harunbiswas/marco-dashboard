@@ -336,10 +336,24 @@
           gap: 10px;
           cursor: pointer;
           transition: 0.3s;
+          position: relative;
 
           &.active,
           &:hover {
             border-color: $primary;
+          }
+
+          .del-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: transparent;
+            border: none;
+
+            svg {
+              color: red !important;
+            }
           }
 
           svg {
@@ -726,4 +740,22 @@
       border-radius: 8px;
     }
   }
+}
+
+.del-wrp {
+  display: grid;
+  align-items: start;
+  grid-template-columns: 90% 10%;
+}
+
+.del-icon {
+  margin-top: 20px;
+  background-color: transparent;
+  border: none;
+  color: red;
+  font-size: 28px;
+}
+
+.weessddsdf {
+  width: 450px;
 }
