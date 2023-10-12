@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import Select from "../basic/Select";
 import Input from "../hotel-edit/Input";
+import EditableSelectCity from "../transport/EditableSelectCity";
 import CreateDateTemplete from "./CreateDateTemplete";
 import CreateRegionTemplete from "./CreateRegionTemplete";
 import DateList from "./DateList";
 import ImportTemplate from "./ImportTemplate";
+import RegionTemplate from "./RegionTemplete";
 
 export default function FixedOffer({
   data,
@@ -14,6 +16,29 @@ export default function FixedOffer({
   tempLoad,
   setTempLoad,
 }) {
+  const [citysName, setCitysName] = useState([
+    "Abruzzo",
+    "Basilicata",
+    "Calabria",
+    "Campania",
+    "Emilia-Romagna",
+    "Friuli-Venezia Giulia",
+    "Lazio",
+    "Liguria",
+    "Lombardia",
+    "Marche",
+    "Molise",
+    "Piemonte",
+    "Puglia",
+    "Sardegna",
+    "Sicilia",
+    "Toscana",
+    "Trentino-Alto Adige",
+    "Umbria",
+    "Valle d'Aosta",
+    "Veneto",
+  ]);
+
   const [dates, setDates] = useState([{ start: "", end: "", id: 1, price: 0 }]);
   const [carrency, setCarrency] = useState("€");
 
@@ -113,6 +138,10 @@ export default function FixedOffer({
       };
     });
   }, [region]);
+
+  const [isRT, setIsRT] = useState(false);
+
+  console.log(region);
 
   return (
     <div className="module-edit-basic fixed-offer">
@@ -227,70 +256,81 @@ export default function FixedOffer({
         <div className="fixed-offer-item-top">
           <strong>By Region</strong>
           <div className="buttons">
-            <button onClick={() => setIsCr(true)}>Create Template </button>
+            <button onClick={() => setIsRr(true)}>Create Template </button>
             <span className="separator"></span>
-            <button>Import Region List </button>
-          </div>
-        </div>
-        {region.map((date, i) => (
-          <div key={i} className="fixed-offer-item-body">
-            <div className="group">
-              <label htmlFor="">Starting Date</label>
-              <input
-                value={date?.start}
-                max={date?.end || ""}
-                onChange={(e) => {
-                  setRegion((prevDates) => {
-                    const updatedDates = [...prevDates];
-                    updatedDates[i].start = e.target.value;
-                    return updatedDates;
-                  });
-                }}
-                type="date"
-                name=""
-                id=""
-              />
-            </div>
-            <div className="group">
-              <label htmlFor="">Ending Date</label>
-              <input
-                value={date?.end}
-                min={date?.start || ""}
-                onChange={(e) => {
-                  setRegion((prevDates) => {
-                    const updatedDates = [...prevDates];
-                    updatedDates[i].start = e.target.value;
-                    return updatedDates;
-                  });
-                }}
-                type="date"
-                name=""
-                id=""
-              />
-            </div>
-            <div className="group">
-              <label htmlFor="">Fixed Price</label>
-              <div className="inner">
-                <Select
-                  activeValue={carrency}
-                  handler={(e) => setCarrency(e)}
-                  data={["€", "$"]}
-                />
-                <Input
-                  d={{ value: date?.price || 0, label: "Enter Price" }}
-                  handler={(e) => handleRegionChange(date.id, e)}
-                />
-              </div>
-            </div>
-            <button onClick={() => deleteRegion(date.id)}>
-              <AiOutlineDelete />
+            <button
+              onClick={() => {
+                setIsRT(true);
+                setTempLoad(!tempLoad);
+              }}
+            >
+              Import Region List{" "}
             </button>
           </div>
-        ))}
+        </div>
+        {region &&
+          region?.map((date, i) => (
+            <div key={i} className="fixed-offer-item-body">
+              <div className="group">
+                <label htmlFor="">Region</label>
+                <Select
+                  activeValue={date?.region || "Seleziona Regione"}
+                  handler={(e) => {
+                    setRegion((prevDates) => {
+                      const updatedDates = [...prevDates];
+                      updatedDates[i].region = e;
+                      updatedDates[i].city = "";
+                      return updatedDates;
+                    });
+                  }}
+                  data={citysName}
+                />
+              </div>
+              <div className="group">
+                <label htmlFor="">City</label>
+                <EditableSelectCity
+                  activeValue={date?.city || "Seleziona Città"}
+                  mainData={{ city: date?.region }}
+                  handler={(e) => {
+                    setRegion((prevDates) => {
+                      const updatedDates = [...prevDates];
+                      updatedDates[i].city = e.name;
+                      return updatedDates;
+                    });
+                  }}
+                />
+              </div>
+              <div className="group">
+                <label htmlFor="">Fixed Price</label>
+                <div className="inner">
+                  <Select
+                    activeValue={carrency}
+                    handler={(e) => setCarrency(e)}
+                    data={["€", "$"]}
+                  />
+                  <Input
+                    d={{ value: date?.price || 0, label: "Enter Price" }}
+                    handler={(e) => handleRegionChange(date.id, e)}
+                  />
+                </div>
+              </div>
+              <button onClick={() => deleteRegion(date.id)}>
+                <AiOutlineDelete />
+              </button>
+            </div>
+          ))}
         <button onClick={addNewRegion}>
           <AiOutlinePlus /> Add More
         </button>
       </div>
+
+      <RegionTemplate
+        addhotel={isRT}
+        setData={setRegion}
+        handler={setIsRT}
+        tempLoad={tempLoad}
+        setTempLoad={setTempLoad}
+      />
     </div>
   );
 }

@@ -25,7 +25,7 @@ export default function CreateRegionTemplete({
     delete data?._id;
     if (name) {
       const ddd = {
-        dates: [...dates],
+        dates,
         carrency,
         name,
       };
@@ -40,12 +40,7 @@ export default function CreateRegionTemplete({
           setTempLoad(!tempLoad);
           handler(false);
           setName("");
-          setData((prev) => {
-            return {
-              ...prev,
-              fixtRegion: d.data?.dates,
-            };
-          });
+          setData(d.data.dates);
         })
         .catch((e) => {
           console.error(e);

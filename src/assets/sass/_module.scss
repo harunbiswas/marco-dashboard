@@ -746,16 +746,49 @@
   display: grid;
   align-items: start;
   grid-template-columns: 90% 10%;
-}
 
-.del-icon {
-  margin-top: 20px;
-  background-color: transparent;
-  border: none;
-  color: red;
-  font-size: 28px;
+  .del-icon {
+    margin-top: 20px;
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-size: 28px;
+  }
 }
 
 .weessddsdf {
   width: 450px;
+}
+
+.editable-select {
+  height: 48px;
+  .add-btn {
+    font-size: 14px;
+    color: $primary;
+    background-color: transparent !important;
+  }
+
+  input {
+    font-size: 14px;
+  }
+
+  .dropdown > li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .del {
+      width: 10%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &-city {
+    .del {
+      width: 17% !important;
+    }
+  }
 }
