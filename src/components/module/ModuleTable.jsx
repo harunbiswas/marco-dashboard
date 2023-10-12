@@ -1,100 +1,13 @@
+import axios from "axios";
 import moment from "moment";
 import { createRef, useEffect, useRef, useState } from "react";
 import { BsCheckLg } from "react-icons/bs";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
+import values from "../../../values";
 import Input from "../booking/Input";
 
 export default function ModuleTable({ data }) {
-  const [td, setTD] = useState([
-    {
-      id: 2036,
-      name: "Eden v3",
-      user: "James Friday",
-      date: new Date(),
-      totalRequ: 2032,
-      pandingRequ: 32,
-    },
-    {
-      id: 2037,
-      name: "Eden v3",
-      user: "James Friday",
-      date: new Date(),
-      totalRequ: 2032,
-      pandingRequ: 32,
-    },
-    {
-      id: 2038,
-      name: "Eden v3",
-      user: "James Friday",
-      date: new Date(),
-      totalRequ: 2032,
-      pandingRequ: 32,
-    },
-    {
-      id: 2039,
-      name: "Eden v3",
-      user: "James Friday",
-      date: new Date(),
-      totalRequ: 2032,
-      pandingRequ: 32,
-    },
-    {
-      id: 2031,
-      name: "Eden v3",
-      user: "James Friday",
-      date: new Date(),
-      totalRequ: 2032,
-      pandingRequ: 32,
-    },
-    {
-      id: 2032,
-      name: "Eden v3",
-      user: "James Friday",
-      date: new Date(),
-      totalRequ: 2032,
-      pandingRequ: 32,
-    },
-    {
-      id: 2033,
-      name: "Eden v3",
-      user: "James Friday",
-      date: new Date(),
-      totalRequ: 2032,
-      pandingRequ: 32,
-    },
-    {
-      id: 2034,
-      name: "Eden v3",
-      user: "James Friday",
-      date: new Date(),
-      totalRequ: 2032,
-      pandingRequ: 32,
-    },
-    {
-      id: 2035,
-      name: "Eden v3",
-      user: "James Friday",
-      date: new Date(),
-      totalRequ: 2032,
-      pandingRequ: 32,
-    },
-    {
-      id: 20340,
-      name: "Eden v3",
-      user: "James Friday",
-      date: new Date(),
-      totalRequ: 2032,
-      pandingRequ: 32,
-    },
-    {
-      id: 2041,
-      name: "Eden v3",
-      user: "James Friday",
-      date: new Date(),
-      totalRequ: 2032,
-      pandingRequ: 32,
-    },
-  ]);
+  const [td, setTD] = useState([]);
 
   const th = [
     "ID",
@@ -102,7 +15,6 @@ export default function ModuleTable({ data }) {
     "Last Modified By",
     "Total Request",
     "Panding Request",
-    "Transport",
   ];
 
   const [isFocus, setIsFocus] = useState(false);
@@ -130,6 +42,12 @@ export default function ModuleTable({ data }) {
       inp.current[index].current.childNodes[1].focus();
     }
   }, [index]);
+
+  useEffect(() => {
+    axios.get(`${values.url}/module`).then((d) => {
+      setTD(d.data);
+    });
+  }, []);
 
   // select handler
   const selectHandler = (e) => {
@@ -160,6 +78,8 @@ export default function ModuleTable({ data }) {
       }
     });
   }, []);
+
+  console.log(td);
 
   return (
     <table className="table table-module" id="table">
@@ -268,7 +188,7 @@ export default function ModuleTable({ data }) {
               }}
               className="name"
             >
-              <Input data={{ value: d.user }} />
+              <Input data={{ value: d.name }} />
             </td>
             <td
               onClick={() => {
@@ -364,29 +284,6 @@ export default function ModuleTable({ data }) {
               }}
             >
               <Input data={{ value: d.pandingRequ }} />
-            </td>
-            <td
-              onClick={() => {
-                if (data.isIndex === i) {
-                  data.detailsHandler(!data.isDetails);
-                } else {
-                  data.setIsIndex(i);
-                  data.detailsHandler(true);
-                }
-              }}
-            >
-              <button
-                onClick={() => {
-                  if (data.isIndex === i) {
-                    data.detailsHandler(!data.isDetails);
-                  } else {
-                    data.setIsIndex(i);
-                    data.detailsHandler(true);
-                  }
-                }}
-              >
-                View Transport
-              </button>
             </td>
 
             <td
