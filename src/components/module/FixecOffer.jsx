@@ -8,7 +8,6 @@ import DateList from "./DateList";
 import ImportTemplate from "./ImportTemplate";
 
 export default function FixedOffer({
-  saveTemplateHandler,
   data,
   setData,
   fixtData,
@@ -48,10 +47,7 @@ export default function FixedOffer({
     setDates(updatedDates);
   };
 
-  const [region, setRegion] = useState([
-    { id: 1, value: "$432" },
-    { id: 2, value: "$323" },
-  ]);
+  const [region, setRegion] = useState([]);
   const handleRegionChange = (id, newValue) => {
     // Create a copy of the dates state
     const updatedDates = [...region];
@@ -96,8 +92,8 @@ export default function FixedOffer({
   const rx = /^(\d+(\.\d{0,2})?)?$/;
 
   useEffect(() => {
-    setDates(fixtData?.fiexDate || []);
     setRegion(fixtData?.fixtRegion || []);
+    setDates(fixtData?.fiexDate || []);
   }, [fixtData]);
 
   useEffect(() => {
@@ -113,7 +109,7 @@ export default function FixedOffer({
     setData((prev) => {
       return {
         ...prev,
-        fixtRegion: dates,
+        fixtRegion: region,
       };
     });
   }, [region]);
@@ -218,7 +214,7 @@ export default function FixedOffer({
       <CreateRegionTemplete
         handler={setIsRr}
         addhotel={isRr}
-        setData={setData}
+        setData={setRegion}
         data={data}
         tempLoad={tempLoad}
         setTempLoad={setTempLoad}

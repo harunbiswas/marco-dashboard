@@ -38,7 +38,7 @@ export default function ModuleTemplate({
 
   const createHandler = () => {
     setData(activeItem);
-
+    setFixtData(activeItem);
     handler(false);
   };
 
