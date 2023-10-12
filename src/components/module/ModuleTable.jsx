@@ -3,10 +3,12 @@ import moment from "moment";
 import { createRef, useEffect, useRef, useState } from "react";
 import { BsCheckLg } from "react-icons/bs";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 import values from "../../../values";
 import Input from "../booking/Input";
 
 export default function ModuleTable({ data }) {
+  const navigate = useNavigate();
   const [td, setTD] = useState([]);
 
   const th = [
@@ -78,8 +80,6 @@ export default function ModuleTable({ data }) {
       }
     });
   }, []);
-
-  console.log(td);
 
   return (
     <table className="table table-module" id="table">
@@ -298,12 +298,7 @@ export default function ModuleTable({ data }) {
             >
               <button
                 onClick={() => {
-                  if (data.isIndex === i) {
-                    data.detailsHandler(!data.isDetails);
-                  } else {
-                    data.setIsIndex(i);
-                    data.detailsHandler(true);
-                  }
+                  navigate(`/module/edit/${d?._id}`);
                 }}
               >
                 View Details
