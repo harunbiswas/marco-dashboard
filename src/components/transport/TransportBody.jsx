@@ -138,9 +138,10 @@ export default function TransportBody({
         transport.length &&
         transport
           .slice(
-            transport.length && showItem * activePage - showItem,
-            showItem * activePage <
-              (transport.length && showItem * activePage) || transport?.length
+            showItem * activePage - showItem,
+            (showItem * activePage < transport.length &&
+              showItem * activePage) ||
+              transport?.length
           )
           .map((item) => (
             <TransportItem
@@ -157,9 +158,10 @@ export default function TransportBody({
           transport
             .filter((item) => new Date(item.createdAt) > oneWeekAgo)
             .slice(
-              transport.length && showItem * activePage - showItem,
-              showItem * activePage <
-                (transport.length && showItem * activePage) || transport?.length
+              showItem * activePage - showItem,
+              (showItem * activePage < transport.length &&
+                showItem * activePage) ||
+                transport?.length
             )
             .map((item) => (
               <TransportItem
