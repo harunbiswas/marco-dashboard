@@ -24,6 +24,8 @@ export default function Header() {
       setTitle("Trasporti");
     } else if (pathname.includes("hotel")) {
       setTitle("Gestione Hotel");
+    } else if (pathname === "module") {
+      setTitle("Moduli");
     }
   }, [pathname]);
 

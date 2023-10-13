@@ -11,10 +11,9 @@ import ModuleTable from "../module/ModuleTable";
 
 export default function Modules() {
   const menus = [
-    { name: "All" },
-    { name: "Crcently Added" },
-    { name: "Archived" },
-    { name: "Deleted" },
+    { name: "Tutti" },
+    { name: "Recentemente Aggiunti" },
+    { name: "Archiviati" },
   ];
   const [isDetails, setIsDetails] = useState(false);
   const [isIndex, setIsIndex] = useState(false);
@@ -30,11 +29,8 @@ export default function Modules() {
         <div className="booking-box">
           <div className="hotel-top">
             <div className="hotel-top-left">
-              <Title title="Hotel Lish" />
-              <p>
-                Contrary to popular belief, Lorem Ipsum is not simply random
-                text. It has roots in a piece
-              </p>
+              <Title title="Moduli" />
+              <p>Questa è la lista di tutti i moduli aggiunti nel pannello</p>
             </div>
             <div className="hotel-top-right">
               <ExportBtn />

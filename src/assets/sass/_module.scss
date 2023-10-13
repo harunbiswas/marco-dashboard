@@ -795,3 +795,11 @@
     }
   }
 }
+
+.sdkfjlsjadf {
+  background-color: red !important;
+  &:disabled {
+    background-color: grey !important;
+    cursor: wait;
+  }
+}

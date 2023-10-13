@@ -29,6 +29,8 @@ export default function EditModule() {
     },
   ];
 
+  const [isDelete, setIsDele] = useState(false);
+
   const navigate = useNavigate();
   const [tempLoad, setTempLoad] = useState(false);
 
@@ -75,6 +77,19 @@ export default function EditModule() {
       })
       .catch((e) => {
         console.log(e);
+      });
+  };
+
+  const [mName, setMName] = useState("");
+  const deleteHandler = () => {
+    axios
+      .delete(`${values.url}/module?id=${moduleData?._id}`, {
+        headers: {
+          token,
+        },
+      })
+      .then((d) => {
+        navigate("/module");
       });
   };
 
@@ -212,9 +227,45 @@ export default function EditModule() {
             tempLoad={tempLoad}
             setTempLoad={setTempLoad}
           />
+          {isDelete && (
+            <div className="isdelete">
+              <h2 className="jakarta">Delete Module</h2>
+              <p className="jakarta">
+                please type hotel name: <strong>{moduleData?.name}</strong> to
+                be sure that you want delete
+              </p>
+              <br />
+
+              <input
+                type="text"
+                value={mName}
+                onChange={(e) => {
+                  setMName(e.target.value);
+                }}
+                style={{ color: "red" }}
+              />
+              <div className="buttons">
+                <button
+                  onClick={() => {
+                    setIsDele(false);
+                  }}
+                  className="btn"
+                >
+                  Annulla
+                </button>
+                <button
+                  disabled={moduleData?.name !== mName}
+                  onClick={deleteHandler}
+                  className="delete-btn sdkfjlsjadf btn"
+                >
+                  Elimina
+                </button>
+              </div>
+            </div>
+          )}
           <div className="hotel-edit-footer">
             <div className="left">
-              <button>Discard</button>
+              <button onClick={() => setIsDele(true)}>Discard</button>
             </div>
             <div className="right">
               <button onClick={() => setIsSaveTemplate(true)}>
