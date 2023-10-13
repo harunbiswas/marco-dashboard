@@ -470,8 +470,9 @@
   }
 
   &-module {
+    width: 1217px;
     tr {
-      grid-template-columns: 100px 200px 320px 260px 205px 200px 230px;
+      grid-template-columns: 60px 200px 260px 160px 205px 200px 130px;
     }
   }
 }

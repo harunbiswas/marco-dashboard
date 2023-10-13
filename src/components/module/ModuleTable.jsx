@@ -226,8 +226,8 @@ export default function ModuleTable({ data, searchData }) {
                 }}
                 className="inner"
               >
-                <strong>{moment(d.date).format("MMM DD, YY")}</strong>{" "}
-                <span>{moment(d.date).format("h: MM a")}</span>
+                <strong>{moment(d?.updatedAt).format("MMM DD, YY")}</strong>{" "}
+                <span>{moment(d.updatedAt).format("h: MM a")}</span>
               </div>
             </td>
 
