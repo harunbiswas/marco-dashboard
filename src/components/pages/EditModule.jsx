@@ -251,6 +251,7 @@ export default function EditModule() {
                 onChange={(e) => {
                   setMName(e.target.value);
                 }}
+                placeholder="name of the module"
                 style={{ color: "red" }}
               />
               <div className="buttons">
