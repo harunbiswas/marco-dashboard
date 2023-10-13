@@ -49,10 +49,10 @@ export default function EditModule() {
     axios
       .get(`${values.url}/module/single?id=${id}`)
       .then((d) => {
+        setModuleData(d.data);
         axios
           .get(`${values.url}/module/templete?id=${d.data.templeteId}`)
           .then((d1) => {
-            setModuleData(d.data);
             setFixtData(d1.data);
           });
       })
@@ -62,17 +62,17 @@ export default function EditModule() {
   }, []);
 
   const publishHandler = () => {
+    moduleData.templeteId = data?._id;
+    moduleData.publish = true;
+
     axios
-      .put(
-        `${values.url}/module`,
-        { ...moduleData, templeteId: data?._id, publish: true },
-        {
-          headers: {
-            token,
-          },
-        }
-      )
+      .put(`${values.url}/module`, moduleData, {
+        headers: {
+          token,
+        },
+      })
       .then((d) => {
+        console.log(d);
         navigate("/module");
       })
       .catch((e) => {
@@ -92,6 +92,10 @@ export default function EditModule() {
         navigate("/module");
       });
   };
+
+  useEffect(() => {
+    setData(fixtData);
+  }, [fixtData]);
 
   return (
     <div className=" module-edit hotel">

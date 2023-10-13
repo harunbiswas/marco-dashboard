@@ -23,7 +23,7 @@ export default function SectionTwo({ data, setData }) {
               setData((prev) => {
                 return {
                   ...prev,
-                  section1Video: e,
+                  section2Video1: e,
                 };
               });
             }}
