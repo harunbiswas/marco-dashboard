@@ -141,8 +141,6 @@ export default function FixedOffer({
 
   const [isRT, setIsRT] = useState(false);
 
-  console.log(dates);
-
   return (
     <div className="module-edit-basic fixed-offer">
       <ImportTemplate

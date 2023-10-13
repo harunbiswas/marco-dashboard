@@ -18,15 +18,14 @@ export default function Modules() {
   ];
   const [isDetails, setIsDetails] = useState(false);
   const [isIndex, setIsIndex] = useState(false);
+  const [searchData, setSearchData] = useState("");
 
   const [addModule, setAddModule] = useState(false);
 
   return (
     <div className="module hotel">
       <AddModule handler={setAddModule} addhotel={addModule} />
-      {isDetails && (
-        <ModuleDetils handler={setIsDetails} addhotel={isDetails} />
-      )}
+      {isDetails && <ModuleDetils handler={setIsDetails} addhotel={false} />}
       <div className="container">
         <div className="booking-box">
           <div className="hotel-top">
@@ -43,9 +42,10 @@ export default function Modules() {
             </div>
           </div>
           <BookingMneu menus={menus} />
-          <Filters />
+          <Filters search={searchData} setSearch={setSearchData} />
           <div className="module-table-wrp">
             <ModuleTable
+              searchData={searchData}
               data={{
                 detailsHandler: setIsDetails,
                 isIndex: isIndex,

@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 import values from "../../../values";
 import Input from "../booking/Input";
 
-export default function ModuleTable({ data }) {
+export default function ModuleTable({ data, searchData }) {
   const navigate = useNavigate();
   const [td, setTD] = useState([]);
+  const [mainTD, setMainTD] = useState([]);
 
   const th = [
     "ID",
@@ -48,6 +49,7 @@ export default function ModuleTable({ data }) {
   useEffect(() => {
     axios.get(`${values.url}/module`).then((d) => {
       setTD(d.data);
+      setMainTD(d.data);
     });
   }, []);
 
@@ -80,6 +82,19 @@ export default function ModuleTable({ data }) {
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (searchData) {
+      const filteredData = mainTD.filter(
+        (item) =>
+          item.name.includes(searchData) ||
+          item.id.toString().includes(searchData)
+      );
+      setTD(filteredData);
+    } else {
+      setTD(mainTD);
+    }
+  }, [searchData]);
 
   return (
     <table className="table table-module" id="table">
