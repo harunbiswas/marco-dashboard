@@ -255,12 +255,19 @@ export default function AddTransport({
   useEffect(() => {
     if (isDup) {
       if (transportData && isDup) {
-        delete transportData._id;
-        transportData.name = "";
-        transportData.transportId = values.generateUniqueString();
+        // delete transportData._id;
+        // transportData.name = "";
+        // transportData.transportId = values.generateUniqueString();
 
-        setData(transportData);
+        setData({
+          ...transportData,
+          _id: null,
+          name: "",
+          transportId: values.generateUniqueString(),
+        });
         setIsChange(true);
+      } else if (!add) {
+        setData(transportData);
       } else {
         setData({
           name: "",
@@ -562,7 +569,9 @@ export default function AddTransport({
                 Annulla
               </button>
               <button onClick={deleteHandler} className="delete-btn btn">
-                {(add && "Torna alla Lista") || "Elimina"}
+                {(add && "Torna alla Lista") ||
+                  (isDup && "Torna Indietro") ||
+                  "Elimina"}
               </button>
             </div>
           </div>
