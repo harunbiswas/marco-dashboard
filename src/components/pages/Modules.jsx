@@ -34,7 +34,7 @@ export default function Modules() {
             </div>
             <div className="hotel-top-right">
               <ExportBtn />
-              <Button handler={setAddModule} text="New Module" />
+              <Button handler={setAddModule} text="Nuovo Modulo" />
             </div>
           </div>
           <BookingMneu menus={menus} />

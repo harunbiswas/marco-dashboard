@@ -8,17 +8,16 @@ export default function SectionTwo({ data, setData }) {
   const [title, setTitle] = useState("");
   return (
     <div className="module-edit-basic">
-      <h4>Section 2</h4>
+      <h4>Sezione Centrale</h4>
       <p>
-        Contrary to popular belief, Lorem Ipsum is not simply random text. It
-        has roots in a piece of classical Latin
+        Questa è la sezione centrale, cioè la sezione dopo quella del video.
       </p>
 
       <div className="module-edit-basic-wrp">
         <div className="module-edit-basic-item">
-          <label htmlFor="vidwoLink">1st Video Link</label>
+          <label htmlFor="vidwoLink"> Link 1° Foto </label>
           <Input
-            d={{ value: data?.section2Video1 || "", label: "Enter URL" }}
+            d={{ value: data?.section2Video1 || "", label: "Inserisci URL" }}
             i="vidwoLink"
             handler={(e) => {
               setData((prev) => {
@@ -31,9 +30,9 @@ export default function SectionTwo({ data, setData }) {
           />
         </div>
         <div className="module-edit-basic-item">
-          <label htmlFor="vidwoLink1">2nd Video Link</label>
+          <label htmlFor="vidwoLink1">Link 2° Foto</label>
           <Input
-            d={{ value: data?.section2Video2 || "", label: "Enter URL" }}
+            d={{ value: data?.section2Video2 || "", label: "Inserisci URL" }}
             i="vidwoLink1"
             handler={(e) => {
               setData((prev) => {
@@ -48,9 +47,9 @@ export default function SectionTwo({ data, setData }) {
       </div>
 
       <div className="module-edit-basic-item">
-        <label htmlFor="title1">Title</label>
+        <label htmlFor="title1">Titolo della Sezione Centrale</label>
         <Input
-          d={{ value: data?.section2Title || "", label: "Enter Title" }}
+          d={{ value: data?.section2Title || "", label: "Inserisci Titolo" }}
           i="title1"
           handler={(e) => {
             setData((prev) => {
@@ -63,9 +62,10 @@ export default function SectionTwo({ data, setData }) {
         />
       </div>
       <div className="module-edit-basic-item">
-        <label htmlFor="">Description</label>
+        <label htmlFor="">Testo della Sezione</label>
         <TextArea
           value={data?.section2Desctiption || ""}
+          pls="Inserici il testo qui..."
           handler={(e) => {
             setData((prev) => {
               return {

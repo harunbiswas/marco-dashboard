@@ -71,16 +71,13 @@ export default function SectionThree({ data, fixtData, setData }) {
 
   return (
     <div className="module-edit-basic">
-      <h4>Section 3</h4>
-      <p>
-        Contrary to popular belief, Lorem Ipsum is not simply random text. It
-        has roots in a piece of classical Latin
-      </p>
+      <h4>Sezione Blog</h4>
+      <p>Questa è la sezione blog, cioè la sezione finale.</p>
 
       <div className="module-edit-basic-item">
-        <label htmlFor="title1">Title</label>
+        <label htmlFor="title1">Titolo della Sezione Blog</label>
         <Input
-          d={{ value: data?.section3Title || "", label: "Enter Title" }}
+          d={{ value: data?.section3Title || "", label: "Inserisci Titolo" }}
           i="title1"
           handler={(e) => {
             setData((prev) => {
@@ -93,9 +90,10 @@ export default function SectionThree({ data, fixtData, setData }) {
         />
       </div>
       <div className="module-edit-basic-item">
-        <label htmlFor="">sub-Description</label>
+        <label htmlFor="">Sotto-Titolo della Sezione Blog</label>
         <TextArea
           value={data?.section3Description || ""}
+          pls="Inserici il testo qui..."
           handler={(e) => {
             setData((prev) => {
               return {
@@ -112,25 +110,25 @@ export default function SectionThree({ data, fixtData, setData }) {
       {blogs?.map((blog, i) => (
         <div key={i} className="module-edit-basic-wrp">
           <div className="module-edit-basic-item">
-            <label htmlFor="vidwoLink">Title</label>
+            <label htmlFor="vidwoLink">Titolo Blog</label>
             <Input
-              d={{ value: blog?.title || "", label: "Enter Title" }}
+              d={{ value: blog?.title || "", label: "Inserisci Titolo Blog" }}
               i="vidwoLink"
               handler={(e) => handleChange(i, "title", e)}
             />
           </div>
           <div className="module-edit-basic-item">
-            <label htmlFor="vidwoLink">Image URL</label>
+            <label htmlFor="vidwoLink">Link Copertina Blog</label>
             <Input
-              d={{ value: blog?.img || "", label: "Enter URL" }}
+              d={{ value: blog?.img || "", label: "Inserisci URL" }}
               i="vidwoLink"
               handler={(e) => handleChange(i, "img", e)}
             />
           </div>
           <div className="module-edit-basic-item">
-            <label htmlFor="vidwoLink">Title</label>
+            <label htmlFor="vidwoLink">Link Reindirizzamento Blog</label>
             <Input
-              d={{ value: blog?.url || "", label: "Redirect URL" }}
+              d={{ value: blog?.url || "", label: "Inserisci URL" }}
               i="vidwoLink"
               handler={(e) => handleChange(i, "url", e)}
             />
@@ -154,13 +152,14 @@ export default function SectionThree({ data, fixtData, setData }) {
       ))}
       <button onClick={addNewBlog}>
         <AiOutlinePlus />
-        Add More
+        Aggiungi Blog
       </button>
 
       <div className="module-edit-basic-item">
-        <label htmlFor="">Bottom Description</label>
+        <label htmlFor="">Aggiungi Descrizione Finale</label>
         <TextArea
           value={data?.bottomDescription || ""}
+          pls="Inserici il testo qui..."
           handler={(e) => {
             setData((prev) => {
               return {

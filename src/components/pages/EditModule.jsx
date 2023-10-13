@@ -129,16 +129,16 @@ export default function EditModule() {
           </div>
           <CopyLink />
           <div className="module-edit-basic">
-            <h4>Module Preview</h4>
-            <p>
-              Contrary to popular belief, Lorem Ipsum is not simply random text.
-              It has roots in a piece of classical Latin
-            </p>
+            <h4>Crea Modulo</h4>
+            <p>Inserisci o modifica le informazioni del modulo qui sotto</p>
             <AddImage />
             <div className="module-edit-basic-item">
-              <label htmlFor="title">SEO - Title</label>
+              <label htmlFor="title">SEO - Titolo</label>
               <Input
-                d={{ value: data?.seoTitle || "", label: "Enter SEO Title" }}
+                d={{
+                  value: data?.seoTitle || "",
+                  label: "Inserisci il titolo SEO",
+                }}
                 i="title"
                 handler={(e) => {
                   setData((prev) => {
@@ -151,8 +151,9 @@ export default function EditModule() {
               />
             </div>
             <div className="module-edit-basic-item">
-              <label htmlFor="">SEO - Description</label>
+              <label htmlFor="">SEO - Descrizione</label>
               <TextArea
+                pls="Inserisci la descrizione SEO"
                 value={data?.seoDescription || ""}
                 handler={(e) => {
                   setData((prev) => {
@@ -166,16 +167,19 @@ export default function EditModule() {
             </div>
           </div>{" "}
           <div className="module-edit-basic">
-            <h4>Section 1</h4>
+            <h4>Sezione Video</h4>
             <p>
-              Contrary to popular belief, Lorem Ipsum is not simply random text.
-              It has roots in a piece of classical Latin
+              Questa è la sezione con il video, cioè la prima sezione dopo il
+              form
             </p>
 
             <div className="module-edit-basic-item">
-              <label htmlFor="title1">Title</label>
+              <label htmlFor="title1">Titolo della Sezione Video</label>
               <Input
-                d={{ value: data?.section1Title || "", label: "Enter Title" }}
+                d={{
+                  value: data?.section1Title || "",
+                  label: "Inserisci Titolo",
+                }}
                 i="title1"
                 handler={(e) => {
                   setData((prev) => {
@@ -188,8 +192,9 @@ export default function EditModule() {
               />
             </div>
             <div className="module-edit-basic-item">
-              <label htmlFor="">Description</label>
+              <label htmlFor="">Testo della Sezione</label>
               <TextArea
+                pls="Inserici il testo qui..."
                 value={data?.section1Description || ""}
                 handler={(e) => {
                   setData((prev) => {
@@ -202,9 +207,9 @@ export default function EditModule() {
               />
             </div>
             <div className="module-edit-basic-item">
-              <label htmlFor="vidwoLink">Video Link</label>
+              <label htmlFor="vidwoLink">Link Video </label>
               <Input
-                d={{ value: data?.section1Video || "", label: "Enter URL" }}
+                d={{ value: data?.section1Video || "", label: "Inserisci URL" }}
                 i="vidwoLink"
                 handler={(e) => {
                   setData((prev) => {
