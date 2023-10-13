@@ -81,7 +81,7 @@ export default function AddModule({ handler, addhotel }) {
               }`}
             >
               <label htmlFor="">Hotel ID</label>
-              <Input d={{ value: hotelId, label: "#" }} handler={setHotelId} />
+              <Input d={{ value: hotelId, label: "#" }} />
             </div>{" "}
             <div
               className={`add-hotel-item ${

@@ -6,7 +6,6 @@ import { BsFillBuildingsFill } from "react-icons/bs";
 import { FaAngleUp } from "react-icons/fa";
 import { ImGlass } from "react-icons/im";
 import { IoClose } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
 import values from "../../../values";
 import Description from "../hotel/Description";
 import OfferTags from "../hotel/OfferTags";
@@ -17,8 +16,6 @@ export default function ImportTemplate({
   tempLoad,
   setDates,
 }) {
-  const navigate = useNavigate();
-
   const ref = useRef(null);
   const wrp = useRef(null);
 
@@ -43,21 +40,21 @@ export default function ImportTemplate({
   }, [tempLoad]);
 
   const createHandler = () => {
+    const newDates = activeID.map((item, index) => ({
+      start: moment(item.startDate).format("YYYY-MM-DD"),
+      end: moment(item.endDate).format("YYYY-MM-DD"),
+      currency: item.currency,
+      id: index + 1, // Use index + 1 as the id
+      hotelName: isOffer?.name,
+      offerName: item.name,
+      price: item.price,
+    }));
     setDates((prev) => {
-      return [
-        ...prev,
-        {
-          start: moment(activeID?.startDate).format("YYYY-MM-DD"),
-          end: moment(activeID?.endDate).format("YYYY-MM-DD"),
-          carrency: activeID?.currency,
-          id: (prev.length && prev.length + 1) || 1,
-          hotelName: isOffer?.name,
-          offerName: activeID?.name,
-          price: activeID?.price,
-        },
-      ];
+      return [...prev, ...newDates];
     });
     handler(false);
+    setIsOffer(false);
+    setActiveId([]);
   };
 
   return (
@@ -97,7 +94,9 @@ export default function ImportTemplate({
                 <div
                   key={i}
                   className={`item`}
-                  onClick={() => setIsOffer(item)}
+                  onClick={() => {
+                    setIsOffer(item);
+                  }}
                 >
                   <BsFillBuildingsFill />
                   <div className="content">
@@ -114,10 +113,28 @@ export default function ImportTemplate({
                   <div
                     key={i}
                     className={`item ${
-                      (activeID?._id === item._id && "active") || ""
+                      (activeID.some((obj) => obj._id === item._id) &&
+                        "active") ||
+                      ""
                     }`}
                     onClick={() => {
-                      setActiveId(item);
+                      setActiveId((prevActiveId) => {
+                        if (!Array.isArray(prevActiveId)) {
+                          return [item]; // If it's not an array, initialize it with the new item
+                        }
+
+                        const itemIndex = prevActiveId.findIndex(
+                          (obj) => obj._id === item._id
+                        );
+
+                        if (itemIndex !== -1) {
+                          return prevActiveId.filter(
+                            (obj) => obj._id !== item._id
+                          ); // Remove item if it exists
+                        } else {
+                          return [...prevActiveId, item]; // Add item if it doesn't exist
+                        }
+                      });
                     }}
                   >
                     <div className="body">
