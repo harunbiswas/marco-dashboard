@@ -1,5 +1,6 @@
 import axios from "axios";
 import moment from "moment";
+import "moment/locale/it";
 import { createRef, useEffect, useRef, useState } from "react";
 import { BsCheckLg } from "react-icons/bs";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
@@ -22,6 +23,32 @@ export default function ModuleTable({ data, searchData }) {
     "Panding Request",
   ];
 
+  const formatDateToItalian = (dateString) => {
+    const months = [
+      "Gen",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Mag",
+      "Giu",
+      "Lug",
+      "Ago",
+      "Set",
+      "Ott",
+      "Nov",
+      "Dic",
+    ];
+
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear().toString().slice(-2);
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+
+    return `${day} ${month} ${year}, ${hours}:${minutes}`;
+  };
+
   const [isFocus, setIsFocus] = useState(false);
 
   const inp = useRef(td.map(() => createRef()));
@@ -41,6 +68,10 @@ export default function ModuleTable({ data, searchData }) {
     });
     setIndex(i);
   };
+
+  useEffect(() => {
+    moment.locale("it"); // Set Moment.js to use Italian locale
+  }, []);
 
   useEffect(() => {
     if (index || index === 0) {
@@ -95,7 +126,7 @@ export default function ModuleTable({ data, searchData }) {
     if (searchData) {
       const filteredData = mainTD.filter(
         (item) =>
-          item.name.includes(searchData) ||
+          item.name.toLowerCase().includes(searchData.toLowerCase()) ||
           item.id.toString().includes(searchData)
       );
       setTD(filteredData);
@@ -103,6 +134,8 @@ export default function ModuleTable({ data, searchData }) {
       setTD(mainTD);
     }
   }, [searchData]);
+
+  console.log(mainTD);
 
   return (
     <>
@@ -238,8 +271,10 @@ export default function ModuleTable({ data, searchData }) {
                     }}
                     className="inner"
                   >
-                    <strong>{moment(d?.updatedAt).format("MMM DD, YY")}</strong>{" "}
-                    <span>{moment(d.updatedAt).format("HH: MM")}</span>
+                    <strong>{formatDateToItalian(d?.updatedAt)}</strong>{" "}
+                    <span>
+                      {d?.userId?.firstName} {d?.userId?.lastName}
+                    </span>
                   </div>
                 </td>
 

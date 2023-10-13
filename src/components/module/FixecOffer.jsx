@@ -230,27 +230,29 @@ export default function FixedOffer({
               </button>
             </div>
 
-            <div className="info">
-              {date?.hotelName && (
-                <span
-                  style={{
-                    color: "#015DAA",
-                  }}
-                >
-                  {date?.hotelName}
-                </span>
-              )}{" "}
-              -{" "}
-              {date?.offerName && (
-                <span
-                  style={{
-                    color: "#1DBF73",
-                  }}
-                >
-                  {date?.offerName}
-                </span>
-              )}
-            </div>
+            {date?.hotelName && (
+              <div className="info">
+                {date?.hotelName && (
+                  <span
+                    style={{
+                      color: "#015DAA",
+                    }}
+                  >
+                    {date?.hotelName}
+                  </span>
+                )}{" "}
+                -{" "}
+                {date?.offerName && (
+                  <span
+                    style={{
+                      color: "#1DBF73",
+                    }}
+                  >
+                    {date?.offerName}
+                  </span>
+                )}
+              </div>
+            )}
           </>
         ))}
         <button onClick={addNewDate}>
