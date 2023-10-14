@@ -13,9 +13,11 @@ export default function AddModule({ handler, addhotel }) {
   const [name, setName] = useState("");
 
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
 
   const createHandler = () => {
     if (hotelId && name) {
+      setIsloading(true);
       axios
         .post(
           `${values.url}/module`,
@@ -27,9 +29,11 @@ export default function AddModule({ handler, addhotel }) {
           }
         )
         .then((d) => {
+          setIsloading(false);
           navigate(`/module/edit/${d.data._id}`);
         })
         .catch((e) => {
+          setIsloading(false);
           setIsError(e.response.data);
         });
     } else {
@@ -105,13 +109,22 @@ export default function AddModule({ handler, addhotel }) {
             </div>{" "}
           </form>
         </div>
-        <div className="add-hotel-footer">
+        <div className="add-hotel-footer sdjfjsldflskadf">
           <button onClick={() => handler(false)} className="btn cancel">
             Annulla
           </button>
-          <button onClick={createHandler} className="btn">
-            Crea Modulo
-          </button>
+
+          {(isLoading && (
+            <button disabled className="jakarta spinner btn ">
+              <div className="bounce1"></div>
+              <div className="bounce2"></div>
+              <div className="bounce3"></div>
+            </button>
+          )) || (
+            <button onClick={createHandler} className="btn">
+              Crea Modulo
+            </button>
+          )}
         </div>
       </div>
     </div>

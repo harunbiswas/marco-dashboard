@@ -6,6 +6,7 @@ import { BsFillBuildingsFill } from "react-icons/bs";
 import { FaAngleUp } from "react-icons/fa";
 import { ImGlass } from "react-icons/im";
 import { IoClose } from "react-icons/io5";
+import { RiHotelFill } from "react-icons/ri";
 import values from "../../../values";
 import Description from "../hotel/Description";
 import OfferTags from "../hotel/OfferTags";
@@ -28,6 +29,7 @@ export default function ImportTemplate({
   });
 
   const [items, setItems] = useState([]);
+  const [itemsMain, setItemsMain] = useState([]);
 
   const [isOffer, setIsOffer] = useState(false);
   const [activeID, setActiveId] = useState([]);
@@ -36,6 +38,7 @@ export default function ImportTemplate({
   useEffect(() => {
     axios.get(`${values.url}/hotel`).then((d) => {
       setItems(d.data);
+      setItemsMain(d.data);
     });
   }, [tempLoad]);
 
@@ -56,6 +59,20 @@ export default function ImportTemplate({
     setIsOffer(false);
     setActiveId([]);
   };
+  const [serchData, setSearchData] = useState("");
+
+  useEffect(() => {
+    if (!isOffer) {
+      if (serchData) {
+        const filteredData = itemsMain.filter((item) =>
+          item.name.toLowerCase().includes(serchData.toLowerCase())
+        );
+        setItems(filteredData);
+      } else {
+        setItems(itemsMain);
+      }
+    }
+  }, [serchData]);
 
   return (
     <div
@@ -75,139 +92,164 @@ export default function ImportTemplate({
         </div>
 
         <div className="add-hotel-body">
-          <h4>{(isOffer && "Select Offer") || "Select Hotel"}</h4>
+          <h4>{(isOffer && "Seleziona Offerte") || "Seleziona Hotel"}</h4>
           <p>
-            Contrary to popular belief, Lorem Ipsum is not simply random text
+            Seleziona l'hotel da cui vuoi importare le offerte e le relative
+            date
           </p>
           <div className="module-template-search">
             <label htmlFor="search">
               <BiSearch />
             </label>
-            <input type="text" placeholder="Search" id="search" />
-            <button className="btn">Search</button>
+            <input
+              value={serchData}
+              onChange={(e) => {
+                setSearchData(e.target.value);
+              }}
+              type="text"
+              placeholder="Cerca"
+              id="search"
+            />
           </div>
           <div
             className={`module-template-items max ${(isOffer && "hide") || ""}`}
           >
             <div className="left">
               {items.map((item, i) => (
-                <div
-                  key={i}
-                  className={`item`}
-                  onClick={() => {
-                    setIsOffer(item);
-                  }}
-                >
-                  <BsFillBuildingsFill />
-                  <div className="content">
-                    <h4>{item.name}</h4>
-                    <p>{item?.offers?.length}</p>
-                  </div>
-                </div>
+                <>
+                  {(item?.offers?.length && (
+                    <div
+                      key={i}
+                      className={`item`}
+                      onClick={() => {
+                        {
+                          item?.offers?.length && setIsOffer(item);
+                          item?.offers?.length && setSearchData("");
+                        }
+                      }}
+                    >
+                      <RiHotelFill />
+                      <div className="content">
+                        <h4>{item.name}</h4>
+                        <p>
+                          {(item?.offers?.length &&
+                            ((item?.offers?.length === 1 && "1 Offerta") ||
+                              `${item?.offers?.length} Offerte`)) ||
+                            "none"}
+                        </p>
+                      </div>
+                    </div>
+                  )) ||
+                    ""}
+                </>
               ))}
             </div>
 
             <div className="right">
               {isOffer &&
-                isOffer?.offers?.map((item, i) => (
-                  <div
-                    key={i}
-                    className={`item ${
-                      (activeID.some((obj) => obj._id === item._id) &&
-                        "active") ||
-                      ""
-                    }`}
-                    onClick={() => {
-                      setActiveId((prevActiveId) => {
-                        if (!Array.isArray(prevActiveId)) {
-                          return [item]; // If it's not an array, initialize it with the new item
-                        }
-
-                        const itemIndex = prevActiveId.findIndex(
-                          (obj) => obj._id === item._id
-                        );
-
-                        if (itemIndex !== -1) {
-                          return prevActiveId.filter(
-                            (obj) => obj._id !== item._id
-                          ); // Remove item if it exists
-                        } else {
-                          return [...prevActiveId, item]; // Add item if it doesn't exist
-                        }
-                      });
-                    }}
-                  >
-                    <div className="body">
-                      <BiSolidOffer />
-                      <div className="content">
-                        <h4>{item.name}</h4>
-                        <p>
-                          From {moment(item?.startDate).format("DD MMMM")} -{" "}
-                          {moment(item?.endDate).format("DD MMMM")}
-                        </p>
-                      </div>
-                      {(!(istoggle === item.id) && (
-                        <button
-                          onClick={() => {
-                            setIsToggle(item.id);
-                            setActiveId(null);
-                          }}
-                          className="btn btn-white"
-                        >
-                          View Details
-                        </button>
-                      )) || (
-                        <button
-                          onClick={() => setIsToggle(null)}
-                          className="close"
-                        >
-                          <FaAngleUp />
-                        </button>
-                      )}
-                    </div>
-
+                isOffer?.offers
+                  ?.filter((item) =>
+                    item.name.toLowerCase().includes(serchData.toLowerCase())
+                  )
+                  .map((item, i) => (
                     <div
-                      className={`offer-item-body ${
-                        (istoggle === item.id && "show") || ""
+                      key={i}
+                      className={`item ${
+                        (activeID.some((obj) => obj._id === item._id) &&
+                          "active") ||
+                        ""
                       }`}
+                      onClick={() => {
+                        setActiveId((prevActiveId) => {
+                          if (!Array.isArray(prevActiveId)) {
+                            return [item]; // If it's not an array, initialize it with the new item
+                          }
+
+                          const itemIndex = prevActiveId.findIndex(
+                            (obj) => obj._id === item._id
+                          );
+
+                          if (itemIndex !== -1) {
+                            return prevActiveId.filter(
+                              (obj) => obj._id !== item._id
+                            ); // Remove item if it exists
+                          } else {
+                            return [...prevActiveId, item]; // Add item if it doesn't exist
+                          }
+                        });
+                      }}
                     >
-                      <Description description={item?.description} max={20} />
-                      <div className="conditions">
-                        <h4>Conditions</h4>
-                        <ul className="conditions-wrp">
-                          <li>&#x2713; Minimum 2 Nights </li>
-                          <li>&#x2713; Minimum 7 Nights </li>
-                        </ul>
-                      </div>
-                      <div className="conditions">
-                        <h4>
-                          <ImGlass />
-                          Beverage Included
-                        </h4>
+                      <div className="body">
+                        <BiSolidOffer />
+                        <div className="content">
+                          <h4>{item.name}</h4>
+                          <p>
+                            From {moment(item?.startDate).format("DD MMMM")} -{" "}
+                            {moment(item?.endDate).format("DD MMMM")}
+                          </p>
+                        </div>
+                        {(!(istoggle === item.id) && (
+                          <button
+                            onClick={() => {
+                              setIsToggle(item.id);
+                              setActiveId(null);
+                            }}
+                            className="btn btn-white"
+                          >
+                            Vedi Dettagli
+                          </button>
+                        )) || (
+                          <button
+                            onClick={() => setIsToggle(null)}
+                            className="close"
+                          >
+                            <FaAngleUp />
+                          </button>
+                        )}
                       </div>
 
-                      <div className="price">
-                        <h4>Price</h4>
-                        <ul className="price-items">
-                          {item?.breakdown?.map((d, i) => (
-                            <li key={i}>
-                              <p>{d.name}</p>
-                              <strong>
-                                {d?.currency}
-                                {d?.price} <span>/{d?.priceType}</span>
-                              </strong>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      <div
+                        className={`offer-item-body ${
+                          (istoggle === item.id && "show") || ""
+                        }`}
+                      >
+                        <Description description={item?.description} max={20} />
+                        <div className="conditions">
+                          <h4>Condizioni</h4>
+                          <ul className="conditions-wrp">
+                            <li>&#x2713; Minimum 2 Nights </li>
+                            <li>&#x2713; Minimum 7 Nights </li>
+                          </ul>
+                        </div>
+                        <div className="conditions">
+                          <h4>
+                            <ImGlass />
+                            Bevande Incluse
+                          </h4>
+                        </div>
 
-                      <div className="offer-item-tags">
-                        <h4>Tags</h4>
-                        <OfferTags ta={item?.tags} isTagEdit={false} />
+                        <div className="price">
+                          <h4>Prezzi</h4>
+                          <ul className="price-items">
+                            {item?.breakdown?.map((d, i) => (
+                              <li key={i}>
+                                <p>{d.name}</p>
+                                <strong>
+                                  {d?.currency}
+                                  {d?.price} <span>/{d?.priceType}</span>
+                                </strong>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="offer-item-tags">
+                          <h4>Tags</h4>
+                          <OfferTags ta={item?.tags} isTagEdit={false} />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
             </div>
           </div>
         </div>
@@ -217,13 +259,14 @@ export default function ImportTemplate({
               onClick={() => {
                 setIsOffer(false);
                 setIsToggle(null);
+                setSearchData("");
               }}
               className="btn cancel"
             >
-              back
+              Indietro
             </button>
             <button onClick={createHandler} className="btn">
-              Select
+              Seleziona
             </button>
           </div>
         )}

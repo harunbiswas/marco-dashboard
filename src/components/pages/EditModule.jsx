@@ -18,16 +18,6 @@ import SectionTwo from "../module/SectionTwo";
 
 export default function EditModule() {
   const { id } = useParams();
-  const bootCump = [
-    {
-      name: "Modules",
-      url: "/module",
-      icon: <HiDocumentText />,
-    },
-    {
-      name: "El Plazo Module v2",
-    },
-  ];
 
   const [isDelete, setIsDele] = useState(false);
 
@@ -97,6 +87,17 @@ export default function EditModule() {
     setData(fixtData);
   }, [fixtData]);
 
+  const bootCump = [
+    {
+      name: "Moduli",
+      url: "/module",
+      icon: <HiDocumentText />,
+    },
+    {
+      name: moduleData?.name,
+    },
+  ];
+
   return (
     <div className=" module-edit hotel">
       <ModuleTemplate
@@ -128,7 +129,7 @@ export default function EditModule() {
             </div>{" "}
             <ExportBtn
               handler={() => setIsTemplate(true)}
-              text="Import Template  "
+              text="Importa Template"
             />
           </div>
           <CopyLink />
@@ -238,22 +239,26 @@ export default function EditModule() {
           />
           {isDelete && (
             <div className="isdelete">
-              <h2 className="jakarta">Delete Module</h2>
+              <h2 className="jakarta">
+                {(moduleData?.publish && "Delete Module") ||
+                  "Vuoi tornare indietro"}
+              </h2>
               <p className="jakarta">
                 please type hotel name: <strong>{moduleData?.name}</strong> to
                 be sure that you want delete
               </p>
               <br />
-
-              <input
-                type="text"
-                value={mName}
-                onChange={(e) => {
-                  setMName(e.target.value);
-                }}
-                placeholder="name of the module"
-                style={{ color: "red" }}
-              />
+              {moduleData?.publish && (
+                <input
+                  type="text"
+                  value={mName}
+                  onChange={(e) => {
+                    setMName(e.target.value);
+                  }}
+                  placeholder="name of the module"
+                  style={{ color: "red" }}
+                />
+              )}
               <div className="buttons">
                 <button
                   onClick={() => {
@@ -264,7 +269,7 @@ export default function EditModule() {
                   Annulla
                 </button>
                 <button
-                  disabled={moduleData?.name !== mName}
+                  disabled={moduleData?.publish && moduleData?.name !== mName}
                   onClick={deleteHandler}
                   className="delete-btn sdkfjlsjadf btn"
                 >

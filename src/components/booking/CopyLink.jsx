@@ -44,11 +44,11 @@ export default function CopyLink() {
       </div>
       <div className="copy-link-right">
         <button className={(!isCopy && "active") || ""} onClick={handelCopy}>
-          <BiCopy /> <span>Copy Link</span>{" "}
+          <BiCopy /> <span>Copia Link</span>{" "}
         </button>
         <span className={`coped ${(isCopy && "active") || ""}`}>
           {" "}
-          link coped!
+          Link Copiato
         </span>
       </div>
     </div>

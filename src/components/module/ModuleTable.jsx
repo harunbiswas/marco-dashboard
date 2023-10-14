@@ -9,7 +9,7 @@ import values from "../../../values";
 import Loading from "../basic/Loading";
 import Input from "../booking/Input";
 
-export default function ModuleTable({ data, searchData }) {
+export default function ModuleTable({ data, searchData, active }) {
   const navigate = useNavigate();
   const [td, setTD] = useState([]);
   const [mainTD, setMainTD] = useState([]);
@@ -17,10 +17,10 @@ export default function ModuleTable({ data, searchData }) {
 
   const th = [
     "ID",
-    "Module Name",
-    "Last Modified By",
-    "Total Request",
-    "Panding Request",
+    "Nome Modulo",
+    "Modificato da",
+    "Richieste Totali",
+    "Richieste in Attesa",
   ];
 
   const formatDateToItalian = (dateString) => {
@@ -135,7 +135,20 @@ export default function ModuleTable({ data, searchData }) {
     }
   }, [searchData]);
 
-  console.log(mainTD);
+  console.log(td);
+  useEffect(() => {
+    if (active === "Recentemente Aggiunti") {
+      const filteredData = mainTD.filter((item) => {
+        const today = new Date();
+        const lastWeek = new Date(today.getTime() - 7 * 24 * 60 * 60 * 1000);
+        return new Date(mainTD[0].createdAt).getTime() >= lastWeek;
+      });
+
+      setTD(filteredData);
+    } else {
+      setTD(mainTD);
+    }
+  }, [active]);
 
   return (
     <>
@@ -155,7 +168,7 @@ export default function ModuleTable({ data, searchData }) {
                   </div>
                 </th>
               ))}
-              <th>Action</th>
+              <th>Azione</th>
             </tr>
           </thead>
 

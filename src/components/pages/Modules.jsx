@@ -10,15 +10,11 @@ import ModuleDetils from "../module/ModuleDetails";
 import ModuleTable from "../module/ModuleTable";
 
 export default function Modules() {
-  const menus = [
-    { name: "Tutti" },
-    { name: "Recentemente Aggiunti" },
-    { name: "Archiviati" },
-  ];
+  const menus = [{ name: "Tutti" }, { name: "Recentemente Aggiunti" }];
   const [isDetails, setIsDetails] = useState(false);
   const [isIndex, setIsIndex] = useState(false);
   const [searchData, setSearchData] = useState("");
-
+  const [active, setActive] = useState("");
   const [addModule, setAddModule] = useState(false);
 
   return (
@@ -37,10 +33,11 @@ export default function Modules() {
               <Button handler={setAddModule} text="Nuovo Modulo" />
             </div>
           </div>
-          <BookingMneu menus={menus} />
+          <BookingMneu setActive={setActive} menus={menus} />
           <Filters search={searchData} setSearch={setSearchData} />
           <div className="module-table-wrp">
             <ModuleTable
+              active={active}
               searchData={searchData}
               data={{
                 detailsHandler: setIsDetails,

@@ -156,27 +156,28 @@ export default function FixedOffer({
         tempLoad={tempLoad}
         setTempLoad={setTempLoad}
       />
-      <h4>Fixed Offers</h4>
+      <h4>Offerte Fisse</h4>
       <p>
-        Contrary to popular belief, Lorem Ipsum is not simply random text. It
-        has roots in a piece of classical Latin
+        Aggiungi le date e le città che possono selezionare gli utenti nel
+        modulo, e se possibile, importa le offerte dall'hotel poiché potranno
+        essere calcolate automaticamente
       </p>
       <div className="fixed-offer-item">
         <div className="fixed-offer-item-top">
-          <strong>By Date</strong>
+          <strong>Date</strong>
           <div className="buttons">
-            <button onClick={() => setIsCr(true)}>Create Template </button>
+            <button onClick={() => setIsCr(true)}>Crea Template </button>
             <span className="separator"></span>
-            <button onClick={() => setIsImport(true)}>Import Offerte </button>
+            <button onClick={() => setIsImport(true)}>Importa Offerte </button>
             <span className="separator"></span>
-            <button onClick={() => setIsDate(true)}>Import Date List </button>
+            <button onClick={() => setIsDate(true)}>Importa lista Date </button>
           </div>
         </div>
         {dates.map((date, i) => (
           <>
             <div key={i} className="fixed-offer-item-body">
               <div className="group">
-                <label htmlFor="">Starting Date</label>
+                <label htmlFor="">Data d’inizio</label>
                 <input
                   value={date?.start}
                   max={date?.end || ""}
@@ -195,7 +196,7 @@ export default function FixedOffer({
                 />
               </div>
               <div className="group">
-                <label htmlFor="">Ending Date</label>
+                <label htmlFor="">Data finale</label>
                 <input
                   min={date?.start || ""}
                   value={date?.end}
@@ -212,7 +213,7 @@ export default function FixedOffer({
                 />
               </div>
               <div className="group">
-                <label htmlFor="">Fixed Price</label>
+                <label htmlFor="">Prezzo Iniziale</label>
                 <div className="inner">
                   <Select
                     activeValue={carrency}
@@ -256,7 +257,7 @@ export default function FixedOffer({
           </>
         ))}
         <button onClick={addNewDate}>
-          <AiOutlinePlus /> Add More
+          <AiOutlinePlus /> Aggiungi
         </button>
       </div>
 
@@ -285,9 +286,9 @@ export default function FixedOffer({
       {/* region part */}
       <div className="fixed-offer-item">
         <div className="fixed-offer-item-top">
-          <strong>By Region</strong>
+          <strong>Città</strong>
           <div className="buttons">
-            <button onClick={() => setIsRr(true)}>Create Template </button>
+            <button onClick={() => setIsRr(true)}>Crea Template </button>
             <span className="separator"></span>
             <button
               onClick={() => {
@@ -295,7 +296,7 @@ export default function FixedOffer({
                 setTempLoad(!tempLoad);
               }}
             >
-              Import Region List{" "}
+              Importa lista Città
             </button>
           </div>
         </div>
@@ -303,7 +304,7 @@ export default function FixedOffer({
           region?.map((date, i) => (
             <div key={i} className="fixed-offer-item-body">
               <div className="group">
-                <label htmlFor="">Region</label>
+                <label htmlFor="">Regione</label>
                 <Select
                   activeValue={date?.region || "Seleziona Regione"}
                   handler={(e) => {
@@ -318,7 +319,7 @@ export default function FixedOffer({
                 />
               </div>
               <div className="group">
-                <label htmlFor="">City</label>
+                <label htmlFor="">Città</label>
                 <EditableSelectCity
                   activeValue={date?.city || "Seleziona Città"}
                   mainData={{ city: date?.region }}
@@ -332,7 +333,7 @@ export default function FixedOffer({
                 />
               </div>
               <div className="group">
-                <label htmlFor="">Fixed Price</label>
+                <label htmlFor="">Prezzo Iniziale</label>
                 <div className="inner">
                   <Select
                     activeValue={carrency}

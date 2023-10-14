@@ -14,7 +14,8 @@ export default function Description({ description, title, max }) {
       {title && <h4>{title}</h4>}
       <p> {showFullDescription ? description : truncatedDescription + "..."}</p>
       <button onClick={() => setShowFullDescription(!showFullDescription)}>
-        {(showFullDescription && "Show less") || "Show more"}
+        {description?.length > 50 &&
+          ((showFullDescription && "Mostra di meno") || "Mostra di più")}
       </button>
     </div>
   );

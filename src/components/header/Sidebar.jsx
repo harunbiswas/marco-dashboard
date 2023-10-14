@@ -30,7 +30,7 @@ export default function Sidebar({ isFull, setIsFull }) {
       url: "/hotel",
     },
     {
-      name: "Modules",
+      name: "Moduli",
       icon: (
         <svg
           xmlns="http://www.w3.org/2000/svg"
