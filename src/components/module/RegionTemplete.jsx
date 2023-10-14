@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
-import { AiFillDelete } from "react-icons/ai";
+import { AiOutlineDelete } from "react-icons/ai";
 import { BiSearch } from "react-icons/bi";
 import { HiDocumentText } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
@@ -68,7 +68,7 @@ export default function RegionTemplate({
         console.log(e);
       });
   };
-
+  const [search, setSearch] = useState("");
   return (
     <div
       ref={wrp}
@@ -84,42 +84,48 @@ export default function RegionTemplate({
           </button>
         </div>
         <div className="add-hotel-body">
-          <h4>Module Templates</h4>
-          <p>
-            Contrary to popular belief, Lorem Ipsum is not simply random text
-          </p>
+          <h4>Template lista Città</h4>
+          <p>Seleziona il template della lista Città che desideri importare</p>
           <div className="module-template-search">
             <label htmlFor="search">
               <BiSearch />
             </label>
-            <input type="text" placeholder="Search" id="search" />
-            <button className="btn">Search</button>
+            <input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              type="text"
+              placeholder="Cerca"
+              id="search"
+            />
           </div>
           <div className="module-template-items">
             <div className="left">
-              {items.map((item, i) => (
-                <div
-                  key={i}
-                  className={`item ${
-                    (activeItem?._id === item?._id && "active") || ""
-                  }`}
-                  onClick={() => {
-                    setActiveItem(item);
-                  }}
-                >
-                  <HiDocumentText />
-                  <div className="content">
-                    <h4>{item?.name}</h4>
-                    <p>Data: {item?.dates.length}</p>
+              {items
+                ?.filter((item) => item.name.includes(search))
+                .map((item, i) => (
+                  <div key={i} className="del-wrp">
+                    <div
+                      className={`item ${
+                        (activeItem?._id === item?._id && "active") || ""
+                      }`}
+                      onClick={() => {
+                        setActiveItem(item);
+                      }}
+                    >
+                      <HiDocumentText />
+                      <div className="content">
+                        <h4>{item?.name}</h4>
+                        <p>{item?.dates.length} Città</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setIsDelete(true)}
+                      className="del-icon"
+                    >
+                      <AiOutlineDelete />
+                    </button>
                   </div>
-                  <button
-                    onClick={() => setIsDelete(true)}
-                    className="del-icon"
-                  >
-                    <AiFillDelete />
-                  </button>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>
@@ -138,7 +144,7 @@ export default function RegionTemplate({
                 }}
                 className="btn"
               >
-                Cancel
+                Annulla
               </button>
               <button onClick={deleteHandler} className="delete-btn btn">
                 Delete
@@ -151,7 +157,7 @@ export default function RegionTemplate({
             Cancel
           </button>
           <button onClick={createHandler} className="btn">
-            Select
+            Seleziona
           </button>
         </div>
       </div>

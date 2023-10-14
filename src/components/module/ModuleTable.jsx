@@ -135,7 +135,6 @@ export default function ModuleTable({ data, searchData, active }) {
     }
   }, [searchData]);
 
-  console.log(td);
   useEffect(() => {
     if (active === "Recentemente Aggiunti") {
       const filteredData = mainTD.filter((item) => {
@@ -376,7 +375,7 @@ export default function ModuleTable({ data, searchData, active }) {
                       navigate(`/module/edit/${d?._id}`);
                     }}
                   >
-                    View Details
+                    Vedi Dettagli
                   </button>
                 </td>
               </tr>

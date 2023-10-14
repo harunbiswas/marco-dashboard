@@ -40,11 +40,7 @@ export default function EditModule() {
       .get(`${values.url}/module/single?id=${id}`)
       .then((d) => {
         setModuleData(d.data);
-        axios
-          .get(`${values.url}/module/templete?id=${d.data.templeteId}`)
-          .then((d1) => {
-            setFixtData(d1.data);
-          });
+        setFixtData(d.data);
       })
       .catch((e) => {
         console.log(e);
@@ -55,14 +51,20 @@ export default function EditModule() {
     moduleData.templeteId = data?._id;
     moduleData.publish = true;
 
+    delete data._id;
+    delete data.name;
     axios
-      .put(`${values.url}/module`, moduleData, {
-        headers: {
-          token,
-        },
-      })
+      .put(
+        `${values.url}/module`,
+        { ...moduleData, ...data },
+        {
+          headers: {
+            token,
+          },
+        }
+      )
       .then((d) => {
-        console.log(d);
+        console.log(d.data);
         navigate("/module");
       })
       .catch((e) => {
@@ -97,6 +99,8 @@ export default function EditModule() {
       name: moduleData?.name,
     },
   ];
+
+  console.log();
 
   return (
     <div className=" module-edit hotel">
@@ -273,21 +277,21 @@ export default function EditModule() {
                   onClick={deleteHandler}
                   className="delete-btn sdkfjlsjadf btn"
                 >
-                  Elimina
+                  {(moduleData?.publish && "Elimina") || "Torna Indietro"}
                 </button>
               </div>
             </div>
           )}
           <div className="hotel-edit-footer">
             <div className="left">
-              <button onClick={() => setIsDele(true)}>Discard</button>
+              <button onClick={() => setIsDele(true)}>Elimina</button>
             </div>
             <div className="right">
               <button onClick={() => setIsSaveTemplate(true)}>
-                Save as Template
+                Salva sezioni come Template
               </button>
               <button onClick={publishHandler} className="submit">
-                Publish
+                Pubblica
               </button>
             </div>
           </div>
