@@ -27,7 +27,9 @@ export default function TransportBody({
     const encodedSearchTerm = encodeURIComponent(search);
     axios
       .get(
-        `${values.url}/transport?page=${activePage}&search=${encodedSearchTerm}`,
+        `${values.url}/transport?page=${
+          activePage || 1
+        }&search=${encodedSearchTerm}`,
         {
           headers: {
             token,

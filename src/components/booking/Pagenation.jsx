@@ -8,7 +8,7 @@ export default function Pagenation({
   setIsLoading,
   search,
 }) {
-  const [btns, setBtns] = useState([1]);
+  const [btns, setBtns] = useState([]);
   const [activeBtn, setActiveBtn] = useState(btns[0]);
   const showItem = 30;
 
@@ -53,18 +53,59 @@ export default function Pagenation({
               Previous
             </button>
           </li>
+          <li>
+            <button
+              onClick={() => setActiveBtn(1)}
+              className={`pagenation-btn ${
+                (activeBtn === 1 && "active") || ""
+              }`}
+            >
+              1
+            </button>
+          </li>
+          {btns.length > 5 && activeBtn > btns[0] + 2 && "..."}
           {btns.map((btn) => (
-            <li key={btn}>
-              <button
-                onClick={() => setActiveBtn(btn)}
-                className={`pagenation-btn ${
-                  (activeBtn === btn && "active") || ""
-                }`}
-              >
-                {btn}
-              </button>
-            </li>
+            <>
+              {((btn !== 1 &&
+                btn !== btns[btns.length - 1] &&
+                activeBtn === btn) ||
+                (activeBtn - 1 === btn && btn !== 1) ||
+                (activeBtn + 1 === btn && btn !== btns[btns.length - 1]) ||
+                (btns.length <= 5 &&
+                  btn !== 1 &&
+                  btn !== btns[btns.length - 1])) && (
+                <li key={btn}>
+                  <button
+                    onClick={() => setActiveBtn(btn)}
+                    className={`pagenation-btn ${
+                      (activeBtn === btn && "active") || ""
+                    }`}
+                  >
+                    {btn}
+                  </button>
+                </li>
+              )}
+            </>
           ))}
+
+          {
+            <>
+              {btns.length > 5 &&
+                activeBtn < btns[btns.length - 1] - 2 &&
+                "..."}
+              <li>
+                <button
+                  onClick={() => setActiveBtn(btns[btns.length - 1])}
+                  className={`pagenation-btn ${
+                    (activeBtn === btns[btns.length - 1] && "active") || ""
+                  }`}
+                >
+                  {btns[btns.length - 1]}
+                </button>
+              </li>
+            </>
+          }
+
           <li>
             <button
               onClick={() => {
