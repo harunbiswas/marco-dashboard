@@ -6,6 +6,7 @@ export default function Pagenation({
   active,
   setActiveValue,
   setIsLoading,
+  search,
 }) {
   const [btns, setBtns] = useState([1]);
   const [activeBtn, setActiveBtn] = useState(btns[0]);
@@ -26,6 +27,10 @@ export default function Pagenation({
       setActiveValue(activeBtn);
     }
   }, [activeBtn]);
+
+  useEffect(() => {
+    setActiveBtn(1);
+  }, [search]);
 
   return (
     <div className="pagenation-wrp">

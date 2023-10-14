@@ -18,55 +18,59 @@ export default function TransportBody({
   isloading,
   setIsLoading,
 }) {
-  const showItem = 30;
   const [transport, setTransport] = useState([]);
   const [transportMain, setTransportMain] = useState([]);
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
   useEffect(() => {
     setIsLoading(true);
+    const encodedSearchTerm = encodeURIComponent(search);
     axios
-      .get(`${values.url}/transport`, {
-        headers: {
-          token,
-        },
-      })
+      .get(
+        `${values.url}/transport?page=${activePage}&search=${encodedSearchTerm}`,
+        {
+          headers: {
+            token,
+          },
+        }
+      )
       .then((d) => {
-        setTransport(d.data);
-        setTransportMain(d.data);
-        setMaxValue(d.data.length);
+        setTransport(d.data.result);
+        console.log(d.data);
+        setTransportMain(d.data.result);
+        setMaxValue(d.data.count);
         setIsLoading(false);
       })
       .catch((e) => {
         setIsLoading(false);
         console.log(e.response);
       });
-  }, []);
+  }, [activePage, search]);
 
   //search
 
-  useEffect(() => {
-    if (search) {
-      const filteredTransport = transportMain.filter((item) => {
-        const searchValue = search?.toLowerCase().replace(/\$/, "").trim();
+  // useEffect(() => {
+  //   if (search) {
+  //     const filteredTransport = transportMain.filter((item) => {
+  //       const searchValue = search?.toLowerCase().replace(/\$/, "").trim();
 
-        if (search[0] === "$") {
-          return item?.vehicleType.toLowerCase().includes(searchValue);
-        }
+  //       if (search[0] === "$") {
+  //         return item?.vehicleType.toLowerCase().includes(searchValue);
+  //       }
 
-        return (
-          item?.name.toLowerCase().includes(searchValue) ||
-          item?.city.toLowerCase().includes(searchValue) ||
-          item?.state.toLowerCase().includes(searchValue)
-        );
-      });
+  //       return (
+  //         item?.name.toLowerCase().includes(searchValue) ||
+  //         item?.city.toLowerCase().includes(searchValue) ||
+  //         item?.state.toLowerCase().includes(searchValue)
+  //       );
+  //     });
 
-      // Update state with filtered results
-      setTransport(filteredTransport);
-    } else {
-      setTransport(transportMain);
-    }
-  }, [search]);
+  //     // Update state with filtered results
+  //     setTransport(filteredTransport);
+  //   } else {
+  //     setTransport(transportMain);
+  //   }
+  // }, [search]);
 
   useEffect(() => {
     if (sortValue === "Ordina per i più vecchi") {
@@ -136,33 +140,20 @@ export default function TransportBody({
         !isloading &&
         transport &&
         transport.length &&
-        transport
-          .slice(
-            showItem * activePage - showItem,
-            (showItem * activePage < transport.length &&
-              showItem * activePage) ||
-              transport?.length
-          )
-          .map((item) => (
-            <TransportItem
-              setTransportData={setTransportData}
-              key={item._id}
-              data={item}
-              handler={handler}
-              setIsDup={setIsDup}
-            />
-          ))) ||
+        transport.map((item) => (
+          <TransportItem
+            setTransportData={setTransportData}
+            key={item._id}
+            data={item}
+            handler={handler}
+            setIsDup={setIsDup}
+          />
+        ))) ||
         (!isloading &&
           transport &&
           transport.length &&
           transport
             .filter((item) => new Date(item.createdAt) > oneWeekAgo)
-            .slice(
-              showItem * activePage - showItem,
-              (showItem * activePage < transport.length &&
-                showItem * activePage) ||
-                transport?.length
-            )
             .map((item) => (
               <TransportItem
                 setTransportData={setTransportData}

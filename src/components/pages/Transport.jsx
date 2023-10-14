@@ -90,6 +90,7 @@ export default function Transport() {
             active={activeVlaue}
             max={maxVlaue}
             setActiveValue={setActiveValue}
+            search={search}
           />
         </div>
       </div>
