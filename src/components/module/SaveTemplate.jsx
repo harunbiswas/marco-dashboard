@@ -90,7 +90,7 @@ export default function SaveTemplate({
         <div className="add-hotel-body">
           <h4>Salva le Sezioni</h4>
           <p>
-            nserisci il nome del template per salvare tutte le informazioni del
+            Inserisci il nome del template per salvare tutte le informazioni del
             modulo escluse le date e le città
           </p>
           <form onSubmit={(e) => e.preventDefault()}>

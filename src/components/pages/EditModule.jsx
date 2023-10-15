@@ -244,14 +244,25 @@ export default function EditModule() {
           {isDelete && (
             <div className="isdelete">
               <h2 className="jakarta">
-                {(moduleData?.publish && "Delete Module") ||
+                {(moduleData?.publish &&
+                  `uoi eliminare ${moduleData?.name}?`) ||
                   "Vuoi tornare indietro"}
               </h2>
-              <p className="jakarta">
-                please type hotel name: <strong>{moduleData?.name}</strong> to
-                be sure that you want delete
-              </p>
+              {
+                <p className="jakarta">
+                  {(moduleData?.publish && (
+                    <>
+                      {`Inserisci il nome del modulo da eliminare nella barra di testo:`}
+                      <strong style={{ color: "red" }}>
+                        {moduleData?.name}
+                      </strong>
+                    </>
+                  )) ||
+                    "Tornando alla lista perderai il le informazioni nel modulo che stai creando"}
+                </p>
+              }
               <br />
+
               {moduleData?.publish && (
                 <input
                   type="text"

@@ -18,6 +18,7 @@ export default function ModuleTemplate({
 }) {
   const navigate = useNavigate();
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isDelete, setIsDelete] = useState(false);
 
@@ -57,18 +58,23 @@ export default function ModuleTemplate({
       });
   }, [tempLoad]);
 
-  const deleteHandler = () => {
+  const deleteHandler = (item) => {
+    setIsLoading(true);
     axios
-      .delete(`${values.url}/module/templete?id=${activeItem?._id}`, {
+      .delete(`${values.url}/module/templete?id=${item?._id}`, {
         headers: {
           token,
         },
       })
       .then((d) => {
+        setIsLoading(false);
         setIsDelete(false);
         setTempLoad(!tempLoad);
       })
       .catch((e) => {
+        setIsLoading(false);
+        setIsDelete(false);
+        setTempLoad(!tempLoad);
         console.log(e);
       });
   };
@@ -151,6 +157,43 @@ export default function ModuleTemplate({
                         </p>
                       </div>
                     </div>
+                    {isDelete && (
+                      <div className="isdelete">
+                        <h2 className="jakarta">
+                          Vuoi eliminare {activeItem?.name}
+                        </h2>
+
+                        <div className="buttons">
+                          <button
+                            onClick={() => {
+                              setIsDelete(false);
+                              handler(true);
+                            }}
+                            className="btn"
+                          >
+                            Seleziona
+                          </button>
+
+                          {(isLoading && (
+                            <button
+                              disabled
+                              className="delete-btn  spinner btn "
+                            >
+                              <div className="bounce1"></div>
+                              <div className="bounce2"></div>
+                              <div className="bounce3"></div>
+                            </button>
+                          )) || (
+                            <button
+                              onClick={() => deleteHandler(item)}
+                              className="delete-btn btn"
+                            >
+                              Seleziona
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
                     <button
                       onClick={() => setIsDelete(true)}
                       className="del-icon"
@@ -163,28 +206,6 @@ export default function ModuleTemplate({
           </div>
         </div>
 
-        {isDelete && (
-          <div className="isdelete">
-            <h2 className="jakarta">
-              do you want delete the Template {activeItem?.name}
-            </h2>
-
-            <div className="buttons">
-              <button
-                onClick={() => {
-                  setIsDelete(false);
-                  handler(true);
-                }}
-                className="btn"
-              >
-                Seleziona
-              </button>
-              <button onClick={deleteHandler} className="delete-btn btn">
-                Seleziona
-              </button>
-            </div>
-          </div>
-        )}
         <div className="add-hotel-footer ">
           <button onClick={() => handler(false)} className="btn cancel">
             Annulla

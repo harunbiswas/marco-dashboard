@@ -17,6 +17,7 @@ export default function RegionTemplate({
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
   const [isDelete, setIsDelete] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const ref = useRef(null);
   const wrp = useRef(null);
@@ -53,18 +54,23 @@ export default function RegionTemplate({
       });
   }, [tempLoad]);
 
-  const deleteHandler = () => {
+  const deleteHandler = (item) => {
+    setIsLoading(true);
     axios
-      .delete(`${values.url}/module/regionTemplete?id=${activeItem?._id}`, {
+      .delete(`${values.url}/module/regionTemplete?id=${item?._id}`, {
         headers: {
           token,
         },
       })
       .then((d) => {
         setIsDelete(false);
+        setIsLoading(false);
         setTempLoad(!tempLoad);
       })
       .catch((e) => {
+        setIsDelete(false);
+        setIsLoading(false);
+        setTempLoad(!tempLoad);
         console.log(e);
       });
   };
@@ -118,6 +124,41 @@ export default function RegionTemplate({
                         <p>{item?.dates.length} Città</p>
                       </div>
                     </div>
+                    {isDelete && (
+                      <div className="isdelete">
+                        <h2 className="jakarta">Vuoi eliminare {item?.name}</h2>
+
+                        <div className="buttons">
+                          <button
+                            onClick={() => {
+                              setIsDelete(false);
+                              handler(true);
+                            }}
+                            className="btn"
+                          >
+                            Annulla
+                          </button>
+
+                          {(isLoading && (
+                            <button
+                              disabled
+                              className="delete-btn  spinner btn "
+                            >
+                              <div className="bounce1"></div>
+                              <div className="bounce2"></div>
+                              <div className="bounce3"></div>
+                            </button>
+                          )) || (
+                            <button
+                              onClick={() => deleteHandler(item)}
+                              className="delete-btn btn"
+                            >
+                              Delete
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
                     <button
                       onClick={() => setIsDelete(true)}
                       className="del-icon"
@@ -130,31 +171,9 @@ export default function RegionTemplate({
           </div>
         </div>
 
-        {isDelete && (
-          <div className="isdelete">
-            <h2 className="jakarta">
-              do you want delete the Template {activeItem?.name}
-            </h2>
-
-            <div className="buttons">
-              <button
-                onClick={() => {
-                  setIsDelete(false);
-                  handler(true);
-                }}
-                className="btn"
-              >
-                Annulla
-              </button>
-              <button onClick={deleteHandler} className="delete-btn btn">
-                Delete
-              </button>
-            </div>
-          </div>
-        )}
         <div className="add-hotel-footer ">
           <button onClick={() => handler(false)} className="btn cancel">
-            Cancel
+            Annulla
           </button>
           <button onClick={createHandler} className="btn">
             Seleziona

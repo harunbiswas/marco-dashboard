@@ -17,6 +17,7 @@ export default function DateList({
 }) {
   const ref = useRef(null);
   const wrp = useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
@@ -33,6 +34,32 @@ export default function DateList({
     });
   });
 
+  const formatDateToItalian = (dateString) => {
+    const months = [
+      "Gen",
+      "Feb",
+      "Mar",
+      "Apr",
+      "Mag",
+      "Giu",
+      "Lug",
+      "Ago",
+      "Set",
+      "Ott",
+      "Nov",
+      "Dic",
+    ];
+
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear().toString().slice(-2);
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+
+    return `${day} ${month} ${year}`;
+  };
+
   const [offers, setOffers] = useState([]);
 
   const [isOffer, setIsOffer] = useState(true);
@@ -46,6 +73,7 @@ export default function DateList({
   }, [tempLoad]);
 
   const deleteHandler = (item) => {
+    setIsLoading(true);
     axios
       .delete(`${values.url}/module/dateTemplete?id=${item?._id}`, {
         headers: {
@@ -54,10 +82,18 @@ export default function DateList({
       })
       .then((d) => {
         setTempLoad(!tempLoad);
+        setIsDelete(false);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setTempLoad(!tempLoad);
+        setIsDelete(false);
+        setIsLoading(false);
       });
   };
 
   const [search, setSearch] = useState("");
+  const [isDelete, setIsDelete] = useState(false);
   return (
     <div
       ref={wrp}
@@ -147,7 +183,7 @@ export default function DateList({
                                 <p>Data d'inizio</p>
                                 {item?.dates?.map((date, i) => (
                                   <div key={i} className="date-body-item">
-                                    {date?.start}
+                                    {formatDateToItalian(date?.start)}
                                   </div>
                                 ))}
                               </div>
@@ -155,17 +191,54 @@ export default function DateList({
                                 <p>Data finale</p>
                                 {item?.dates?.map((date, i) => (
                                   <div key={i} className="date-body-item">
-                                    {date?.end}
+                                    {formatDateToItalian(date?.end)}
                                   </div>
                                 ))}
                               </div>
                             </div>
                           </div>
                         </div>
+                        {isDelete && (
+                          <div className="isdelete">
+                            <h2 className="jakarta">
+                              Vuoi eliminare {item?.name}
+                            </h2>
+
+                            <div className="buttons">
+                              <button
+                                onClick={() => {
+                                  setIsDelete(false);
+                                  handler(true);
+                                }}
+                                className="btn"
+                              >
+                                Annulla
+                              </button>
+
+                              {(isLoading && (
+                                <button
+                                  disabled
+                                  className="delete-btn  spinner btn "
+                                >
+                                  <div className="bounce1"></div>
+                                  <div className="bounce2"></div>
+                                  <div className="bounce3"></div>
+                                </button>
+                              )) || (
+                                <button
+                                  onClick={() => deleteHandler(item)}
+                                  className="delete-btn btn"
+                                >
+                                  Delete
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        )}
 
                         <button
                           className="del-icon"
-                          onClick={() => deleteHandler(item)}
+                          onClick={() => setIsDelete(true)}
                         >
                           <AiOutlineDelete />
                         </button>

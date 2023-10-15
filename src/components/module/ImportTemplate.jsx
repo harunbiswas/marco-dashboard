@@ -180,14 +180,17 @@ export default function ImportTemplate({
                       }}
                     >
                       <div className="body">
-                        <BiSolidOffer />
-                        <div className="content">
-                          <h4>{item.name}</h4>
-                          <p>
-                            From {moment(item?.startDate).format("DD MMMM")} -{" "}
-                            {moment(item?.endDate).format("DD MMMM")}
-                          </p>
+                        <div className="sjdcafcxvbbnvflkj">
+                          <BiSolidOffer />
+                          <div className="content">
+                            <h4>{item.name}</h4>
+                            <p>
+                              From {moment(item?.startDate).format("DD MMMM")} -{" "}
+                              {moment(item?.endDate).format("DD MMMM")}
+                            </p>
+                          </div>
                         </div>
+
                         {(!(istoggle === item.id) && (
                           <button
                             onClick={() => {
