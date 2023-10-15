@@ -48,15 +48,24 @@ export default function EditModule() {
   }, []);
 
   const publishHandler = () => {
+    const updatedFixeDate = data?.fiexDate.map((date) => {
+      if (date.hotel) {
+        return {
+          ...date,
+          hotel: date.hotel._id,
+        };
+      }
+      return date;
+    });
+
     moduleData.templeteId = data?._id;
     moduleData.publish = true;
-
     delete data._id;
     delete data.name;
     axios
       .put(
         `${values.url}/module`,
-        { ...moduleData, ...data },
+        { ...moduleData, ...data, fiexDate: updatedFixeDate },
         {
           headers: {
             token,
@@ -99,8 +108,6 @@ export default function EditModule() {
       name: moduleData?.name,
     },
   ];
-
-  console.log();
 
   return (
     <div className=" module-edit hotel">

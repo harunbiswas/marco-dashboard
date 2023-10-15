@@ -1,5 +1,4 @@
 import axios from "axios";
-import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { BiSearch, BiSolidOffer } from "react-icons/bi";
 import { FaAngleUp } from "react-icons/fa";
@@ -15,6 +14,7 @@ export default function ImportTemplate({
   addhotel,
   tempLoad,
   setDates,
+  dates,
 }) {
   const ref = useRef(null);
   const wrp = useRef(null);
@@ -70,12 +70,9 @@ export default function ImportTemplate({
 
   const createHandler = () => {
     const newDates = activeID.map((item, index) => ({
-      start: moment(item.startDate).format("YYYY-MM-DD"),
-      end: moment(item.endDate).format("YYYY-MM-DD"),
-      currency: item.currency,
-      id: index + 1, // Use index + 1 as the id
-      hotelName: isOffer?.name,
-      offerName: item.name,
+      id: index + dates?.length,
+      hotel: isOffer,
+      offer: item?._id,
       price: item.price,
     }));
     setDates((prev) => {
@@ -99,8 +96,6 @@ export default function ImportTemplate({
       }
     }
   }, [serchData]);
-
-  console.log(items[0]);
 
   return (
     <div

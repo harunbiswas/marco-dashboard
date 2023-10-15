@@ -148,6 +148,7 @@ export default function FixedOffer({
         addhotel={isImport}
         handler={setIsImport}
         setDates={setDates}
+        dates={dates}
       />
       <DateList
         setDates={setDates}
@@ -179,10 +180,21 @@ export default function FixedOffer({
               <div className="group">
                 <label htmlFor="">Data d’inizio</label>
                 <input
-                  value={date?.start}
+                  disabled={date?.hotel}
+                  value={
+                    date.hotel
+                      ? new Date(
+                          date?.hotel?.offers?.find(
+                            (item) => item._id === date?.offer
+                          )?.startDate
+                        )
+                          .toISOString()
+                          .split("T")[0] || ""
+                      : date?.start || ""
+                  }
                   max={date?.end || ""}
                   onChange={(e) => {
-                    if (!date.hotelName) {
+                    if (!date.hotel) {
                       setDates((prevDates) => {
                         const updatedDates = [...prevDates];
                         updatedDates[i].start = e.target.value;
@@ -198,8 +210,19 @@ export default function FixedOffer({
               <div className="group">
                 <label htmlFor="">Data finale</label>
                 <input
+                  disabled={date?.hotel}
                   min={date?.start || ""}
-                  value={date?.end}
+                  value={
+                    date.hotel
+                      ? new Date(
+                          date?.hotel?.offers?.find(
+                            (item) => item._id === date?.offer
+                          )?.endDate
+                        )
+                          .toISOString()
+                          .split("T")[0] || ""
+                      : date?.end || ""
+                  }
                   type="date"
                   name=""
                   onChange={(e) => {
@@ -231,25 +254,27 @@ export default function FixedOffer({
               </button>
             </div>
 
-            {date?.hotelName && (
+            {date?.hotel?.name && (
               <div className="info">
-                {date?.hotelName && (
+                {date?.hotel?.name && (
                   <span
                     style={{
                       color: "#015DAA",
                     }}
                   >
-                    {date?.hotelName}
+                    {date?.hotel?.name}
                   </span>
                 )}{" "}
                 -{" "}
-                {date?.offerName && (
+                {date?.hotel.name && (
                   <span
                     style={{
                       color: "#1DBF73",
                     }}
                   >
-                    {date?.offerName}
+                    {date?.hotel?.offers?.map((item) => {
+                      return item._id === date?.offer && item?.name;
+                    })}
                   </span>
                 )}
               </div>
