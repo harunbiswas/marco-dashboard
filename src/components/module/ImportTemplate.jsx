@@ -2,7 +2,6 @@ import axios from "axios";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { BiSearch, BiSolidOffer } from "react-icons/bi";
-import { BsFillBuildingsFill } from "react-icons/bs";
 import { FaAngleUp } from "react-icons/fa";
 import { ImGlass } from "react-icons/im";
 import { IoClose } from "react-icons/io5";
@@ -83,9 +82,7 @@ export default function ImportTemplate({
     >
       <div ref={ref} className="add-hotel-inner">
         <div className="add-hotel-top">
-          <span>
-            {(isOffer && <BiSolidOffer />) || <BsFillBuildingsFill />}
-          </span>
+          <span>{(isOffer && <RiHotelFill />) || <RiHotelFill />}</span>
           <button onClick={() => handler(false)} className="close">
             <IoClose />
           </button>

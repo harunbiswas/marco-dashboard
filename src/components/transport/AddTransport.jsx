@@ -33,7 +33,7 @@ export default function AddTransport({
 
   // valid postale code
   const [isValid, setIsValid] = useState(true);
-
+  const [isBack, setIsBack] = useState(false);
   const [isRemove, setIsRemove] = useState(false);
   const [isChange, setIsChange] = useState(false);
 
@@ -87,6 +87,7 @@ export default function AddTransport({
     wrp.current.addEventListener("mousedown", (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
         if (isChange) {
+          setIsBack(true);
           handler(true);
           setIsDelete(true);
           setIsRemove(false);
@@ -203,6 +204,7 @@ export default function AddTransport({
   const [isDelete, setIsDelete] = useState(false);
 
   const deleteHandler = () => {
+    setIsBack(false);
     if (add || isDup) {
       setIsChange(false);
       setIsRemove(false);
@@ -308,6 +310,7 @@ export default function AddTransport({
                 if (add) {
                   setIsDelete(true);
                 } else {
+                  setIsBack(true);
                   setIsRemove(false);
                   setIsDelete(true);
                 }
@@ -571,6 +574,7 @@ export default function AddTransport({
               <button onClick={deleteHandler} className="delete-btn btn">
                 {(add && "Torna alla Lista") ||
                   (isDup && "Torna Indietro") ||
+                  (isBack && "Torna Indietro") ||
                   "Elimina"}
               </button>
             </div>
