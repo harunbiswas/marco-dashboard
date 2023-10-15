@@ -73,6 +73,8 @@ export default function ImportTemplate({
     }
   }, [serchData]);
 
+  console.log(items[0]);
+
   return (
     <div
       ref={wrp}
@@ -80,9 +82,9 @@ export default function ImportTemplate({
         isOffer && "offer"
       }`}
     >
-      <div ref={ref} className="add-hotel-inner">
+      <div ref={ref} className="add-hotel-inner erweiuriowuerweriow">
         <div className="add-hotel-top">
-          <span>{(isOffer && <RiHotelFill />) || <RiHotelFill />}</span>
+          <span>{(isOffer && <BiSolidOffer />) || <RiHotelFill />}</span>
           <button onClick={() => handler(false)} className="close">
             <IoClose />
           </button>
@@ -182,7 +184,7 @@ export default function ImportTemplate({
                           <div className="content">
                             <h4>{item.name}</h4>
                             <p>
-                              From {moment(item?.startDate).format("DD MMMM")} -{" "}
+                              Dal {moment(item?.startDate).format("DD MMMM")} al{" "}
                               {moment(item?.endDate).format("DD MMMM")}
                             </p>
                           </div>
@@ -217,8 +219,16 @@ export default function ImportTemplate({
                         <div className="conditions">
                           <h4>Condizioni</h4>
                           <ul className="conditions-wrp">
-                            <li>&#x2713; Minimum 2 Nights </li>
-                            <li>&#x2713; Minimum 7 Nights </li>
+                            <li>
+                              &#x2713;
+                              {(item?.minStay === 1 && "Minimo 1 Notte") ||
+                                `Minimo ${item?.minStay} Notti`}
+                            </li>
+                            <li>
+                              &#x2713;
+                              {(item?.maxStay === 1 && "Massimo 1 Notte") ||
+                                `Massimo ${item?.maxStay} Notti`}{" "}
+                            </li>
                           </ul>
                         </div>
                         <div className="conditions">

@@ -171,7 +171,7 @@ export default function ModuleTemplate({
                             }}
                             className="btn"
                           >
-                            Seleziona
+                            Annulla
                           </button>
 
                           {(isLoading && (
@@ -185,7 +185,7 @@ export default function ModuleTemplate({
                             </button>
                           )) || (
                             <button
-                              onClick={() => deleteHandler(item)}
+                              onClick={() => deleteHandler(activeItem)}
                               className="delete-btn btn"
                             >
                               Seleziona
@@ -195,7 +195,10 @@ export default function ModuleTemplate({
                       </div>
                     )}
                     <button
-                      onClick={() => setIsDelete(true)}
+                      onClick={() => {
+                        setActiveItem(item);
+                        setIsDelete(true);
+                      }}
                       className="del-icon"
                     >
                       <AiOutlineDelete />

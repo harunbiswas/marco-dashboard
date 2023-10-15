@@ -241,61 +241,62 @@ export default function EditModule() {
             tempLoad={tempLoad}
             setTempLoad={setTempLoad}
           />
-          {isDelete && (
-            <div className="isdelete">
-              <h2 className="jakarta">
-                {(moduleData?.publish &&
-                  `uoi eliminare ${moduleData?.name}?`) ||
-                  "Vuoi tornare indietro"}
-              </h2>
-              {
-                <p className="jakarta">
-                  {(moduleData?.publish && (
-                    <>
-                      {`Inserisci il nome del modulo da eliminare nella barra di testo:`}
-                      <strong style={{ color: "red" }}>
-                        {moduleData?.name}
-                      </strong>
-                    </>
-                  )) ||
-                    "Tornando alla lista perderai il le informazioni nel modulo che stai creando"}
-                </p>
-              }
-              <br />
+          <div
+            className={`isdelete skdfjlksjdffsvvsfsdf ${
+              (isDelete && "show") || ""
+            }`}
+          >
+            <h2 className="jakarta">
+              {(moduleData?.publish && `uoi eliminare ${moduleData?.name}?`) ||
+                "Vuoi tornare indietro?"}
+            </h2>
+            {
+              <p className="jakarta">
+                {(moduleData?.publish && (
+                  <>
+                    {`Inserisci il nome del modulo da eliminare nella barra di testo:`}
+                    <strong style={{ color: "red" }}>{moduleData?.name}</strong>
+                  </>
+                )) ||
+                  "Tornando alla lista perderai il le informazioni nel modulo che stai creando"}
+              </p>
+            }
+            <br />
 
-              {moduleData?.publish && (
-                <input
-                  type="text"
-                  value={mName}
-                  onChange={(e) => {
-                    setMName(e.target.value);
-                  }}
-                  placeholder="name of the module"
-                  style={{ color: "red" }}
-                />
-              )}
-              <div className="buttons">
-                <button
-                  onClick={() => {
-                    setIsDele(false);
-                  }}
-                  className="btn"
-                >
-                  Annulla
-                </button>
-                <button
-                  disabled={moduleData?.publish && moduleData?.name !== mName}
-                  onClick={deleteHandler}
-                  className="delete-btn sdkfjlsjadf btn"
-                >
-                  {(moduleData?.publish && "Elimina") || "Torna Indietro"}
-                </button>
-              </div>
+            {moduleData?.publish && (
+              <input
+                type="text"
+                value={mName}
+                onChange={(e) => {
+                  setMName(e.target.value);
+                }}
+                placeholder="name of the module"
+                style={{ color: "red" }}
+              />
+            )}
+            <div className="buttons">
+              <button
+                onClick={() => {
+                  setIsDele(false);
+                }}
+                className="btn"
+              >
+                Annulla
+              </button>
+              <button
+                disabled={moduleData?.publish && moduleData?.name !== mName}
+                onClick={deleteHandler}
+                className="delete-btn sdkfjlsjadf btn"
+              >
+                {(moduleData?.publish && "Elimina") || "Torna Indietro"}
+              </button>
             </div>
-          )}
+          </div>
           <div className="hotel-edit-footer">
             <div className="left">
-              <button onClick={() => setIsDele(true)}>Elimina</button>
+              <button onClick={() => setIsDele(true)}>
+                {(moduleData?.publish && "Elimina") || "Torna Indietro"}
+              </button>
             </div>
             <div className="right">
               <button onClick={() => setIsSaveTemplate(true)}>

@@ -153,7 +153,7 @@ export default function RegionTemplate({
                               onClick={() => deleteHandler(item)}
                               className="delete-btn btn"
                             >
-                              Delete
+                              Elimina
                             </button>
                           )}
                         </div>

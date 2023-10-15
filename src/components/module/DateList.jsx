@@ -201,7 +201,7 @@ export default function DateList({
                         {isDelete && (
                           <div className="isdelete">
                             <h2 className="jakarta">
-                              Vuoi eliminare {item?.name}
+                              Vuoi eliminare {activeID?.name}
                             </h2>
 
                             <div className="buttons">
@@ -226,19 +226,23 @@ export default function DateList({
                                 </button>
                               )) || (
                                 <button
-                                  onClick={() => deleteHandler(item)}
+                                  onClick={() => {
+                                    deleteHandler(activeID);
+                                  }}
                                   className="delete-btn btn"
                                 >
-                                  Delete
+                                  Elimina
                                 </button>
                               )}
                             </div>
                           </div>
                         )}
-
                         <button
                           className="del-icon"
-                          onClick={() => setIsDelete(true)}
+                          onClick={() => {
+                            setActiveId(item);
+                            setIsDelete(true);
+                          }}
                         >
                           <AiOutlineDelete />
                         </button>

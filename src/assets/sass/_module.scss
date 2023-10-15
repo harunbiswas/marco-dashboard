@@ -300,6 +300,10 @@
       }
     }
 
+    .erweiuriowuerweriow {
+      height: 76vh;
+    }
+
     .add-hotel-body {
       width: 100%;
       overflow: hidden;
@@ -867,7 +871,6 @@
 }
 
 .isdelete .buttons button.delete-btn {
-  background-color: red !important;
   height: 40px !important;
   margin-top: 0;
 
@@ -875,5 +878,16 @@
     width: 7px;
     height: 7px;
     background-color: #fff !important;
+  }
+}
+
+.skdfjlksjdffsvvsfsdf {
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
   }
 }
