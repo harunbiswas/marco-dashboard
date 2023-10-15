@@ -30,6 +30,7 @@ export default function DateList({
     wrp.current.addEventListener("click", (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
         handler(false);
+        setIsDelete(false);
       }
     });
   });
@@ -104,7 +105,13 @@ export default function DateList({
           <span>
             <FaRegCalendarDays />
           </span>
-          <button onClick={() => handler(false)} className="close">
+          <button
+            onClick={() => {
+              handler(false);
+              setIsDelete(false);
+            }}
+            className="close"
+          >
             <IoClose />
           </button>
         </div>
@@ -201,7 +208,7 @@ export default function DateList({
                         {isDelete && (
                           <div className="isdelete">
                             <h2 className="jakarta">
-                              Vuoi eliminare {activeID?.name}
+                              Vuoi eliminare {activeID?.name}?
                             </h2>
 
                             <div className="buttons">

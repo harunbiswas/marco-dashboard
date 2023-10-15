@@ -261,7 +261,6 @@ export default function EditModule() {
                   "Tornando alla lista perderai il le informazioni nel modulo che stai creando"}
               </p>
             }
-            <br />
 
             {moduleData?.publish && (
               <input

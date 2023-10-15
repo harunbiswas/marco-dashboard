@@ -19,10 +19,37 @@ export default function ImportTemplate({
   const ref = useRef(null);
   const wrp = useRef(null);
 
+  const formatDateToItalian = (dateString) => {
+    const months = [
+      "Gennaio",
+      "Febbraio",
+      "Marzo",
+      "Aprile",
+      "Maggio",
+      "Giugno",
+      "Luglio",
+      "Agosto",
+      "Settembre",
+      "Ottobre",
+      "Novembre",
+      "Dicembre",
+    ];
+
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear().toString().slice(-2);
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+
+    return `${day} ${month} `;
+  };
+
   useEffect(() => {
     wrp.current.addEventListener("click", (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
         handler(false);
+        setIsOffer(false);
       }
     });
   });
@@ -85,7 +112,13 @@ export default function ImportTemplate({
       <div ref={ref} className="add-hotel-inner erweiuriowuerweriow">
         <div className="add-hotel-top">
           <span>{(isOffer && <BiSolidOffer />) || <RiHotelFill />}</span>
-          <button onClick={() => handler(false)} className="close">
+          <button
+            onClick={() => {
+              handler(false);
+              setIsOffer(false);
+            }}
+            className="close"
+          >
             <IoClose />
           </button>
         </div>
@@ -93,8 +126,9 @@ export default function ImportTemplate({
         <div className="add-hotel-body">
           <h4>{(isOffer && "Seleziona Offerte") || "Seleziona Hotel"}</h4>
           <p>
-            Seleziona l'hotel da cui vuoi importare le offerte e le relative
-            date
+            {(isOffer &&
+              "Seleziona una o più offerte da cui vuoi importare le date") ||
+              " Seleziona l'hotel da cui vuoi importare le offerte e le relative date"}
           </p>
           <div className="module-template-search">
             <label htmlFor="search">
@@ -184,8 +218,8 @@ export default function ImportTemplate({
                           <div className="content">
                             <h4>{item.name}</h4>
                             <p>
-                              Dal {moment(item?.startDate).format("DD MMMM")} al{" "}
-                              {moment(item?.endDate).format("DD MMMM")}
+                              Dal {formatDateToItalian(item?.startDate)} al{" "}
+                              {formatDateToItalian(item?.endDate)}
                             </p>
                           </div>
                         </div>

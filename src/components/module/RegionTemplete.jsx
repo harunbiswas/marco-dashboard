@@ -26,6 +26,7 @@ export default function RegionTemplate({
     wrp.current.addEventListener("click", (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
         handler(false);
+        setIsDelete(false);
       }
     });
   });
@@ -85,7 +86,13 @@ export default function RegionTemplate({
           <span>
             <HiDocumentText />
           </span>
-          <button onClick={() => handler(false)} className="close">
+          <button
+            onClick={() => {
+              handler(false);
+              setIsDelete(false);
+            }}
+            className="close"
+          >
             <IoClose />
           </button>
         </div>
@@ -126,7 +133,9 @@ export default function RegionTemplate({
                     </div>
                     {isDelete && (
                       <div className="isdelete">
-                        <h2 className="jakarta">Vuoi eliminare {item?.name}</h2>
+                        <h2 className="jakarta">
+                          Vuoi eliminare {item?.name}?
+                        </h2>
 
                         <div className="buttons">
                           <button
