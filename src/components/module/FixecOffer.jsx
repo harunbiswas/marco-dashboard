@@ -56,7 +56,7 @@ export default function FixedOffer({
 
   const addNewDate = () => {
     const newDate = {
-      id: dates.length + 1,
+      id: dates.length + 1 + Math.random(),
       value: "",
     };
 
@@ -377,7 +377,7 @@ export default function FixedOffer({
             </div>
           ))}
         <button onClick={addNewRegion}>
-          <AiOutlinePlus /> Add More
+          <AiOutlinePlus /> Aggiungi
         </button>
       </div>
 

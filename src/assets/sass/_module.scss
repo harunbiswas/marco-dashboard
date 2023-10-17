@@ -444,6 +444,9 @@
             width: 115px;
             background-color: #f2f2f3 !important;
             color: $primary;
+            display: flex;
+            align-items: center;
+            justify-content: center;
           }
 
           .offer-item-body {
@@ -884,10 +887,29 @@
 .skdfjlksjdffsvvsfsdf {
   opacity: 0;
   visibility: hidden;
-  transition: 0.3s;
+  transition: 0.6s;
 
   &.show {
     opacity: 1;
     visibility: visible;
+  }
+
+  .group {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    & > button {
+      background-color: transparent;
+      border: none;
+      font-size: 22px;
+    }
   }
 }

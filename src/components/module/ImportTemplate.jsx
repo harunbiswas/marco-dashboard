@@ -70,7 +70,7 @@ export default function ImportTemplate({
 
   const createHandler = () => {
     const newDates = activeID.map((item, index) => ({
-      id: index + dates?.length,
+      id: index + dates?.length + Math.random(),
       hotel: isOffer,
       offer: item?._id,
       price: item.price,

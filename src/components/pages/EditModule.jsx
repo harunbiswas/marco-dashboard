@@ -1,6 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
 import { HiDocumentText } from "react-icons/hi";
 import { useNavigate, useParams } from "react-router-dom";
 import values from "../../../values";
@@ -140,7 +141,7 @@ export default function EditModule() {
             </div>{" "}
             <ExportBtn
               handler={() => setIsTemplate(true)}
-              text="Importa Template"
+              text="Importa Template Sezioni"
             />
           </div>
           <CopyLink />
@@ -253,10 +254,21 @@ export default function EditModule() {
               (isDelete && "show") || ""
             }`}
           >
-            <h2 className="jakarta">
-              {(moduleData?.publish && `uoi eliminare ${moduleData?.name}?`) ||
-                "Vuoi tornare indietro?"}
-            </h2>
+            <div className="top">
+              <h2 className="jakarta">
+                {(moduleData?.publish &&
+                  `uoi eliminare ${moduleData?.name}?`) ||
+                  "Vuoi tornare indietro?"}
+              </h2>
+              <button
+                onClick={() => {
+                  setIsDele(false);
+                }}
+              >
+                <AiOutlineClose />
+              </button>
+            </div>
+
             {
               <p className="jakarta">
                 {(moduleData?.publish && (
@@ -270,15 +282,19 @@ export default function EditModule() {
             }
 
             {moduleData?.publish && (
-              <input
-                type="text"
-                value={mName}
-                onChange={(e) => {
-                  setMName(e.target.value);
-                }}
-                placeholder="name of the module"
-                style={{ color: "red" }}
-              />
+              <div className="group">
+                <label htmlFor="">name of the module</label>
+
+                <input
+                  type="text"
+                  value={mName}
+                  onChange={(e) => {
+                    setMName(e.target.value);
+                  }}
+                  placeholder="name of the module"
+                  style={{ color: "red" }}
+                />
+              </div>
             )}
             <div className="buttons">
               <button
