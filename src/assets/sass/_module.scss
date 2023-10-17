@@ -899,6 +899,13 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    input {
+      color: $dark !important;
+      &::placeholder {
+        color: red;
+      }
+    }
   }
 
   .top {

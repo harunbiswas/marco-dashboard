@@ -257,7 +257,7 @@ export default function EditModule() {
             <div className="top">
               <h2 className="jakarta">
                 {(moduleData?.publish &&
-                  `uoi eliminare ${moduleData?.name}?`) ||
+                  `Vuoi eliminare ${moduleData?.name}?`) ||
                   "Vuoi tornare indietro?"}
               </h2>
               <button
@@ -291,7 +291,7 @@ export default function EditModule() {
                   onChange={(e) => {
                     setMName(e.target.value);
                   }}
-                  placeholder="name of the module"
+                  placeholder={moduleData?.name}
                   style={{ color: "red" }}
                 />
               </div>
