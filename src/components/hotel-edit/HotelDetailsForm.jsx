@@ -8,7 +8,7 @@ import DetailsInputs from "./DetailsInputs";
 import Rating from "./Rating";
 import TagInput from "./TagInput";
 
-export default function HotelDetailsForm({ data, setData }) {
+export default function HotelDetailsForm({ data, setData, fixtData }) {
   const [existingStrengths, setExistingStrengths] = useState([]);
   const [existingServices, setExistingServices] = useState([]);
 
@@ -75,26 +75,26 @@ export default function HotelDetailsForm({ data, setData }) {
         </div>
       </div>
 
-      {data.services && (
-        <div className="hotel-edit-bottom">
-          <h4>Service Included</h4>
-          <TagInput
-            tags={existingServices}
-            handler={setExistingServices}
-            name="hotelServices"
-            setData={setData}
-            data={data}
-          />
-          <h4>Punti di forza</h4>
-          <TagInput
-            tags={existingStrengths}
-            handler={setExistingStrengths}
-            name="hotelStrengths"
-            setData={setData}
-            data={data}
-          />
-        </div>
-      )}
+      <div className="hotel-edit-bottom">
+        <h4>Service Included</h4>
+        <TagInput
+          tags={existingServices}
+          handler={setExistingServices}
+          name="hotelServices"
+          setData={setData}
+          data={data}
+          fixtData={fixtData}
+        />
+        <h4>Punti di forza</h4>
+        <TagInput
+          tags={existingStrengths}
+          handler={setExistingStrengths}
+          name="hotelStrengths"
+          setData={setData}
+          data={data}
+          fixtData={fixtData}
+        />
+      </div>
 
       <div className="service age-edit-wrp">
         <h4>Riduzioni Età</h4>

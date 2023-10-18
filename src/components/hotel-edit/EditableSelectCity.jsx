@@ -7,7 +7,12 @@ import values from "../../../values";
 
 // region
 
-export default function EditableSelectCity({ handler, activeValue, mainData }) {
+export default function EditableSelectCity({
+  handler,
+  activeValue,
+  mainData,
+  hotel = false,
+}) {
   const [isDorp, setIsDrop] = useState(false);
   const ref = useRef(null);
   const refbtn = useRef(null);
@@ -42,6 +47,7 @@ export default function EditableSelectCity({ handler, activeValue, mainData }) {
         name: parts[0],
         zip: parts[1],
         region: mainData?.city,
+        hotel,
       };
 
       axios
@@ -96,7 +102,9 @@ export default function EditableSelectCity({ handler, activeValue, mainData }) {
         <ul className="dropdown">
           {data?.length &&
             data
-              .filter((item) => item.region === mainData?.city)
+              .filter(
+                (item) => item.region === mainData?.city && item.hotel === hotel
+              )
               .sort((a, b) => a.name.localeCompare(b.name))
               .map((d, i) => (
                 <li key={i}>

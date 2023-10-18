@@ -42,7 +42,7 @@ export const extractLatAndLng = (inputString) => {
   return { lat, lng };
 };
 
-export default function LocationDetails({ data, setData }) {
+export default function LocationDetails({ data, setData, fixtData }) {
   useEffect(() => {
     if (!data.distance || !!data.distance.length)
       setData((prev) => {
@@ -147,6 +147,7 @@ export default function LocationDetails({ data, setData }) {
           <label htmlFor="">Città</label>
           {/* <Select data={["Select City", "Select City", "Select City"]} /> */}
           <EditableSelectCity
+            hotel={true}
             activeValue={data?.state || "Seleziona Città"}
             mainData={data}
             handler={(e) => {
@@ -296,7 +297,7 @@ export default function LocationDetails({ data, setData }) {
           </button>
         </div>
       </div> */}
-      <LocationDistances data={data} setData={setData} />
+      <LocationDistances fixtData={fixtData} data={data} setData={setData} />
     </div>
   );
 }

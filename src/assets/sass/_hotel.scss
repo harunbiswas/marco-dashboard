@@ -1389,9 +1389,11 @@
       display: grid;
       grid-template-columns: auto auto auto;
       gap: 20px;
+      align-items: end;
 
       &-item {
         width: 100%;
+
         &-top {
           margin-bottom: 10px;
           display: flex;
@@ -1415,16 +1417,34 @@
 
         &-body {
           display: flex;
+          align-items: center;
 
           .select {
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
             border-right: none;
+            height: 48px;
           }
 
           input {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
+            height: 48px;
+          }
+
+          .delete-btn {
+            height: 48px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: red;
+            border: none;
+            border-radius: 4px;
+            width: 11%;
+            border: 1px solid red;
+            margin-left: 5px;
+            color: $white;
+            font-size: 22px;
           }
         }
       }
@@ -1443,6 +1463,7 @@
         transition: 0.3s;
         display: flex;
         align-items: center;
+        height: 48px;
 
         &:hover {
           opacity: 1;
@@ -2340,4 +2361,17 @@ button.edit-offer-item {
 
 .edit-offer {
   grid-template-columns: 50% 50%;
+}
+
+.rerpoiuqwer {
+  .spinner {
+    width: 156px;
+    height: 39px;
+    border: $border;
+    margin-top: 0px !important;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

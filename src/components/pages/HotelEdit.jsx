@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import values from "../../../values";
 import { HotelContext, useHotelContext } from "../../context/hotel.context";
 import Bootcump from "../basic/BootCump";
+import Loading from "../basic/Loading";
 import EditMenu from "../hotel-edit/EditMenu";
 import EditOffer from "../hotel-edit/EditOffer";
 import HotelDetailsForm from "../hotel-edit/HotelDetailsForm";
@@ -19,6 +20,7 @@ export default function HotelEdit() {
     useHotelContext(HotelContext);
   const [isPublish, setIsPublish] = useState(false);
   const navigate = useNavigate();
+  const [fixtData, setFixtData] = useState({});
 
   // development
   const { id } = useParams();
@@ -29,6 +31,7 @@ export default function HotelEdit() {
     axios
       .get(`${values.url}/hotel/single?id=${id}`)
       .then((d) => {
+        setFixtData(d.data);
         setHotelData(d.data);
       })
       .catch((e) => {
@@ -36,15 +39,22 @@ export default function HotelEdit() {
       });
   }, []);
 
+  const [isLoading, setIsloading] = useState(false);
   const submitHandler = () => {
+    setIsloading(true);
     axios
       .put(`${values.url}/hotel`, hotelData, {
         headers: {
           token,
         },
       })
-      .then((d) => {})
-      .catch((e) => console.log(e));
+      .then((d) => {
+        setIsloading(false);
+      })
+      .catch((e) => {
+        console.log(e);
+        setIsloading(false);
+      });
   };
   const publishHandler = () => {
     hotelData.publish = true;
@@ -104,10 +114,18 @@ export default function HotelEdit() {
           </div>
           <div className="hotel-edit-body">
             {(active === 1 && (
-              <HotelDetailsForm data={hotelData} setData={setHotelData} />
+              <HotelDetailsForm
+                data={hotelData}
+                fixtData={fixtData}
+                setData={setHotelData}
+              />
             )) ||
               (active === 2 && (
-                <LocationDetails data={hotelData} setData={setHotelData} />
+                <LocationDetails
+                  fixtData={fixtData}
+                  data={hotelData}
+                  setData={setHotelData}
+                />
               )) ||
               (active === 3 && (
                 <EditOffer data={hotelData} setData={setHotelData} />
@@ -145,10 +163,13 @@ export default function HotelEdit() {
                 </div>
               )}
             </div>
-            <div className="right">
-              {!isPublish && !isNewHotelAdding && (
-                <button onClick={submitHandler}>Save Changes</button>
-              )}
+            <div className="right rerpoiuqwer">
+              {!isPublish &&
+                new Date(hotelData?.createdAt).getTime() !==
+                  new Date(hotelData?.updatedAt).getTime() &&
+                ((isLoading && <Loading />) || (
+                  <button onClick={submitHandler}>Salva Modifiche</button>
+                ))}
               <button
                 onClick={() => {
                   if (active === 4 && !isPublish) publishHandler();

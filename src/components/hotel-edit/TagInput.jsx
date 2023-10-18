@@ -11,7 +11,14 @@ const isAlreadyPresentInTags = (inputString, array) => {
   return cleanArray.includes(cleanInputString);
 };
 
-export default function TagInput({ tags, handler, name, setData, data }) {
+export default function TagInput({
+  tags,
+  handler,
+  name,
+  setData,
+  data,
+  fixtData,
+}) {
   const [active, setActive] = useState([]);
   const [isInput, setIsInput] = useState(false);
   const [value, setValue] = useState("");
@@ -20,7 +27,7 @@ export default function TagInput({ tags, handler, name, setData, data }) {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log("handle submit is clicked", e);
+
     if (!value) return;
     if (!isAlreadyPresentInTags(value, tags)) {
       try {
@@ -34,7 +41,6 @@ export default function TagInput({ tags, handler, name, setData, data }) {
           }
         );
         handler((prev) => {
-          console.log([...prev, value]);
           return [...prev, value];
         });
         setActive((prev) => {
@@ -54,14 +60,12 @@ export default function TagInput({ tags, handler, name, setData, data }) {
     // axios.get(`${values.url}/hotel/single?id=${id}`).then((d) => {
 
     if (name === "hotelServices") {
-      setActive(data?.services ?? []);
-    } else if (name === "offerTags") {
-      setActive(Array.isArray(data) ? data : data?.offerTags ?? []);
-    } else {
-      setActive(data?.strengths ?? []);
+      setActive(data?.services || []);
+    } else if (name === "hotelStrengths") {
+      setActive(data?.strengths || []);
     }
     // });
-  }, []);
+  }, [fixtData]);
 
   useEffect(() => {
     if (name === "hotelServices") {
@@ -71,8 +75,6 @@ export default function TagInput({ tags, handler, name, setData, data }) {
           services: active,
         };
       });
-    } else if (name === "offerTags") {
-      setData(active);
     } else {
       setData((prev) => {
         return {
@@ -82,6 +84,8 @@ export default function TagInput({ tags, handler, name, setData, data }) {
       });
     }
   }, [active]);
+
+  // console.log(data);
 
   return (
     <ul className="tag-input">

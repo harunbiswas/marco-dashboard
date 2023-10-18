@@ -16,6 +16,7 @@ export default function Hotel() {
   const [menus, setMenus] = useState([
     { name: "Tutti" },
     { name: "Recentemente Aggiunti" },
+    { name: "Disabilita" },
   ]);
 
   const [hotels, setHotels] = useState([]);
@@ -38,7 +39,11 @@ export default function Hotel() {
         const { data } = await axios.get(
           `${values.url}/hotel?page=${active || 1}&search=${
             search || ""
-          }&week=${(week === "Recentemente Aggiunti" && true) || false}`,
+          }&week=${
+            (week === "Recentemente Aggiunti" && true) ||
+            (week === "Disabilita" && "Disabilita") ||
+            false
+          }`,
           {
             headers: {
               token,

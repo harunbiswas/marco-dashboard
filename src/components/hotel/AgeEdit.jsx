@@ -47,7 +47,7 @@ export default function AgeEdit({ isEdit, data, setData }) {
               value: Number(
                 subItem.label === "Age Limit"
                   ? rx.test(newValue.toString())
-                    ? (newValue < 17 && newValue) || 17
+                    ? (newValue < 18 && newValue) || 18
                     : 0
                   : rx.test(newValue.toString())
                   ? (newValue < 100 && newValue) || 100
@@ -66,6 +66,8 @@ export default function AgeEdit({ isEdit, data, setData }) {
     });
     setItems(updatedItems);
   };
+
+  // console.log(items);
 
   return (
     <>
@@ -104,7 +106,7 @@ export default function AgeEdit({ isEdit, data, setData }) {
                     >
                       {/* <div key={i} className={"age-edit-item-input"}> */}
                       <label htmlFor="">
-                        {d1.label === "Età Massima" ? "Età Massima" : "Sconto"}
+                        {d1.label === "Age Limit" ? "Età Massima" : "Sconto"}
                       </label>
                       {d1.label !== "Age Limit" && <span>%</span>}
                       <Input
@@ -161,12 +163,12 @@ export default function AgeEdit({ isEdit, data, setData }) {
                       {
                         id: 1,
                         label: "Age Limit",
-                        value: 10,
+                        value: 0,
                       },
                       {
                         id: 2,
                         label: "Discount",
-                        value: 10,
+                        value: 0,
                       },
                     ],
                   },
