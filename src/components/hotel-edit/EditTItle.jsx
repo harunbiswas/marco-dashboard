@@ -29,24 +29,21 @@ export default function EditTitle({
     <div ref={wrp} className={`edit-title-wrp ${(isShow && "show") || ""}`}>
       <div ref={ref} className={`edit-title booking-box `}>
         <div className="edit-title-top">
-          <h4>Edit Title</h4>
+          <h4>Modifica Titolo</h4>
           <button onClick={closeHandler}>
             <GrClose />
           </button>
         </div>
-        <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry.
-        </p>
+        <p>Modifica il titolo dell'opzione Distanza</p>
 
         <div className="item">
-          <label htmlFor="">Title Name</label>
+          <label htmlFor="">Nome Distanza</label>
           <Input handler={setValue} d={{ value, label: "Enter Name" }} />
         </div>
 
         <div className="edit-title-footer">
           <button onClick={closeHandler} className="btn cancel">
-            Cancel
+            Annulla
           </button>
           <button
             onClick={() => {
@@ -56,7 +53,7 @@ export default function EditTitle({
             }}
             className="btn"
           >
-            Change
+            Modifica
           </button>
         </div>
       </div>

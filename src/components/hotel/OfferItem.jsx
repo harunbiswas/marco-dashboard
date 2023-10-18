@@ -1,33 +1,12 @@
+import moment from "moment/moment";
 import { useRef, useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { ImGlass } from "react-icons/im";
 import img from "../../assets/images/discount.svg";
 import Description from "./Description";
 import OfferTags from "./OfferTags";
-import moment from "moment/moment";
 
 export default function OfferItem({ editOfferHandler, offer }) {
-  const description = `
-    Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.Offering a private beach, fitness centre and a Michelin-starred restaurant, Il San Pietro di Positano is located in Positano. This luxurious 5-star hotel features elegantly furnished rooms with a terrace and sea views.`;
-
-  const [prices, setPrices] = useState([
-    {
-      name: "Full Board",
-      price: 120,
-      dateline: "per night",
-    },
-    {
-      name: "Half Board",
-      price: 90,
-      dateline: "per night",
-    },
-    {
-      name: "Bread & Breakfast",
-      price: 140,
-      dateline: "per night",
-    },
-  ]);
-
   const body = useRef(null);
   const [istoggle, setIsToggle] = useState(false);
   const [isTagEdit, setIsTagEdit] = useState(false);

@@ -15,7 +15,6 @@ export default function DetailsInputs({ data, setData }) {
   const [isRestu, setIsRestu] = useState(false);
 
   useEffect(() => {
-    console.log("simple useeffect ");
     const fetchData = async () => {
       try {
         const response = await axios.get(`${values.url}/hotel/single?id=${id}`);
@@ -44,7 +43,6 @@ export default function DetailsInputs({ data, setData }) {
   }, [id]);
 
   useEffect(() => {
-    console.log("Inputs useeffect ");
     setData((prev) => {
       return {
         ...prev,

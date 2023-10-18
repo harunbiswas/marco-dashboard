@@ -5,6 +5,7 @@ import values from "../../../values";
 import Button from "../basic/Button";
 import ExportBtn from "../basic/ExportBtn";
 import Filters from "../basic/Filters";
+import Loading from "../basic/Loading";
 import Title from "../basic/Title";
 import BookingMneu from "../booking/BookingMenu";
 import Pagenation from "../booking/Pagenation";
@@ -21,23 +22,40 @@ export default function Hotel() {
   const [addhotel, setAddhotel] = useState(false);
 
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
+  const [isLoading, setIsloading] = useState(false);
+
+  // development
+  const [week, setIsWeek] = useState("");
+  const [max, setMax] = useState("");
+  const [active, setActive] = useState("");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
+    setIsloading(true);
+
     (async () => {
       try {
-        const { data } = await axios.get(`${values.url}/hotel`, {
-          headers: {
-            token,
-          },
-        });
-        console.log(data);
-        setHotels(data);
+        const { data } = await axios.get(
+          `${values.url}/hotel?page=${active || 1}&search=${
+            search || ""
+          }&week=${(week === "Recentemente Aggiunti" && true) || false}`,
+          {
+            headers: {
+              token,
+            },
+          }
+        );
+
+        setMax(data.count);
+        setHotels(data.result);
+        setIsloading(false);
       } catch (error) {
+        setIsloading(false);
         console.log(error);
         setHotels([]);
       }
     })();
-  }, []);
+  }, [search, active, week]);
 
   return (
     <div className="hotel">
@@ -46,7 +64,7 @@ export default function Hotel() {
         <div className="booking-box">
           <div className="hotel-top">
             <div className="hotel-top-left">
-              <Title title="Hotel Lish" />
+              <Title title="Lista Hotel" />
               <p>Questa è la lista di tutti gli hotel aggiunti nel pannello</p>
             </div>
             <div className="hotel-top-right">
@@ -54,15 +72,30 @@ export default function Hotel() {
               <Button text="Aggiungi Hotel" handler={setAddhotel} />
             </div>
           </div>
-          <BookingMneu menus={menus} />
-          <Filters />
-          <div className="hotel-wrp">
-            {Array.isArray(hotels) &&
-              hotels?.map((hotel, i) => (
-                <HotelItem key={i} hotelData={hotel} />
-              ))}
-          </div>
-          <Pagenation isbrns={true} />
+          <BookingMneu menus={menus} setActive={setIsWeek} />
+          <Filters
+            pls="Cerca Hotel o $Offerte"
+            search={search}
+            setSearch={setSearch}
+          />
+          {(isLoading && <Loading />) || (
+            <div className="hotel-wrp">
+              {Array.isArray(hotels) &&
+                hotels?.map((hotel, i) => (
+                  <HotelItem key={i} hotelData={hotel} />
+                ))}
+            </div>
+          )}
+
+          <Pagenation
+            isbrns={true}
+            max={max}
+            active={active}
+            setActiveValue={setActive}
+            search={search}
+            showItem={10}
+            btn={week}
+          />
         </div>
       </div>
     </div>

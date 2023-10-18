@@ -26,7 +26,7 @@ const calculateLowestAndHighestPrices = (offers) => {
       }
     }
   }
-  return `$${lowestPrice}~$${highestPrice}`;
+  return `€${lowestPrice}~${highestPrice}€ `;
 };
 
 export default function HotelItem({ hotelData }) {
@@ -69,7 +69,7 @@ export default function HotelItem({ hotelData }) {
         </div>
         <div className="hotel-item-right-bottom">
           <Link to={`/hotel/${hotelData._id}`} className="btn">
-          Vedi Dettagli
+            Vedi Dettagli
           </Link>
         </div>
       </div>

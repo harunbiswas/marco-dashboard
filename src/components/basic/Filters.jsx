@@ -14,6 +14,7 @@ export default function Filters({
   setSortValue,
   filterOP,
   setFilterOP,
+  pls,
 }) {
   const [isFilter, setIsFilter] = useState(false);
   const filter = useRef(null);
@@ -32,7 +33,7 @@ export default function Filters({
 
   return (
     <div className="booking-filter">
-      <Search search={search} pls="Cerca" setSearch={setSearch} />
+      <Search search={search} pls={pls || "Cerca"} setSearch={setSearch} />
       <div className="booking-filters">
         {activePage && <AddBtn activePage={activePage} />}
         <div className="sort booking-btn transport-sort">

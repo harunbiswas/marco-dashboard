@@ -1,8 +1,12 @@
 import React, { useMemo } from "react";
 import { GoogleMap, Marker, withGoogleMap } from "react-google-maps";
 
+function Map({ markerPosition = {} }) {
+  const { lat, lng } = markerPosition || {
+    lat: 40.72910996068338,
+    lng: 13.907388130851295,
+  };
 
-function Map({ lat, lng }) {
   const MapComponent = withGoogleMap((prop) => {
     console.log(prop);
     return (

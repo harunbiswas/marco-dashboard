@@ -1,16 +1,21 @@
+import axios from "axios";
+import Cookies from "js-cookie";
 import { useEffect, useRef, useState } from "react";
 import { GrClose } from "react-icons/gr";
+import values from "../../../values";
 
 export default function DeleteHotel({
   data,
   isShow,
   closeHandler,
   changeHandler,
+  publish,
+  hotelData,
 }) {
   const [value, setValue] = useState("");
-
   const ref = useRef(null);
   const wrp = useRef(null);
+  const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
   useEffect(() => {
     wrp.current.addEventListener("click", (e) => {
@@ -29,6 +34,21 @@ export default function DeleteHotel({
     }
   }, [value]);
 
+  const disableHandler = () => {
+    hotelData.publish = !publish;
+    axios
+      .put(`${values.url}/hotel`, hotelData, {
+        headers: {
+          token,
+        },
+      })
+      .then((d) => {
+        closeHandler();
+        setValue("");
+      })
+      .catch((e) => console.log(e));
+  };
+
   return (
     <div
       ref={wrp}
@@ -36,17 +56,31 @@ export default function DeleteHotel({
     >
       <div ref={ref} className={`edit-title booking-box `}>
         <div className="edit-title-top">
-          <h4>Delete Hotel</h4>
+          <h4>
+            {(isShow === "delete" && "Elimina Hotel") ||
+              (hotelData?.publish && "Disabilita Hotel") ||
+              "Riabilita Hotel"}
+          </h4>
           <button onClick={closeHandler}>
             <GrClose />
           </button>
         </div>
-        <p>Please type the hotel name to be sure that you want delete.</p>
+        <p>
+          {(isShow === "delete" &&
+            "nserisci il nome dell'hotel per poterlo eliminare") ||
+            (hotelData?.publish &&
+              "Inserisci il nome dell'hotel per poterlo eliminare") ||
+            "Inserisci il nome dell'hotel per poterlo riabilitare"}
+        </p>
 
         <div className="item">
-          <label htmlFor="">Title Name</label>
+          <label htmlFor="">
+            {(isShow === "delete" && "Nome Hotel") || "Nome Titolo"}
+          </label>
           <input
-            className={isError && "error"}
+            className={`${isError && "error"} ${
+              isShow === "disable" && "disable"
+            }`}
             type="text"
             value={value}
             onChange={(e) => {
@@ -58,18 +92,24 @@ export default function DeleteHotel({
 
         <div className="edit-title-footer">
           <button onClick={closeHandler} className="btn cancel">
-            Cancel
+            Annulla
           </button>
           <button
             onClick={() => {
               if (value) {
-                changeHandler(value);
+                if (isShow === "delete") {
+                  changeHandler(value);
+                } else {
+                  disableHandler();
+                }
               }
             }}
             className="btn delete"
             disabled={!(data === value)}
           >
-            Delete
+            {(isShow === "delete" && "Elimina") ||
+              (hotelData?.publish && "Disabilita") ||
+              "Riabilita"}
           </button>
         </div>
       </div>

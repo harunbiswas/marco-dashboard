@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { BsFillBuildingsFill } from "react-icons/bs";
 import { useNavigate, useParams } from "react-router-dom";
 import values from "../../../values";
-import { useHotelContext } from "../../context/hotel.context";
+import { HotelContext, useHotelContext } from "../../context/hotel.context";
 import Bootcump from "../basic/BootCump";
 import EditMenu from "../hotel-edit/EditMenu";
 import EditOffer from "../hotel-edit/EditOffer";
@@ -12,21 +12,11 @@ import HotelDetailsForm from "../hotel-edit/HotelDetailsForm";
 import LocationDetails from "../hotel-edit/LocationDetails";
 import Publish from "../hotel-edit/Publish";
 
-const bootCump = ({ isNewHotelAdding }) => [
-  {
-    name: "Lista Hotel",
-    url: "/hotel",
-    icon: <BsFillBuildingsFill />,
-  },
-  {
-    name: isNewHotelAdding ? "isNewHotelAdding" : "Modifica Hotel",
-  },
-];
-
 export default function HotelEdit() {
   const [isDelete, setIsDelete] = useState(false);
   const [active, setActive] = useState(1);
-  const { isNewHotelAdding, setIsNewHotelAdding } = useHotelContext();
+  const { isNewHotelAdding, setIsNewHotelAdding } =
+    useHotelContext(HotelContext);
   const [isPublish, setIsPublish] = useState(false);
   const navigate = useNavigate();
 
@@ -47,14 +37,24 @@ export default function HotelEdit() {
   }, []);
 
   const submitHandler = () => {
-    console.log("Hotel");
     axios
       .put(`${values.url}/hotel`, hotelData, {
         headers: {
           token,
         },
       })
-      .then((d) => console.log(d))
+      .then((d) => {})
+      .catch((e) => console.log(e));
+  };
+  const publishHandler = () => {
+    hotelData.publish = true;
+    axios
+      .put(`${values.url}/hotel`, hotelData, {
+        headers: {
+          token,
+        },
+      })
+      .then((d) => {})
       .catch((e) => console.log(e));
   };
 
@@ -78,6 +78,21 @@ export default function HotelEdit() {
       setIsNewHotelAdding(false);
     }
   };
+
+  const bootCump = ({ isNewHotelAdding }) => [
+    {
+      name: "Lista Hotel",
+      url: "/hotel",
+      icon: <BsFillBuildingsFill />,
+    },
+    {
+      name:
+        new Date(hotelData?.createdAt).getTime() ===
+        new Date(hotelData?.updatedAt).getTime()
+          ? "Aggiungi Hotel"
+          : hotelData?.name,
+    },
+  ];
 
   return (
     <div className="hotel-edit hotel">
@@ -136,7 +151,7 @@ export default function HotelEdit() {
               )}
               <button
                 onClick={() => {
-                  if (active === 4 && !isPublish) submitHandler();
+                  if (active === 4 && !isPublish) publishHandler();
                   if (active < 4 && !isPublish) {
                     setActive(active + 1);
                   } else if (isPublish) {

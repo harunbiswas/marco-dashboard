@@ -1,9 +1,9 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import values from "../../../values";
-import Cookies from "js-cookie";
 
 const isAlreadyPresentInTags = (inputString, array) => {
   const cleanInputString = inputString.replace(/\s/g, "").toLowerCase();
@@ -19,13 +19,9 @@ export default function TagInput({ tags, handler, name, setData, data }) {
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
   const submitHandler = async (e) => {
-
     e.preventDefault();
-    console.log(
-      "handle submit is clicked",
-      e
-    );
-    if(!value) return
+    console.log("handle submit is clicked", e);
+    if (!value) return;
     if (!isAlreadyPresentInTags(value, tags)) {
       try {
         await axios.post(
@@ -38,11 +34,11 @@ export default function TagInput({ tags, handler, name, setData, data }) {
           }
         );
         handler((prev) => {
-          console.log([...prev, value])
+          console.log([...prev, value]);
           return [...prev, value];
         });
         setActive((prev) => {
-          console.log([...prev, value])
+          console.log([...prev, value]);
           return [...prev, value];
         });
       } catch (error) {
@@ -56,14 +52,14 @@ export default function TagInput({ tags, handler, name, setData, data }) {
   const { id } = useParams();
   useEffect(() => {
     // axios.get(`${values.url}/hotel/single?id=${id}`).then((d) => {
-      console.log("id," , data)
-      if (name === "hotelServices") {
-        setActive(data?.services ?? []);
-      } else if(name === "offerTags") {
-        setActive(Array.isArray(data) ? data :  data?.offerTags ?? []);
-      } else {
-        setActive(data?.strengths ?? []);
-      }
+
+    if (name === "hotelServices") {
+      setActive(data?.services ?? []);
+    } else if (name === "offerTags") {
+      setActive(Array.isArray(data) ? data : data?.offerTags ?? []);
+    } else {
+      setActive(data?.strengths ?? []);
+    }
     // });
   }, []);
 
@@ -75,7 +71,7 @@ export default function TagInput({ tags, handler, name, setData, data }) {
           services: active,
         };
       });
-    } else if(name === "offerTags") {
+    } else if (name === "offerTags") {
       setData(active);
     } else {
       setData((prev) => {

@@ -283,7 +283,7 @@ export default function EditModule() {
 
             {moduleData?.publish && (
               <div className="group">
-                <label htmlFor="">name of the module</label>
+                <label htmlFor="">Nome del modulo</label>
 
                 <input
                   type="text"

@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
-import { FiEdit } from "react-icons/fi";
 import { MdLocationOn } from "react-icons/md";
 import Select from "../basic/Select";
 import Map from "../hotel/Map";
-import EditTitle from "./EditTItle";
-import Input from "./Input";
 import EditableSelectCity from "./EditableSelectCity";
+import Input from "./Input";
 import LocationDistances from "./LocationDistances";
 
 const cities = [
@@ -78,19 +75,19 @@ export default function LocationDetails({ data, setData }) {
       });
   }, []);
 
-  const [lat, setLat] = useState(40.7270757466288)
-  const [lng, setLng] = useState(40.7270757466288)
+  const [lat, setLat] = useState(40.72910996068338);
+  const [lng, setLng] = useState(13.907388130851295);
   const [mapMarker, setMapMarker] = useState({
-    lat: 40.7270757466288,
-    lng: 13.903021256356881,
+    lat: 40.72910996068338,
+    lng: 13.907388130851295,
   });
 
   useEffect(() => {
     if (data.coordinate) {
-      const {lat: funcLat, lng: funcLng} = extractLatAndLng(data.coordinate);
+      const { lat: funcLat, lng: funcLng } = extractLatAndLng(data.coordinate);
       // setMapMarker({lat, lng})
-      setLat(funcLat)
-      setLng(funcLng)
+      setLat(funcLat);
+      setLng(funcLng);
     }
   }, [data]);
 
@@ -243,7 +240,7 @@ export default function LocationDetails({ data, setData }) {
       {/* <Map markerPosition={extractLatAndLng(data.coordinate) ?? mapMarker} /> */}
       {/* <Map markerPosition={mapMarker} /> */}
       {/* <Map markerPosition={{lat, lng}} /> */}
-      <Map lat={lat} lng={lng} />
+      <Map lat={lat} lng={lng} markerPosition={mapMarker} />
       {/* <div className="location-details-bottom">
         <h4>Distanza</h4>
         <p>Inserisci le distanze dai vari posti</p>

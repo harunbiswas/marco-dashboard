@@ -86,9 +86,10 @@
 
       .img {
         width: 160px;
-        height: 100%;
+        height: 160px;
         overflow: hidden;
-        display: flex;
+        display: grid;
+        grid-template-columns: 100% 100% 100%;
         position: relative;
         border-radius: 6px;
 
@@ -338,6 +339,12 @@
 
         &::placeholder {
           color: $red;
+        }
+
+        &.disable {
+          &::placeholder {
+            color: $yollow;
+          }
         }
       }
 
@@ -1247,7 +1254,7 @@
   &-wrp {
     display: grid;
     grid-template-columns: auto auto auto;
-    column-gap: 28px;
+    column-gap: 15px;
     row-gap: 15px;
     margin-top: 28px;
   }
@@ -1314,10 +1321,13 @@
   }
 
   & > .buttons {
-    padding-top: 20px;
     display: flex;
     flex-direction: column;
     gap: 5px;
+
+    .hotel-form-details-item.full {
+      margin-top: 15px;
+    }
 
     & > button {
       color: $primary;
@@ -2326,4 +2336,8 @@ button.edit-offer-item {
     color: $primary;
     font-size: 24px;
   }
+}
+
+.edit-offer {
+  grid-template-columns: 50% 50%;
 }

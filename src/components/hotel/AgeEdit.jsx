@@ -25,12 +25,13 @@ export default function AgeEdit({ isEdit, data, setData }) {
   }, []);
 
   useEffect(() => {
-    setData && setData((prev) => {
-      return {
-        ...prev,
-        ageDeductions: items,
-      };
-    });
+    setData &&
+      setData((prev) => {
+        return {
+          ...prev,
+          ageDeductions: items,
+        };
+      });
   });
 
   // Function to update value dynamically
@@ -93,12 +94,17 @@ export default function AgeEdit({ isEdit, data, setData }) {
               <div key={i} className="age-edit-item">
                 {d.items.map((d1, i) => (
                   <>
-                    <div key={i} className={d1.label === "Age Limit" ? "age-edit-item-input" : "age-edit-item-form-group discount"}>
-                    {/* <div key={i} className={"age-edit-item-input"}> */}
+                    <div
+                      key={i}
+                      className={
+                        d1.label === "Age Limit"
+                          ? "age-edit-item-input"
+                          : "age-edit-item-form-group discount"
+                      }
+                    >
+                      {/* <div key={i} className={"age-edit-item-input"}> */}
                       <label htmlFor="">
-                        {d1.label === "Age Limit"
-                          ? "Età Limite (Inclusa)"
-                          : "Sconto (%)"}
+                        {d1.label === "Età Massima" ? "Età Massima" : "Sconto"}
                       </label>
                       {d1.label !== "Age Limit" && <span>%</span>}
                       <Input

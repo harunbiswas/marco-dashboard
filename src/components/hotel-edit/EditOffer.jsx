@@ -1,10 +1,10 @@
+import moment from "moment/moment";
 import { useState } from "react";
 import { ImGlass } from "react-icons/im";
 import { LuEdit } from "react-icons/lu";
 import img1 from "../../assets/images/create.svg";
 import img from "../../assets/images/discount.svg";
 import AddNewOffer from "./AddNewOffer";
-import moment from "moment/moment";
 
 export default function EditOffer({ data, setData }) {
   const [items, setItems] = useState([1]);
@@ -18,7 +18,7 @@ export default function EditOffer({ data, setData }) {
 
   const [isAdd, setIsAdd] = useState(false);
   const [isAddNewOfferClicked, setIsAddNewOfferClicked] = useState(false);
-  const [offerToEdit, setOfferToEdit] = useState(null)
+  const [offerToEdit, setOfferToEdit] = useState(null);
   return (
     <div className="edit-offer">
       {data.offers &&
@@ -30,19 +30,27 @@ export default function EditOffer({ data, setData }) {
                   <img src={img} alt="" />
                   <div className="content">
                     <h4>{offer.name}</h4>
-                    <span>Dal {moment(offer.startDate).format("Do MMMM ")} - {moment(offer.endDate).format("Do MMMM YY")}</span>
+                    <span>
+                      Dal {moment(offer.startDate).format("Do MMMM ")} -{" "}
+                      {moment(offer.endDate).format("Do MMMM YY")}
+                    </span>
                   </div>
                 </div>
 
                 <div className="edit-btn">
-                  <button onClick={() => {setOfferToEdit(offer); setIsAdd(true)}}>
-                    <LuEdit /> Edit
+                  <button
+                    onClick={() => {
+                      setOfferToEdit(offer);
+                      setIsAdd(true);
+                    }}
+                  >
+                    <LuEdit /> Modifica
                   </button>
                 </div>
               </div>
               <div className="edit-offer-item-body">
                 <div className="conditions">
-                  <h4>Conditions</h4>
+                  <h4>Condizioni</h4>
                   <ul className="conditions-wrp">
                     <li>&#x2713; Minimo {offer.minStay} Notti </li>
                     <li>&#x2713; Massimo {offer.maxStay} Notti </li>
@@ -51,18 +59,20 @@ export default function EditOffer({ data, setData }) {
                 <div className="conditions">
                   <h4>
                     <ImGlass />
-                    {offer.beverageAvailability === "Incluse" ? "Bevande Incluse" :  "Bevande non Incluse"}
+                    {offer.beverageAvailability === "Incluse"
+                      ? "Bevande Incluse"
+                      : "Bevande non Incluse"}
                   </h4>
                 </div>
 
                 <div className="price">
-                  <h4>Price</h4>
+                  <h4>Prezzi</h4>
                   <ul className="price-items">
                     {offer.breakdown.map((pr, i) => (
                       <li key={i}>
                         <p>{pr.name}</p>
                         <strong>
-                          {pr.currency +  pr.price} <span>/{pr.priceType}</span>
+                          {pr.currency + pr.price} <span>/{pr.priceType}</span>
                         </strong>
                       </li>
                     ))}
@@ -70,11 +80,14 @@ export default function EditOffer({ data, setData }) {
                 </div>
 
                 <div className="price">
-                  <h4>Age Reduction</h4>
+                  <h4>Riduzioni Età</h4>
                   <ul className="price-items">
                     {offer.ageReduction.map((ageRed, i) => (
                       <li key={i}>
-                        <p>Eta {i === 0 ? 0 : offer.ageReduction[i - 1].agelimit} - {ageRed.agelimit}</p>
+                        <p>
+                          Eta {i === 0 ? 0 : offer.ageReduction[i - 1].agelimit}{" "}
+                          - {ageRed.agelimit}
+                        </p>
                         <strong>
                           $120 <span>/{ageRed.boardType}</span>
                         </strong>
@@ -87,17 +100,19 @@ export default function EditOffer({ data, setData }) {
             </div>
           );
         })}
-      {(isAddNewOfferClicked || offerToEdit) && <AddNewOffer
-        isAdd={isAdd}
-        setIsAdd={setIsAdd}
-        isAddNewOfferClicked={isAddNewOfferClicked}
-        offer={offerToEdit}
-        setOffer={setOfferToEdit}
-        setIsAddNewOfferClicked={setIsAddNewOfferClicked}
-        submitHandler={submitHandler}
-        data={data}
-        setData={setData}
-      />}
+      {(isAddNewOfferClicked || offerToEdit) && (
+        <AddNewOffer
+          isAdd={isAdd}
+          setIsAdd={setIsAdd}
+          isAddNewOfferClicked={isAddNewOfferClicked}
+          offer={offerToEdit}
+          setOffer={setOfferToEdit}
+          setIsAddNewOfferClicked={setIsAddNewOfferClicked}
+          submitHandler={submitHandler}
+          data={data}
+          setData={setData}
+        />
+      )}
       <button
         onClick={() => {
           setIsAddNewOfferClicked(true);
@@ -106,8 +121,8 @@ export default function EditOffer({ data, setData }) {
         className="edit-offer-item"
       >
         <img src={img1} alt="" />
-        <h4>Create New Offer</h4>
-        <p>Contrary to popular belief, Lorem Ipsum is not simply random text</p>
+        <h4>Crea Offerta</h4>
+        <p>Clicca qui per creare una nuova offerta manualmente</p>
       </button>
     </div>
   );

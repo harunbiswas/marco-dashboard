@@ -7,10 +7,11 @@ export default function Pagenation({
   setActiveValue,
   setIsLoading,
   search,
+  showItem = 30,
+  btn = "",
 }) {
   const [btns, setBtns] = useState([]);
   const [activeBtn, setActiveBtn] = useState(btns[0]);
-  const showItem = 30;
 
   useEffect(() => {
     const btn = max / showItem;
@@ -30,7 +31,7 @@ export default function Pagenation({
 
   useEffect(() => {
     setActiveBtn(1);
-  }, [search]);
+  }, [search, btn]);
 
   return (
     <div className="pagenation-wrp">
@@ -95,7 +96,6 @@ export default function Pagenation({
                 "..."}
               {btns[btns.length - 1] !== 1 && (
                 <li>
-                  {" "}
                   <button
                     onClick={() => setActiveBtn(btns[btns.length - 1])}
                     className={`pagenation-btn ${
