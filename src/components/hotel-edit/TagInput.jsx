@@ -44,7 +44,6 @@ export default function TagInput({
           return [...prev, value];
         });
         setActive((prev) => {
-          console.log([...prev, value]);
           return [...prev, value];
         });
       } catch (error) {
@@ -64,7 +63,7 @@ export default function TagInput({
     } else if (name === "hotelStrengths") {
       setActive(data?.strengths || []);
     } else if (name === "offerTags") {
-      setActive(fixtData);
+      setActive(fixtData || []);
     }
     // });
   }, [fixtData]);

@@ -2,7 +2,6 @@ import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
 import Input from "./Input";
 
 export default function Supplement({ supplement, setSupplement }) {
-  console.log(supplement);
   return (
     <div className="add-new-offer-details supplement">
       {supplement?.map((d, i) => (
