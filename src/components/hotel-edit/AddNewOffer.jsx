@@ -190,6 +190,8 @@ export default function AddNewOffer({
     wrp.current.addEventListener("click", (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
         setIsAdd(false);
+        setIsAddNewOfferClicked(false);
+        setOffer(null);
       }
     });
   }, []);
