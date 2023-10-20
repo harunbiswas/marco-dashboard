@@ -9,6 +9,7 @@ const engToItLabel = {
 
 export default function Breakdown({ data, handler, minStay, maxStay, i }) {
   const def = ["Pensione completa", "Mezza pensione", "Bed & Breakfast"];
+
   return (
     <div className="breakdown-inner">
       <div className="item">
@@ -26,7 +27,7 @@ export default function Breakdown({ data, handler, minStay, maxStay, i }) {
           // handler={(e) => handler(e, data.breakdownId, "priceType")}
           activeValue={
             data.priceType ||
-            (minStay === maxStay && "Costo giornaliero") ||
+            (minStay !== maxStay && "Costo giornaliero") ||
             "Totale offerta"
           }
         />

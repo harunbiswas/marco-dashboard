@@ -24,7 +24,7 @@ export default function AgeReduction({ data, handler }) {
         />
       </div>
       <div className="item">
-        <label htmlFor="">Età Massima.</label>
+        <label htmlFor="">Età Massima</label>
         <Input
           type="number"
           handler={(e) => handler(e, data.reductionId, "agelimit")}
@@ -32,7 +32,7 @@ export default function AgeReduction({ data, handler }) {
         />
       </div>
       <div className="item klsajflkjsdfjlkklsadflkjsdf">
-        <label htmlFor="">Sconto(%)</label>
+        <label htmlFor="">Sconto</label>
         <span>%</span>
         <Input
           type="number"

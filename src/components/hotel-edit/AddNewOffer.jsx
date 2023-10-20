@@ -64,7 +64,15 @@ export default function AddNewOffer({
   const [packages, setPackage] = useState(offer ? offer?.packages : "");
   const [omaggi, setOmaggi] = useState(offer ? offer?.omaggi : "");
   const [supplement, setSupplement] = useState(
-    offer?.supplement ? offer?.supplement : []
+    offer?.supplement
+      ? offer?.supplement
+      : [
+          {
+            name: "",
+            currency: "€",
+            price: 0,
+          },
+        ]
   );
 
   const [minStay, setMinStay] = useState(offer ? offer.minStay : "");
@@ -94,6 +102,7 @@ export default function AddNewOffer({
   );
 
   const [offerTags, setOfferTags] = useState(offer ? offer?.tags : []);
+  const [noUpdateXML, setNoUpdateXML] = useState(offer?.noUpdateXML || false);
 
   const [existingTags, setExistingTags] = useState([]);
 
@@ -116,17 +125,32 @@ export default function AddNewOffer({
   }, []);
 
   const handleBreakdownChange = (value, id, property) => {
-    console.log("handleBreakdownChange", items);
-    const updatedItems = items.map((item) => {
-      return item.breakdownId === id
-        ? {
-            ...item,
-            [property]: value,
-          }
-        : item;
-    });
+    if (property === "price") {
+      const rx = /^(\d+(\.\d{0,2})?)?$/;
+      const updatedItems = items.map((item) => {
+        return item.breakdownId === id
+          ? {
+              ...item,
+              [property]:
+                (rx.test(value.toString()) && value) ||
+                (value.length < 2 ? 0 : item.price),
+            }
+          : item;
+      });
+      setItems(updatedItems);
+    } else {
+      const updatedItems = items.map((item) => {
+        return item.breakdownId === id
+          ? {
+              ...item,
+              [property]: value,
+            }
+          : item;
+      });
+      setItems(updatedItems);
+    }
+
     // console.log(updatedItems);
-    setItems(updatedItems);
   };
 
   const handleAgeChange = (value, id, property) => {
@@ -174,6 +198,7 @@ export default function AddNewOffer({
       packages,
       omaggi,
       supplement,
+      noUpdateXML,
     };
     console.log({
       newOffer: newOfferData,
@@ -258,15 +283,12 @@ export default function AddNewOffer({
                 <label htmlFor="title">Nome Offerta</label>
                 <Input
                   handler={setTitle}
-                  d={{ value: title, label: "Enter title" }}
+                  d={{ value: title, label: "Inserisci nome" }}
                 />
               </div>
               <div className="item">
                 <label htmlFor="title">ID Offerta</label>
-                <Input
-                  handler={setOfferID}
-                  d={{ value: offerID, label: "#" }}
-                />
+                <Input d={{ value: offerID, label: "#" }} />
               </div>
               <div className="item full">
                 <label htmlFor="title">Descrizione offerta</label>
@@ -280,11 +302,11 @@ export default function AddNewOffer({
               <div className="buttons">
                 {((isSpa || offer?.packages) && (
                   <div className="hotel-form-details-item  full">
-                    <label htmlFor="">Descrizione Spa</label>
+                    <label htmlFor="">Descrizione Pacchetto Incluso</label>
                     <div className="inner">
                       <textarea
                         name="hotelDescription"
-                        placeholder="Inserisci una descrizione delle spa"
+                        placeholder="Inserisci la descrizione del pacchetto incluso"
                         value={packages}
                         onChange={(e) => {
                           setPackage(e.target.value);
@@ -304,13 +326,11 @@ export default function AddNewOffer({
                 )}{" "}
                 {isRestu || offer?.omaggi ? (
                   <div className="hotel-form-details-item full">
-                    <label htmlFor="hotelDescription">
-                      Descrizione ristorante
-                    </label>
+                    <label htmlFor="hotelDescription">Descrizione Omaggi</label>
                     <div className="inner">
                       <textarea
                         name="hotelDescription"
-                        placeholder="Inserisci una descrizione delle ristorante"
+                        placeholder="Inserisci la descrizione degli omaggi"
                         value={omaggi}
                         onChange={(e) => setOmaggi(e.target.value)}
                       ></textarea>
@@ -457,7 +477,7 @@ export default function AddNewOffer({
                   });
                 }}
               >
-                <AiOutlinePlus /> Add More Age Reduction
+                <AiOutlinePlus /> Aggiungi Riduzione Età
               </button>
             </div>
           </div>
@@ -466,12 +486,28 @@ export default function AddNewOffer({
 
             <div className="add-new-offer-details">
               <div className="item extrasdjfsjdfkj">
-                <input type="checkbox" />
+                <input
+                  checked={noUpdateXML}
+                  onChange={(e) => {
+                    setNoUpdateXML(e.target.checked);
+                  }}
+                  type="checkbox"
+                />
                 <label htmlFor="Minimo notti">
                   Disattiva l'aggiornamento automatico di questa offerta{" "}
-                  <button title="Questa opzione, se attivata consente di evitare l'aggiornamento automatico di questa offerta, insieme alle relative informazioni e opzioni, dal Flusso XML. Inoltre, se questa offerta non è presente nel Flusso XML delle offerte, essa non verrà eliminata.">
+                  <div className="icon">
                     <BsInfoCircle />
-                  </button>
+
+                    <div className="info">
+                      <span>
+                        Questa opzione, se attivata consente di evitare
+                        l'aggiornamento automatico di questa offerta, insieme
+                        alle relative informazioni e opzioni, dal Flusso XML.
+                        Inoltre, se questa offerta non è presente nel Flusso XML
+                        delle offerte, essa non verrà eliminata.
+                      </span>
+                    </div>
+                  </div>
                 </label>
               </div>
             </div>

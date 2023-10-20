@@ -1265,7 +1265,7 @@
   &-item {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0px;
 
     &.full {
       grid-column: span 3;
@@ -2019,7 +2019,7 @@ button.edit-offer-item {
   &-details {
     display: grid;
     grid-template-columns: auto auto;
-    gap: 20px;
+    gap: 15px;
     margin-top: 10px;
 
     .item {
@@ -2090,6 +2090,15 @@ button.edit-offer-item {
           border-top-right-radius: 0;
           border-bottom-right-radius: 0;
           border-right: none;
+        }
+      }
+
+      & > .select {
+        .icon {
+          display: none;
+        }
+        .dropdown {
+          display: none;
         }
       }
     }
@@ -2409,17 +2418,34 @@ button.edit-offer-item {
 .supplement {
   display: flex;
   flex-direction: column;
+  gap: 15px;
 
   .item {
     width: 100%;
 
+    .inner {
+      display: flex;
+      width: 100%;
+
+      input {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+
+      .select {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        border-right: none;
+      }
+    }
+
     &-wrp {
       display: flex;
       align-items: flex-end;
-      gap: 10px;
+      gap: 15px;
 
       & > button {
-        width: 40px;
+        width: 14%;
         height: 40px;
         border-radius: 50%;
         border: none;
@@ -2447,12 +2473,22 @@ button.edit-offer-item {
 
   input {
     text-align: right;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+    }
   }
 
   & > span {
     position: absolute;
     bottom: 13px;
     right: 13px;
+  }
+
+  input[type="number"] {
+    padding-right: 30px;
+    -moz-appearance: textfield;
   }
 }
 
@@ -2483,4 +2519,51 @@ button.edit-offer-item {
       justify-content: center;
     }
   }
+
+  .icon {
+    color: #84818a;
+    position: relative;
+    transition: 0.3s;
+    margin-top: 4px;
+
+    .info {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: max-content;
+      padding: 5px 10px;
+      background-color: rgba($color: $black, $alpha: 0.6);
+      color: $white;
+      border-radius: 4px;
+      opacity: 0;
+      transition: 0.2s;
+
+      font-weight: 500;
+      font-family: $dm;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      z-index: 9999;
+      max-width: 500px;
+      visibility: hidden;
+
+      span {
+        font-size: 12px;
+      }
+    }
+
+    &:hover {
+      color: $dark;
+
+      .info {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+  }
+}
+
+.add-new-offer-details > .buttons {
+  gap: 15px;
 }

@@ -1,7 +1,9 @@
 import { AiOutlineDelete, AiOutlinePlus } from "react-icons/ai";
+import Select from "../basic/Select";
 import Input from "./Input";
 
 export default function Supplement({ supplement, setSupplement }) {
+  const rx = /^(\d+(\.\d{0,2})?)?$/;
   return (
     <div className="add-new-offer-details supplement">
       {supplement?.map((d, i) => (
@@ -12,12 +14,41 @@ export default function Supplement({ supplement, setSupplement }) {
             <Input
               type="text"
               handler={(e) => {
-                setSupplement((prevValues) =>
-                  prevValues.map((value, j) => (i === j ? e : value))
-                );
+                setSupplement((prevSupplement) => {
+                  const updatedSupplement = [...prevSupplement];
+                  updatedSupplement[i].name = e;
+                  return updatedSupplement;
+                });
               }}
-              d={{ value: d }}
+              d={{ value: d.name }}
             />
+          </div>
+          <div className="item">
+            <label htmlFor="">Prezzo</label>
+            <div className="inner">
+              <Select
+                data={["€", "$"]}
+                activeValue={d.currency || "€"}
+                handler={(e) => {
+                  setSupplement((prevSupplement) => {
+                    const updatedSupplement = [...prevSupplement];
+                    updatedSupplement[i].currency = e;
+                    return updatedSupplement;
+                  });
+                }}
+              />
+              <Input
+                handler={(e) => {
+                  setSupplement((prevSupplement) => {
+                    const updatedSupplement = [...prevSupplement];
+                    updatedSupplement[i].price =
+                      (rx.test(e) && e) || (e.length < 2 ? 0 : d.price);
+                    return updatedSupplement;
+                  });
+                }}
+                d={{ value: d.price, label: "Enter price" }}
+              />
+            </div>
           </div>
           <button
             onClick={() => {
