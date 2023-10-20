@@ -3,15 +3,18 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { GrClose } from "react-icons/gr";
 import Select from "../basic/Select";
 // import OfferTags from "../hotel/OfferTags";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { BiPlus } from "react-icons/bi";
+import { BsInfoCircle } from "react-icons/bs";
+import values from "../../../values";
+import { useHotelContext } from "../../context/hotel.context";
 import AgeReduction from "./AgeReduction";
 import Breakdown from "./Breakdown";
 import Input from "./Input";
-import TextArea from "./TextArea";
-import values from "../../../values";
+import Supplement from "./Supplement";
 import TagInput from "./TagInput";
-import Cookies from "js-cookie";
-import axios from "axios";
-import { useHotelContext } from "../../context/hotel.context";
+import TextArea from "./TextArea";
 
 const updateOffer = (data, newOffer, offerId) => {
   const updatedOffers = data.offers.map((offer) => {
@@ -58,6 +61,11 @@ export default function AddNewOffer({
   const [endDate, setEndDate] = useState(
     offer ? new Date(offer.endDate) : null
   );
+  const [packages, setPackage] = useState(offer ? offer?.packages : "");
+  const [omaggi, setOmaggi] = useState(offer ? offer?.omaggi : "");
+  const [supplement, setSupplement] = useState(
+    offer.supplement ? offer.supplement : []
+  );
 
   const [minStay, setMinStay] = useState(offer ? offer.minStay : "");
   const [maxStay, setMaxStay] = useState(offer ? offer.maxStay : "");
@@ -85,7 +93,7 @@ export default function AddNewOffer({
         ]
   );
 
-  const [offerTags, setOfferTags] = useState(offer ? offer.tags : []);
+  const [offerTags, setOfferTags] = useState(offer ? offer?.tags : []);
 
   const [existingTags, setExistingTags] = useState([]);
 
@@ -127,7 +135,7 @@ export default function AddNewOffer({
       return age.reductionId === id
         ? {
             ...age,
-            [property]: value,
+            [property]: (value > 18 && 18) || value,
           }
         : age;
     });
@@ -163,6 +171,9 @@ export default function AddNewOffer({
       tags: offerTags,
       breakdown: items,
       ageReduction: ages,
+      packages,
+      omaggi,
+      supplement,
     };
     console.log({
       newOffer: newOfferData,
@@ -204,7 +215,7 @@ export default function AddNewOffer({
               },
             }
           );
-          setData((prevData) => updateOffer(prevData, newOfferData, offer._id));  
+          setData((prevData) => updateOffer(prevData, newOfferData, offer._id));
         }
       } catch (error) {
         console.log(error);
@@ -214,6 +225,10 @@ export default function AddNewOffer({
     setIsAddNewOfferClicked(false);
     setOffer(null);
   };
+
+  // update
+  const [isSpa, setIsSpa] = useState(false);
+  const [isRestu, setIsRestu] = useState(false);
 
   return (
     <div ref={wrp} className={`add-new-offer  ${(isAdd && "show") || ""}`}>
@@ -257,9 +272,61 @@ export default function AddNewOffer({
                 <label htmlFor="title">Descrizione offerta</label>
                 <TextArea
                   value={description}
-                  handler={(e) => setDescription(e.target.value)}
+                  handler={(e) => setDescription(e)}
                   pls="Inserisci la descrizione dell’offerta"
                 />
+              </div>
+
+              <div className="buttons">
+                {((isSpa || offer?.packages) && (
+                  <div className="hotel-form-details-item  full">
+                    <label htmlFor="">Descrizione Spa</label>
+                    <div className="inner">
+                      <textarea
+                        name="hotelDescription"
+                        placeholder="Inserisci una descrizione delle spa"
+                        value={packages}
+                        onChange={(e) => {
+                          setPackage(e.target.value);
+                        }}
+                      ></textarea>
+                    </div>
+                  </div>
+                )) || (
+                  <button
+                    onClick={(e) => {
+                      setIsSpa(true);
+                    }}
+                  >
+                    <BiPlus />
+                    Aggiungi Desc. Pacchetto Incluso
+                  </button>
+                )}{" "}
+                {isRestu || offer?.omaggi ? (
+                  <div className="hotel-form-details-item full">
+                    <label htmlFor="hotelDescription">
+                      Descrizione ristorante
+                    </label>
+                    <div className="inner">
+                      <textarea
+                        name="hotelDescription"
+                        placeholder="Inserisci una descrizione delle ristorante"
+                        value={omaggi}
+                        onChange={(e) => setOmaggi(e.target.value)}
+                      ></textarea>
+                    </div>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => {
+                      console.log(isRestu);
+                      setIsRestu(true);
+                    }}
+                  >
+                    <BiPlus />
+                    Aggiungi Desc. Omaggi
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -286,7 +353,9 @@ export default function AddNewOffer({
                   onChange={(e) => setEndDate(new Date(e.target.value))}
                   name=""
                   id=""
-                  min={startDate && new Date(startDate).toISOString().split('T')[0]}
+                  min={
+                    startDate && new Date(startDate).toISOString().split("T")[0]
+                  }
                   placeholder="select date"
                 />
               </div>
@@ -318,7 +387,7 @@ export default function AddNewOffer({
                 <label htmlFor="title">Bevande incluse</label>
                 <Select
                   data={["Incluse", "Non Incluse"]}
-                  activeValue={beverageAvailability || ""}
+                  activeValue={beverageAvailability || "Non Incluse"}
                   handler={(e) => {
                     setBeverageAvailability(e);
                   }}
@@ -336,19 +405,27 @@ export default function AddNewOffer({
                 name="offerTags"
                 setData={setOfferTags}
                 data={offerTags}
+                fixtData={offer?.tags}
               />
             )}
+          </div>{" "}
+          <div className="offer-details">
+            <h4>Supplementi</h4>
+            <Supplement supplement={supplement} setSupplement={setSupplement} />
           </div>
           <div className="offer-details">
             <h4>Prezzi</h4>
             <div className="breakdown">
               {items.map((item, i) => (
                 <Breakdown
+                  minStay={minStay}
+                  maxStay={maxStay}
                   handler={(value, id, property) =>
                     handleBreakdownChange(value, id, property)
                   }
                   key={i}
                   data={item}
+                  i={i}
                 />
               ))}
             </div>
@@ -382,6 +459,21 @@ export default function AddNewOffer({
               >
                 <AiOutlinePlus /> Add More Age Reduction
               </button>
+            </div>
+          </div>
+          <div className="offer-details">
+            <h4>Opzioni Extra</h4>
+
+            <div className="add-new-offer-details">
+              <div className="item extrasdjfsjdfkj">
+                <input type="checkbox" />
+                <label htmlFor="Minimo notti">
+                  Disattiva l'aggiornamento automatico di questa offerta{" "}
+                  <button title="Questa opzione, se attivata consente di evitare l'aggiornamento automatico di questa offerta, insieme alle relative informazioni e opzioni, dal Flusso XML. Inoltre, se questa offerta non è presente nel Flusso XML delle offerte, essa non verrà eliminata.">
+                    <BsInfoCircle />
+                  </button>
+                </label>
+              </div>
             </div>
           </div>
         </div>

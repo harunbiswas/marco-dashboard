@@ -51,7 +51,7 @@ export default function Pagenation({
               disabled={activeBtn === 1}
               className="prenext"
             >
-              Previous
+              Indietro
             </button>
           </li>
           <li>
@@ -119,7 +119,7 @@ export default function Pagenation({
               disabled={activeBtn === btns[btns.length - 1]}
               className="prenext"
             >
-              next
+              Avanti
             </button>
           </li>
         </ul>

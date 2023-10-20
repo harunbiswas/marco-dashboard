@@ -88,10 +88,13 @@
         width: 160px;
         height: 160px;
         overflow: hidden;
-        display: grid;
-        grid-template-columns: 100% 100% 100%;
+        display: flex;
         position: relative;
         border-radius: 6px;
+
+        .img-item {
+          width: 100%;
+        }
 
         & > button {
           position: absolute;
@@ -127,8 +130,8 @@
         }
 
         img {
-          width: 100%;
-          height: 100%;
+          width: 160px;
+          height: 160px;
           object-fit: cover;
 
           transition: 0.5s;
@@ -378,7 +381,7 @@
     }
     &-wrp {
       display: grid;
-      grid-template-columns: auto auto;
+      grid-template-columns: auto 400px;
       gap: 30px;
     }
 
@@ -1535,6 +1538,7 @@
         letter-spacing: -0.07px;
         font-family: $jakarta;
       }
+
       .description {
         padding: 10px;
         & > p {
@@ -2030,6 +2034,32 @@ button.edit-offer-item {
         height: 116px;
       }
     }
+
+    & > .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      grid-column: span 2;
+      width: 100%;
+
+      & > button {
+        color: $primary;
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        font-size: 16px;
+        font-family: $jakarta;
+        line-height: 21px;
+        background-color: transparent;
+        border: none;
+      }
+
+      & > .full {
+        textarea {
+          height: 116px;
+        }
+      }
+    }
   }
 
   .breakdown {
@@ -2373,5 +2403,84 @@ button.edit-offer-item {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+.supplement {
+  display: flex;
+  flex-direction: column;
+
+  .item {
+    width: 100%;
+
+    &-wrp {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+
+      & > button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 4px;
+      }
+    }
+  }
+
+  & > button {
+    background-color: transparent;
+    display: inline-flex;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: $primary;
+  }
+}
+
+.klsajflkjsdfjlkklsadflkjsdf {
+  position: relative;
+
+  input {
+    text-align: right;
+  }
+
+  & > span {
+    position: absolute;
+    bottom: 13px;
+    right: 13px;
+  }
+}
+
+.extrasdjfsjdfkj {
+  width: 100% !important;
+  align-items: center;
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: row !important;
+  gap: 5px;
+
+  input {
+    width: 15px;
+    height: 15px;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    margin-top: 3px;
+    gap: 5px;
+
+    button {
+      background-color: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 }

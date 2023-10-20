@@ -26,7 +26,7 @@ const calculateLowestAndHighestPrices = (offers) => {
       }
     }
   }
-  return `€${lowestPrice}~${highestPrice}€ `;
+  return `${lowestPrice}€~${highestPrice}€ `;
 };
 
 export default function HotelItem({ hotelData }) {

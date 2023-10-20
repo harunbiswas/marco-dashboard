@@ -67,7 +67,6 @@ ul {
     outline: none !important;
 
     &::placeholder {
-      text-transform: capitalize;
       color: $text;
       font-family: $manrope;
     }
@@ -623,4 +622,8 @@ ul {
 .delete-btn {
   height: 40px !important;
   min-width: max-content;
+}
+
+.isdelete {
+  min-width: 400px;
 }

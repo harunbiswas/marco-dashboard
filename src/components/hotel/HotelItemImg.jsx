@@ -6,12 +6,13 @@ export default function HotelItemImg({ imas }) {
   return (
     <div className="img">
       {imas.map((d, i) => (
-        <img
-          style={{ transform: `translateX(-${trn * 100}%)` }}
-          key={i}
-          src={d.src}
-          alt=""
-        />
+        <div key={i} className="img-item">
+          <img
+            style={{ transform: `translateX(-${trn * 100}%)` }}
+            src={d.src}
+            alt=""
+          />
+        </div>
       ))}
       {trn > 0 && (
         <button onClick={() => setTrns(trn - 1)} className="prev">

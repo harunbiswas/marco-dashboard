@@ -104,6 +104,11 @@ export default function DeleteHotel({
                 }
               }
             }}
+            style={{
+              backgroundColor: `${
+                (isShow !== "delete" && "#ff9500") || "#ff4e4e"
+              }`,
+            }}
             className="btn delete"
             disabled={!(data === value)}
           >

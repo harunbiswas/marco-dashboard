@@ -75,24 +75,6 @@ export default function AgeEdit({ isEdit, data, setData }) {
         {items.map((d, i) => {
           return (
             <>
-              {/* <Input
-                  d={{ value: item.age }}
-                  handler={(e) => {
-                    setItems((prevItems) => {
-                      return prevItems.map((i) => {
-                        if (i.itemId === item.itemId) {
-                          return {
-                            ...i,
-                            age: Number(
-                              rx.test(e.toString()) ? (e < 17 && e) || 17 : 0
-                            ),
-                          };
-                        }
-                        return i;
-                      });
-                    });
-                  }}
-                /> */}
               <div key={i} className="age-edit-item">
                 {d.items.map((d1, i) => (
                   <>
@@ -110,28 +92,9 @@ export default function AgeEdit({ isEdit, data, setData }) {
                       </label>
                       {d1.label !== "Age Limit" && <span>%</span>}
                       <Input
-                        // disabled={!isEdit}
-                        // type="text"
                         d={{ value: d1.value }}
-                        // value={d1.value || 0}
-                        // onChange={(e) =>
-                        //   updateValue(d.id, d1.id, e.target.value)
-                        // }
                         handler={(e) => {
                           updateValue(d.id, d1.id, e);
-                          // setItems((prevItems) => {
-                          //   return prevItems.map((i) => {
-                          //     if (i.itemId === item.itemId) {
-                          //       return {
-                          //         ...i,
-                          //         age: Number(
-                          //           rx.test(e.toString()) ? (e < 17 && e) || 17 : 0
-                          //         ),
-                          //       };
-                          //     }
-                          //     return i;
-                          //   });
-                          // });
                         }}
                       />
                     </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { GrClose } from "react-icons/gr";
 
-export default function HotelDetailsImg({imgs}) {
+export default function HotelDetailsImg({ imgs }) {
   // const [imgs, setImgs] = useState([
   //   {
   //     src: "https://cdn.pixabay.com/photo/2014/07/10/17/17/hotel-389256_640.jpg",
@@ -22,15 +22,17 @@ export default function HotelDetailsImg({imgs}) {
       <div className="secondary">
         {imgs && imgs[1] && <img src={imgs[1].src} alt="" />}
         {imgs && imgs[2] && <img src={imgs[2].src} alt="" />}
-        <button onClick={() => setIsShow(true)}>
-          <span>Altre {imgs && imgs.length} foto</span>
-        </button>
+        {imgs.length > 3 && (
+          <button onClick={() => setIsShow(true)}>
+            {(imgs.length > 4 && (
+              <span>Altre {imgs && imgs.length - 3} foto</span>
+            )) || <span>1 altra foto</span>}
+          </button>
+        )}
       </div>
       <div className={`images-full ${(isShow && "show") || ""}`}>
         <div className="images-full-inner">
-          {imgs && imgs.map((d, i) => (
-            <img src={d.src} key={i} alt="" />
-          ))}
+          {imgs && imgs.map((d, i) => <img src={d.src} key={i} alt="" />)}
         </div>
         <button onClick={() => setIsShow(false)}>
           <GrClose />

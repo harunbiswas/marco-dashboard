@@ -106,6 +106,15 @@ export default function HotelDetails() {
                 <div className="info">
                   <div className="left">
                     <Title title={hotelData && hotelData.name} />
+                    {!hotelData?.publish && (
+                      <strong
+                        style={{
+                          color: "#ff9500",
+                        }}
+                      >
+                        ( Disabilitato)
+                      </strong>
+                    )}
                     <Rating />
                   </div>
                   <EditBtn hotelId={hotelId} />
@@ -153,7 +162,19 @@ export default function HotelDetails() {
                   {hotelData.summaryDescription && (
                     <Description
                       max={30}
-                      description={hotelData.summaryDescription}
+                      description={"✓" + hotelData.summaryDescription}
+                    />
+                  )}{" "}
+                  {hotelData.hotelDescription && (
+                    <Description
+                      max={30}
+                      description={"✓" + hotelData.hotelDescription}
+                    />
+                  )}{" "}
+                  {hotelData.roomsDescription && (
+                    <Description
+                      max={30}
+                      description={"✓" + hotelData.roomsDescription}
                     />
                   )}
                 </div>

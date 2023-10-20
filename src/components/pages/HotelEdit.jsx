@@ -140,7 +140,7 @@ export default function HotelEdit() {
                 <div className="isdelete">
                   <h2 className="jakarta">Vuoi tornare indietro?</h2>
                   <p className="jakarta">
-                    Perderai tutti i dati inseriti nella creazione dell’hotel
+                    Inserisci il nome dell'hotel per poterlo eliminare
                   </p>
                   <div className="buttons">
                     <button

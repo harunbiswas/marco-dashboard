@@ -63,6 +63,8 @@ export default function TagInput({
       setActive(data?.services || []);
     } else if (name === "hotelStrengths") {
       setActive(data?.strengths || []);
+    } else if (name === "offerTags") {
+      setActive(fixtData);
     }
     // });
   }, [fixtData]);
@@ -75,6 +77,8 @@ export default function TagInput({
           services: active,
         };
       });
+    } else if (name === "offerTags") {
+      setData(active);
     } else {
       setData((prev) => {
         return {
@@ -111,7 +115,7 @@ export default function TagInput({
       {(!isInput && (
         <button onClick={() => setIsInput(true)}>
           <AiOutlinePlus />
-          Add More
+          Aggiungi
         </button>
       )) || (
         <form onSubmit={submitHandler}>
