@@ -12,7 +12,7 @@ export default function Breakdown({ data, handler, minStay, maxStay, i }) {
 
   return (
     <div className="breakdown-inner">
-      <div className="item">
+      <div className="item fjjjsjdfkskfjksflsd">
         <label htmlFor="">Seleziona tipo pensione</label>
         <Select
           data={def}

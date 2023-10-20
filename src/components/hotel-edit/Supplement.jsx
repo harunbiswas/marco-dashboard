@@ -20,7 +20,7 @@ export default function Supplement({ supplement, setSupplement }) {
                   return updatedSupplement;
                 });
               }}
-              d={{ value: d.name }}
+              d={{ value: d.name, label: "Inserisci un supplemento" }}
             />
           </div>
           <div className="item">
@@ -46,7 +46,7 @@ export default function Supplement({ supplement, setSupplement }) {
                     return updatedSupplement;
                   });
                 }}
-                d={{ value: d.price, label: "Enter price" }}
+                d={{ value: d.price, label: "Prezzo" }}
               />
             </div>
           </div>

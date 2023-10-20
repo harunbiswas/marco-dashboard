@@ -2029,6 +2029,8 @@ button.edit-offer-item {
     & > .full {
       grid-column: span 2;
       width: 100%;
+      display: flex;
+      flex-direction: column;
 
       textarea {
         height: 116px;
@@ -2093,7 +2095,7 @@ button.edit-offer-item {
         }
       }
 
-      & > .select {
+      &.fjjjsjdfkskfjksflsd > .select {
         .icon {
           display: none;
         }

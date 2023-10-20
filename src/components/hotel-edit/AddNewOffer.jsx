@@ -154,17 +154,29 @@ export default function AddNewOffer({
   };
 
   const handleAgeChange = (value, id, property) => {
-    console.log("handleAgeChange", ages);
-    const updatedAges = ages.map((age) => {
-      return age.reductionId === id
-        ? {
-            ...age,
-            [property]: (value > 18 && 18) || value,
-          }
-        : age;
-    });
-    // console.log(updatedAges);
-    setAges(updatedAges);
+    if (property === "agelimit") {
+      const updatedAges = ages.map((age) => {
+        return age.reductionId === id
+          ? {
+              ...age,
+              [property]: (value > 18 && 18) || value,
+            }
+          : age;
+      });
+      // console.log(updatedAges);
+      setAges(updatedAges);
+    } else {
+      const updatedAges = ages.map((age) => {
+        return age.reductionId === id
+          ? {
+              ...age,
+              [property]: (value > 100 && 100) || value,
+            }
+          : age;
+      });
+      // console.log(updatedAges);
+      setAges(updatedAges);
+    }
   };
 
   const ref = useRef(null);
