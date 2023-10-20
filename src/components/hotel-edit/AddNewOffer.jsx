@@ -529,7 +529,15 @@ export default function AddNewOffer({
         </div>
         <div className="hotel-edit-footer">
           <div className="left">
-            <button onClick={() => setIsAdd(false)}>Discard</button>
+            <button
+              onClick={() => {
+                setIsAdd(false);
+                setIsAddNewOfferClicked(false);
+                setOffer(null);
+              }}
+            >
+              Discard
+            </button>
           </div>
           <div className="right">
             {/* <button onClick={handleSave}>Save Changes</button> */}
