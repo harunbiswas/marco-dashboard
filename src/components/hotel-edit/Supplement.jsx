@@ -5,7 +5,7 @@ export default function Supplement({ supplement, setSupplement }) {
   console.log(supplement);
   return (
     <div className="add-new-offer-details supplement">
-      {supplement.map((d, i) => (
+      {supplement?.map((d, i) => (
         <div key={i} className="item-wrp">
           <div className="item">
             <label htmlFor="Massimo notti">Supplemento {i + 1}</label>

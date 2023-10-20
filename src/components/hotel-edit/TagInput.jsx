@@ -105,7 +105,7 @@ export default function TagInput({
               setActive(updatedItems);
             }
           }}
-          className={(active.includes(tag) && "active") || ""}
+          className={(active?.includes(tag) && "active") || ""}
           key={i}
         >
           {/* {d.icon} */}

@@ -64,7 +64,7 @@ export default function AddNewOffer({
   const [packages, setPackage] = useState(offer ? offer?.packages : "");
   const [omaggi, setOmaggi] = useState(offer ? offer?.omaggi : "");
   const [supplement, setSupplement] = useState(
-    offer.supplement ? offer.supplement : []
+    offer?.supplement ? offer?.supplement : []
   );
 
   const [minStay, setMinStay] = useState(offer ? offer.minStay : "");
