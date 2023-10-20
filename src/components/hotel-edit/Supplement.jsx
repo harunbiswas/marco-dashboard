@@ -65,7 +65,7 @@ export default function Supplement({ supplement, setSupplement }) {
       <button
         onClick={() => {
           setSupplement((prev) => {
-            return [...prev, ""];
+            return [...prev, {}];
           });
         }}
       >
