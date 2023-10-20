@@ -64,15 +64,7 @@ export default function AddNewOffer({
   const [packages, setPackage] = useState(offer ? offer?.packages : "");
   const [omaggi, setOmaggi] = useState(offer ? offer?.omaggi : "");
   const [supplement, setSupplement] = useState(
-    offer?.supplement
-      ? offer?.supplement
-      : [
-          {
-            name: "",
-            currency: "€",
-            price: 0,
-          },
-        ]
+    offer?.supplement ? offer?.supplement : []
   );
 
   const [minStay, setMinStay] = useState(offer ? offer.minStay : "");
@@ -92,14 +84,7 @@ export default function AddNewOffer({
         ]
   );
 
-  const [ages, setAges] = useState(
-    offer
-      ? offer.ageReduction
-      : [
-          { reductionId: 1, boardType: "", agelimit: 0, discount: 10 },
-          { reductionId: 2, boardType: "", agelimit: 0, discount: 10 },
-        ]
-  );
+  const [ages, setAges] = useState(offer ? offer.ageReduction : []);
 
   const [offerTags, setOfferTags] = useState(offer ? offer?.tags : []);
   const [noUpdateXML, setNoUpdateXML] = useState(offer?.noUpdateXML || false);
@@ -485,7 +470,7 @@ export default function AddNewOffer({
                         reductionId: ages.length + 1,
                         boardType: "",
                         agelimit: 0,
-                        discount: 10,
+                        discount: 0,
                       },
                     ];
                   });
