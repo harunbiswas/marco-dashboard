@@ -305,7 +305,6 @@ export default function AddNewOffer({
     });
   }, []);
 
-  console.log(items);
   return (
     <div ref={wrp} className={`add-new-offer  ${(isAdd && "show") || ""}`}>
       <div ref={ref} className="add-new-offer-inner booking-box">
