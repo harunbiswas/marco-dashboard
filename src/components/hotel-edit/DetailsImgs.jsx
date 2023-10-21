@@ -46,8 +46,8 @@ const DetailsImgs = ({ data, setData }) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="images-wrp">
-        {data.images &&
-          data.images.map((img, index) => (
+        {data?.images &&
+          data?.images.map((img, index) => (
             <DraggableImage
               key={img.id}
               index={index}

@@ -21,8 +21,8 @@ export default function EditOffer({ data, setData }) {
   const [offerToEdit, setOfferToEdit] = useState(null);
   return (
     <div className="edit-offer">
-      {data.offers &&
-        data.offers.map((offer, i) => {
+      {data?.offers &&
+        data?.offers.map((offer, i) => {
           return (
             <div key={i} className="edit-offer-item">
               <div className="edit-offer-item-top">

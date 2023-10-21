@@ -44,7 +44,7 @@ export const extractLatAndLng = (inputString) => {
 
 export default function LocationDetails({ data, setData, fixtData }) {
   useEffect(() => {
-    if (!data.distance || !!data.distance.length)
+    if (!data?.distance || !!data.distance.length)
       setData((prev) => {
         return {
           ...prev,
@@ -84,7 +84,7 @@ export default function LocationDetails({ data, setData, fixtData }) {
   });
 
   useEffect(() => {
-    if (data.coordinate) {
+    if (data?.coordinate) {
       const { lat: funcLat, lng: funcLng } = extractLatAndLng(data.coordinate);
       // setMapMarker({lat, lng})
       setLat(funcLat);

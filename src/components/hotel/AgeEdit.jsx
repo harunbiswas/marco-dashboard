@@ -36,7 +36,7 @@ export default function AgeEdit({ isEdit, data, setData }) {
 
   // Function to update value dynamically
   const updateValue = (itemId, subItemId, newValue) => {
-    const updatedItems = items.map((item) => {
+    const updatedItems = items?.map((item) => {
       if (item.id === itemId) {
         const updatedSubItems = item.items.map((subItem) => {
           if (subItem.id === subItemId) {
@@ -75,7 +75,7 @@ export default function AgeEdit({ isEdit, data, setData }) {
   return (
     <>
       <div className="age-edit">
-        {items.map((d, i) => {
+        {items?.map((d, i) => {
           return (
             <>
               <div key={i} className="age-edit-item">
