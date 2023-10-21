@@ -293,6 +293,7 @@ export default function AddNewOffer({
   // update
   const [isSpa, setIsSpa] = useState(false);
   const [isRestu, setIsRestu] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
 
   useEffect(() => {
     setItems((prevItems) => {
@@ -561,15 +562,48 @@ export default function AddNewOffer({
                 </label>
               </div>
             </div>
+
+            {isDelete && (
+              <div className="isdelete">
+                <h2 className="jakarta">Vuoi tornare indietro?</h2>
+                <p className="jakarta">Perderai i dati inseriti nell'offerta</p>
+                <div className="buttons">
+                  <button
+                    onClick={() => {
+                      setIsDelete(false);
+                      // handler(true);
+                    }}
+                    className="btn"
+                  >
+                    Annulla
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsAdd(false);
+                      setIsAddNewOfferClicked(false);
+                      setOffer(null);
+                    }}
+                    style={{ background: "red", color: "white" }}
+                    className=" btn"
+                  >
+                    Torna Indietro
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className="hotel-edit-footer">
           <div className="left">
             <button
               onClick={() => {
-                setIsAdd(false);
-                setIsAddNewOfferClicked(false);
-                setOffer(null);
+                if (isAddNewOfferClicked) {
+                  setIsDelete(true);
+                } else {
+                  setIsAdd(false);
+                  setIsAddNewOfferClicked(false);
+                  setOffer(null);
+                }
               }}
             >
               Discard
