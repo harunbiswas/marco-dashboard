@@ -10,19 +10,20 @@ import Input from "./Input";
 
 const defaultDistances = [
   {
-    id: 1,
-    isEdit: false,
-    label: "Distanza dal Mare",
-    distance: 0,
-    scale: "Mt",
-  },
-  {
     id: 2,
     isEdit: false,
     label: "Distanza dal Centro",
     distance: 0,
     scale: "Mt",
   },
+  {
+    id: 1,
+    isEdit: false,
+    label: "Distanza dal Mare",
+    distance: 0,
+    scale: "Mt",
+  },
+
   {
     id: 3,
     isEdit: false,
@@ -46,26 +47,44 @@ const LocationDistances = ({ data, setData, fixtData }) => {
   };
 
   const handleChange = (itemId, newValue, property) => {
-    const updatedDestinces = distances.map((item) => {
-      if (item.id === itemId) {
-        return {
-          ...item,
-          [property]: newValue,
-          isEdit: false,
-        };
-      }
-      return item;
-    });
-    setDistances(updatedDestinces);
+    if (property === "distance") {
+      const rx = /^(\d+(\.\d{0,2})?)?$/;
+      const updatedDestinces = distances.map((item) => {
+        if (item.id === itemId) {
+          return {
+            ...item,
+            [property]:
+              (rx.test(newValue) && newValue) ||
+              (newValue.length < 2 ? 0 : item.distance),
+            isEdit: false,
+          };
+        }
+        return item;
+      });
+      setDistances(updatedDestinces);
+    } else {
+      const updatedDestinces = distances.map((item) => {
+        if (item.id === itemId) {
+          return {
+            ...item,
+            [property]: newValue,
+            isEdit: false,
+          };
+        }
+        return item;
+      });
+      setDistances(updatedDestinces);
+    }
   };
   useEffect(() => {
     axios
       .get(`${values.url}/hotel/single?id=${id}`)
       .then((d) => {
-        setDistances(fixtData?.distance || []);
+        setDistances(
+          (fixtData?.publish && fixtData?.distance) || defaultDistances
+        );
       })
       .catch((e) => {
-        console.log(e);
         setDistances(defaultDistances);
       });
   }, [fixtData]);
@@ -85,7 +104,6 @@ const LocationDistances = ({ data, setData, fixtData }) => {
     );
   };
 
-  console.log(data);
   return (
     <div className="location-details-bottom">
       <h4>Distanza</h4>
@@ -130,16 +148,16 @@ const LocationDistances = ({ data, setData, fixtData }) => {
               return [
                 ...prev,
                 {
-                  id: prev.length + 1,
+                  id: prev.length + 1 + Math.random(),
                   label: "distance from center",
-                  distance: 30,
+                  distance: 0,
                   scale: "Mt",
                 },
               ];
             });
           }}
         >
-          <AiOutlinePlus /> Add more
+          <AiOutlinePlus /> Aggiungi Opzione
         </button>
       </div>
     </div>

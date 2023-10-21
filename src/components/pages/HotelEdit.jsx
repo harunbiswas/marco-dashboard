@@ -135,7 +135,17 @@ export default function HotelEdit() {
 
           <div className="hotel-edit-footer">
             <div className="left">
-              <button onClick={() => setIsDelete(true)}>Annulla</button>
+              <button
+                onClick={() => {
+                  if (active === 1) {
+                    setIsDelete(true);
+                  } else {
+                    setActive(active - 1);
+                  }
+                }}
+              >
+                {(active === 1 && "Annulla") || "Indietro"}
+              </button>
               {isDelete && (
                 <div className="isdelete">
                   <h2 className="jakarta">Vuoi tornare indietro?</h2>

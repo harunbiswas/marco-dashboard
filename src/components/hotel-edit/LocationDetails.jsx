@@ -50,19 +50,20 @@ export default function LocationDetails({ data, setData, fixtData }) {
           ...prev,
           distance: [
             {
-              id: "1",
-              isEdit: false,
-              label: "Distanza dal Mare",
-              distance: 0,
-              scale: "Mt",
-            },
-            {
               id: "2",
               isEdit: false,
               label: "Distanza dal Centro",
               distance: 0,
               scale: "Mt",
             },
+            {
+              id: "1",
+              isEdit: false,
+              label: "Distanza dal Mare",
+              distance: 0,
+              scale: "Mt",
+            },
+
             {
               id: "3",
               isEdit: false,
