@@ -19,11 +19,7 @@ export default function Breakdown({ data, handler, minStay, maxStay, i }) {
     <div className="breakdown-inner">
       <div className="item fjjjsjdfkskfjksflsd">
         <label htmlFor="">Seleziona tipo pensione</label>
-        <Select
-          data={def}
-          // handler={(e) => handler(e, data.breakdownId, "name")}
-          activeValue={data.name || def[i]}
-        />
+        <Input d={{ value: def[i] }} />
       </div>
       <div className="item">
         <label htmlFor="">Tipo di prezzo</label>

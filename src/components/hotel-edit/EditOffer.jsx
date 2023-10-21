@@ -72,7 +72,12 @@ export default function EditOffer({ data, setData }) {
                       <li key={i}>
                         <p>{pr.name}</p>
                         <strong>
-                          {pr.currency + pr.price} <span>/{pr.priceType}</span>
+                          {pr.currency + pr.price}{" "}
+                          <span>
+                            /{" "}
+                            {(pr.priceType === 1 && "Costo giornaliero") ||
+                              "Totale offerta"}
+                          </span>
                         </strong>
                       </li>
                     ))}

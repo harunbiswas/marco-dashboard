@@ -95,7 +95,7 @@ export default function AddNewOffer({
     let finalPirce;
     if (Number(lowPrice.price) !== 0) {
       finalPirce =
-        lowPrice.priceType === 1
+        lowPrice.priceType === 0
           ? Number(lowPrice.price) / minStay
           : Number(lowPrice.price);
     } else {
