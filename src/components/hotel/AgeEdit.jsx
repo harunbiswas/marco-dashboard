@@ -124,7 +124,7 @@ export default function AgeEdit({ isEdit, data, setData }) {
                 return [
                   ...prev,
                   {
-                    id: items.length + 1,
+                    id: items.length + 1 + Math.random(),
                     items: [
                       {
                         id: 1,
