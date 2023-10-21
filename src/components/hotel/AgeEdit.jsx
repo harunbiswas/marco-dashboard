@@ -44,15 +44,18 @@ export default function AgeEdit({ isEdit, data, setData }) {
             // return { ...subItem, value: parseInt(newValue) };
             return {
               ...subItem,
-              value: Number(
-                subItem.label === "Age Limit"
-                  ? rx.test(newValue.toString())
-                    ? (newValue < 18 && newValue) || 18
-                    : 0
-                  : rx.test(newValue.toString())
-                  ? (newValue < 100 && newValue) || 100
-                  : 0
-              ),
+              value:
+                Number(newValue) === 0
+                  ? 0
+                  : Number(
+                      subItem.label === "Age Limit"
+                        ? rx.test(newValue)
+                          ? (Number(newValue) < 18 && newValue) || 18
+                          : 0
+                        : rx.test(newValue.toString())
+                        ? (newValue < 100 && newValue) || 100
+                        : 0
+                    ),
             };
             // } else {
             //   return { ...subItem, value: newValue };
