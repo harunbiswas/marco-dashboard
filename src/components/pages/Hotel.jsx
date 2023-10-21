@@ -62,20 +62,6 @@ export default function Hotel() {
     })();
   }, [search, active, week]);
 
-  useEffect(() => {
-    const xmlUrl = "https://www.goischia.it/source_xml/1615896594.xml";
-
-    axios
-      .get(xmlUrl)
-      .then((response) => {
-        // 'response.data' will contain the XML content
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
-
   return (
     <div className="hotel">
       <AddHotel handler={setAddhotel} addhotel={addhotel} />

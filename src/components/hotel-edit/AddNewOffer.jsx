@@ -78,11 +78,32 @@ export default function AddNewOffer({
     offer
       ? offer.breakdown
       : [
-          { breakdownId: 1, name: "", priceType: "", currency: "€", price: 0 },
-          { breakdownId: 2, name: "", priceType: "", currency: "€", price: 0 },
-          { breakdownId: 3, name: "", priceType: "", currency: "€", price: 0 },
+          { breakdownId: 1, name: "", priceType: 0, currency: "€", price: 0 },
+          { breakdownId: 2, name: "", priceType: 0, currency: "€", price: 0 },
+          { breakdownId: 3, name: "", priceType: 0, currency: "€", price: 0 },
         ]
   );
+  const [lowestOfferPrice, setlowestOfferPrice] = useState(
+    offer ? offer?.lowestOfferPrice : null
+  );
+
+  useEffect(() => {
+    const lowPrice = items.reduce((min, current) => {
+      return Number(current.price) < Number(min.price) ? current : min;
+    }, items[0]);
+
+    let finalPirce;
+    if (Number(lowPrice.price) !== 0) {
+      finalPirce =
+        lowPrice.priceType === 1
+          ? Number(lowPrice.price) / minStay
+          : Number(lowPrice.price);
+    } else {
+      finalPirce = null;
+    }
+
+    setlowestOfferPrice(finalPirce);
+  }, [items]);
 
   const [ages, setAges] = useState(offer ? offer.ageReduction : []);
 
@@ -113,16 +134,37 @@ export default function AddNewOffer({
     if (property === "price") {
       const rx = /^(\d+(\.\d{0,2})?)?$/;
       const updatedItems = items.map((item) => {
+        console.log(typeof value);
         return item.breakdownId === id
           ? {
               ...item,
               [property]:
-                (rx.test(value.toString()) && value) ||
+                (rx.test(value) && value) ||
                 (value.length < 2 ? 0 : item.price),
             }
           : item;
       });
       setItems(updatedItems);
+    } else if (property === "priceType") {
+      if (id) {
+        const updatedItems = items.map((item) => {
+          return item.breakdownId === id
+            ? {
+                ...item,
+                priceType: value === "Costo giornaliero" ? 1 : 0,
+              }
+            : item;
+        });
+        setItems(updatedItems);
+      } else {
+        const updatedItems = items.map((item) => {
+          return {
+            ...item,
+            priceType: value === "Costo giornaliero" ? 1 : 0,
+          };
+        });
+        setItems(updatedItems);
+      }
     } else {
       const updatedItems = items.map((item) => {
         return item.breakdownId === id
@@ -198,11 +240,9 @@ export default function AddNewOffer({
       omaggi,
       supplement,
       noUpdateXML,
+      lowestOfferPrice,
     };
-    console.log({
-      newOffer: newOfferData,
-      hotelId: data._id,
-    });
+
     if (isNewHotelAdding) {
       if (isAddNewOfferClicked) {
         setData((prevData) => addNewOffer(prevData, newOfferData));

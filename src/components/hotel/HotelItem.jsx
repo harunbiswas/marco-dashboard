@@ -51,10 +51,10 @@ export default function HotelItem({ hotelData }) {
               <RxDotFilled />
               {/* 1.7 km from centre */}
               {hotelData.distance.map((dist, index) => (
-                <>
+                <span key={index}>
                   {dist.distance + " " + dist.label}{" "}
                   {hotelData.distance.length !== index + 1 ? " - " : ""}
-                </>
+                </span>
               ))}
             </span>
           </p>

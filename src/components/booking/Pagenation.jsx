@@ -66,7 +66,7 @@ export default function Pagenation({
           </li>
           {btns.length > 5 && activeBtn > btns[0] + 2 && "..."}
           {btns.map((btn) => (
-            <>
+            <div key={btn}>
               {((btn !== 1 &&
                 btn !== btns[btns.length - 1] &&
                 activeBtn === btn) ||
@@ -75,7 +75,7 @@ export default function Pagenation({
                 (btns.length <= 5 &&
                   btn !== 1 &&
                   btn !== btns[btns.length - 1])) && (
-                <li key={btn}>
+                <li>
                   <button
                     onClick={() => setActiveBtn(btn)}
                     className={`pagenation-btn ${
@@ -86,7 +86,7 @@ export default function Pagenation({
                   </button>
                 </li>
               )}
-            </>
+            </div>
           ))}
 
           {
