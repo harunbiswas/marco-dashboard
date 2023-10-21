@@ -67,7 +67,7 @@ export default function DeleteHotel({
         </div>
         <p>
           {(isShow === "delete" &&
-            "nserisci il nome dell'hotel per poterlo eliminare") ||
+            "Inserisci il nome dell'hotel per poterlo eliminare") ||
             (hotelData?.publish &&
               "Inserisci il nome dell'hotel per poterlo eliminare") ||
             "Inserisci il nome dell'hotel per poterlo riabilitare"}

@@ -162,19 +162,19 @@ export default function HotelDetails() {
                   {hotelData.summaryDescription && (
                     <Description
                       max={30}
-                      description={"✓" + hotelData.summaryDescription}
+                      description={hotelData.summaryDescription}
                     />
                   )}{" "}
                   {hotelData.hotelDescription && (
                     <Description
                       max={30}
-                      description={"✓" + hotelData.hotelDescription}
+                      description={hotelData.hotelDescription}
                     />
                   )}{" "}
                   {hotelData.roomsDescription && (
                     <Description
                       max={30}
-                      description={"✓" + hotelData.roomsDescription}
+                      description={hotelData.roomsDescription}
                     />
                   )}
                 </div>

@@ -558,6 +558,18 @@
             gap: 5px;
             align-items: center;
             color: $dark;
+            position: relative;
+            padding-left: 20px;
+
+            &::before {
+              content: "\2713"; /* Unicode check mark character */
+              font-size: 20px;
+              position: absolute;
+              left: 0;
+              top: 0;
+              color: $dark; /* Color of the check mark */
+              font-weight: 800;
+            }
           }
         }
       }
