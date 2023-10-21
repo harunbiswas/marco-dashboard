@@ -32,7 +32,7 @@ export default function AgeEdit({ isEdit, data, setData }) {
           ageDeductions: items,
         };
       });
-  });
+  }, [items]);
 
   // Function to update value dynamically
   const updateValue = (itemId, subItemId, newValue) => {
@@ -146,32 +146,4 @@ export default function AgeEdit({ isEdit, data, setData }) {
       </div>
     </>
   );
-}
-
-{
-  /* <Input
-  d={{ value: item.discount }}
-  handler={(e) => {
-    setItems((prevItems) => {
-      return prevItems.map((i) => {
-        if (i.itemId === item.itemId) {
-          return {
-            ...i,
-            discount: rx.test(e.toString()) ? (e < 100 && e) || 100 : 0,
-          };
-        }
-        return i;
-      });
-    });
-  }}
-/>; */
-}
-
-{
-  /* <input
-  disabled={!isEdit}
-  type="text"
-  value={d1.value || 0}
-  onChange={(e) => updateValue(d.id, d1.id, e.target.value)}
-/>; */
 }

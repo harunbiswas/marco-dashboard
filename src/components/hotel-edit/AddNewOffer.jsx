@@ -294,6 +294,17 @@ export default function AddNewOffer({
   const [isSpa, setIsSpa] = useState(false);
   const [isRestu, setIsRestu] = useState(false);
 
+  useEffect(() => {
+    setItems((prevItems) => {
+      const updatedItems = [...prevItems];
+      updatedItems[0].name = "Pensione completa";
+      updatedItems[1].name = "Mezza pensione";
+      updatedItems[2].name = "Bed & Breakfast";
+      return updatedItems;
+    });
+  }, []);
+
+  console.log(items);
   return (
     <div ref={wrp} className={`add-new-offer  ${(isAdd && "show") || ""}`}>
       <div ref={ref} className="add-new-offer-inner booking-box">
@@ -475,7 +486,7 @@ export default function AddNewOffer({
           <div className="offer-details">
             <h4>Prezzi</h4>
             <div className="breakdown">
-              {items.map((item, i) => (
+              {items?.map((item, i) => (
                 <Breakdown
                   minStay={minStay}
                   maxStay={maxStay}
