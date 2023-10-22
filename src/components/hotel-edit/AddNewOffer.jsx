@@ -122,7 +122,9 @@ export default function AddNewOffer({
             token,
           },
         });
-        setExistingTags(tags.offerTags ?? []);
+        setExistingTags(
+          tags.filter((item) => item.catagory === "offerTags") ?? []
+        );
       } catch (error) {
         console.log(error);
       }

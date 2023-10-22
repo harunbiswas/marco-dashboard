@@ -22,8 +22,13 @@ export default function HotelDetailsForm({ data, setData, fixtData }) {
             token,
           },
         });
-        setExistingServices(tags.hotelServices ?? []);
-        setExistingStrengths(tags.hotelStrengths ?? []);
+
+        setExistingServices(
+          tags.filter((item) => item.catagory === "hotelServices") ?? []
+        );
+        setExistingStrengths(
+          tags.filter((item) => item.catagory === "hotelStrengths") ?? []
+        );
       } catch (error) {
         console.log(error);
       }

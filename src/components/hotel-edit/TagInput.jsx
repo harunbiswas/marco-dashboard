@@ -6,9 +6,11 @@ import { useParams } from "react-router-dom";
 import values from "../../../values";
 
 const isAlreadyPresentInTags = (inputString, array) => {
-  const cleanInputString = inputString.replace(/\s/g, "").toLowerCase();
-  const cleanArray = array.map((str) => str.replace(/\s/g, "").toLowerCase());
-  return cleanArray.includes(cleanInputString);
+  const cleanInputString = inputString?.replace(/\s/g, "").toLowerCase();
+  const cleanArray = array?.map((str) =>
+    str?.name.replace(/\s/g, "").toLowerCase()
+  );
+  return cleanArray?.includes(cleanInputString);
 };
 
 export default function TagInput({
@@ -41,7 +43,7 @@ export default function TagInput({
           }
         );
         handler((prev) => {
-          return [...prev, value];
+          return [...prev, { name: value }];
         });
         setActive((prev) => {
           return [...prev, value];
@@ -56,16 +58,16 @@ export default function TagInput({
 
   const { id } = useParams();
   useEffect(() => {
-    // axios.get(`${values.url}/hotel/single?id=${id}`).then((d) => {
-
-    if (name === "hotelServices") {
-      setActive(data?.services || []);
-    } else if (name === "hotelStrengths") {
-      setActive(data?.strengths || []);
-    } else if (name === "offerTags") {
-      setActive(fixtData || []);
-    }
-    // });
+    axios.get(`${values.url}/hotel/single?id=${id}`).then((d) => {
+      if (name === "hotelServices") {
+        setActive(data?.services || []);
+      } else if (name === "hotelStrengths") {
+        setActive(data?.strengths || []);
+      } else if (name === "offerTags") {
+        setActive(fixtData || []);
+      }
+      // });
+    });
   }, [fixtData]);
 
   useEffect(() => {
@@ -88,27 +90,25 @@ export default function TagInput({
     }
   }, [active]);
 
-  // console.log(data);
-
   return (
     <ul className="tag-input">
-      {tags.map((tag, i) => (
+      {tags?.map((tag, i) => (
         <li
           onClick={() => {
-            if (!active.includes(tag)) {
+            if (!active.includes(tag.name)) {
               setActive((prev) => {
-                return [...prev, tag];
+                return [...prev, tag.name];
               });
             } else {
-              const updatedItems = active.filter((item) => item !== tag);
+              const updatedItems = active.filter((item) => item !== tag.name);
               setActive(updatedItems);
             }
           }}
-          className={(active?.includes(tag) && "active") || ""}
+          className={(active?.includes(tag.name) && "active") || ""}
           key={i}
         >
           {/* {d.icon} */}
-          {tag}
+          {tag.name}
         </li>
       ))}
       {(!isInput && (
@@ -128,7 +128,7 @@ export default function TagInput({
           <button
             type="submit"
             // onClick={submitHandler}
-            disabled={!value || tags.includes(value)}
+            disabled={!value || tags?.includes(value)}
           >
             <AiOutlinePlus />
           </button>
