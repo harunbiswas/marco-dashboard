@@ -149,7 +149,7 @@ const LocationDistances = ({ data, setData, fixtData }) => {
                 ...prev,
                 {
                   id: prev.length + 1 + Math.random(),
-                  label: "distance from center",
+                  label: "Aggiungi Nome",
                   distance: 0,
                   scale: "Mt",
                 },
