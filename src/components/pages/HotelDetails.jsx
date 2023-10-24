@@ -153,13 +153,20 @@ export default function HotelDetails() {
                   )}
                 </ul> */}
                 <div className="hotel-details-des">
+                  {hotelData.serviceDetails && (
+                    <Description
+                      max={30}
+                      description={hotelData.serviceDetails}
+                      title="Dettagli Servizi"
+                    />
+                  )}
                   {hotelData.roomsDescription && (
                     <Description
                       max={30}
                       description={hotelData.roomsDescription}
                       title={hotelData?.roomsTitle}
                     />
-                  )}{" "}
+                  )}
                   {hotelData.spaDescription && (
                     <Description
                       max={30}
@@ -185,11 +192,12 @@ export default function HotelDetails() {
               <Map markerPosition={extractLatAndLng(hotelData.coordinate)} />
             </div>
 
-            <div className="booking-box hotel-details-service">
-              <div className="hotel-details-service-top">
-                <h4>Riduzioni Età</h4>
-                <div className="edit-btn">
-                  {/* <button
+            {(hotelData?.ageDeductions && hotelData?.ageDeductions?.length && (
+              <div className="booking-box hotel-details-service">
+                <div className="hotel-details-service-top">
+                  <h4>Riduzioni Età</h4>
+                  <div className="edit-btn">
+                    {/* <button
                     className={isEdit && "save"}
                     onClick={() => setIsEdit(!isEdit)}
                   >
@@ -200,11 +208,13 @@ export default function HotelDetails() {
                     )) ||
                       "Save"}
                   </button> */}
-                  <EditBtn hotelId={hotelId} />
+                    <EditBtn hotelId={hotelId} />
+                  </div>
                 </div>
+                <AgeEdit isEdit={isEdit} />
               </div>
-              <AgeEdit isEdit={isEdit} />
-            </div>
+            )) ||
+              ""}
           </div>
           <div className="hotel-details-right basic">
             <div className="booking-box delete-disable">

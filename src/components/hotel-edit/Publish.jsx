@@ -1,5 +1,4 @@
 export default function Publish({ isSuccess, errorType }) {
-  console.log(isSuccess);
   return (
     <>
       {(isSuccess && (

@@ -67,6 +67,7 @@ export default function HotelEdit() {
         },
       })
       .then((d) => {
+        setIsPublish(true);
         setIsSuccess(true);
       })
       .catch((e) => {
@@ -141,7 +142,7 @@ export default function HotelEdit() {
               (active === 3 && (
                 <EditOffer data={hotelData} setData={setHotelData} />
               )) ||
-              (active === 4 && isPublish && (
+              (active === 4 && (
                 <Publish isSuccess={isSuccess} errorType={errorType} />
               ))}
           </div>
@@ -205,15 +206,13 @@ export default function HotelEdit() {
                 onClick={() => {
                   if (active === 4 && !isPublish) {
                     publishHandler();
-                  } else {
+                  } else if (active > 4) {
                     submitHandler();
                   }
                   if (active < 4 && !isPublish) {
                     setActive(active + 1);
                   } else if (isPublish) {
                     navigate("/hotel");
-                  } else {
-                    setIsPublish(true);
                   }
                 }}
                 className="submit"

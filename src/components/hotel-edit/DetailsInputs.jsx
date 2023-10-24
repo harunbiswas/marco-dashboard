@@ -196,7 +196,7 @@ export default function DetailsInputs({ data, setData, fixtData }) {
           <div className="inner">
             <textarea
               name="hotelDescription"
-              placeholder="Inserisci una descrizione delle camere"
+              placeholder={roomsTitle}
               value={data?.roomsDescription}
               onChange={(e) => {
                 setData((prev) => {
@@ -229,7 +229,7 @@ export default function DetailsInputs({ data, setData, fixtData }) {
             <div className="inner">
               <textarea
                 name="hotelDescription"
-                placeholder="Inserisci una descrizione delle spa"
+                placeholder={data?.spaTitle}
                 value={data?.spaDescription}
                 onChange={(e) => {
                   setData((prev) => {
@@ -275,7 +275,7 @@ export default function DetailsInputs({ data, setData, fixtData }) {
             <div className="inner">
               <textarea
                 name="hotelDescription"
-                placeholder="Inserisci una descrizione delle ristorante"
+                placeholder={data?.restaurantTitle}
                 value={data?.restaurantDescription}
                 onChange={(e) =>
                   setData((prev) => ({
