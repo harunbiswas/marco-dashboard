@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 
-export default function Rating() {
+export default function Rating({ rate }) {
   const [rating, setRating] = useState(5);
+  console.log(rate);
   return (
     <ul className="rating">
-      {Array.from({ length: rating }, (d, i) => (
+      {Array.from({ length: rate }, (d, i) => (
         <li key={i}>
           <AiFillStar />
         </li>
