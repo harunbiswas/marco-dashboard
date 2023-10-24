@@ -44,6 +44,7 @@ export default function AddNewOffer({
   data,
   setData,
 }) {
+  const [isChange, setIsChange] = useState(false);
   const { isNewHotelAdding } = useHotelContext();
   const [tagsLoading, setTagsLoading] = useState(true);
   const [title, setTitle] = useState(offer ? offer.name : "");
@@ -216,14 +217,18 @@ export default function AddNewOffer({
   }, [isAdd]);
 
   useEffect(() => {
-    wrp.current.addEventListener("click", (e) => {
+    wrp.current.addEventListener("mousedown", (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
-        setIsAdd(false);
-        setIsAddNewOfferClicked(false);
-        setOffer(null);
+        if (isChange) {
+          setIsDelete(true);
+        } else {
+          setIsAdd(false);
+          setIsAddNewOfferClicked(false);
+          setOffer(null);
+        }
       }
     });
-  }, []);
+  });
 
   const handleSave = async () => {
     const newOfferData = {
@@ -318,9 +323,13 @@ export default function AddNewOffer({
           </h4>
           <button
             onClick={() => {
-              setIsAdd(false);
-              setIsAddNewOfferClicked(false);
-              setOffer(null);
+              if (isChange) {
+                setIsDelete(true);
+              } else {
+                setIsAdd(false);
+                setIsAddNewOfferClicked(false);
+                setOffer(null);
+              }
             }}
           >
             <GrClose />
@@ -334,7 +343,10 @@ export default function AddNewOffer({
               <div className="item">
                 <label htmlFor="title">Nome Offerta</label>
                 <Input
-                  handler={setTitle}
+                  handler={() => {
+                    setTitle();
+                    setIsChange(true);
+                  }}
                   d={{ value: title, label: "Inserisci nome" }}
                 />
               </div>
@@ -346,7 +358,10 @@ export default function AddNewOffer({
                 <label htmlFor="title">Descrizione offerta</label>
                 <TextArea
                   value={description}
-                  handler={(e) => setDescription(e)}
+                  handler={(e) => {
+                    setIsChange(true);
+                    setDescription(e);
+                  }}
                   pls="Inserisci la descrizione dell’offerta"
                 />
               </div>
@@ -361,6 +376,7 @@ export default function AddNewOffer({
                         placeholder="Inserisci la descrizione del pacchetto incluso"
                         value={packages}
                         onChange={(e) => {
+                          setIsChange(true);
                           setPackage(e.target.value);
                         }}
                       ></textarea>
@@ -384,7 +400,10 @@ export default function AddNewOffer({
                         name="hotelDescription"
                         placeholder="Inserisci la descrizione degli omaggi"
                         value={omaggi}
-                        onChange={(e) => setOmaggi(e.target.value)}
+                        onChange={(e) => {
+                          setIsChange(true);
+                          setOmaggi(e.target.value);
+                        }}
                       ></textarea>
                     </div>
                   </div>
@@ -411,7 +430,10 @@ export default function AddNewOffer({
                 <input
                   type="date"
                   value={startDate && startDate.toLocaleDateString("en-CA")}
-                  onChange={(e) => setStartDate(new Date(e.target.value))}
+                  onChange={(e) => {
+                    setIsChange(true);
+                    setStartDate(new Date(e.target.value));
+                  }}
                   name=""
                   id=""
                   placeholder="select date"
@@ -422,7 +444,10 @@ export default function AddNewOffer({
                 <input
                   type="date"
                   value={endDate && endDate.toLocaleDateString("en-CA")}
-                  onChange={(e) => setEndDate(new Date(e.target.value))}
+                  onChange={(e) => {
+                    setIsChange(true);
+                    setEndDate(new Date(e.target.value));
+                  }}
                   name=""
                   id=""
                   min={
@@ -442,7 +467,10 @@ export default function AddNewOffer({
                 {/* <Select data={["2 days", "3 days", "4 days"]} /> */}
                 <Input
                   type="number"
-                  handler={setMinStay}
+                  handler={(e) => {
+                    setIsChange(true);
+                    setMinStay(e);
+                  }}
                   d={{ value: minStay }}
                 />
               </div>
@@ -451,7 +479,10 @@ export default function AddNewOffer({
                 {/* <Select data={["5 days", "3 days", "4 days"]} /> */}
                 <Input
                   type="number"
-                  handler={setMaxStay}
+                  handler={(e) => {
+                    setIsChange(true);
+                    setMaxStay(e);
+                  }}
                   d={{ value: maxStay }}
                 />
               </div>
@@ -461,6 +492,7 @@ export default function AddNewOffer({
                   data={["Incluse", "Non Incluse"]}
                   activeValue={beverageAvailability || "Non Incluse"}
                   handler={(e) => {
+                    setIsChange(true);
                     setBeverageAvailability(e);
                   }}
                 />
@@ -475,7 +507,10 @@ export default function AddNewOffer({
                 tags={existingTags}
                 handler={setExistingTags}
                 name="offerTags"
-                setData={setOfferTags}
+                setData={(e) => {
+                  setIsChange(true);
+                  setOfferTags(e);
+                }}
                 data={offerTags}
                 fixtData={offer?.tags}
               />
@@ -492,9 +527,10 @@ export default function AddNewOffer({
                 <Breakdown
                   minStay={minStay}
                   maxStay={maxStay}
-                  handler={(value, id, property) =>
-                    handleBreakdownChange(value, id, property)
-                  }
+                  handler={(value, id, property) => {
+                    setIsChange(true);
+                    handleBreakdownChange(value, id, property);
+                  }}
                   key={i}
                   data={item}
                   i={i}
@@ -507,9 +543,10 @@ export default function AddNewOffer({
             <div className="breakdown">
               {ages.map((age, i) => (
                 <AgeReduction
-                  handler={(value, id, property) =>
-                    handleAgeChange(value, id, property)
-                  }
+                  handler={(value, id, property) => {
+                    setIsChange(true);
+                    handleAgeChange(value, id, property);
+                  }}
                   key={i}
                   data={age}
                 />
@@ -583,6 +620,7 @@ export default function AddNewOffer({
                       setIsAdd(false);
                       setIsAddNewOfferClicked(false);
                       setOffer(null);
+                      setIsChange(false);
                     }}
                     style={{ background: "red", color: "white" }}
                     className=" btn"
@@ -599,7 +637,11 @@ export default function AddNewOffer({
             <button
               onClick={() => {
                 if (isAddNewOfferClicked) {
-                  setIsDelete(true);
+                  if (isChange) {
+                    setIsDelete(true);
+                  } else {
+                    setIsAdd(false);
+                  }
                 } else {
                   setIsAdd(false);
                   setIsAddNewOfferClicked(false);

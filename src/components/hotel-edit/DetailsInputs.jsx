@@ -174,6 +174,8 @@ export default function DetailsInputs({ data, setData, fixtData }) {
                 };
               });
             }
+
+            setIsEditTitle(false);
           }}
         />
         {/* item start  */}

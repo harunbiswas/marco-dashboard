@@ -38,11 +38,12 @@ export default function HotelEdit() {
       .catch((e) => {
         console.log(e.response);
       });
-  }, []);
+  }, [active]);
 
   const [isLoading, setIsloading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [errorType, setErrorType] = useState("");
   const submitHandler = () => {
-    setIsloading(true);
     axios
       .put(`${values.url}/hotel`, hotelData, {
         headers: {
@@ -65,8 +66,13 @@ export default function HotelEdit() {
           token,
         },
       })
-      .then((d) => {})
-      .catch((e) => console.log(e));
+      .then((d) => {
+        setIsSuccess(true);
+      })
+      .catch((e) => {
+        setIsSuccess(false);
+        setErrorType(e.code);
+      });
   };
 
   const handleDeleteBtn = async () => {
@@ -111,7 +117,11 @@ export default function HotelEdit() {
         <Bootcump data={bootCump(isNewHotelAdding)} />
         <div className="hotel-edit-wrp booking-box">
           <div className="hotel-edit-top">
-            <EditMenu active={active} setActive={setActive} />
+            <EditMenu
+              active={active}
+              setActive={setActive}
+              submitHandler={submitHandler}
+            />
           </div>
           <div className="hotel-edit-body">
             {(active === 1 && (
@@ -131,7 +141,9 @@ export default function HotelEdit() {
               (active === 3 && (
                 <EditOffer data={hotelData} setData={setHotelData} />
               )) ||
-              (active === 4 && isPublish && <Publish />)}
+              (active === 4 && isPublish && (
+                <Publish isSuccess={isSuccess} errorType={errorType} />
+              ))}
           </div>
 
           <div className="hotel-edit-footer">
@@ -180,11 +192,22 @@ export default function HotelEdit() {
                   new Date(hotelData?.updatedAt).getTime() &&
                 active !== 4 &&
                 ((isLoading && <Loading />) || (
-                  <button onClick={submitHandler}>Salva Modifiche</button>
+                  <button
+                    onClick={() => {
+                      setIsloading(true);
+                      submitHandler();
+                    }}
+                  >
+                    Salva Modifiche
+                  </button>
                 ))}
               <button
                 onClick={() => {
-                  if (active === 4 && !isPublish) publishHandler();
+                  if (active === 4 && !isPublish) {
+                    publishHandler();
+                  } else {
+                    submitHandler();
+                  }
                   if (active < 4 && !isPublish) {
                     setActive(active + 1);
                   } else if (isPublish) {

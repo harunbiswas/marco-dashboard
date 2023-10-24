@@ -119,7 +119,7 @@ export default function HotelDetails() {
                   </div>
                   <EditBtn hotelId={hotelId} />
                 </div>
-                <Tags tag={[]} />
+                <Tags tag={[...hotelData.services, ...hotelData.strengths]} />
               </div>
               <div className="hotel-details-des">
                 {hotelData.summaryDescription && (
@@ -137,7 +137,7 @@ export default function HotelDetails() {
                 {hotelData.roomsDescription && (
                   <Description
                     description={hotelData.roomsDescription}
-                    title="Descrizione Camere"
+                    title={hotelData?.roomsTitle}
                   />
                 )}
               </div>
@@ -148,33 +148,36 @@ export default function HotelDetails() {
                 <EditBtn hotelId={hotelId} />
               </div>
               <div className="hotel-details-service-body">
-                <ul className="hotel-details-service-body-items">
+                {/* <ul className="hotel-details-service-body-items">
                   {[...hotelData.services, ...hotelData.strengths].map(
                     (item, i) => (
                       <li key={i}>
-                        {/* {item.icon} {item.name} */}
+                      
                         {item}
                       </li>
                     )
                   )}
-                </ul>
+                </ul> */}
                 <div className="hotel-details-des">
-                  {hotelData.summaryDescription && (
-                    <Description
-                      max={30}
-                      description={hotelData.summaryDescription}
-                    />
-                  )}{" "}
-                  {hotelData.hotelDescription && (
-                    <Description
-                      max={30}
-                      description={hotelData.hotelDescription}
-                    />
-                  )}{" "}
                   {hotelData.roomsDescription && (
                     <Description
                       max={30}
                       description={hotelData.roomsDescription}
+                      title={hotelData?.roomsTitle}
+                    />
+                  )}{" "}
+                  {hotelData.spaDescription && (
+                    <Description
+                      max={30}
+                      description={hotelData.spaDescription}
+                      title={hotelData?.spaTitle}
+                    />
+                  )}{" "}
+                  {hotelData.restaurantDescription && (
+                    <Description
+                      max={30}
+                      description={hotelData.restaurantDescription}
+                      title={hotelData?.restaurantTitle}
                     />
                   )}
                 </div>

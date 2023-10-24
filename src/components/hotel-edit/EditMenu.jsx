@@ -3,7 +3,7 @@ import { BsFillBookmarkStarFill } from "react-icons/bs";
 import { FaLocationDot } from "react-icons/fa6";
 import { HiMiniDocumentText, HiReceiptPercent } from "react-icons/hi2";
 
-export default function EditMenu({ active, setActive }) {
+export default function EditMenu({ active, setActive, submitHandler }) {
   const [menus, setMenus] = useState([
     { id: 1, name: "Dettagli Hotel", icon: <HiMiniDocumentText /> },
     { id: 2, name: "Dettagli Location", icon: <FaLocationDot /> },
@@ -23,7 +23,10 @@ export default function EditMenu({ active, setActive }) {
     <ul className="edit-menu">
       {menus.map((menu, i) => (
         <li
-          onClick={() => setActive(i + 1)}
+          onClick={() => {
+            submitHandler();
+            setActive(i + 1);
+          }}
           className={`edit-menu-item ${(menu.id <= active && "active") || ""} `}
           key={i}
         >
