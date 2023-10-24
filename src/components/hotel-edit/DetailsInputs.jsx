@@ -92,7 +92,7 @@ export default function DetailsInputs({ data, setData, fixtData }) {
   const [intigator, setInitgator] = useState("");
 
   useEffect(() => {
-    setRoomsTitle(fixtData?.roomsTitle);
+    setRoomsTitle(fixtData?.roomsTitle || "Descrizione Camere");
   }, [fixtData]);
 
   return (
@@ -153,6 +153,7 @@ export default function DetailsInputs({ data, setData, fixtData }) {
         </div>
         {/* item end  */}
         <EditTitle
+          isInput={true}
           isShow={isEditTitle}
           closeHandler={() => setIsEditTitle(false)}
           data={title}
