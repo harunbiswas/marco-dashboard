@@ -34,8 +34,8 @@ const defaultDistances = [
 const LocationDistances = ({ data, setData, fixtData }) => {
   const [distances, setDistances] = useState([]);
   const { id } = useParams();
-  const toggleEdit = (itemId, i) => {
-    const updatedDestinces = distances.map((item) => {
+  const toggleEdit = (itemId) => {
+    const updatedDestinces = distances.map((item, i) => {
       if (i === itemId) {
         return { ...item, isEdit: !item.isEdit };
       }
@@ -87,12 +87,13 @@ const LocationDistances = ({ data, setData, fixtData }) => {
     });
   }, [distances]);
 
-  const deleteHandler = (item) => {
-    console.log(item);
+  const deleteHandler = (index) => {
     setDistances((prevDistances) =>
-      prevDistances.filter((distance, i) => i !== item.id)
+      prevDistances.filter((_, i) => i !== index)
     );
   };
+
+  console.log(distances);
 
   return (
     <div className="location-details-bottom">
