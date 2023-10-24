@@ -218,7 +218,7 @@ export default function AddNewOffer({
 
   useEffect(() => {
     wrp.current.addEventListener("mousedown", (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
+      if (ref.current && !ref.current.contains(e.target) && isChange) {
         if (isChange) {
           setIsDelete(true);
         } else {
