@@ -62,6 +62,8 @@ export default function Hotel() {
     })();
   }, [search, active, week]);
 
+  // console.log(hotels);
+
   return (
     <div className="hotel">
       <AddHotel handler={setAddhotel} addhotel={addhotel} />

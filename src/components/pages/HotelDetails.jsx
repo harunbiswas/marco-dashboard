@@ -106,7 +106,7 @@ export default function HotelDetails() {
                 <div className="info">
                   <div className="left">
                     <Title title={hotelData && hotelData.name} />
-                    {!hotelData?.publish && (
+                    {hotelData?.disabled && (
                       <strong
                         style={{
                           color: "#ff9500",
@@ -216,24 +216,24 @@ export default function HotelDetails() {
             <div className="booking-box delete-disable">
               <div className="delete-disable-top">
                 <h4>
-                  {(hotelData?.publish && "Disabilita o Elimina") ||
+                  {(hotelData?.disabled && "Disabilita o Elimina") ||
                     "Riabilita o Elimina"}
                 </h4>
               </div>
               <div className="delete-disable-body">
                 <DeleteHotel
                   data={hotelData.name}
-                  publish={hotelData.publish}
+                  publish={hotelData?.disabled || false}
                   isShow={isDelete}
                   closeHandler={() => setIsDelete(false)}
                   changeHandler={deleteChange}
                   hotelData={hotelData}
                 />
                 <button onClick={() => setIsDelete("disable")} className="btn">
-                  {(hotelData?.publish && <GiSightDisabled />) || (
+                  {(hotelData?.disabled && <GiSightDisabled />) || (
                     <AiFillEyeInvisible />
                   )}
-                  {(hotelData?.publish && "Disabilita") || "Riabilita"}
+                  {(!hotelData?.disabled && "Disabilita") || "Riabilita"}
                 </button>
                 <button
                   onClick={() => setIsDelete("delete")}

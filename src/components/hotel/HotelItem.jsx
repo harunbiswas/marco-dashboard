@@ -39,7 +39,7 @@ export default function HotelItem({ hotelData }) {
             <Link to={`/hotel/${hotelData._id}`}>
               <h4>{hotelData.name}</h4>
             </Link>
-            {!hotelData?.publish && (
+            {hotelData?.disabled && (
               <span
                 style={{
                   color: "#ff9500",

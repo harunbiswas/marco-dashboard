@@ -35,7 +35,7 @@ export default function DeleteHotel({
   }, [value]);
 
   const disableHandler = () => {
-    hotelData.publish = !publish;
+    hotelData.disabled = !publish;
     axios
       .put(`${values.url}/hotel`, hotelData, {
         headers: {
