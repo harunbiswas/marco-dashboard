@@ -92,8 +92,9 @@
     justify-content: space-between;
 
     &-left {
-      display: flex;
+      display: grid;
       gap: 20px;
+      grid-template-columns: 160px auto;
 
       .img {
         width: 160px;
