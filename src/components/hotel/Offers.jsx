@@ -1,9 +1,9 @@
+import moment from "moment/moment";
 import { useEffect, useState } from "react";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import img from "../../assets/images/discount.svg";
-import moment from "moment/moment";
 
-export default function Offers({offer}) {
+export default function Offers({ offer }) {
   const [offers, setOffers] = useState([]);
   const [trn, setTrns] = useState(0);
   useEffect(() => {
@@ -11,13 +11,16 @@ export default function Offers({offer}) {
   }, [offer]);
   return (
     <>
-      <button
-        disabled={!(trn > 0)}
-        onClick={() => setTrns(trn - 1)}
-        className="offers-btn"
-      >
-        <FaAngleLeft />
-      </button>
+      {(offer && offer?.length && (
+        <button
+          disabled={!(trn > 0)}
+          onClick={() => setTrns(trn - 1)}
+          className="offers-btn"
+        >
+          <FaAngleLeft />
+        </button>
+      )) ||
+        ""}
 
       <ul className="offers">
         {offers.map((d, i) => (
@@ -31,7 +34,10 @@ export default function Offers({offer}) {
             </div>
             <div className="offers-item-right">
               <h5>{d.name}</h5>
-              <p>Dal {moment(d.startDate).format("Do MMMM ")} - {moment(d.endDate).format("Do MMMM YY")}</p>
+              <p>
+                Dal {moment(d.startDate).format("Do MMMM ")} -{" "}
+                {moment(d.endDate).format("Do MMMM YY")}
+              </p>
             </div>
           </li>
         ))}
