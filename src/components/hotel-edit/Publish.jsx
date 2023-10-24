@@ -21,7 +21,7 @@ export default function Publish() {
           />
         </svg>
       </div>
-      <h4>Hotel Published Succesfully</h4>
+      <h4>Hotel Pubblicato Correttamente</h4>
     </div>
   );
 }

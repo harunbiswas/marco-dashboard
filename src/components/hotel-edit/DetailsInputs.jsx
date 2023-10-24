@@ -1,13 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { BiPlus } from "react-icons/bi";
+import { FiEdit } from "react-icons/fi";
 import { PiArrowSquareOutBold } from "react-icons/pi";
 import { useParams } from "react-router-dom";
 import values from "../../../values";
 import Select from "../basic/Select";
+import EditTitle from "./EditTItle";
 import Input from "./Input";
 
-export default function DetailsInputs({ data, setData }) {
+export default function DetailsInputs({ data, setData, fixtData }) {
   const [inputs, setInputs] = useState([]);
   const { id } = useParams();
   const [isSpa, setIsSpa] = useState(false);
@@ -73,11 +75,25 @@ export default function DetailsInputs({ data, setData }) {
     }
   };
 
-  // useEffect(() => {
-  //   console.log("Data useeffect ", Boolean(data?.restaurantDescription))
-  //   setIsSpa(data?.spaDescription);
-  //   setIsRestu(Boolean(data?.restaurantDescription));
-  // }, [data]);
+  const [roomsTitle, setRoomsTitle] = useState(
+    data?.roomsTitle || "Descrizione Camere"
+  );
+  useEffect(() => {
+    setData((prev) => {
+      return {
+        ...prev,
+        roomsTitle,
+      };
+    });
+  }, [roomsTitle]);
+
+  const [isEditTitle, setIsEditTitle] = useState(false);
+  const [title, setTitle] = useState("");
+  const [intigator, setInitgator] = useState("");
+
+  useEffect(() => {
+    setRoomsTitle(fixtData?.roomsTitle);
+  }, [fixtData]);
 
   return (
     <>
@@ -136,10 +152,44 @@ export default function DetailsInputs({ data, setData }) {
           </div>
         </div>
         {/* item end  */}
-
+        <EditTitle
+          isShow={isEditTitle}
+          closeHandler={() => setIsEditTitle(false)}
+          data={title}
+          changeHandler={(e) => {
+            if (intigator === "room") {
+              setRoomsTitle(e);
+            } else if (intigator === "spa") {
+              setData((prev) => {
+                return {
+                  ...prev,
+                  spaTitle: e,
+                };
+              });
+            } else if (intigator === "res") {
+              setData((prev) => {
+                return {
+                  ...prev,
+                  restaurantTitle: e,
+                };
+              });
+            }
+          }}
+        />
         {/* item start  */}
         <div className="hotel-form-details-item full">
-          <label htmlFor="">Descrizione Camere</label>
+          <label htmlFor="">
+            {roomsTitle}
+            <button
+              onClick={() => {
+                setIsEditTitle(true);
+                setTitle(roomsTitle);
+                setInitgator("room");
+              }}
+            >
+              <FiEdit />
+            </button>
+          </label>
           <div className="inner">
             <textarea
               name="hotelDescription"
@@ -161,7 +211,18 @@ export default function DetailsInputs({ data, setData }) {
       <div className="buttons">
         {(isSpa && (
           <div className="hotel-form-details-item full">
-            <label htmlFor="">Descrizione Spa</label>
+            <label htmlFor="">
+              {data?.spaTitle}
+              <button
+                onClick={() => {
+                  setIsEditTitle(true);
+                  setTitle(data?.spaTitle);
+                  setInitgator("spa");
+                }}
+              >
+                <FiEdit />
+              </button>
+            </label>
             <div className="inner">
               <textarea
                 name="hotelDescription"
@@ -182,6 +243,12 @@ export default function DetailsInputs({ data, setData }) {
           <button
             onClick={(e) => {
               setIsSpa(true);
+              setData((prev) => {
+                return {
+                  ...prev,
+                  spaTitle: "Descrizione Spa",
+                };
+              });
             }}
           >
             <BiPlus />
@@ -190,7 +257,18 @@ export default function DetailsInputs({ data, setData }) {
         )}{" "}
         {isRestu ? (
           <div className="hotel-form-details-item full">
-            <label htmlFor="hotelDescription">Descrizione ristorante</label>
+            <label htmlFor="hotelDescription">
+              {data?.restaurantTitle}
+              <button
+                onClick={() => {
+                  setIsEditTitle(true);
+                  setTitle(data?.restaurantTitle);
+                  setInitgator("res");
+                }}
+              >
+                <FiEdit />
+              </button>
+            </label>
             <div className="inner">
               <textarea
                 name="hotelDescription"
@@ -208,12 +286,17 @@ export default function DetailsInputs({ data, setData }) {
         ) : (
           <button
             onClick={() => {
-              console.log(isRestu);
               setIsRestu(true);
+              setData((prev) => {
+                return {
+                  ...prev,
+                  restaurantTitle: "Descrizione ristorante",
+                };
+              });
             }}
           >
             <BiPlus />
-            Aggiungi Descrizione Ristorante {isRestu.toString()}
+            Aggiungi Descrizione Ristorante
           </button>
         )}
       </div>

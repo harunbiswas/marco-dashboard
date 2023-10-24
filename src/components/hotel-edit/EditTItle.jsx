@@ -49,6 +49,7 @@ export default function EditTitle({
             onClick={() => {
               if (value) {
                 changeHandler(value);
+                closeHandler();
               }
             }}
             className="btn"

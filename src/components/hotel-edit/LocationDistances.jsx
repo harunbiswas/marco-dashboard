@@ -10,14 +10,14 @@ import Input from "./Input";
 
 const defaultDistances = [
   {
-    id: 2,
+    id: 2 + Math.random(),
     isEdit: false,
     label: "Distanza dal Centro",
     distance: 0,
     scale: "Mt",
   },
   {
-    id: 1,
+    id: 1 + Math.random(),
     isEdit: false,
     label: "Distanza dal Mare",
     distance: 0,
@@ -25,7 +25,7 @@ const defaultDistances = [
   },
 
   {
-    id: 3,
+    id: 3 + Math.random(),
     isEdit: false,
     label: "Distanza dalle Terme",
     distance: 0,

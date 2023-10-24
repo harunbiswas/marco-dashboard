@@ -46,7 +46,7 @@ export default function HotelDetailsForm({ data, setData, fixtData }) {
         <h4>Dettagli Hotel</h4>
         <p>Inserisci o modifica i dettagli dell'hotel qui sotto</p>
 
-        <DetailsInputs data={data} setData={setData} />
+        <DetailsInputs fixtData={fixtData} data={data} setData={setData} />
       </div>
       <div className="hotel-details-form-rating">
         <h4>Stelle Struttura</h4>
@@ -81,7 +81,7 @@ export default function HotelDetailsForm({ data, setData, fixtData }) {
       </div>
 
       <div className="hotel-edit-bottom">
-        <h4>Service Included</h4>
+        <h4>Servizi Inclusi</h4>
         <TagInput
           tags={existingServices}
           handler={setExistingServices}

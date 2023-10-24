@@ -26,6 +26,17 @@
     font-weight: 500;
     line-height: 140%;
     color: #737373;
+
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+    & > button {
+      background-color: transparent;
+      border: none;
+      color: $primary;
+      font-size: 16px;
+    }
   }
 
   input,

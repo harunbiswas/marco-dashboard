@@ -25,6 +25,7 @@ export default function HotelEdit() {
   // development
   const { id } = useParams();
   const [hotelData, setHotelData] = useState({});
+
   const token = Cookies.get("login") && JSON.parse(Cookies.get("login")).token;
 
   useEffect(() => {
@@ -177,6 +178,7 @@ export default function HotelEdit() {
               {!isPublish &&
                 new Date(hotelData?.createdAt).getTime() !==
                   new Date(hotelData?.updatedAt).getTime() &&
+                active !== 4 &&
                 ((isLoading && <Loading />) || (
                   <button onClick={submitHandler}>Salva Modifiche</button>
                 ))}
@@ -193,7 +195,7 @@ export default function HotelEdit() {
                 }}
                 className="submit"
               >
-                {(active === 4 && !isPublish && "Publish") || "Avanti"}
+                {(active === 4 && !isPublish && "Pubblica") || "Avanti"}
               </button>
             </div>
           </div>
