@@ -1,4 +1,5 @@
 export default function Publish({ isSuccess, errorType }) {
+  console.log(isSuccess);
   return (
     <>
       {(isSuccess && (
@@ -25,75 +26,76 @@ export default function Publish({ isSuccess, errorType }) {
           </div>
           <h4>Hotel Pubblicato Correttamente</h4>
         </div>
-      )) || (
-        <div className="publish">
-          <div className="ui-error">
-            <svg
-              viewBox="0 0 87 87"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g
-                id="Page-1"
-                stroke="none"
-                strokeWidth="1"
-                fill="none"
-                fillRule="evenodd"
+      )) ||
+        (errorType && (
+          <div className="publish">
+            <div className="ui-error">
+              <svg
+                viewBox="0 0 87 87"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <g id="Group-2" transform="translate(2.000000, 2.000000)">
-                  <circle
-                    id="Oval-2"
-                    stroke="#FF0000"
-                    strokeWidth="4"
-                    cx="41.5"
-                    cy="41.5"
-                    r="41.5"
-                  ></circle>
-                  <circle
-                    className="ui-error-circle"
-                    stroke="#FF0000"
-                    strokeWidth="4"
-                    cx="41.5"
-                    cy="41.5"
-                    r="41.5"
-                  ></circle>
-                  <path
-                    className="ui-error-line1"
-                    d="M22.244224,22 L60.4279902,60.1837662"
-                    id="Line"
-                    stroke="#F74444"
-                    strokeWidth="3"
-                    strokeLinecap="square"
-                  ></path>
-                  <path
-                    className="ui-error-line2"
-                    d="M60.755776,21 L23.244224,59.8443492"
-                    id="Line"
-                    stroke="#F74444"
-                    strokeWidth="3"
-                    strokeLinecap="square"
-                  ></path>
+                <g
+                  id="Page-1"
+                  stroke="none"
+                  strokeWidth="1"
+                  fill="none"
+                  fillRule="evenodd"
+                >
+                  <g id="Group-2" transform="translate(2.000000, 2.000000)">
+                    <circle
+                      id="Oval-2"
+                      stroke="#FF0000"
+                      strokeWidth="4"
+                      cx="41.5"
+                      cy="41.5"
+                      r="41.5"
+                    ></circle>
+                    <circle
+                      className="ui-error-circle"
+                      stroke="#FF0000"
+                      strokeWidth="4"
+                      cx="41.5"
+                      cy="41.5"
+                      r="41.5"
+                    ></circle>
+                    <path
+                      className="ui-error-line1"
+                      d="M22.244224,22 L60.4279902,60.1837662"
+                      id="Line"
+                      stroke="#F74444"
+                      strokeWidth="3"
+                      strokeLinecap="square"
+                    ></path>
+                    <path
+                      className="ui-error-line2"
+                      d="M60.755776,21 L23.244224,59.8443492"
+                      id="Line"
+                      stroke="#F74444"
+                      strokeWidth="3"
+                      strokeLinecap="square"
+                    ></path>
+                  </g>
                 </g>
-              </g>
-            </svg>
+              </svg>
+            </div>
+            <h4
+              style={{
+                color: "red",
+              }}
+            >
+              Hotel non Pubbicato
+            </h4>
+            <p>
+              {(errorType &&
+                errorType === "ERR_NETWORK" &&
+                "Assicurati di essere connesso a internet prima di pubblicare l'hotel") ||
+                `Ci deve essere un'errore con Google, ricarica la pagina o contatta Alphard Labs inviando questa stringa: ${
+                  errorType || "ENTERNAL SERVER ERROR"
+                }`}
+            </p>
           </div>
-          <h4
-            style={{
-              color: "red",
-            }}
-          >
-            Hotel non Pubbicato
-          </h4>
-          <p>
-            {(errorType &&
-              errorType === "ERR_NETWORK" &&
-              "Assicurati di essere connesso a internet prima di pubblicare l'hotel") ||
-              `Ci deve essere un'errore con Google, ricarica la pagina o contatta Alphard Labs inviando questa stringa: ${
-                errorType || "ENTERNAL SERVER ERROR"
-              }`}
-          </p>
-        </div>
-      )}
+        ))}
     </>
   );
 }

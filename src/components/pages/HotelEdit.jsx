@@ -111,8 +111,6 @@ export default function HotelEdit() {
     },
   ];
 
-  console.log(hotelData);
-
   return (
     <div className="hotel-edit hotel">
       <div className="container">

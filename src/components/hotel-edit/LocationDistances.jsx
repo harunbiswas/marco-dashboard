@@ -1,9 +1,7 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { AiFillDelete, AiOutlinePlus } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import { useParams } from "react-router-dom";
-import values from "../../../values";
 import Select from "../basic/Select";
 import EditTitle from "./EditTItle";
 import Input from "./Input";
@@ -36,9 +34,9 @@ const defaultDistances = [
 const LocationDistances = ({ data, setData, fixtData }) => {
   const [distances, setDistances] = useState([]);
   const { id } = useParams();
-  const toggleEdit = (itemId) => {
+  const toggleEdit = (itemId, i) => {
     const updatedDestinces = distances.map((item) => {
-      if (item.id === itemId) {
+      if (i === itemId) {
         return { ...item, isEdit: !item.isEdit };
       }
       return item;
@@ -49,8 +47,8 @@ const LocationDistances = ({ data, setData, fixtData }) => {
   const handleChange = (itemId, newValue, property) => {
     if (property === "distance") {
       const rx = /^(\d+(\.\d{0,2})?)?$/;
-      const updatedDestinces = distances.map((item) => {
-        if (item.id === itemId) {
+      const updatedDestinces = distances.map((item, i) => {
+        if (i === itemId) {
           return {
             ...item,
             [property]:
@@ -63,8 +61,8 @@ const LocationDistances = ({ data, setData, fixtData }) => {
       });
       setDistances(updatedDestinces);
     } else {
-      const updatedDestinces = distances.map((item) => {
-        if (item.id === itemId) {
+      const updatedDestinces = distances.map((item, i) => {
+        if (i === itemId) {
           return {
             ...item,
             [property]: newValue,
@@ -77,16 +75,7 @@ const LocationDistances = ({ data, setData, fixtData }) => {
     }
   };
   useEffect(() => {
-    axios
-      .get(`${values.url}/hotel/single?id=${id}`)
-      .then((d) => {
-        setDistances(
-          (fixtData?.publish && fixtData?.distance) || defaultDistances
-        );
-      })
-      .catch((e) => {
-        setDistances(defaultDistances);
-      });
+    setDistances(fixtData?.distance || defaultDistances);
   }, [fixtData]);
 
   useEffect(() => {
@@ -99,8 +88,9 @@ const LocationDistances = ({ data, setData, fixtData }) => {
   }, [distances]);
 
   const deleteHandler = (item) => {
+    console.log(item);
     setDistances((prevDistances) =>
-      prevDistances.filter((distance) => distance.id !== item.id)
+      prevDistances.filter((distance, i) => i !== item.id)
     );
   };
 
@@ -110,18 +100,18 @@ const LocationDistances = ({ data, setData, fixtData }) => {
       <p>Inserisci le distanze dai vari posti</p>
 
       <div className="destince">
-        {distances.map((d, i) => (
+        {data?.distance?.map((d, i) => (
           <>
             <div key={i} className="destince-item">
               <div className="destince-item-top">
                 <span>{d.label}</span>
                 <EditTitle
-                  closeHandler={(e) => toggleEdit(d.id)}
-                  changeHandler={(e) => handleChange(d.id, e, "label")}
+                  closeHandler={(e) => toggleEdit(i)}
+                  changeHandler={(e) => handleChange(i, e, "label")}
                   isShow={d.isEdit}
                   data={d.label}
                 />
-                <button onClick={() => toggleEdit(d.id)}>
+                <button onClick={() => toggleEdit(i)}>
                   <FiEdit />
                 </button>
               </div>
@@ -129,13 +119,13 @@ const LocationDistances = ({ data, setData, fixtData }) => {
                 <Select
                   data={["Mt", "Km"]}
                   activeValue={d.scale}
-                  handler={(e) => handleChange(d.id, e, "scale")}
+                  handler={(e) => handleChange(i, e, "scale")}
                 />
                 <Input
                   d={{ value: d.distance, label: "" }}
-                  handler={(e) => handleChange(d.id, e, "distance")}
+                  handler={(e) => handleChange(i, e, "distance")}
                 />
-                <button onClick={() => deleteHandler(d)} className="delete-btn">
+                <button onClick={() => deleteHandler(i)} className="delete-btn">
                   <AiFillDelete />
                 </button>
               </div>

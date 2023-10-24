@@ -134,12 +134,6 @@ export default function HotelDetails() {
                     title="Descrizione Hotel"
                   />
                 )}
-                {hotelData.roomsDescription && (
-                  <Description
-                    description={hotelData.roomsDescription}
-                    title={hotelData?.roomsTitle}
-                  />
-                )}
               </div>
             </div>
             <div className="booking-box hotel-details-service">
