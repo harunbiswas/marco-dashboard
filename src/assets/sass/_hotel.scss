@@ -84,14 +84,16 @@
   }
 
   &-item {
-    display: flex;
+    display: grid;
     padding: 10px;
+    grid-template-columns: auto 160px;
     border-radius: 8px;
     border: $border;
     box-shadow: $shadow;
     justify-content: space-between;
 
     &-left {
+      width: 100%;
       display: grid;
       gap: 20px;
       grid-template-columns: 160px auto;

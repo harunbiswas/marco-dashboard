@@ -26,7 +26,11 @@ const calculateLowestAndHighestPrices = (offers) => {
       }
     }
   }
-  return `${lowestPrice}€~${highestPrice}€ `;
+  if (!(lowestPrice && highestPrice)) {
+    return `${lowestPrice}€~${highestPrice}€ `;
+  } else {
+    return "Nessuna Offerta";
+  }
 };
 
 export default function HotelItem({ hotelData }) {
